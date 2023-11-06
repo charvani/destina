@@ -16,6 +16,7 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
+//charvani 06/11/23 initial commint static design
 void main() async {
   // HttpOverrides.global = MyHttpOverrides();
 
