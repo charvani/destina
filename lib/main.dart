@@ -1,12 +1,11 @@
 import 'dart:io';
 
+import 'package:destina_1_international/authentication_screens/splash_screen.dart';
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'authentication_screens/enrollpackage_screen.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -41,7 +40,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
         useMaterial3: true,
       ),
-      home: const EnrollPackageScreen(),
+      home: const SplashScreen(),
     );
   }
 }

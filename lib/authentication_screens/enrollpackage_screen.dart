@@ -1,12 +1,8 @@
-import 'dart:convert';
-
 import 'package:destina_1_international/authentication_screens/register_screen.dart';
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../service_call/encryption.dart';
 
 class EnrollPackageScreen extends StatefulWidget {
   const EnrollPackageScreen({super.key});
@@ -25,27 +21,27 @@ class _EnrollPackageScreenState extends State<EnrollPackageScreen> {
     "assets/images/tools.png",
     "assets/images/bussiness_card.png",
   ];
-  finalFun() async {
-    // final Map<String, dynamic> parameters = {
-    //   "action": "GetSalesSingleproductdata",
-    //   "pcode": "MYD1SLS09",
-    //   "country": "1"
-    // };
-    // dynamic dear = Encrypt.encryptJsonObjectResponse(json.encode(parameters));
-    final Map<String, dynamic> parameters = {
-      "action": "HEALTH CARE",
-      "pcode": "0",
-      "country": "MY"
-    };
-    dynamic dear = Encrypt.encryptStringResponse(json.encode(parameters));
-    print(" de....$dear}");
-  }
+  // finalFun() async {
+  //   // final Map<String, dynamic> parameters = {
+  //   //   "action": "GetSalesSingleproductdata",
+  //   //   "pcode": "MYD1SLS09",
+  //   //   "country": "1"
+  //   // };
+  //   // dynamic dear = Encrypt.encryptJsonObjectResponse(json.encode(parameters));
+  //   final Map<String, dynamic> parameters = {
+  //     "action": "HEALTH CARE",
+  //     "pcode": "0",
+  //     "country": "MY"
+  //   };
+  //   dynamic dear = Encrypt.encryptStringResponse(json.encode(parameters));
+  //   print(" de....$dear}");
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    finalFun();
+    // finalFun();
   }
 
   @override
