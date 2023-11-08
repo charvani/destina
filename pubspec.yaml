@@ -48,6 +48,12 @@ dependencies:
   flutter_svg:
   shared_preferences: ^2.2.2
   text_scroll: ^0.2.0
+  # pointycastle: ^3.7.3
+  encrypt:
+  logger: ^2.0.2+1
+  pointycastle: 
+  crypto: ^3.0.1
+  intl:
   
 
 
