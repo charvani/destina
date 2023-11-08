@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../commons/common_widgets.dart';
+import '../commons/constants.dart';
 import 'login_screen.dart';
 
 class OnboardScreen extends StatefulWidget {
@@ -29,6 +30,12 @@ List<OnboardModel> onboardData = [
 
 class _OnboardScreenState extends State<OnboardScreen> {
   final _pageController = PageController();
+  @override
+  void initState() {
+    super.initState();
+    Constants.prefs.setBool("onboard", true);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

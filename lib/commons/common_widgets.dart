@@ -1760,7 +1760,7 @@ class CategroyItemWidget extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset(
+                Image.network(
                   imagePath,
                   height: 100,
                 ),

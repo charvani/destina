@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:destina_1_international/authentication_screens/login_screen.dart';
 import 'package:destina_1_international/commons/colors.dart';
+import 'package:destina_1_international/commons/constants.dart';
+import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,24 +21,25 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   bool splashAnimation = true;
   // late VideoPlayerController _controller;
-
+  late bool onboard;
   navgationFun() {
-    Get.to(() => const OnboardScreen());
+    Get.to(
+        () => onboard == false ? const OnboardScreen() : const LoginScreen());
+  }
+
+  countyCodeFun() async {
+    dynamic countyCodeRes = await MainController().getCountryCode();
+    if (countyCodeRes != null) {
+      await Constants.prefs.setString("country", countyCodeRes['country']);
+      country = countyCodeRes['country'];
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    // _controller = VideoPlayerController.asset('assets/videos/splash_video.mp4')
-    //   ..initialize().then((_) {
-    //     setState(() {});
-    //     _controller.play();
-    //   });
-    // Timer(const Duration(seconds: 1), () {
-    //   setState(() {
-    //     splashAnimation = false;
-    //   });
-    // });
+    onboard = Constants.prefs.getBool("onboard") ?? false;
+    countyCodeFun();
     Timer(const Duration(seconds: 4), () {
       navgationFun();
     });
