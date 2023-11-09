@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:destina_1_international/authentication_screens/countryselect_screen.dart';
 import 'package:destina_1_international/commons/colors.dart';
@@ -952,7 +953,7 @@ class VersionText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "version $appversion",
+      "version ${Constants().appversion}",
       style: TextStyle(
           fontFamily: "OnestLight",
           color: middleBlackColor.withOpacity(0.5),
@@ -1760,14 +1761,22 @@ class CategroyItemWidget extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.network(
-                  imagePath,
+                CommonCachedNetworkImage(
+                  imagePath: imagePath,
                   height: 100,
                 ),
-                const SpaceHeightWidget(height: 12),
+                // CachedNetworkImage(
+                //   imageUrl: imagePath,
+                //   height: 100,
+                //   progressIndicatorBuilder: (context, url, progress) => loader,
+                //   errorWidget: (context, url, error) => Image.asset(
+                //     "assets/images/new_logo.png",
+                //     height: 100,
+                //   ),
+                // ),
                 Text(
                   titile.capitalizeFirst.toString().replaceAll("d1", "D1"),
-                  maxLines: 1,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       fontFamily: "OnestSemiBold",
@@ -1776,6 +1785,29 @@ class CategroyItemWidget extends StatelessWidget {
                 )
               ]),
         ),
+      ),
+    );
+  }
+}
+// commonCachedNetworkImage
+
+class CommonCachedNetworkImage extends StatelessWidget {
+  final String imagePath;
+  final double? height;
+  final BoxFit? boxfit;
+  const CommonCachedNetworkImage(
+      {super.key, required this.imagePath, this.height, this.boxfit});
+
+  @override
+  Widget build(BuildContext context) {
+    return CachedNetworkImage(
+      imageUrl: imagePath,
+      height: height,
+      progressIndicatorBuilder: (context, url, progress) => loader,
+      fit: boxfit,
+      errorWidget: (context, url, error) => Image.asset(
+        "assets/images/new_logo.png",
+        height: height,
       ),
     );
   }
@@ -2067,14 +2099,14 @@ class ProductAmountDetailsWidget extends StatelessWidget {
   final String productCode;
   final String cv;
   // final String memberPrice;
-  // final String retialPrice;
+  final String price;
 
   const ProductAmountDetailsWidget(
       {super.key,
       // required this.memberPrice,
       required this.productCode,
       required this.cv,
-      // required this.retialPrice,
+      required this.price,
       required this.title});
 
   @override
@@ -2109,66 +2141,68 @@ class ProductAmountDetailsWidget extends StatelessWidget {
             )
           ])),
           const SpaceHeightWidget(height: 10),
-          RichText(
-              text: TextSpan(children: [
-            TextSpan(
-              text: "CV: ",
-              style: TextStyle(
-                  fontFamily: "OnestSemiBold",
-                  fontSize: 14,
-                  color: blackColor.withOpacity(0.4)),
-            ),
-            TextSpan(
-              text: cv,
-              style: TextStyle(
-                  fontFamily: "OnestSemiBold",
-                  fontSize: 14,
-                  color: blackColor.withOpacity(0.4)),
-            )
-          ])),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     Row(
-          //       children: [
-          //         Text(
-          //           "Member price",
-          //           style: TextStyle(
-          //               fontFamily: "OnestRegular",
-          //               fontSize: 12,
-          //               color: blackColor),
-          //         ),
-          //         const SpaceWidthWidget(width: 5),
-          //         Text(
-          //           "฿ $memberPrice",
-          //           style: TextStyle(
-          //               fontFamily: "OnestSemiBold",
-          //               fontSize: 14,
-          //               color: blackColor),
-          //         ),
-          //       ],
-          //     ),
-          //     Row(
-          //       children: [
-          //         Text(
-          //           "Retail price ฿",
-          //           style: TextStyle(
-          //               fontFamily: "OnestRegular",
-          //               fontSize: 12,
-          //               color: darkBlue),
-          //         ),
-          //         const SpaceWidthWidget(width: 5),
-          //         Text(
-          //           retialPrice,
-          //           style: TextStyle(
-          //               fontFamily: "OnestSemiBold",
-          //               fontSize: 22,
-          //               color: darkBlue),
-          //         ),
-          //       ],
-          //     ),
-          //   ],
-          // )
+          if (cv != "0")
+            RichText(
+                text: TextSpan(children: [
+              TextSpan(
+                text: "CV: ",
+                style: TextStyle(
+                    fontFamily: "OnestSemiBold",
+                    fontSize: 14,
+                    color: blackColor.withOpacity(0.4)),
+              ),
+              TextSpan(
+                text: cv,
+                style: TextStyle(
+                    fontFamily: "OnestSemiBold",
+                    fontSize: 14,
+                    color: blackColor.withOpacity(0.4)),
+              )
+            ])),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              //     Row(
+              //       children: [
+              //         Text(
+              //           "Member price",
+              //           style: TextStyle(
+              //               fontFamily: "OnestRegular",
+              //               fontSize: 12,
+              //               color: blackColor),
+              //         ),
+              //         const SpaceWidthWidget(width: 5),
+              //         Text(
+              //           "฿ $memberPrice",
+              //           style: TextStyle(
+              //               fontFamily: "OnestSemiBold",
+              //               fontSize: 14,
+              //               color: blackColor),
+              //         ),
+              //       ],
+              //     ),
+              if (price != "")
+                Row(
+                  children: [
+                    Text(
+                      "Price: ",
+                      style: TextStyle(
+                          fontFamily: "OnestSemiBold",
+                          fontSize: 14,
+                          color: blackColor.withOpacity(0.4)),
+                    ),
+                    const SpaceWidthWidget(width: 5),
+                    Text(
+                      price,
+                      style: TextStyle(
+                          fontFamily: "OnestSemiBold",
+                          fontSize: 20,
+                          color: blackColor),
+                    ),
+                  ],
+                ),
+            ],
+          )
         ],
       ),
     );
@@ -2177,27 +2211,28 @@ class ProductAmountDetailsWidget extends StatelessWidget {
 
 class CommonCarousel extends StatelessWidget {
   final int currentIndex;
+  final List<String> images;
   final Function(int, CarouselPageChangedReason)? onchangedFun;
   const CommonCarousel(
-      {super.key, required this.onchangedFun, required this.currentIndex});
+      {super.key,
+      required this.onchangedFun,
+      required this.currentIndex,
+      required this.images});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         CarouselSlider.builder(
-            itemCount: 5,
+            itemCount: images.length,
             itemBuilder: (context, i, rindex) {
               return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        i == 0
-                            ? "assets/images/health.jpg"
-                            : "assets/images/health$i.jpg",
-                        fit: BoxFit.fill,
-                      )));
+                    borderRadius: BorderRadius.circular(10),
+                    child: CommonCachedNetworkImage(
+                        imagePath: images[i], boxfit: BoxFit.fill),
+                  ));
             },
             options: CarouselOptions(
                 pageSnapping: false,
@@ -2214,7 +2249,7 @@ class CommonCarousel extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
-              for (int i = 0; i < 5; i++)
+              for (int i = 0; i < images.length; i++)
                 (i == currentIndex)
                     ? const ActiveDot()
                     : const SopInactiveDot(),

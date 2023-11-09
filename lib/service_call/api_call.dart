@@ -22,7 +22,8 @@ class ApiCall {
 //encryption
     dynamic encryptedText = Encrypt.encryptStringResponse(json.encode(params));
     print("Encrypted text....$encryptedText");
-    http.Response response = await http.post(Uri.parse(baseUrl + methodName),
+    http.Response response = await http.post(
+        Uri.parse(ApiData().baseUrl + methodName),
         body: {"Info": encryptedText.toString()});
     dynamic convertedData = convert.jsonDecode(response.body);
     if (response.statusCode == 200 &&

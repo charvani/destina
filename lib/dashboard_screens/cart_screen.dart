@@ -330,6 +330,7 @@ class _CartScreenState extends State<CartScreen> {
                       onTapFun: () {
                         Get.to(() => ProductDetailsScreen(
                               from: widget.from,
+                              packageCode: "",
                             ));
                       },
                       amountColor: darkBlue,

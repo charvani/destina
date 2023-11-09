@@ -3,11 +3,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'colors.dart';
 
-String appversion = "1.0";
-String country = "MY";
-
 class Constants {
   static late SharedPreferences prefs;
+
+  String appversion = "1.0";
+  String country = "MY";
 }
 
 Center loader = Center(
@@ -26,3 +26,10 @@ Center loader = Center(
 //   color: appthemeColor,
 //   radius: 45,
 // ));
+
+Center notAvailableW = Center(
+    child: Text(
+  "Not available",
+  style: TextStyle(
+      fontFamily: "OnestRegular", fontSize: 12, color: middleBlackColor),
+));

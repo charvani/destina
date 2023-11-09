@@ -342,6 +342,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             onTapFun: () {
                               Get.to(() => const ProductDetailsScreen(
                                     from: "newarrival",
+                                    packageCode: "",
                                   ));
                             },
                             imagePath: i == 0
@@ -491,6 +492,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTapFun: () {
                             Get.to(() => const ProductDetailsScreen(
                                   from: "recommended_for_you",
+                                  packageCode: "",
                                 ));
                           },
                           amountColor: darkBlue,
@@ -589,6 +591,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTapFun: () {
                         Get.to(() => const ProductDetailsScreen(
                               from: "promotion",
+                              packageCode: "",
                             ));
                       },
                       imagePath: (i == 1 && index == 0)
