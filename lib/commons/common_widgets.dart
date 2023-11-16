@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:destina_1_international/authentication_screens/countryselect_screen.dart';
@@ -5,6 +7,7 @@ import 'package:destina_1_international/commons/colors.dart';
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../authentication_screens/login_screen.dart';
@@ -1119,12 +1122,11 @@ class PromotionItemWidget extends StatelessWidget {
                     children: [
                       Container(
                         margin: const EdgeInsets.only(top: 3),
-                        width: double.infinity,
                         padding: const EdgeInsets.all(8),
                         child: Image.asset(
                           imagePath,
-                          height: 90,
-                          width: 90,
+                          height: 100,
+                          width: 100,
                           // fit: BoxFit.fill,
                         ),
                       ),
@@ -1138,6 +1140,7 @@ class PromotionItemWidget extends StatelessWidget {
                                   topRight: Radius.circular(10),
                                   bottomRight: Radius.circular(10))),
                           child: Row(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               const SpaceWidthWidget(width: 3),
                               CircleAvatar(
@@ -1159,12 +1162,12 @@ class PromotionItemWidget extends StatelessWidget {
                         )
                     ],
                   ),
-                  const SpaceHeightWidget(height: 15),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       itemName.capitalize.toString().replaceAll("d1", "D1"),
                       maxLines: 2,
+                      textAlign: TextAlign.center,
                       style: const TextStyle(fontFamily: "OnestRegular"),
                     ),
                   ),
@@ -1803,7 +1806,8 @@ class CommonCachedNetworkImage extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: imagePath,
       height: height,
-      progressIndicatorBuilder: (context, url, progress) => loader,
+      progressIndicatorBuilder: (context, url, progress) =>
+          SizedBox(width: 80, child: loader),
       fit: boxfit,
       errorWidget: (context, url, error) => Image.asset(
         "assets/images/new_logo.png",
@@ -1931,52 +1935,49 @@ class CustomMemberButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: InkWell(
-        onTap: onTapFun,
-        child: Container(
-          decoration: BoxDecoration(
-              color: whiteColor, borderRadius: BorderRadius.circular(25)),
-          height: 35,
-          child: Stack(
-            children: [
-              Container(
-                  padding: const EdgeInsets.only(
-                      left: 10, right: 24, bottom: 8, top: 8),
-                  decoration: BoxDecoration(
-                      color: activeColor,
-                      borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                          bottomLeft: Radius.circular(25))),
-                  height: 35,
-                  child: Image.asset(
-                    imagePath,
-                    width: 21,
-                    color: whiteColor,
+    return InkWell(
+      onTap: onTapFun,
+      child: Container(
+        decoration: BoxDecoration(
+            color: whiteColor, borderRadius: BorderRadius.circular(25)),
+        height: 35,
+        width: 135,
+        child: Stack(
+          children: [
+            Container(
+                padding: const EdgeInsets.only(
+                    left: 10, right: 24, bottom: 8, top: 8),
+                decoration: BoxDecoration(
+                    color: activeColor,
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        bottomLeft: Radius.circular(25))),
+                height: 35,
+                child: Image.asset(
+                  imagePath,
+                  width: 21,
+                  color: whiteColor,
+                )),
+            Positioned(
+              left: 31,
+              child: Transform.rotate(
+                  angle: 10.5,
+                  child: TriangleShape(
+                    triangleColor: whiteColor,
                   )),
-              Positioned(
-                left: 31,
-                child: Transform.rotate(
-                    angle: 10.5,
-                    child: TriangleShape(
-                      triangleColor: whiteColor,
-                    )),
-              ),
-              Positioned(
-                left: 45,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                        fontSize: 10,
-                        fontFamily: "OnestBold",
-                        color: textColor),
-                  ),
+            ),
+            Positioned(
+              left: 45,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  title,
+                  style: TextStyle(
+                      fontSize: 10, fontFamily: "OnestBold", color: textColor),
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -2212,11 +2213,15 @@ class ProductAmountDetailsWidget extends StatelessWidget {
 class CommonCarousel extends StatelessWidget {
   final int currentIndex;
   final List<String> images;
+  final bool? autoPlay;
+  final VoidCallback? onTapFun;
   final Function(int, CarouselPageChangedReason)? onchangedFun;
   const CommonCarousel(
       {super.key,
       required this.onchangedFun,
       required this.currentIndex,
+      this.autoPlay,
+      this.onTapFun,
       required this.images});
 
   @override
@@ -2230,15 +2235,19 @@ class CommonCarousel extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: CommonCachedNetworkImage(
-                        imagePath: images[i], boxfit: BoxFit.fill),
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: onTapFun,
+                      child: CommonCachedNetworkImage(
+                          imagePath: images[i], boxfit: BoxFit.fill),
+                    ),
                   ));
             },
             options: CarouselOptions(
-                pageSnapping: false,
+                // pageSnapping: false,
                 viewportFraction: 0.95,
                 padEnds: false,
-                autoPlay: true,
+                autoPlay: autoPlay ?? true,
                 autoPlayInterval: const Duration(seconds: 3),
                 onPageChanged: onchangedFun)),
         const SpaceHeightWidget(height: 10),
@@ -2279,26 +2288,159 @@ class _CommonDividerState extends State<CommonDivider> {
   }
 }
 
+// class CartItemWidget extends StatelessWidget {
+//   final VoidCallback removeFun;
+//   final VoidCallback addFun;
+//   final int itemCount;
+//   final String productCode;
+//   final String itemname;
+//   final String imagePath;
+//   final String actualItemPrice;
+//   final String itemsPrice;
+//   final String memberPrice;
+
+//   const CartItemWidget(
+//       {super.key,
+//       required this.removeFun,
+//       required this.addFun,
+//       required this.actualItemPrice,
+//       required this.imagePath,
+//       required this.itemname,
+//       required this.itemsPrice,
+//       required this.memberPrice,
+//       required this.productCode,
+//       required this.itemCount});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+//       child: Row(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Column(
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             children: [
+//               Text("#$productCode",
+//                   style: TextStyle(
+//                       fontFamily: "OnestRegular",
+//                       fontSize: 12,
+//                       color: blackColor.withOpacity(0.5))),
+//               const SpaceHeightWidget(height: 5),
+//               Image.asset(
+//                 imagePath,
+//                 height: 90,
+//                 width: 90,
+//                 // fit: BoxFit.fill,
+//               )
+//             ],
+//           ),
+//           const SpaceWidthWidget(width: 10),
+//           Expanded(
+//             child: Column(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: [
+//                 Text(
+//                   itemname,
+//                   maxLines: 3,
+//                   style: TextStyle(
+//                       fontFamily: "OnestRegular",
+//                       fontSize: 11,
+//                       color: blackColor),
+//                 ),
+//                 const SpaceHeightWidget(height: 10),
+//                 Row(
+//                   crossAxisAlignment: CrossAxisAlignment.end,
+//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                   children: [
+//                     Container(
+//                       height: 28,
+//                       // width: 120,
+//                       padding: const EdgeInsets.all(5),
+//                       decoration: BoxDecoration(
+//                           borderRadius: BorderRadius.circular(20),
+//                           border: Border.all()),
+//                       child: Row(
+//                         mainAxisAlignment: MainAxisAlignment.spaceAround,
+//                         children: [
+//                           InkWell(
+//                               onTap: removeFun,
+//                               child: Icon(
+//                                 Icons.remove_outlined,
+//                                 color: blackColor,
+//                                 size: 15,
+//                               )),
+//                           Padding(
+//                             padding: const EdgeInsets.symmetric(horizontal: 8),
+//                             child: Text(
+//                               itemCount.toString(),
+//                               style: TextStyle(
+//                                   color: blackColor,
+//                                   fontFamily: "OnestRegular"),
+//                             ),
+//                           ),
+//                           InkWell(
+//                               onTap: addFun,
+//                               child: Icon(
+//                                 size: 15,
+//                                 Icons.add,
+//                                 color: blackColor,
+//                               ))
+//                         ],
+//                       ),
+//                     ),
+//                     Column(
+//                       crossAxisAlignment: CrossAxisAlignment.end,
+//                       children: [
+//                         Text(
+//                           "3 x ฿ $actualItemPrice",
+//                           style: TextStyle(
+//                               fontFamily: "OnestRegular",
+//                               fontSize: 12.5,
+//                               color: blackColor.withOpacity(0.5)),
+//                         ),
+//                         Text(
+//                           "฿ $itemsPrice",
+//                           style: TextStyle(
+//                               fontFamily: "OnestSemiBold",
+//                               color: lightDarKBlue,
+//                               fontSize: 14),
+//                         ),
+//                         Text(
+//                           "Member Price $memberPrice",
+//                           maxLines: 2,
+//                           style: TextStyle(
+//                               fontFamily: "OnestRegular",
+//                               fontSize: 12,
+//                               color: blackColor),
+//                         ),
+//                       ],
+//                     )
+//                   ],
+//                 )
+//               ],
+//             ),
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }
+
 class CartItemWidget extends StatelessWidget {
   final VoidCallback removeFun;
-  final VoidCallback addFun;
-  final int itemCount;
+  final String itemCount;
   final String productCode;
   final String itemname;
   final String imagePath;
-  final String actualItemPrice;
   final String itemsPrice;
-  final String memberPrice;
 
   const CartItemWidget(
       {super.key,
       required this.removeFun,
-      required this.addFun,
-      required this.actualItemPrice,
       required this.imagePath,
       required this.itemname,
       required this.itemsPrice,
-      required this.memberPrice,
       required this.productCode,
       required this.itemCount});
 
@@ -2309,27 +2451,15 @@ class CartItemWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("#$productCode",
-                  style: TextStyle(
-                      fontFamily: "OnestRegular",
-                      fontSize: 12,
-                      color: blackColor.withOpacity(0.5))),
-              const SpaceHeightWidget(height: 5),
-              Image.asset(
-                imagePath,
-                height: 90,
-                width: 90,
-                // fit: BoxFit.fill,
-              )
-            ],
+          CommonCachedNetworkImage(
+            imagePath: imagePath,
+            height: 90,
           ),
           const SpaceWidthWidget(width: 10),
           Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
                   itemname,
@@ -2339,76 +2469,74 @@ class CartItemWidget extends StatelessWidget {
                       fontSize: 11,
                       color: blackColor),
                 ),
-                const SpaceHeightWidget(height: 10),
+                const SpaceHeightWidget(height: 5),
+                RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                    text: "Product Code: ",
+                    style: TextStyle(
+                        fontFamily: "OnestRegular",
+                        fontSize: 12,
+                        color: blackColor.withOpacity(0.7)),
+                  ),
+                  TextSpan(
+                      text: productCode,
+                      style: TextStyle(
+                          fontFamily: "OnestRegular",
+                          fontSize: 12,
+                          color: blackColor.withOpacity(0.5)))
+                ])),
+                const SpaceHeightWidget(height: 5),
+                RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                    text: "Quantity: ",
+                    style: TextStyle(
+                        fontFamily: "OnestRegular",
+                        fontSize: 12,
+                        color: blackColor.withOpacity(0.7)),
+                  ),
+                  TextSpan(
+                      text: itemCount,
+                      style: TextStyle(
+                          fontFamily: "OnestRegular",
+                          fontSize: 12,
+                          color: blackColor.withOpacity(0.5)))
+                ])),
+                const SpaceHeightWidget(height: 5),
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      height: 28,
-                      // width: 120,
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all()),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          InkWell(
-                              onTap: removeFun,
-                              child: Icon(
-                                Icons.remove_outlined,
-                                color: blackColor,
-                                size: 15,
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Text(
-                              itemCount.toString(),
-                              style: TextStyle(
-                                  color: blackColor,
-                                  fontFamily: "OnestRegular"),
-                            ),
-                          ),
-                          InkWell(
-                              onTap: addFun,
-                              child: Icon(
-                                size: 15,
-                                Icons.add,
-                                color: blackColor,
-                              ))
-                        ],
+                    RichText(
+                        text: TextSpan(children: [
+                      TextSpan(
+                        text: "MRP: ",
+                        style: TextStyle(
+                            fontFamily: "OnestRegular",
+                            fontSize: 12,
+                            color: blackColor.withOpacity(0.7)),
                       ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          "3 x ฿ $actualItemPrice",
-                          style: TextStyle(
-                              fontFamily: "OnestRegular",
-                              fontSize: 12.5,
-                              color: blackColor.withOpacity(0.5)),
-                        ),
-                        Text(
-                          "฿ $itemsPrice",
-                          style: TextStyle(
-                              fontFamily: "OnestSemiBold",
-                              color: lightDarKBlue,
-                              fontSize: 14),
-                        ),
-                        Text(
-                          "Member Price $memberPrice",
-                          maxLines: 2,
+                      TextSpan(
+                          text: itemsPrice,
                           style: TextStyle(
                               fontFamily: "OnestRegular",
                               fontSize: 12,
-                              color: blackColor),
-                        ),
-                      ],
-                    )
+                              color: blackColor.withOpacity(0.5)))
+                    ])),
+                    GestureDetector(
+                        onTap: removeFun,
+                        child: CircleAvatar(
+                          radius: 15,
+                          backgroundColor: darkRedColor,
+                          child: Icon(
+                            Icons.delete_forever,
+                            color: whiteColor,
+                            size: 17,
+                          ),
+                        ))
                   ],
-                )
+                ),
+                const SpaceHeightWidget(height: 5),
               ],
             ),
           )
@@ -2629,6 +2757,7 @@ class RegisterTextField extends StatelessWidget {
   final Color? borderColor;
   final String hintText;
   final String labelText;
+  final FocusNode? focusNode;
   final TextAlignVertical? textAlignVertical;
   final TextInputType textInputType;
   final String? Function(String?)? validation;
@@ -2641,6 +2770,7 @@ class RegisterTextField extends StatelessWidget {
       this.borderColor,
       this.inputFormatter,
       this.textAlignVertical,
+      this.focusNode,
       required this.hintText,
       required this.textInputType,
       required this.validation,
@@ -2651,7 +2781,9 @@ class RegisterTextField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: padding ?? 10),
       child: TextFormField(
+        focusNode: focusNode,
         textAlignVertical: textAlignVertical ?? TextAlignVertical.center,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: controller,
         keyboardType: textInputType,
         style: TextStyle(
@@ -3045,10 +3177,14 @@ class FlagWidget extends StatelessWidget {
                   alignment: Alignment.center,
                   children: [
                     const CustomCurveShape(),
-                    Image.asset(
-                      imagePath,
+                    CommonCachedNetworkImage(
+                      imagePath: imagePath,
                       height: 60,
                     )
+                    // Image.asset(
+                    //   imagePath,
+                    //   height: 60,
+                    // )
                   ],
                 ),
                 Padding(
@@ -3068,15 +3204,21 @@ class FlagWidget extends StatelessWidget {
 }
 
 class MemberScreenInfoWidget extends StatelessWidget {
-  final String titleText;
+  final String heading1;
   final List<dynamic> ddcInfo;
   final List<dynamic> applicationInfo;
   final Color activeColor;
+  final String heading2;
+  final String questioningText;
+  final String amount;
   const MemberScreenInfoWidget(
       {super.key,
+      required this.heading2,
       required this.activeColor,
-      required this.titleText,
+      required this.heading1,
       required this.ddcInfo,
+      required this.questioningText,
+      required this.amount,
       required this.applicationInfo});
 
   @override
@@ -3089,11 +3231,10 @@ class MemberScreenInfoWidget extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: activeColor == darkRedColor
-                ? redColor.withOpacity(0.15)
-                : activeColor.withOpacity(0.1),
-          ),
+              borderRadius: BorderRadius.circular(10),
+              color: activeColor == darkRedColor
+                  ? redColor.withOpacity(0.15)
+                  : activeColor.withOpacity(0.1)),
           width: double.infinity,
           child: Column(
             children: [
@@ -3105,7 +3246,7 @@ class MemberScreenInfoWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "START YOUR BUSINESS",
+                        heading1,
                         style: TextStyle(
                             fontFamily: "OnestBold",
                             fontSize: 16,
@@ -3113,7 +3254,7 @@ class MemberScreenInfoWidget extends StatelessWidget {
                       ),
                       const SpaceHeightWidget(height: 15),
                       Text(
-                        "AS A DESTINA 1 $titleText",
+                        " $heading2",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontFamily: "OnestRegular",
@@ -3145,7 +3286,7 @@ class MemberScreenInfoWidget extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            "Why Become a $titleText?",
+                            questioningText,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontFamily: "OnestSemiBold",
@@ -3202,11 +3343,20 @@ class MemberScreenInfoWidget extends StatelessWidget {
                             width: 100,
                             child: Column(
                               children: [
-                                Image.asset(applicationInfo[i]['image_path'],
-                                    height: 70, fit: BoxFit.fill),
+                                i != 1
+                                    ? Image.asset(
+                                        applicationInfo[i]['image_path'],
+                                        height: 70,
+                                        fit: BoxFit.fill)
+                                    : CommonCachedNetworkImage(
+                                        imagePath: applicationInfo[i]
+                                            ['image_path'],
+                                        height: 70,
+                                        boxfit: BoxFit.fill,
+                                      ),
                                 const SpaceHeightWidget(height: 5),
                                 Text(
-                                  applicationInfo[i]['title'],
+                                  i != 2 ? applicationInfo[i]['title'] : amount,
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                       fontFamily: "OnestRegular", fontSize: 11),
@@ -3228,331 +3378,70 @@ class MemberScreenInfoWidget extends StatelessWidget {
   }
 }
 
-class PackageDilog extends StatelessWidget {
-  final TextEditingController quantityController;
-  final VoidCallback addtoCartFun;
-  const PackageDilog(
-      {super.key,
-      required this.quantityController,
-      required this.addtoCartFun});
+String generateRandomString(int length) {
+  const chars =
+      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  return List.generate(length, (index) => chars[Random().nextInt(chars.length)])
+      .join();
+}
+
+String generateTimeStamp() {
+  int timestamp = DateTime.now().millisecondsSinceEpoch;
+  return timestamp.toString();
+}
+
+class ConfrimationDialog extends StatelessWidget {
+  final String title;
+  final VoidCallback onTapFun;
+  const ConfrimationDialog(
+      {super.key, required this.onTapFun, required this.title});
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      insetPadding: const EdgeInsets.symmetric(horizontal: 6),
-      backgroundColor: blackColor.withOpacity(0.8),
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: blackColor.withOpacity(0.8)),
+    return 
+    Dialog(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Customize Packages",
-                    style: TextStyle(
-                        fontFamily: "OnestBold",
-                        fontSize: 16,
-                        color: whiteColor),
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: Icon(
-                        Icons.close,
-                        size: 16,
-                        color: whiteColor,
-                      ))
-                ],
-              ),
-            ),
-            Container(
-              width: double.maxFinite,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
-                color: whiteColor,
-              ),
-              padding: const EdgeInsets.all(7),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SpaceHeightWidget(height: 5),
-                  Text(
-                    "Products In The Package MYSH01",
-                    style: TextStyle(
-                        fontFamily: "OnestSemiBold",
-                        fontSize: 12,
-                        color: blackColor),
-                  ),
-                  const SpaceHeightWidget(height: 5),
-                  RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                      text: "Products Selected Should Be Of Total Quantity : ",
-                      style: TextStyle(
-                          fontFamily: "OnestSemiBold",
-                          fontSize: 12,
-                          color: blackColor),
-                    ),
-                    TextSpan(
-                      text: "4",
-                      style: TextStyle(
-                          fontFamily: "OnestSemiBold",
-                          fontSize: 14,
-                          color: redColor),
-                    )
-                  ])),
-                  const SpaceHeightWidget(height: 20),
-                  // Container(
-                  //   color: Colors.white,
-                  //   child: Table(
-                  //     border: TableBorder.all(color: Colors.black),
-                  //     children: [
-                  //       TableRow(children: [
-                  //         // Text('lkdjfkdflsdjfklsjdflaskjfl 1'),
-                  //         // Text('lkdjfkdflsdjfklsjdflaskjfl 2'),
-                  //         // Text('lkdjfkdflsdjfklsjdflaskjfl 3'),
-                  //         // Text('lkdjfkdflsdjfklsjdflaskjfl 3'),
-                  //         // Text('lkdjfkdflsdjfklsjdflaskjfl 3'),
-                  //         Padding(
-                  //           padding: const EdgeInsets.symmetric(horizontal: 4),
-                  //           child: Text(
-                  //             "S.No",
-                  //             style: TextStyle(
-                  //                 fontFamily: "OnestSemiBold",
-                  //                 fontSize: 12,
-                  //                 color: blackColor),
-                  //           ),
-                  //         ),
-                  //         Padding(
-                  //           padding: const EdgeInsets.symmetric(horizontal: 4),
-                  //           child: Text(
-                  //             "Product Code",
-                  //             style: TextStyle(
-                  //                 fontFamily: "OnestSemiBold",
-                  //                 fontSize: 12,
-                  //                 color: blackColor),
-                  //           ),
-                  //         ),
-                  //         Padding(
-                  //           padding: const EdgeInsets.symmetric(horizontal: 4),
-                  //           child: Text(
-                  //             "Name",
-                  //             style: TextStyle(
-                  //                 fontFamily: "OnestSemiBold",
-                  //                 fontSize: 12,
-                  //                 color: blackColor),
-                  //           ),
-                  //         ),
-                  //         Padding(
-                  //           padding: const EdgeInsets.symmetric(horizontal: 4),
-                  //           child: Text(
-                  //             "Maximum Quantity",
-                  //             style: TextStyle(
-                  //                 fontFamily: "OnestSemiBold",
-                  //                 fontSize: 12,
-                  //                 color: blackColor),
-                  //           ),
-                  //         ),
-                  //         Padding(
-                  //           padding: const EdgeInsets.symmetric(horizontal: 4),
-                  //           child: Text(
-                  //             "Quantity",
-                  //             style: TextStyle(
-                  //                 fontFamily: "OnestSemiBold",
-                  //                 fontSize: 12,
-                  //                 color: blackColor),
-                  //           ),
-                  //         )
-                  //       ]),
-                  //       const TableRow(children: [
-                  //         Text('lkdjfkdflsdjfklsjdflaskjfl 4'),
-                  //         Text('lkdjfkdflsdjfklsjdflaskjfl 5'),
-                  //         Text('lkdjfkdflsdjfklsjdflaskjfl 6'),
-                  //         Text('lkdjfkdflsdjfklsjdflaskjfl 3'),
-                  //         Text('lkdjfkdflsdjfklsjdflaskjfl 3'),
-                  //       ])
-                  //     ],
-                  //   ),
-                  // ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                        horizontalMargin: 0,
-                        // dataRowMaxHeight: 100,
-                        columnSpacing: 0,
-                        border: TableBorder.all(
-                            color: middleBlackColor.withOpacity(0.15)),
-                        columns: [
-                          DataColumn(
-                              label: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(
-                              "S.No",
-                              style: TextStyle(
-                                  fontFamily: "OnestSemiBold",
-                                  fontSize: 12,
-                                  color: blackColor),
-                            ),
-                          )),
-                          DataColumn(
-                              label: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(
-                              "Product\nCode",
-                              style: TextStyle(
-                                  fontFamily: "OnestSemiBold",
-                                  fontSize: 12,
-                                  color: blackColor),
-                            ),
-                          )),
-                          DataColumn(
-                              label: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(
-                              "Name",
-                              style: TextStyle(
-                                  fontFamily: "OnestSemiBold",
-                                  fontSize: 12,
-                                  color: blackColor),
-                            ),
-                          )),
-                          DataColumn(
-                              label: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(
-                              "Maximum\nQuantity",
-                              style: TextStyle(
-                                  fontFamily: "OnestSemiBold",
-                                  fontSize: 12,
-                                  color: blackColor),
-                            ),
-                          )),
-                          DataColumn(
-                              label: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Text(
-                              "Quantity",
-                              style: TextStyle(
-                                  fontFamily: "OnestSemiBold",
-                                  fontSize: 12,
-                                  color: blackColor),
-                            ),
-                          )),
-                        ],
-                        rows: [
-                          for (int i = 1; i < 4; i++)
-                            DataRow(cells: [
-                              DataCell(Container(
-                                width: 10,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 5.2),
-                                child: Text(
-                                  i.toString(),
-                                  style: TextStyle(
-                                      fontFamily: "OnestRegular",
-                                      fontSize: 12,
-                                      color: middleBlackColor),
-                                ),
-                              )),
-                              DataCell(Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 5.2),
-                                child: Text(
-                                  "MYAST00$i",
-                                  style: TextStyle(
-                                      fontFamily: "OnestRegular",
-                                      fontSize: 12,
-                                      color: middleBlackColor),
-                                ),
-                              )),
-                              DataCell(Container(
-                                width: 160,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 5.2, vertical: 2),
-                                child: Text(
-                                  "D1 ADVANCE SCALAR ENERGIZED PENDANT",
-                                  style: TextStyle(
-                                      fontFamily: "OnestRegular",
-                                      fontSize: 12,
-                                      color: middleBlackColor),
-                                ),
-                              )),
-                              DataCell(Container(
-                                width: 100,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 5.2),
-                                child: Text(
-                                  "4",
-                                  style: TextStyle(
-                                      fontFamily: "OnestRegular",
-                                      fontSize: 12,
-                                      color: middleBlackColor),
-                                ),
-                              )),
-                              DataCell(Container(
-                                  width: 100,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 5.2),
-                                  child: RegisterTextField(
-                                      inputFormatter: [
-                                        FilteringTextInputFormatter.digitsOnly,
-                                        LengthLimitingTextInputFormatter(2)
-                                      ],
-                                      padding: 8,
-                                      textAlignVertical:
-                                          TextAlignVertical.bottom,
-                                      controller: quantityController,
-                                      hintText: "0",
-                                      textInputType: TextInputType.number,
-                                      validation: (val) {
-                                        return null;
-                                      },
-                                      labelText: ""))),
-                            ])
-                        ]),
-                  ),
-                  const SpaceHeightWidget(height: 20),
-
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    alignment: Alignment.bottomCenter,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                            height: 30,
-                            width: 130,
-                            child: CustomElevatedButton(
-                                onTapFun: addtoCartFun, title: "Add To Cart")),
-                        const SpaceWidthWidget(width: 10),
-                        SizedBox(
-                          width: 100,
-                          height: 30,
-                          child: CustomElevatedButton(
-                              onTapFun: () {
-                                Get.back();
-                              },
-                              title: "Cancel"),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
+            Text(title,
+                style:
+                    const TextStyle(fontFamily: "OnestSemiBold", fontSize: 15)),
+            const SpaceHeightWidget(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                    width: 80,
+                    height: 35,
+                    child:
+                        CustomElevatedButton(onTapFun: onTapFun, title: "Yes")),
+                const SpaceWidthWidget(width: 10),
+                SizedBox(
+                    width: 80,
+                    height: 35,
+                    child: CustomElevatedButton(
+                        onTapFun: () {
+                          Get.back();
+                        },
+                        title: "No"))
+              ],
+            )
           ],
         ),
       ),
     );
   }
+}
+
+CommonToast(String text) {
+  return Fluttertoast.showToast(
+      msg: text,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+      fontSize: 16.0);
 }

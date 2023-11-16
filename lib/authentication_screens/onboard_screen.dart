@@ -101,7 +101,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
                 child: CustomElevatedButton(
                     onTapFun: () {
                       if ((onboardData.length - page) == 1) {
-                        Get.to(() => const LoginScreen());
+                        Get.offAll(() => const LoginScreen());
                       } else {
                         setState(() {
                           page = page + 1;

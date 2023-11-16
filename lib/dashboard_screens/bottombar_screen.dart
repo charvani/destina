@@ -10,7 +10,11 @@ import 'account_screen.dart';
 import 'promotions_screen.dart';
 
 class BottomBarScreen extends StatefulWidget {
-  const BottomBarScreen({Key? key}) : super(key: key);
+  final int? index;
+  const BottomBarScreen({Key? key, this.index})
+      : super(
+          key: key,
+        );
 
   @override
   State<BottomBarScreen> createState() => _BottomBarScreenState();
@@ -35,6 +39,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   @override
   void initState() {
     super.initState();
+    selectedIndex = widget.index ?? 0;
     badgeCount = Constants.prefs.getInt("cart_count") ?? 0;
   }
 

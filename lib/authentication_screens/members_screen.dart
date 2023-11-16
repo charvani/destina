@@ -1,21 +1,26 @@
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/commons/constants.dart';
+import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../commons/colors.dart';
-import '../dashboard_screens/products_screen.dart';
+import '../inside_screens/packages_screen.dart';
 
 class MemberScreen extends StatefulWidget {
   final String fromCountry;
-  const MemberScreen({super.key, required this.fromCountry});
+  final String countryId;
+  const MemberScreen(
+      {super.key, required this.fromCountry, required this.countryId});
 
   @override
   State<MemberScreen> createState() => _MemberScreenState();
 }
 
 class _MemberScreenState extends State<MemberScreen> {
-  bool ddcTap = true;
-  bool ddTap = false;
+  bool ddcTap = false;
+  bool ddTap = true;
+  bool pcTap = false;
   List ddcInfo = [
     {
       "title": "Resell products for a profit",
@@ -65,15 +70,7 @@ class _MemberScreenState extends State<MemberScreen> {
       "image_path": "assets/images/more-benefits.jpe"
     },
   ];
-  late List applicationInfo = [
-    {"title": "18 Years and above", "image_path": "assets/images/age.jpe"},
-    {
-      "title":
-          "Must be a Citizen or Permanent Resident of ${widget.fromCountry}",
-      "image_path": "assets/images/${widget.fromCountry}.png"
-    },
-    {"title": "RM 55.00", "image_path": "assets/images/signupfree.jpe"},
-  ];
+  List applicationInfo = [];
 
   List<String> ddcTerms = [
     "I hereby declare that the above particulars are true and correct and i will adhere to the Terms and Conditions",
@@ -86,169 +83,418 @@ class _MemberScreenState extends State<MemberScreen> {
     "I acknowledge and understand that the information submitted by me will be kept, maintained and processed securely for the purposes as outlined in the Company's which can be accessed here",
   ];
 
+  final MainController checkController = Get.put(MainController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        getData();
+      },
+    );
+  }
+
+  getData() async {
+    dynamic res = await checkController.getcheckCountry(widget.countryId);
+    if ((double.parse(checkController.checkCountryData.value.pCiRenFee)
+                .round() >
+            0 &&
+        double.parse(checkController.checkCountryData.value.pcRenF).round() >
+            0)) {
+      pcTap = true;
+
+      ddcTap = false;
+      ddTap = false;
+    } else if ((double.parse(checkController.checkCountryData.value.dCiRenFee)
+                .round() >
+            0 &&
+        double.parse(checkController.checkCountryData.value.dcRenF).round() >
+            0)) {
+      pcTap = false;
+      ddcTap = true;
+      ddTap = false;
+    }
+    //  else if ((double.parse(checkController.checkCountryData.value.diRenFee)
+    //             .round() >
+    //         0 &&
+    //     double.parse(checkController.checkCountryData.value.dRenF).round() >
+    //         0)) {
+    //   pcTap = false;
+    //   ddcTap = false;
+    //   ddTap = true;
+    // }
+    applicationInfo = [
+      {"title": "18 Years and above", "image_path": "assets/images/age.jpe"},
+      {
+        "title":
+            "Must be a Citizen or Permanent Resident of ${checkController.checkCountryData.value.name}",
+        "image_path": checkController.checkCountryData.value.countryFlag,
+      },
+      {
+        "title": "",
+        //  pcTap
+        // ? checkController.checkCountryData.value.pcRenFee
+        // : ddcTap
+        //     ? checkController.checkCountryData.value.dcRenFee
+        //     : checkController.checkCountryData.value.dRenFee,
+        "image_path": "assets/images/signupfree.jpe"
+      },
+    ];
+    print("chck country...$res");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: lightBlackColor,
-          bottom: PreferredSize(
-            preferredSize: const Size(1000, 50),
-            child: Column(
-              children: [
-                Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0)),
-                  color: whiteColor,
-                  margin: const EdgeInsets.all(0),
-                  borderOnForeground: false,
-                  child: SizedBox(
-                    height: 50,
-                    width: double.infinity,
-                    child: ListTile(
-                      leading: IconButton(
-                        icon: const Icon(
-                          Icons.keyboard_arrow_left,
-                        ),
-                        onPressed: () {
-                          Get.back();
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-                const SpaceHeightWidget(height: 5),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      CustomMemberButton(
-                          imagePath: "assets/images/single_employee.png",
-                          textColor: ddcTap ? lightDarKBlue : blackColor,
-                          onTapFun: () {
-                            setState(() {
-                              ddcTap = !ddcTap;
-                              ddTap = !ddTap;
-                            });
-                          },
-                          activeColor: ddcTap
-                              ? lightDarKBlue
-                              : lightBlackColor.withOpacity(0.4),
-                          title: "Become a DDC"),
-                      const SpaceWidthWidget(width: 12),
-                      CustomMemberButton(
-                          imagePath: "assets/images/team_employee.png",
-                          textColor: ddTap ? lightDarKBlue : blackColor,
-                          onTapFun: () {
-                            setState(() {
-                              ddcTap = !ddcTap;
-                              ddTap = !ddTap;
-                            });
-                          },
-                          activeColor: ddTap
-                              ? lightDarKBlue
-                              : lightBlackColor.withOpacity(0.4),
-                          title: "Become an DD"),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          )),
-      // backgroundColor: whiteColor.withOpacity(0.95),
-
-      body: Container(
-        color: whiteColor,
-        child: SingleChildScrollView(
+        leading: const SizedBox.shrink(),
+        backgroundColor: lightBlackColor,
+        toolbarHeight: 50,
+        flexibleSpace: SafeArea(
           child: Column(
             children: [
-              ddcTap
-                  ? MemberScreenInfoWidget(
-                      activeColor: darkNaviBlueColor,
-                      titleText: "DIRECT CUSTOMER AND BECOME A DISTRIBUTOR",
-                      ddcInfo: ddcInfo,
-                      applicationInfo: applicationInfo,
-                    )
-                  : MemberScreenInfoWidget(
-                      activeColor: darkRedColor,
-                      titleText: "DISTRIBUTOR",
-                      ddcInfo: ddInfo,
-                      applicationInfo: applicationInfo,
+              Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0)),
+                color: whiteColor,
+                margin: const EdgeInsets.all(0),
+                borderOnForeground: false,
+                child: SizedBox(
+                  height: 50,
+                  width: double.infinity,
+                  child: ListTile(
+                    leading: IconButton(
+                      icon: const Icon(
+                        Icons.keyboard_arrow_left,
+                      ),
+                      onPressed: () {
+                        Get.back();
+                      },
                     ),
-              const SpaceHeightWidget(height: 10),
-              Container(
-                margin: const EdgeInsets.all(8),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: lightBlackColor),
-                    borderRadius: BorderRadius.circular(8),
-                    color: ddcTap
-                        ? darkNaviBlueColor.withOpacity(0.1)
-                        : darkRedColor.withOpacity(0.09)),
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    const SpaceHeightWidget(height: 10),
-                    Text(
-                      "TERMS & CONDITIONS",
-                      style: TextStyle(
-                          fontFamily: "OnestBold",
-                          fontSize: 16,
-                          color: ddcTap ? darkNaviBlueColor : darkRedColor),
-                    ),
-                    const SpaceHeightWidget(height: 10),
-                    for (int i = 0; i < ddcTerms.length; i++)
-                      CustomBulletTextWidget(
-                          data: ddcTerms[i],
-                          textColor: ddcTap ? darkNaviBlueColor : darkRedColor)
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  ddcTap
-                      ? "I Want to shop Destina1 products and become a distributor later"
-                      : "I want to start my Destina1 business now",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontFamily: "OnestBold", fontSize: 16, color: blackColor),
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                height: 70,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: whiteColor,
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30))),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 19),
-                  child: SizedBox(
-                    height: 45,
-                    width: 200,
-                    child: CommonOulineTextButton(
-                        titleFontSize: 15,
-                        borderColor: ddcTap ? darkNaviBlueColor : darkRedColor,
-                        textColor: whiteColor,
-                        backgroundColor:
-                            ddcTap ? darkNaviBlueColor : darkRedColor,
-                        onTapFun: () {
-                          Get.to(() =>
-                              // RegisterScreen(from: ddcTap ? "ddc" : "dd"));
-                              const ProductsScreen(from: "register",));
-                        },
-                        title: ddcTap ? "Become a DDC" : "Become a DD"),
                   ),
                 ),
               ),
-              const SpaceHeightWidget(height: 10)
             ],
           ),
         ),
       ),
+      body: Obx(() {
+        return checkController.loading.value
+            ? loader
+            // : (
+            // (double.parse(checkController.checkCountryData.value.pCiRenFee)
+            //                   .round() >
+            //               0 &&
+            //           double.parse(checkController
+            //                       .checkCountryData.value.pcRenF)
+            //                   .round() >
+            //               0) ||
+            //       (double.parse(checkController
+            //                       .checkCountryData.value.dCiRenFee)
+            //                   .round() >
+            //               0 &&
+            //           double.parse(checkController
+            //                       .checkCountryData.value.dcRenF)
+            //                   .round() >
+            //               0)
+            //         ||
+            // (double.parse(checkController.checkCountryData.value.diRenFee)
+            //             .round() >
+            //         0 &&
+            //     double.parse(
+            //                 checkController.checkCountryData.value.dRenF)
+            //             .round() >
+            //         0)
+            // )
+            : Container(
+                child: Column(
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      width: 1000,
+                      height: 55,
+                      color: lightBlackColor,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SpaceWidthWidget(width: 3),
+                            if (double.parse(checkController
+                                            .checkCountryData.value.pCiRenFee)
+                                        .round() >
+                                    0 &&
+                                double.parse(checkController
+                                            .checkCountryData.value.pcRenF)
+                                        .round() >
+                                    0)
+                              CustomMemberButton(
+                                  imagePath:
+                                      "assets/images/single_employee.png",
+                                  textColor: pcTap ? lightDarKBlue : blackColor,
+                                  onTapFun: () {
+                                    setState(() {
+                                      pcTap = true;
+                                      ddcTap = false;
+                                      ddTap = false;
+                                    });
+                                  },
+                                  activeColor: pcTap
+                                      ? lightDarKBlue
+                                      : lightBlackColor.withOpacity(0.4),
+                                  title: "Become a PC"),
+                            const SpaceWidthWidget(width: 7),
+                            if (double.parse(checkController
+                                            .checkCountryData.value.dCiRenFee)
+                                        .round() >
+                                    0 &&
+                                double.parse(checkController
+                                            .checkCountryData.value.dcRenF)
+                                        .round() >
+                                    0)
+                              CustomMemberButton(
+                                  imagePath:
+                                      "assets/images/single_employee.png",
+                                  textColor:
+                                      ddcTap ? lightDarKBlue : blackColor,
+                                  onTapFun: () {
+                                    setState(() {
+                                      ddcTap = true;
+                                      ddTap = false;
+                                      pcTap = false;
+                                    });
+                                  },
+                                  activeColor: ddcTap
+                                      ? lightDarKBlue
+                                      : lightBlackColor.withOpacity(0.4),
+                                  title: "Become a DDC"),
+                            const SpaceWidthWidget(width: 7),
+                            // if (double.parse(checkController
+                            //                 .checkCountryData
+                            //                 .value
+                            //                 .diRenFee)
+                            //             .round() >
+                            //         0 &&
+                            //     double.parse(
+                            //                 checkController.checkCountryData
+                            //                     .value.dRenF)
+                            //             .round() >
+                            //         0)
+                            CustomMemberButton(
+                                imagePath: "assets/images/team_employee.png",
+                                textColor: ddTap ? lightDarKBlue : blackColor,
+                                onTapFun: () {
+                                  setState(() {
+                                    ddTap = true;
+
+                                    ddcTap = false;
+                                    pcTap = false;
+                                  });
+                                },
+                                activeColor: ddTap
+                                    ? lightDarKBlue
+                                    : lightBlackColor.withOpacity(0.4),
+                                title: "Become a DD"),
+                            const SpaceWidthWidget(width: 7),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        // height: 800,
+                        color: whiteColor,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              if (double.parse(checkController
+                                              .checkCountryData.value.pCiRenFee)
+                                          .round() >
+                                      0 &&
+                                  double.parse(checkController
+                                              .checkCountryData.value.pcRenF)
+                                          .round() >
+                                      0 &&
+                                  (pcTap == true))
+                                MemberScreenInfoWidget(
+                                  amount: checkController
+                                      .checkCountryData.value.pcRenFee,
+                                  questioningText:
+                                      "Why Become a Preferred Customer?",
+                                  heading1: "START SHOPPING",
+                                  activeColor: darkBlue,
+                                  heading2:
+                                      "QUALITY PRODUCTS AS A PREFERRED CUSTOMER",
+                                  ddcInfo: ddInfo,
+                                  applicationInfo: applicationInfo,
+                                ),
+                              if (double.parse(checkController
+                                              .checkCountryData.value.dCiRenFee)
+                                          .round() >
+                                      0 &&
+                                  double.parse(checkController
+                                              .checkCountryData.value.dcRenF)
+                                          .round() >
+                                      0 &&
+                                  (ddcTap == true))
+                                MemberScreenInfoWidget(
+                                  amount: checkController
+                                      .checkCountryData.value.dcRenFee,
+                                  questioningText:
+                                      "Why Become a Direct Customer & Become a Distributor?",
+                                  heading1: "START YOUR BUSINESS",
+                                  activeColor: darkNaviBlueColor,
+                                  heading2:
+                                      "AS A DESTINA 1 DIRECT CUSTOMER AND BECOME A DISTRIBUTOR",
+                                  ddcInfo: ddcInfo,
+                                  applicationInfo: applicationInfo,
+                                ),
+                              if (
+
+                                  // double.parse(checkController
+                                  //               .checkCountryData
+                                  //               .value
+                                  //               .diRenFee)
+                                  //           .round() >
+                                  //       0 &&
+                                  //   double.parse(checkController
+                                  //               .checkCountryData.value.dRenF)
+                                  //           .round() >
+                                  //       0 &&
+                                  (ddTap == true))
+                                MemberScreenInfoWidget(
+                                  amount: checkController
+                                      .checkCountryData.value.dRenFee,
+                                  questioningText: "Why Become a Distributor?",
+                                  heading1: "START YOUR BUSINESS",
+                                  activeColor: darkRedColor,
+                                  heading2: "AS A DESTINA 1 DISTRIBUTOR",
+                                  ddcInfo: ddInfo,
+                                  applicationInfo: applicationInfo,
+                                ),
+                              const SpaceHeightWidget(height: 10),
+                              Column(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.all(8),
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 1, color: lightBlackColor),
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: ddcTap
+                                          ? darkNaviBlueColor.withOpacity(0.1)
+                                          : ddTap
+                                              ? darkRedColor.withOpacity(0.09)
+                                              : darkBlue.withOpacity(0.05),
+                                    ),
+                                    padding: const EdgeInsets.all(10),
+                                    child: Column(
+                                      children: [
+                                        const SpaceHeightWidget(height: 10),
+                                        Text(
+                                          "TERMS & CONDITIONS",
+                                          style: TextStyle(
+                                            fontFamily: "OnestBold",
+                                            fontSize: 16,
+                                            color: ddcTap
+                                                ? darkNaviBlueColor
+                                                : ddTap
+                                                    ? darkRedColor
+                                                    : darkBlue,
+                                          ),
+                                        ),
+                                        const SpaceHeightWidget(height: 10),
+                                        for (int i = 0;
+                                            i < ddcTerms.length;
+                                            i++)
+                                          CustomBulletTextWidget(
+                                            data: ddcTerms[i],
+                                            textColor: ddcTap
+                                                ? darkNaviBlueColor
+                                                : ddTap
+                                                    ? darkRedColor
+                                                    : darkBlue,
+                                          )
+                                      ],
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      ddcTap || pcTap
+                                          ? "I Want to shop Destina1 products and become a distributor later"
+                                          : "I want to start my Destina1 business now",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontFamily: "OnestBold",
+                                          fontSize: 16,
+                                          color: blackColor),
+                                    ),
+                                  ),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    height: 70,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                        color: whiteColor,
+                                        borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(30),
+                                            topRight: Radius.circular(30))),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 40, vertical: 19),
+                                      child: SizedBox(
+                                        height: 45,
+                                        width: 200,
+                                        child: CommonOulineTextButton(
+                                            titleFontSize: 15,
+                                            borderColor: ddcTap
+                                                ? darkNaviBlueColor
+                                                : ddTap
+                                                    ? darkRedColor
+                                                    : darkBlue,
+                                            textColor: whiteColor,
+                                            backgroundColor: ddcTap
+                                                ? darkNaviBlueColor
+                                                : ddTap
+                                                    ? darkRedColor
+                                                    : darkBlue,
+                                            onTapFun: () {
+                                              Get.to(() =>
+                                                  // RegisterScreen(from: ddcTap ? "ddc" : "dd"));
+                                                  // const ProductsScreen(
+                                                  //   from: "register",
+                                                  // ));
+                                                  const PackagesScreen(
+                                                    from: "register",
+                                                  ));
+                                            },
+                                            title: ddcTap
+                                                ? "Become a DDC"
+                                                : ddTap
+                                                    ? "Become a DD"
+                                                    : "Become a PC"),
+                                      ),
+                                    ),
+                                  ),
+                                  const SpaceHeightWidget(height: 10)
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+        // : SizedBox(
+        //     height: 300,
+        //     child: notAvailableW,
+        //   );
+      }),
     );
   }
 }

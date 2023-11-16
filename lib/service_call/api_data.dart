@@ -4,4 +4,12 @@ class ApiData {
   String baseUrl = "https://worldunityfoundation.org/MobileAPI/api/MobileApp/";
   String productCategoryMethod = "GetProductsdata";
   String productDetailsMethod = "GetSingleProduct";
+  String packageItemsMethod = "GetPkgItems";
+  String addtoCartMethod = "AddtocartItems";
+  String cartItemsMethod = "GetcartItems";
+  String removeCartItemMethod = "removeCartItems";
+  String checkSdponsorMethod = "checkSponsor";
+  String checkoutCartItemsMethod = "checkoutCartItems";
+  String countryLoadMethod = "LoadCountry";
+  String countryCheckMethod = "CheckCountry";
 }

@@ -5,9 +5,9 @@ import 'colors.dart';
 
 class Constants {
   static late SharedPreferences prefs;
-
   String appversion = "1.0";
   String country = "MY";
+  // String ip = "";
 }
 
 Center loader = Center(

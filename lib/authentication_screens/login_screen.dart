@@ -115,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SpaceHeightWidget(height: 40),
                         UnderLineTextButton(
                             onTapFun: () {
-                              Get.to(() => const BottomBarScreen());
+                              Get.offAll(() => const BottomBarScreen());
                             },
                             titile: "Shop now",
                             fontSize: 20),

@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'dashboard_screens/products_screen.dart';
+import 'authentication_screens/splash_screen.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -35,16 +35,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Destina1 International',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
-        useMaterial3: true,
-      ),
-      home: const ProductsScreen(
-        from: "main",
-      ),
-      // home: EnrollPackageScreen(),
-    );
+        title: 'Destina1 International',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
+          useMaterial3: true,
+        ),
+        // home: const ProductsScreen(
+        //   from: "main",
+        // ),
+        // home: EnrollPackageScreen(),
+        home: const SplashScreen());
   }
 }

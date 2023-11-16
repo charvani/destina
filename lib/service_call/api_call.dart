@@ -6,6 +6,8 @@ import 'package:destina_1_international/service_call/api_data.dart';
 import 'package:destina_1_international/service_call/encryption.dart';
 import 'package:http/http.dart' as http;
 
+import '../commons/common_widgets.dart';
+
 class ApiCall {
   getMethodFun({required String url}) async {
     http.Response response = await http.get(Uri.parse(url));
@@ -30,7 +32,7 @@ class ApiCall {
         convertedData['Msg'].toString().toLowerCase() == "success") {
       return convertedData;
     } else {
-      throw e;
+      CommonToast(convertedData['Message']);
     }
   }
 }

@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'product_categoryitem_model.dart';
+
 ProductDetails productDetailsFromJson(String str) =>
     ProductDetails.fromJson(json.decode(str));
 
@@ -31,6 +33,7 @@ class ProductDetails {
   String howtoUse;
   String videoUrl;
   String cv;
+  List<ProductCategoryItem> similarProducts;
 
   ProductDetails(
       {required this.productImages,
@@ -53,7 +56,8 @@ class ProductDetails {
       required this.pType,
       required this.howtoUse,
       required this.videoUrl,
-      required this.cv});
+      required this.cv,
+      required this.similarProducts});
 
   factory ProductDetails.fromJson(Map<String, dynamic> json) => ProductDetails(
         productImages: List<ProductImage>.from(
@@ -63,6 +67,8 @@ class ProductDetails {
         tabs: List<Tab>.from(json["tabs"].map((x) => Tab.fromJson(x))),
         tabcontent: List<Tabcontent>.from(
             json["tabcontent"].map((x) => Tabcontent.fromJson(x))),
+        similarProducts: List<ProductCategoryItem>.from(
+            json['productRpt'].map((x) => ProductCategoryItem.fromJson(x))),
         msg: json["Msg"],
         message: json["Message"],
         available: json["available"],
@@ -88,6 +94,8 @@ class ProductDetails {
         "endorsements": List<dynamic>.from(endorsements.map((x) => x)),
         "tabs": List<dynamic>.from(tabs.map((x) => x.toJson())),
         "tabcontent": List<dynamic>.from(tabcontent.map((x) => x.toJson())),
+        "productRpt":
+            List<dynamic>.from(similarProducts.map((e) => e.toJson())),
         "Msg": msg,
         "Message": message,
         "available": available,
