@@ -15,14 +15,7 @@ class CountySelectScreen extends StatefulWidget {
 }
 
 class _CountySelectScreenState extends State<CountySelectScreen> {
-  List flagData = [
-    {"name": "India", "image_path": "assets/images/India.png"},
-    {"name": "Malaysia", "image_path": "assets/images/Malaysia.png"},
-    {"name": "United States", "image_path": "assets/images/United States.png"},
-    {"name": "Indonesia", "image_path": "assets/images/Indonesia.png"},
-    {"name": "Nigeria", "image_path": "assets/images/Nigeria.png"},
-    {"name": "Philippines", "image_path": "assets/images/Philippines.png"},
-  ];
+  
   int? currentIndex;
   final MainController _countryController = Get.put(MainController());
   @override
@@ -60,7 +53,6 @@ class _CountySelectScreenState extends State<CountySelectScreen> {
                                 });
                                 Timer(const Duration(milliseconds: 500), () {
                                   Get.to(() => MemberScreen(
-                                        fromCountry: flagData[i]['name'],
                                         countryId: _countryController
                                             .countriesList[i].countryId,
                                       ));

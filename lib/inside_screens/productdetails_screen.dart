@@ -94,7 +94,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   getPackageItemsData() async {
     print("my para...${widget.packageCode}....$uniqId...$sessionId");
 
-    dynamic res = await productDetailsController.getPackageItems(
+    dynamic res = await productDetailsController.getProductPackageItems(
         productCode: widget.packageCode,
         uniqId: uniqId,
         sessionId: sessionId,
@@ -115,10 +115,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         appBar: commonAppBar(
           backNavigation: true,
           title: widget.packageCode,
-          onTapFun: () {
-            // Get.offAll(() => const BottomBarScreen());
-            Get.back();
-          },
+          // onTapFun: () {
+          //   // Get.offAll(() => const BottomBarScreen());
+          //   Get.back();
+          // },
         ),
         bottomSheet: Obx(() {
           return productDetailsController.productDetails.value.available
@@ -779,7 +779,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                     .getString("ip"),
                                                 "sprno": "0",
                                                 "prdtype": "Package",
-                                                "Quantity": countQty
+                                                "Quantity":
+                                                    firstQtyController.text
                                               };
                                               print(
                                                   "add to cart params...$parameters");
@@ -804,13 +805,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                   loading = false;
                                                 });
                                                 Get.back();
-                                                if (widget.from == "register") {
-                                                  Get.to(() =>
-                                                      const EnrollPackageScreen());
-                                                } else {
+                                              
                                                   Get.off(() => CartScreen(
                                                       from: widget.from));
-                                                }
                                               });
                                             } else {
                                               myState(() {

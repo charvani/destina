@@ -8,10 +8,8 @@ import '../commons/colors.dart';
 import '../inside_screens/packages_screen.dart';
 
 class MemberScreen extends StatefulWidget {
-  final String fromCountry;
   final String countryId;
-  const MemberScreen(
-      {super.key, required this.fromCountry, required this.countryId});
+  const MemberScreen({super.key, required this.countryId});
 
   @override
   State<MemberScreen> createState() => _MemberScreenState();
@@ -467,8 +465,9 @@ class _MemberScreenState extends State<MemberScreen> {
                                                   // const ProductsScreen(
                                                   //   from: "register",
                                                   // ));
-                                                  const PackagesScreen(
+                                                  PackageScreen(
                                                     from: "register",
+                                                    countryId: widget.countryId,
                                                   ));
                                             },
                                             title: ddcTap

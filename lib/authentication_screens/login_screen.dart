@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../commons/colors.dart';
 import '../commons/common_widgets.dart';
 import '../dashboard_screens/bottombar_screen.dart';
+import '../inside_screens/packagedetails_screen.dart';
 import 'countryselect_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -79,6 +80,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         CustomElevatedButton(
                             onTapFun: () {
                               if (_formKey.currentState!.validate()) {}
+                              // Get.to(() => const PackageDetailsScreen(
+                              //       from: "register",
+                              //       countryid: "1",
+                              //       packageCode: "MYJD01",
+                              //     ));
                             },
                             title: "Send SMS"),
                         const SpaceHeightWidget(height: 20),

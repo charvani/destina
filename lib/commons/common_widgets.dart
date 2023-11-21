@@ -2059,7 +2059,10 @@ class CustomBulletTextWidget extends StatelessWidget {
 }
 
 PreferredSizeWidget commonAppBar(
-    {String? title, VoidCallback? onTapFun, bool backNavigation = false}) {
+    {BuildContext? context,
+    String? title,
+    VoidCallback? onTapFun,
+    bool backNavigation = false}) {
   return AppBar(
       backgroundColor: lightBlackColor,
       toolbarHeight: 0,
@@ -2082,6 +2085,7 @@ PreferredSizeWidget commonAppBar(
                         onPressed: onTapFun ??
                             () {
                               Get.back();
+                              // Navigator.pop(context!);
                             },
                       )
                     : const SizedBox.shrink(),
@@ -2762,11 +2766,21 @@ class RegisterTextField extends StatelessWidget {
   final TextInputType textInputType;
   final String? Function(String?)? validation;
   final List<TextInputFormatter>? inputFormatter;
+  final Function(PointerDownEvent)? outsideFun;
+  final VoidCallback? onTapFun;
+  final bool? readOnly;
+  final Function(String)? onchangeFun;
+  final VoidCallback? editFun;
 
   const RegisterTextField(
       {super.key,
       required this.controller,
+      this.onchangeFun,
+      this.editFun,
       this.padding,
+      this.readOnly,
+      this.onTapFun,
+      this.outsideFun,
       this.borderColor,
       this.inputFormatter,
       this.textAlignVertical,
@@ -2781,6 +2795,11 @@ class RegisterTextField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: padding ?? 10),
       child: TextFormField(
+        onEditingComplete: editFun,
+        onChanged: onchangeFun,
+        readOnly: readOnly ?? false,
+        onTap: onTapFun,
+        onTapOutside: outsideFun,
         focusNode: focusNode,
         textAlignVertical: textAlignVertical ?? TextAlignVertical.center,
         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -2828,9 +2847,11 @@ class RegisterDropDown extends StatelessWidget {
   final String? value;
   final String? labelText;
   final String? hintText;
+  final String? Function(String?)? validationFun;
   const RegisterDropDown(
       {super.key,
       required this.onChangedFun,
+      this.validationFun,
       this.value,
       this.labelText,
       this.hintText,
@@ -2840,15 +2861,26 @@ class RegisterDropDown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
-      height: 40,
+      // height: 40,
       child: DropdownButtonFormField<String>(
+          // menuMaxHeight: 20,
+          // itemHeight: 40,
           // value: value,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: validationFun,
           icon: Icon(
             Icons.keyboard_arrow_down_rounded,
             color: blackColor.withOpacity(0.5),
           ),
           isDense: true,
           decoration: InputDecoration(
+              isDense: true,
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide:
+                      BorderSide(color: lightDarKBlue.withOpacity(0.3))),
               labelText: labelText,
               hintText: hintText,
               hintStyle: TextStyle(
@@ -2858,7 +2890,7 @@ class RegisterDropDown extends StatelessWidget {
               labelStyle: TextStyle(
                   fontFamily: "OnestSemiBold", fontSize: 14, color: blackColor),
               floatingLabelBehavior: FloatingLabelBehavior.always,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+              // contentPadding: const EdgeInsets.symmetric(horizontal: 10),
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5),
                   borderSide:
@@ -3398,8 +3430,7 @@ class ConfrimationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Dialog(
+    return Dialog(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Column(
@@ -3439,7 +3470,7 @@ CommonToast(String text) {
   return Fluttertoast.showToast(
       msg: text,
       toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
+      gravity: ToastGravity.CENTER,
       timeInSecForIosWeb: 1,
       backgroundColor: Colors.red,
       textColor: Colors.white,

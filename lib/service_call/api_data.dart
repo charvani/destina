@@ -12,4 +12,15 @@ class ApiData {
   String checkoutCartItemsMethod = "checkoutCartItems";
   String countryLoadMethod = "LoadCountry";
   String countryCheckMethod = "CheckCountry";
+  String loadDistSelPackageMethod = "LoadDistSelPackage";
+  String packageDetailsMethod = "PackageDescription";
+  String packPackageItemsMethod = "GetPkgItems";
+  String packAddtoCartMethod = "SGAddToCartItems";
+  String enrollPack = "EnrollPackage";
+  String stateData = "SignUpLoad";
+  String sponsorCheckDB = "GetSponsor";
+  String placementPlaceCheckDB = "Sponsorcheck";
+  String userChkLoginID = "ChkLoginID";
+  String register = "InsertSignUpData";
+  String registerCart = "SGCartItems";
 }

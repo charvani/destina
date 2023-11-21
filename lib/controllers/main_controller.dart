@@ -1,13 +1,17 @@
 import 'package:destina_1_international/models/cartitem_model.dart';
 import 'package:destina_1_international/models/checkcountry_model.dart';
 import 'package:destina_1_international/models/loadcountry_model.dart';
+import 'package:destina_1_international/models/packagedetails_model.dart';
+import 'package:destina_1_international/models/selpackage_model.dart';
 import 'package:destina_1_international/service_call/api_call.dart';
 import 'package:get/get.dart';
 
 import '../commons/constants.dart';
+import '../models/enrolldata_model.dart';
 import '../models/packageitems_model.dart';
 import '../models/product_categoryitem_model.dart';
 import '../models/productdetails_model.dart';
+import '../models/signupLoad_model.dart';
 import '../service_call/api_data.dart';
 
 class MainController extends GetxController {
@@ -67,6 +71,55 @@ class MainController extends GetxController {
           name: "")
       .obs;
 
+  RxList<SelPackageModel> selPackageItemList = <SelPackageModel>[].obs;
+  RxList<SelPackageModel> relPackageItemList = <SelPackageModel>[].obs;
+
+  Rx<PackageDetailsModel> packageDetailsData = PackageDetailsModel(
+          packageDescriptionRpt1: [],
+          packageDescriptionRpt2: [],
+          msg: "",
+          message: "",
+          desc: "",
+          overview: "",
+          info: "",
+          pkid: "",
+          pkcode: "",
+          pkname: "",
+          mrp: "",
+          pImage: "",
+          codeNo: "",
+          cv: "",
+          img: "",
+          img1: "",
+          img2: "",
+          img3: "")
+      .obs;
+  Rx<PackageItemsModel> packPackageDetails = PackageItemsModel(
+          getPkgItemsRpt: [],
+          msg: "",
+          message: "",
+          lblMsg: "",
+          head: "",
+          maxQty: "")
+      .obs;
+  Rx<EnrollDataModel> enrollData = EnrollDataModel(
+          enrollPackageRpt: [], iconDetails: [], msg: "", message: "")
+      .obs;
+
+  Rx<SignupLoadModel> signuploadData = SignupLoadModel(
+          stateDetailsRpt: [],
+          bankDetailsRpt: [],
+          secretQuesRpt: [],
+          userSinguprulesRpt: [],
+          msg: "",
+          message: "",
+          hidUid: "",
+          randomnum: "",
+          country: "")
+      .obs;
+
+// ********************************************************************************************
+
   getCountryCode() async {
     dynamic res = await ApiCall().getMethodFun(url: ApiData().countryUrl);
     return res;
@@ -77,7 +130,7 @@ class MainController extends GetxController {
     Map parameters = {
       "action": productType,
       "pcode": "0",
-      "country": Constants().country
+      "country": Constants.prefs.getString("country")
     };
     dynamic res = await ApiCall().postMethodFun(
         methodName: ApiData().productCategoryMethod, params: parameters);
@@ -92,12 +145,12 @@ class MainController extends GetxController {
     return res;
   }
 
-  getProductDetails(String productCode) async {
+  getProductDetails(String packageCode) async {
     loading.value = true;
     Map parameters = {
       "action": "GetSingleproductdata",
-      "pcode": productCode,
-      "country": Constants().country
+      "pcode": packageCode,
+      "country": Constants.prefs.getString("country")
     };
     dynamic res = await ApiCall().postMethodFun(
         methodName: ApiData().productDetailsMethod, params: parameters);
@@ -106,7 +159,7 @@ class MainController extends GetxController {
     return res;
   }
 
-  getPackageItems(
+  getProductPackageItems(
       {required String productCode,
       required String uniqId,
       required String sessionId,
@@ -194,4 +247,98 @@ class MainController extends GetxController {
 
     return res;
   }
+
+  getPackageDetails(Map parameters) async {
+    loading.value = true;
+    print("kllkj");
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().packageDetailsMethod, params: parameters);
+    print("at...res...${res['info']}");
+    packageDetailsData.value = PackageDetailsModel.fromJson(res);
+    loading.value = false;
+    return "res";
+  }
+
+  getPacktPackageItems({
+    required String productCode,
+    required String uniqId,
+    required String sessionId,
+  }) async {
+    Map parameters = {
+      "pkgcode": productCode,
+      "dtype": "Package",
+      "qty": "1",
+      "uniqid": uniqId,
+      "sessid": sessionId,
+      "Jointype": "Signup"
+    };
+
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().packPackageItemsMethod, params: parameters);
+    packPackageDetails.value = PackageItemsModel.fromJson(res);
+    return res;
+  }
+
+  getPackAddToCart(Map parameters) async {
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().packAddtoCartMethod, params: parameters);
+    return res;
+  }
+
+  getEnrollPack(Map parameters) async {
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().enrollPack, params: parameters);
+    enrollData.value = EnrollDataModel.fromJson(res);
+    return res;
+  }
+
+  getStateData(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().stateData, params: parameters);
+    signuploadData.value = SignupLoadModel.fromJson(res);
+    loading.value = false;
+    return res;
+  }
+
+  getSponsorCheckDb(Map parameters) async {
+    dynamic res = await ApiCall().sponsorPostMethodFun(
+        methodName: ApiData().sponsorCheckDB, params: parameters);
+    return res;
+  }
+  getPlacementPlaceCheckDb(Map parameters) async {
+    dynamic res = await ApiCall().sponsorPostMethodFun(
+        methodName: ApiData().placementPlaceCheckDB, params: parameters);
+    return res;
+  }
+
+   getUserCheckDb(Map parameters) async {
+    dynamic res = await ApiCall().sponsorPostMethodFun(
+        methodName: ApiData().userChkLoginID, params: parameters);
+    return res;
+  }
+
+  getRegister(Map parameters) async {
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().register, params: parameters);
+    return res;
+  }
+
+
+   getRegisterCartItems(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().registerCart, params: parameters);
+    // cartItemsList.clear();
+    // print("cart_itmes...${cartItemsList.length}");
+    // if (res['packageDataRpt'].length > 0) {
+    //   for (int i = 0; i < res['packageDataRpt'].length; i++) {
+    //     cartItemsList.add(CartItemModel.fromJson(res['packageDataRpt'][i]));
+    //   }
+    // }
+    // print(cartItemsList.length);
+    loading.value = false;
+    return res;
+  }
+
 }

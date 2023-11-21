@@ -1,12 +1,11 @@
 import 'dart:io';
 
 import 'package:destina_1_international/commons/constants.dart';
+import 'package:destina_1_international/inside_screens/register_cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'authentication_screens/splash_screen.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -35,16 +34,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-        title: 'Destina1 International',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
-          useMaterial3: true,
-        ),
-        // home: const ProductsScreen(
-        //   from: "main",
-        // ),
-        // home: EnrollPackageScreen(),
-        home: const SplashScreen());
+      title: 'Destina1 International',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
+        useMaterial3: true,
+      ),
+      home: const RegisterCartScreen(
+        packageCode: "MYJD03",
+      ),
+      // home: LoginScreen(),
+      // home: const PackageDetailsScreen(
+      //   from: "register",
+      //   countryid: "1",
+      //   packageCode: "MYJD03",
+      // )
+      // home: const SplashScreen(),
+    );
   }
 }
