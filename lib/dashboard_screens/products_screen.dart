@@ -9,8 +9,9 @@ import '../inside_screens/productdetails_screen.dart';
 import '../models/onboarding_model.dart';
 
 class ProductsScreen extends StatefulWidget {
+  final int? index;
   final String from;
-  const ProductsScreen({super.key, required this.from});
+  const ProductsScreen({super.key, required this.from, this.index});
   @override
   State<ProductsScreen> createState() => _ProductsScreenState();
 }
@@ -42,7 +43,21 @@ class _ProductsScreenState extends State<ProductsScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      dataFun("Health Care");
+      if (widget.index != null) {
+        setState(() {
+          selectedCategoryIndex = widget.index!;
+        });
+        dataFun(widget.index == 0
+            ? "Health Care"
+            : widget.index == 1
+                ? "Skin Care"
+                : widget.index == 2
+                    ? "Hair Care"
+                    : "Personal Care");
+      } else {
+        print("at else");
+        dataFun("Health Care");
+      }
       // dataFun("All");
     });
   }
@@ -97,6 +112,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                       horizontal: 11, vertical: 2),
                                   child: HomeScreenProductCategory(
                                     height: i == 0 ? 100 : 90,
+                                    width: 60,
                                     imagePath: productsCategoriesOnTap[i].image,
                                     productName:
                                         productsCategoriesOnTap[i].title,
@@ -115,6 +131,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                           vertical: 2, horizontal: 11),
                                       child: HomeScreenProductCategory(
                                         height: i == 0 ? 100 : 90,
+                                        width: 60,
                                         imagePath: productsCategories[i].image,
                                         productName:
                                             productsCategories[i].title,
@@ -160,12 +177,25 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                                   childAspectRatio: 1 / 1.5),
                                           itemBuilder: (context, i) {
                                             return CategroyItemWidget(
+                                                amount: 
+                                                productController
+                                                    .productItemList[i]
+                                                    .dp>0?"${productController
+                                                    .productItemList[i]
+                                                    .currency} ${productController
+                                                    .productItemList[i]
+                                                    .dp}":""
+                                                
+                                                   ,
                                                 onTapFun: () {
                                                   Get.to(() =>
                                                       ProductDetailsScreen(
                                                         from: widget.from,
-                                                        packageCode: productController
-                                                    .productItemList[i].packagecode,
+                                                        packageCode:
+                                                            productController
+                                                                .productItemList[
+                                                                    i]
+                                                                .packagecode,
                                                       ));
                                                 },
                                                 imagePath: productController

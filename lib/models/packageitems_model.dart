@@ -56,24 +56,25 @@ class GetPkgItemsRpt {
   String qty;
   String tqty;
   String selprod;
+  String compulsory;
 
-  GetPkgItemsRpt({
-    required this.maxquan,
-    required this.pcode,
-    required this.name,
-    required this.qty,
-    required this.tqty,
-    required this.selprod,
-  });
+  GetPkgItemsRpt(
+      {required this.maxquan,
+      required this.pcode,
+      required this.name,
+      required this.qty,
+      required this.tqty,
+      required this.selprod,
+      required this.compulsory});
 
   factory GetPkgItemsRpt.fromJson(Map<String, dynamic> json) => GetPkgItemsRpt(
-        maxquan: json["maxquan"],
-        pcode: json["pcode"],
-        name: json["Name"],
-        qty: json["qty"],
-        tqty: json["tqty"],
-        selprod: json["selprod"],
-      );
+      maxquan: json["maxquan"],
+      pcode: json["pcode"],
+      name: json["Name"],
+      qty: json["qty"],
+      tqty: json["tqty"],
+      selprod: json["selprod"],
+      compulsory: json['compulprod']);
 
   Map<String, dynamic> toJson() => {
         "maxquan": maxquan,
@@ -82,5 +83,6 @@ class GetPkgItemsRpt {
         "qty": qty,
         "tqty": tqty,
         "selprod": selprod,
+        "compulprod": compulsory
       };
 }

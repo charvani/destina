@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import '../commons/colors.dart';
 import '../commons/common_widgets.dart';
 import '../dashboard_screens/bottombar_screen.dart';
-import '../inside_screens/packagedetails_screen.dart';
 import 'countryselect_screen.dart';
+import 'forgotpass_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,12 +14,19 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-final _formKey = GlobalKey<FormState>();
-
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController idTController = TextEditingController();
+  TextEditingController passwordTController = TextEditingController();
+  bool visible = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Container(
+          height: 20,
+          alignment: Alignment.center,
+          width: double.infinity,
+          child: const VersionText()),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -58,25 +65,100 @@ class _LoginScreenState extends State<LoginScreen> {
                   )
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(15),
+              const SpaceHeightWidget(height: 10),
+              const SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                      fontFamily: "OnestBold",
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: darkBlue.withOpacity(0.05),
+                    borderRadius: BorderRadius.circular(20)),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CommonUnderlineTextForm(
-                          onChangeFun: (val) {},
+                        const SpaceHeightWidget(height: 10),
+                        const Text(
+                          "User ID",
+                          style: TextStyle(
+                            fontFamily: "OnestSemiBold",
+                            fontSize: 14,
+                          ),
+                        ),
+                        LoginTextField(
+                          // focusNode: _focusNode,
+                          suffix: Icon(
+                            Icons.perm_identity_rounded,
+                            color: middleBlackColor.withOpacity(0.5),
+                          ),
+                          textInputType: TextInputType.name,
+                          labelText: "",
+                          hintText: "User Id",
+                          controller: idTController,
                           validation: (val) {
                             if (val!.isEmpty) {
-                              return "*Please enter ABO/Member number/Phone number";
+                              return "Your Id";
+                            } else if (val.length < 3) {
+                              return "Enter valid  user Id";
                             } else {
                               return null;
                             }
                           },
-                          hintText: "ABO/Member/Phone no.",
                         ),
-                        const SpaceHeightWidget(height: 40),
+                        const Text(
+                          "Password",
+                          style: TextStyle(
+                            fontFamily: "OnestSemiBold",
+                            fontSize: 14,
+                          ),
+                        ),
+                        LoginTextField(
+                          obscureText: visible,
+                          suffix: GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () {
+                              setState(() {
+                                visible = !visible;
+                              });
+                            },
+                            child: Icon(
+                              !visible
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                              color: middleBlackColor.withOpacity(0.5),
+                            ),
+                          ),
+                          padding: 5,
+                          textInputType: TextInputType.name,
+                          labelText: "",
+                          hintText: "Password",
+                          controller: passwordTController,
+                          validation: (val) {
+                            if (val!.isEmpty) {
+                              return "Your password";
+                            } else if (val.length < 5) {
+                              return "Enter valid password";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        const SpaceHeightWidget(height: 10),
                         CustomElevatedButton(
                             onTapFun: () {
                               if (_formKey.currentState!.validate()) {}
@@ -86,58 +168,56 @@ class _LoginScreenState extends State<LoginScreen> {
                               //       packageCode: "MYJD01",
                               //     ));
                             },
-                            title: "Send SMS"),
-                        const SpaceHeightWidget(height: 20),
-                        CustomBorderElevatedButton(
-                            bgcolor: whiteColor,
+                            title: "Submit"),
+                        Center(
+                          child: CommonTextButton(
                             onTapFun: () {
-                              Get.to(() => const CountySelectScreen());
+                              Get.to(() => const ForgotPasswordScreen());
                             },
-                            title: "Register Member/ABO Member"),
-                        const SpaceHeightWidget(height: 30),
-                        const Row(
-                          children: [
-                            Expanded(child: Divider()),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text("Or sign in with"),
-                            ),
-                            Expanded(child: Divider()),
-                          ],
-                        ),
-                        const SpaceHeightWidget(height: 10),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                                backgroundImage:
-                                    AssetImage("assets/images/lineapp.png")),
-                            SpaceWidthWidget(width: 10),
-                            CircleAvatar(
-                                backgroundImage:
-                                    AssetImage("assets/images/google.png")),
-                          ],
-                        ),
-                        const SpaceHeightWidget(height: 40),
-                        UnderLineTextButton(
-                            onTapFun: () {
-                              Get.offAll(() => const BottomBarScreen());
-                            },
-                            titile: "Shop now",
-                            fontSize: 20),
-                        const SpaceHeightWidget(height: 55),
-                        UnderLineTextButton(
-                            onTapFun: () {},
-                            titile: "Privacy policy",
-                            fontSize: 14),
-                        const SpaceHeightWidget(height: 40),
+                            title: 'Forgot Password?',
+                          ),
+                        )
                       ],
                     ),
-                    const SpaceHeightWidget(height: 20),
-                    const VersionText()
                   ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CustomBorderElevatedButton(
+                    bgcolor: whiteColor,
+                    onTapFun: () {
+                      Get.to(() => const CountySelectScreen());
+                    },
+                    title: "Register Member"),
+              ),
+              const SpaceHeightWidget(height: 20),
+              // UnderLineTextButton(
+              //     onTapFun: () {
+              //       Get.offAll(() => const BottomBarScreen());
+              //     },
+              //     titile: "Shop now",
+              //     fontSize: 20),
+              Container(
+                padding: const EdgeInsets.all(8.0),
+                alignment: Alignment.center,
+                width: double.infinity,
+                child: SizedBox(
+                  width: 200,
+                  height: 35,
+                  child: IconElevatedButton(
+                    onTapFun: () {
+                      Get.offAll(() => const BottomBarScreen(
+                            index: 0,
+                          ));
+                    },
+                    imagePath: 'assets/images/shopping_cart_img.jpg',
+                    labelColor: whiteColor,
+                    buttonColor: lightDarKBlue,
+                    titile: "Shopp Now",
+                  ),
+                ),
+              )
             ],
           ),
         ),

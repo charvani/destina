@@ -88,7 +88,6 @@ class _CartScreenState extends State<CartScreen> {
       "sprno": "0",
       "prdtype": "Package",
     };
-    print("cart params...$cartParams");
     dynamic res = await cartController.getCartItems(cartParams);
     print("cart res...$res");
   }

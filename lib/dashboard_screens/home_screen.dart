@@ -1,9 +1,8 @@
-import 'dart:async';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:destina_1_international/authentication_screens/login_screen.dart';
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/dashboard_screens/bottombar_screen.dart';
 import 'package:destina_1_international/inside_screens/productdetails_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,13 +21,10 @@ int carouselIndex = 0;
 int promotionCarouselIndex = 0;
 int sopCarouselIndex = 0;
 List<OnboardModel> productsCategories = [
-  OnboardModel(
-      image: "assets/images/a_start_privilege.png", title: "A Start Privilege"),
-  OnboardModel(image: "assets/images/sop.png", title: "SOP"),
-  OnboardModel(image: "assets/images/health_care.png", title: "Health"),
-  OnboardModel(image: "assets/images/beauty.png", title: "Beauty"),
-  OnboardModel(image: "assets/images/body_care.png", title: "Body Care"),
-  OnboardModel(image: "assets/images/others.png", title: "Others"),
+  OnboardModel(image: "assets/images/health_care.png", title: "Health Care"),
+  OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
+  OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
+  OnboardModel(image: "assets/images/beauty.png", title: "Personal Care"),
 ];
 List<OnboardModel> promotionItems = [
   OnboardModel(
@@ -105,24 +101,24 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(microseconds: 500), () {
-      Get.dialog(AlertDialog(
-        titlePadding: EdgeInsets.zero,
-        title: Container(
-          width: double.maxFinite,
-          alignment: Alignment.topRight,
-          child: IconButton(
-              onPressed: () {
-                Get.back();
-              },
-              icon: Icon(
-                Icons.cancel_outlined,
-                color: redColor,
-              )),
-        ),
-        content: Image.asset("assets/images/add.png"),
-      ));
-    });
+    // Timer(const Duration(microseconds: 500), () {
+    //   Get.dialog(AlertDialog(
+    //     titlePadding: EdgeInsets.zero,
+    //     title: Container(
+    //       width: double.maxFinite,
+    //       alignment: Alignment.topRight,
+    //       child: IconButton(
+    //           onPressed: () {
+    //             Get.back();
+    //           },
+    //           icon: Icon(
+    //             Icons.cancel_outlined,
+    //             color: redColor,
+    //           )),
+    //     ),
+    //     content: Image.asset("assets/images/add.png"),
+    //   ));
+    // });
   }
 
   @override
@@ -309,9 +305,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         const SpaceWidthWidget(width: 5),
                         for (int i = 0; i < productsCategories.length; i++)
-                          HomeScreenProductCategory(
-                            imagePath: productsCategories[i].image,
-                            productName: productsCategories[i].title,
+                          GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () {
+                              Get.offAll(() => BottomBarScreen(
+                                index: 1,
+                                productIndex: i,
+                              ));
+                            },
+                            child: HomeScreenProductCategory(
+                              imagePath: productsCategories[i].image,
+                              productName: productsCategories[i].title,
+                            ),
                           )
                       ],
                     ),
@@ -585,7 +590,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       // crossAxisCount: i == 2 ? 1 : 2,
                       // childAspectRatio: i == 2 ? 1.3 : 1 / 1.55
                       crossAxisCount: 2,
-                      childAspectRatio: 1 / 1.55),
+                      childAspectRatio: 1 / 1.5),
                   itemBuilder: (context, index) {
                     return PromotionItemWidget(
                       onTapFun: () {

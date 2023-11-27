@@ -17,6 +17,8 @@ class ProductCategoryItem {
   String packagecode;
   String category;
   String slugUrl;
+  double dp;
+  dynamic currency;
 
   ProductCategoryItem({
     required this.packageId,
@@ -25,6 +27,8 @@ class ProductCategoryItem {
     required this.packagecode,
     required this.category,
     required this.slugUrl,
+    required this.dp,
+    required this.currency,
   });
 
   factory ProductCategoryItem.fromJson(Map<String, dynamic> json) =>
@@ -35,6 +39,8 @@ class ProductCategoryItem {
         packagecode: json["packagecode"],
         category: json["category"],
         slugUrl: json["slugUrl"],
+        dp: json["DP"]?.toDouble(),
+        currency: json["currency"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -44,5 +50,7 @@ class ProductCategoryItem {
         "packagecode": packagecode,
         "category": category,
         "slugUrl": slugUrl,
+        "DP": dp,
+        "currency": currency,
       };
 }

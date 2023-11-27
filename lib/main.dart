@@ -1,11 +1,12 @@
 import 'dart:io';
 
 import 'package:destina_1_international/commons/constants.dart';
-import 'package:destina_1_international/inside_screens/register_cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'authentication_screens/splash_screen.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -33,23 +34,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Destina1 International',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
-        useMaterial3: true,
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: GetMaterialApp(
+        title: 'Destina1 International',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color.fromARGB(255, 7, 45, 62)),
+          useMaterial3: true,
+        ),
+        // home:
+        // const RegisterScreen(countryId: "1", packageCode: "MYJD02")
+        //  const RegisterCartScreen(
+        //   packageCode: "MYJD02",
+        // ),
+        // home: LoginScreen(),
+        // home: const PackageDetailsScreen(
+        //   from: "register",
+        //   countryid: "1",
+        //   packageCode: "MYJD02",
+        // )
+        home: const SplashScreen(),
       ),
-      home: const RegisterCartScreen(
-        packageCode: "MYJD03",
-      ),
-      // home: LoginScreen(),
-      // home: const PackageDetailsScreen(
-      //   from: "register",
-      //   countryid: "1",
-      //   packageCode: "MYJD03",
-      // )
-      // home: const SplashScreen(),
     );
   }
 }

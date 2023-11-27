@@ -75,10 +75,10 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
     print("my para...${widget.packageCode}....$uniqId...$sessionId");
 
     dynamic res = await packDetailsController.getPacktPackageItems(
-      productCode: widget.packageCode,
-      uniqId: uniqId,
-      sessionId: sessionId,
-    );
+        productCode: widget.packageCode,
+        uniqId: uniqId,
+        sessionId: sessionId,
+        dtype: "Package");
 
     print("packages data...$res");
   }
@@ -125,8 +125,7 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        _focusNode1.unfocus();
-        _focusNode.unfocus();
+        FocusManager.instance.primaryFocus!.unfocus();
       },
       child: Scaffold(
         appBar: AppBar(
@@ -209,6 +208,20 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                       i++) {
                                     textEControllerList
                                         .add(TextEditingController());
+
+                                    if (packDetailsController
+                                            .packPackageDetails
+                                            .value
+                                            .getPkgItemsRpt[i]
+                                            .compulsory ==
+                                        "True") {
+                                      textEControllerList[i].text =
+                                          packDetailsController
+                                              .packPackageDetails
+                                              .value
+                                              .getPkgItemsRpt[i]
+                                              .qty;
+                                    }
                                   }
                                   if (mounted) {
                                     setState(() {
@@ -358,764 +371,424 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: blackColor.withOpacity(0.8)),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Customize Packages",
-                        style: TextStyle(
-                            fontFamily: "OnestBold",
-                            fontSize: 16,
-                            color: whiteColor),
-                      ),
-                      IconButton(
-                          onPressed: () {
-                            if (loading != true) {
-                              Get.back();
-                            }
-                          },
-                          icon: Icon(
-                            Icons.close,
-                            size: 16,
-                            color: whiteColor,
-                          ))
-                    ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Customize Packages",
+                          style: TextStyle(
+                              fontFamily: "OnestBold",
+                              fontSize: 16,
+                              color: whiteColor),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              if (loading != true) {
+                                Get.back();
+                              }
+                            },
+                            icon: Icon(
+                              Icons.close,
+                              size: 16,
+                              color: whiteColor,
+                            ))
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10)),
-                    color: whiteColor,
-                  ),
-                  padding: const EdgeInsets.all(7),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SpaceHeightWidget(height: 5),
-                      Text(
-                        // "Products In The Package MYSH01",
-                        packDetailsController.packPackageDetails.value.head,
-                        style: TextStyle(
-                            fontFamily: "OnestSemiBold",
-                            fontSize: 12,
-                            color: blackColor),
-                      ),
-                      const SpaceHeightWidget(height: 5),
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                          text:
-                              "Products Selected Should Be Of Total Quantity : ",
+                  Container(
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10)),
+                      color: whiteColor,
+                    ),
+                    padding: const EdgeInsets.all(7),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SpaceHeightWidget(height: 5),
+                        Text(
+                          // "Products In The Package MYSH01",
+                          packDetailsController.packPackageDetails.value.head,
                           style: TextStyle(
                               fontFamily: "OnestSemiBold",
                               fontSize: 12,
                               color: blackColor),
                         ),
-                        TextSpan(
-                          text: packDetailsController
-                              .packPackageDetails.value.maxQty,
-                          style: TextStyle(
-                              fontFamily: "OnestSemiBold",
-                              fontSize: 14,
-                              color: redColor),
-                        )
-                      ])),
-                      const SpaceHeightWidget(height: 20),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: DataTable(
-                            // dataRowMinHeight: ,
-                            dataRowMaxHeight: 60,
-                            horizontalMargin: 0,
-                            // dataRowMaxHeight: 100,
-                            columnSpacing: 0,
-                            border: TableBorder.all(
-                                color: middleBlackColor.withOpacity(0.15)),
-                            columns: [
-                              DataColumn(
-                                  label: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  "S.No",
-                                  style: TextStyle(
-                                      fontFamily: "OnestSemiBold",
-                                      fontSize: 12,
-                                      color: blackColor),
-                                ),
-                              )),
-                              DataColumn(
-                                  label: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  "Product\nCode",
-                                  style: TextStyle(
-                                      fontFamily: "OnestSemiBold",
-                                      fontSize: 12,
-                                      color: blackColor),
-                                ),
-                              )),
-                              DataColumn(
-                                  label: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  "Name",
-                                  style: TextStyle(
-                                      fontFamily: "OnestSemiBold",
-                                      fontSize: 12,
-                                      color: blackColor),
-                                ),
-                              )),
-                              DataColumn(
-                                  label: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  "Maximum\nQuantity",
-                                  style: TextStyle(
-                                      fontFamily: "OnestSemiBold",
-                                      fontSize: 12,
-                                      color: blackColor),
-                                ),
-                              )),
-                              DataColumn(
-                                  label: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  "Quantity",
-                                  style: TextStyle(
-                                      fontFamily: "OnestSemiBold",
-                                      fontSize: 12,
-                                      color: blackColor),
-                                ),
-                              )),
-                            ],
-                            rows: [
-                              for (int i = 0;
-                                  i <
-                                      packDetailsController.packPackageDetails
-                                          .value.getPkgItemsRpt.length;
-                                  i++)
-                                DataRow(cells: [
-                                  DataCell(Container(
-                                    width: 10,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.2),
-                                    child: Text(
-                                      (i + 1).toString(),
-                                      style: TextStyle(
-                                          fontFamily: "OnestRegular",
-                                          fontSize: 12,
-                                          color: middleBlackColor),
-                                    ),
-                                  )),
-                                  DataCell(Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.2),
-                                    child: Text(
-                                      packDetailsController.packPackageDetails
-                                          .value.getPkgItemsRpt[i].pcode,
-                                      style: TextStyle(
-                                          fontFamily: "OnestRegular",
-                                          fontSize: 12,
-                                          color: middleBlackColor),
-                                    ),
-                                  )),
-                                  DataCell(Container(
-                                    width: 160,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.2, vertical: 2),
-                                    child: Text(
-                                      packDetailsController.packPackageDetails
-                                          .value.getPkgItemsRpt[i].name,
-                                      style: TextStyle(
-                                          fontFamily: "OnestRegular",
-                                          fontSize: 12,
-                                          color: middleBlackColor),
-                                    ),
-                                  )),
-                                  DataCell(Container(
-                                    width: 100,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.2),
-                                    child: Text(
-                                      packDetailsController.packPackageDetails
-                                          .value.getPkgItemsRpt[i].maxquan,
-                                      style: TextStyle(
-                                          fontFamily: "OnestRegular",
-                                          fontSize: 12,
-                                          color: middleBlackColor),
-                                    ),
-                                  )),
-                                  DataCell(Container(
+                        const SpaceHeightWidget(height: 5),
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                            text:
+                                "Products Selected Should Be Of Total Quantity : ",
+                            style: TextStyle(
+                                fontFamily: "OnestSemiBold",
+                                fontSize: 12,
+                                color: blackColor),
+                          ),
+                          TextSpan(
+                            text: packDetailsController
+                                .packPackageDetails.value.maxQty,
+                            style: TextStyle(
+                                fontFamily: "OnestSemiBold",
+                                fontSize: 14,
+                                color: redColor),
+                          )
+                        ])),
+                        const SpaceHeightWidget(height: 20),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: DataTable(
+                              // dataRowMinHeight: ,
+                              dataRowMaxHeight: 60,
+                              horizontalMargin: 0,
+                              // dataRowMaxHeight: 100,
+                              columnSpacing: 0,
+                              border: TableBorder.all(
+                                  color: middleBlackColor.withOpacity(0.15)),
+                              columns: [
+                                DataColumn(
+                                    label: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Text(
+                                    "S.No",
+                                    style: TextStyle(
+                                        fontFamily: "OnestSemiBold",
+                                        fontSize: 12,
+                                        color: blackColor),
+                                  ),
+                                )),
+                                DataColumn(
+                                    label: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Text(
+                                    "Product\nCode",
+                                    style: TextStyle(
+                                        fontFamily: "OnestSemiBold",
+                                        fontSize: 12,
+                                        color: blackColor),
+                                  ),
+                                )),
+                                DataColumn(
+                                    label: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Text(
+                                    "Name",
+                                    style: TextStyle(
+                                        fontFamily: "OnestSemiBold",
+                                        fontSize: 12,
+                                        color: blackColor),
+                                  ),
+                                )),
+                                DataColumn(
+                                    label: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Text(
+                                    "Maximum\nQuantity",
+                                    style: TextStyle(
+                                        fontFamily: "OnestSemiBold",
+                                        fontSize: 12,
+                                        color: blackColor),
+                                  ),
+                                )),
+                                DataColumn(
+                                    label: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Text(
+                                    "Quantity",
+                                    style: TextStyle(
+                                        fontFamily: "OnestSemiBold",
+                                        fontSize: 12,
+                                        color: blackColor),
+                                  ),
+                                )),
+                              ],
+                              rows: [
+                                for (int i = 0;
+                                    i <
+                                        packDetailsController.packPackageDetails
+                                            .value.getPkgItemsRpt.length;
+                                    i++)
+                                  DataRow(cells: [
+                                    DataCell(Container(
+                                      width: 10,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5.2),
+                                      child: Text(
+                                        (i + 1).toString(),
+                                        style: TextStyle(
+                                            fontFamily: "OnestRegular",
+                                            fontSize: 12,
+                                            color: middleBlackColor),
+                                      ),
+                                    )),
+                                    DataCell(Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5.2),
+                                      child: Text(
+                                        packDetailsController.packPackageDetails
+                                            .value.getPkgItemsRpt[i].pcode,
+                                        style: TextStyle(
+                                            fontFamily: "OnestRegular",
+                                            fontSize: 12,
+                                            color: middleBlackColor),
+                                      ),
+                                    )),
+                                    DataCell(Container(
+                                      width: 160,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5.2, vertical: 2),
+                                      child: Text(
+                                        packDetailsController.packPackageDetails
+                                            .value.getPkgItemsRpt[i].name,
+                                        style: TextStyle(
+                                            fontFamily: "OnestRegular",
+                                            fontSize: 12,
+                                            color: middleBlackColor),
+                                      ),
+                                    )),
+                                    DataCell(Container(
                                       width: 100,
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 5.2),
-                                      child: RegisterTextField(
-                                          focusNode: _focusNode,
-                                          inputFormatter: [
-                                            FilteringTextInputFormatter
-                                                .digitsOnly,
-                                            LengthLimitingTextInputFormatter(2),
-                                            // FilteringTextInputFormatter.allow(
-                                            //     RegExp("[1-28]"))
-                                          ],
-                                          padding: 8,
-                                          textAlignVertical:
-                                              TextAlignVertical.bottom,
-                                          controller: textEControllerList[i],
-                                          hintText: "0",
-                                          textInputType: TextInputType.number,
-                                          validation: (val) {
-                                            if (val!.isEmpty) {
-                                              return "Enter Quantity";
-                                            } else if (int.parse(val) >
-                                                int.parse(packDetailsController
-                                                    .packPackageDetails
-                                                    .value
-                                                    .maxQty)) {
-                                              return "Not allowed";
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          labelText: ""))),
-                                ])
-                            ]),
-                      ),
-                      if (showQtyErrorText)
-                        Column(
-                          children: [
-                            const SpaceHeightWidget(height: 8),
-                            Text(
-                              "Your selected quantity total should be ${packDetailsController.packPackageDetails.value.maxQty}",
-                              style: TextStyle(
-                                  fontFamily: "OnestSemiBold",
-                                  fontSize: 14,
-                                  color: redColor),
-                            )
-                          ],
+                                      child: Text(
+                                        packDetailsController.packPackageDetails
+                                            .value.getPkgItemsRpt[i].maxquan,
+                                        style: TextStyle(
+                                            fontFamily: "OnestRegular",
+                                            fontSize: 12,
+                                            color: middleBlackColor),
+                                      ),
+                                    )),
+                                    DataCell(Container(
+                                        width: 100,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5.2),
+                                        child: RegisterTextField(
+                                            readOnly: packDetailsController
+                                                        .packPackageDetails
+                                                        .value
+                                                        .getPkgItemsRpt[i]
+                                                        .compulsory ==
+                                                    "True"
+                                                ? true
+                                                : false,
+                                            // focusNode: _focusNode,
+                                            inputFormatter: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly,
+                                              LengthLimitingTextInputFormatter(
+                                                  2),
+                                              // FilteringTextInputFormatter.allow(
+                                              //     RegExp("[1-28]"))
+                                            ],
+                                            padding: 8,
+                                            textAlignVertical:
+                                                TextAlignVertical.bottom,
+                                            controller: textEControllerList[i],
+                                            hintText: "0",
+                                            textInputType: TextInputType.number,
+                                            validation: (val) {
+                                              if (val!.isEmpty) {
+                                                return "Enter Quantity";
+                                              } else if (int.parse(val) >
+                                                  int.parse(
+                                                      packDetailsController
+                                                          .packPackageDetails
+                                                          .value
+                                                          .maxQty)) {
+                                                return "Not allowed";
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                            labelText: ""))),
+                                  ])
+                              ]),
                         ),
-                      const SpaceHeightWidget(height: 20),
-                      loading
-                          ? loader
-                          : Container(
-                              padding: const EdgeInsets.all(10),
-                              alignment: Alignment.bottomCenter,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SizedBox(
-                                      height: 30,
-                                      width: 130,
-                                      child: CustomElevatedButton(
-                                          onTapFun: () async {
-                                            pidList.clear();
-                                            int countQty = 0;
-                                            for (int i = 0;
-                                                i < textEControllerList.length;
-                                                i++) {
-                                              if (textEControllerList[i].text !=
-                                                  "") {
-                                                countQty = countQty +
-                                                    int.parse(
-                                                        textEControllerList[i]
-                                                            .text);
-                                                pidList.add(
-                                                    "${packDetailsController.packPackageDetails.value.getPkgItemsRpt[i].pcode}@${textEControllerList[i].text}");
+                        if (showQtyErrorText)
+                          Column(
+                            children: [
+                              const SpaceHeightWidget(height: 8),
+                              Text(
+                                "Your selected quantity total should be ${packDetailsController.packPackageDetails.value.maxQty}",
+                                style: TextStyle(
+                                    fontFamily: "OnestSemiBold",
+                                    fontSize: 14,
+                                    color: redColor),
+                              )
+                            ],
+                          ),
+                        const SpaceHeightWidget(height: 20),
+                        loading
+                            ? loader
+                            : Container(
+                                padding: const EdgeInsets.all(10),
+                                alignment: Alignment.bottomCenter,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(
+                                        height: 30,
+                                        width: 130,
+                                        child: CustomElevatedButton(
+                                            onTapFun: () async {
+                                              pidList.clear();
+                                              int countQty = 0;
+                                              for (int i = 0;
+                                                  i <
+                                                      textEControllerList
+                                                          .length;
+                                                  i++) {
+                                                if (textEControllerList[i]
+                                                        .text !=
+                                                    "") {
+                                                  countQty = countQty +
+                                                      int.parse(
+                                                          textEControllerList[i]
+                                                              .text);
+                                                  pidList.add(
+                                                      "${packDetailsController.packPackageDetails.value.getPkgItemsRpt[i].pcode}@${textEControllerList[i].text}");
+                                                }
                                               }
-                                            }
 
-                                            if (countQty ==
-                                                int.parse(packDetailsController
-                                                    .packPackageDetails
-                                                    .value
-                                                    .maxQty)) {
-                                              if (mounted) {
-                                                myState(() {
-                                                  showQtyErrorText = false;
-                                                  loading = true;
-                                                });
-                                              }
-
-                                              print("add to packcart fun");
-                                              Map parameters = {
-                                                "Pkid": widget.packageCode,
-                                                "pid": pidList.join(":"),
-                                                "qty": "1",
-                                                "uniqid": uniqId,
-                                                "sessid": sessionId,
-                                                "ipaddress": Constants.prefs
-                                                    .getString("ip"),
-                                                "sprno": "0",
-                                                "jointype": "Package",
-                                                "action": "addSGCartitems",
-                                              };
-                                              print(
-                                                  "add to cart params...$parameters");
-                                              dynamic res =
-                                                  await MainController()
-                                                      .getPackAddToCart(
-                                                          parameters);
-                                              if (res['Msg']
-                                                      .toString()
-                                                      .toLowerCase() ==
-                                                  "success") {
-                                                // ignore: use_build_context_synchronously
-                                                MotionToast.success(
-                                                  title: const Text(
-                                                      "Congartulations!"),
-                                                  description: const Text(
-                                                      "Packages added successfully"),
-                                                ).show(context);
-                                                Map params = {
-                                                  "rpt": "  EnrollDetails",
-                                                  "Cid": widget.countryid,
-                                                  "mid": "0"
-                                                };
-
-                                                dynamic res =
-                                                    await packDetailsController
-                                                        .getEnrollPack(params);
-                                                print("enroll res..$res");
-                                                print(
-                                                    "***********${double.parse(res['EnrollPackageRpt'][0]['RenFee'])}");
+                                              if (countQty ==
+                                                  int.parse(
+                                                      packDetailsController
+                                                          .packPackageDetails
+                                                          .value
+                                                          .maxQty)) {
                                                 if (mounted) {
                                                   myState(() {
-                                                    loading = false;
+                                                    showQtyErrorText = false;
+                                                    loading = true;
                                                   });
                                                 }
-                                                Get.back();
-                                                if (double.parse(
-                                                        res['EnrollPackageRpt']
-                                                            [0]['RenFee']) >
-                                                    0) {
-                                                  Get.off(() =>
-                                                      EnrollPackageScreen(
-                                                        packageCoded:
-                                                            widget.packageCode,
-                                                        countyId:
-                                                            widget.countryid!,
-                                                      ));
-                                                } else {
-                                                  Get.off(() => RegisterScreen(
-                                                        packageCode:
-                                                            widget.packageCode,
-                                                        countryId:
-                                                            widget.countryid!,
-                                                      ));
-                                                }
-                                              } else {
-                                                Timer(
-                                                    const Duration(seconds: 1),
-                                                    () {
+
+                                                print("add to packcart fun");
+                                                Map parameters = {
+                                                  "Pkid": widget.packageCode,
+                                                  "pid": pidList.join(":"),
+                                                  "qty": "1",
+                                                  "uniqid": uniqId,
+                                                  "sessid": sessionId,
+                                                  "ipaddress": Constants.prefs
+                                                      .getString("ip"),
+                                                  "sprno": "0",
+                                                  "jointype": "Package",
+                                                  "action": "addSGCartitems",
+                                                };
+                                                print(
+                                                    "add to cart params...$parameters");
+                                                dynamic res =
+                                                    await MainController()
+                                                        .getPackAddToCart(
+                                                            parameters);
+                                                if (res['Msg']
+                                                        .toString()
+                                                        .toLowerCase() ==
+                                                    "success") {
+                                                  // ignore: use_build_context_synchronously
+                                                  MotionToast.success(
+                                                    title: const Text(
+                                                        "Congartulations!"),
+                                                    description: const Text(
+                                                        "Packages added successfully"),
+                                                  ).show(context);
+                                                  Map params = {
+                                                    "rpt": "  EnrollDetails",
+                                                    "Cid": widget.countryid,
+                                                    "mid": "0"
+                                                  };
+
+                                                  dynamic res =
+                                                      await packDetailsController
+                                                          .getEnrollPack(
+                                                              params);
+                                                  print("enroll res..$res");
+                                                  print(
+                                                      "***********${double.parse(res['EnrollPackageRpt'][0]['RenFee'])}");
                                                   if (mounted) {
                                                     myState(() {
                                                       loading = false;
                                                     });
                                                   }
-                                                });
+                                                  Get.back();
+                                                  if (double.parse(
+                                                          res['EnrollPackageRpt']
+                                                              [0]['RenFee']) >
+                                                      0) {
+                                                    Get.off(() =>
+                                                        EnrollPackageScreen(
+                                                          packageCoded: widget
+                                                              .packageCode,
+                                                          countyId:
+                                                              widget.countryid!,
+                                                        ));
+                                                  } else {
+                                                    Get.off(
+                                                        () => RegisterScreen(
+                                                              packageCode: widget
+                                                                  .packageCode,
+                                                              countryId: widget
+                                                                  .countryid!,
+                                                            ));
+                                                  }
+                                                } else {
+                                                  Timer(
+                                                      const Duration(
+                                                          seconds: 1), () {
+                                                    if (mounted) {
+                                                      myState(() {
+                                                        loading = false;
+                                                      });
+                                                    }
+                                                  });
+                                                }
+                                              } else {
+                                                if (mounted) {
+                                                  myState(() {
+                                                    showQtyErrorText = true;
+                                                  });
+                                                }
                                               }
-                                            } else {
-                                              if (mounted) {
-                                                myState(() {
-                                                  showQtyErrorText = true;
-                                                });
-                                              }
-                                            }
+                                            },
+                                            title: "Add To Cart")),
+                                    const SpaceWidthWidget(width: 10),
+                                    SizedBox(
+                                      width: 100,
+                                      height: 30,
+                                      child: CustomElevatedButton(
+                                          onTapFun: () {
+                                            Get.back();
                                           },
-                                          title: "Add To Cart")),
-                                  const SpaceWidthWidget(width: 10),
-                                  SizedBox(
-                                    width: 100,
-                                    height: 30,
-                                    child: CustomElevatedButton(
-                                        onTapFun: () {
-                                          Get.back();
-                                        },
-                                        title: "Cancel"),
-                                  ),
-                                ],
-                              ),
-                            )
-                    ],
+                                          title: "Cancel"),
+                                    ),
+                                  ],
+                                ),
+                              )
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
       }),
     );
   }
-
-//   class PackageDilog extends get StatefulWidget async {
-//   final List<TextEditingController> quantityControllerList;
-//   // final VoidCallback addtoCartFun;
-//   final String heading;
-//   final String subHeading;
-//   final String maxQunatity;
-//   final List<GetPkgItemsRpt> packageItemsList;
-//   final String? Function(String?)? validation;
-//   final bool showErrorText;
-//   final BuildContext cont;
-//   const PackageDilog(
-//       {super.key,
-//       required this.cont,
-//       required this.quantityControllerList,
-//       // required this.addtoCartFun,
-//       required this.heading,
-//       required this.maxQunatity,
-//       required this.packageItemsList,
-//       required this.validation,
-//       required this.showErrorText,
-//       required this.subHeading});
-
-//   @override
-//   State<PackageDilog> createState() => _PackageDilogState();
-// }
-
-// class _PackageDilogState extends State<PackageDilog> {
-
-//   @override
-//   Widget build(BuildContext cont) {
-//     return
-
-//     Dialog(
-//       insetPadding: const EdgeInsets.symmetric(horizontal: 6),
-//       backgroundColor: blackColor.withOpacity(0.8),
-//       child: Form(
-//         key: _fomkey,
-//         child: Container(
-//           decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(10),
-//               color: blackColor.withOpacity(0.8)),
-//           child: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               Padding(
-//                 padding: const EdgeInsets.only(left: 10),
-//                 child: Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     Text(
-//                       "Customize Packages",
-//                       style: TextStyle(
-//                           fontFamily: "OnestBold",
-//                           fontSize: 16,
-//                           color: whiteColor),
-//                     ),
-//                     IconButton(
-//                         onPressed: () {
-//                           if (loading != true) {
-//                             Get.back();
-//                           }
-//                         },
-//                         icon: Icon(
-//                           Icons.close,
-//                           size: 16,
-//                           color: whiteColor,
-//                         ))
-//                   ],
-//                 ),
-//               ),
-//               Container(
-//                 width: double.maxFinite,
-//                 decoration: BoxDecoration(
-//                   borderRadius: const BorderRadius.only(
-//                       bottomLeft: Radius.circular(10),
-//                       bottomRight: Radius.circular(10)),
-//                   color: whiteColor,
-//                 ),
-//                 padding: const EdgeInsets.all(7),
-//                 child: Column(
-//                   mainAxisSize: MainAxisSize.min,
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     const SpaceHeightWidget(height: 5),
-//                     Text(
-//                       // "Products In The Package MYSH01",
-//                       widget.heading,
-//                       style: TextStyle(
-//                           fontFamily: "OnestSemiBold",
-//                           fontSize: 12,
-//                           color: blackColor),
-//                     ),
-//                     const SpaceHeightWidget(height: 5),
-//                     RichText(
-//                         text: TextSpan(children: [
-//                       TextSpan(
-//                         text:
-//                             "Products Selected Should Be Of Total Quantity : ",
-//                         style: TextStyle(
-//                             fontFamily: "OnestSemiBold",
-//                             fontSize: 12,
-//                             color: blackColor),
-//                       ),
-//                       TextSpan(
-//                         text: widget.maxQunatity,
-//                         style: TextStyle(
-//                             fontFamily: "OnestSemiBold",
-//                             fontSize: 14,
-//                             color: redColor),
-//                       )
-//                     ])),
-//                     const SpaceHeightWidget(height: 20),
-//                     SingleChildScrollView(
-//                       scrollDirection: Axis.horizontal,
-//                       child: DataTable(
-//                           // dataRowMinHeight: ,
-//                           dataRowMaxHeight: 60,
-//                           horizontalMargin: 0,
-//                           // dataRowMaxHeight: 100,
-//                           columnSpacing: 0,
-//                           border: TableBorder.all(
-//                               color: middleBlackColor.withOpacity(0.15)),
-//                           columns: [
-//                             DataColumn(
-//                                 label: Padding(
-//                               padding:
-//                                   const EdgeInsets.symmetric(horizontal: 10),
-//                               child: Text(
-//                                 "S.No",
-//                                 style: TextStyle(
-//                                     fontFamily: "OnestSemiBold",
-//                                     fontSize: 12,
-//                                     color: blackColor),
-//                               ),
-//                             )),
-//                             DataColumn(
-//                                 label: Padding(
-//                               padding:
-//                                   const EdgeInsets.symmetric(horizontal: 10),
-//                               child: Text(
-//                                 "Product\nCode",
-//                                 style: TextStyle(
-//                                     fontFamily: "OnestSemiBold",
-//                                     fontSize: 12,
-//                                     color: blackColor),
-//                               ),
-//                             )),
-//                             DataColumn(
-//                                 label: Padding(
-//                               padding:
-//                                   const EdgeInsets.symmetric(horizontal: 10),
-//                               child: Text(
-//                                 "Name",
-//                                 style: TextStyle(
-//                                     fontFamily: "OnestSemiBold",
-//                                     fontSize: 12,
-//                                     color: blackColor),
-//                               ),
-//                             )),
-//                             DataColumn(
-//                                 label: Padding(
-//                               padding:
-//                                   const EdgeInsets.symmetric(horizontal: 10),
-//                               child: Text(
-//                                 "Maximum\nQuantity",
-//                                 style: TextStyle(
-//                                     fontFamily: "OnestSemiBold",
-//                                     fontSize: 12,
-//                                     color: blackColor),
-//                               ),
-//                             )),
-//                             DataColumn(
-//                                 label: Padding(
-//                               padding:
-//                                   const EdgeInsets.symmetric(horizontal: 10),
-//                               child: Text(
-//                                 "Quantity",
-//                                 style: TextStyle(
-//                                     fontFamily: "OnestSemiBold",
-//                                     fontSize: 12,
-//                                     color: blackColor),
-//                               ),
-//                             )),
-//                           ],
-//                           rows: [
-//                             for (int i = 0;
-//                                 i < widget.packageItemsList.length;
-//                                 i++)
-//                               DataRow(cells: [
-//                                 DataCell(Container(
-//                                   width: 10,
-//                                   padding: const EdgeInsets.symmetric(
-//                                       horizontal: 5.2),
-//                                   child: Text(
-//                                     (i + 1).toString(),
-//                                     style: TextStyle(
-//                                         fontFamily: "OnestRegular",
-//                                         fontSize: 12,
-//                                         color: middleBlackColor),
-//                                   ),
-//                                 )),
-//                                 DataCell(Container(
-//                                   padding: const EdgeInsets.symmetric(
-//                                       horizontal: 5.2),
-//                                   child: Text(
-//                                     widget.packageItemsList[i].pcode,
-//                                     style: TextStyle(
-//                                         fontFamily: "OnestRegular",
-//                                         fontSize: 12,
-//                                         color: middleBlackColor),
-//                                   ),
-//                                 )),
-//                                 DataCell(Container(
-//                                   width: 160,
-//                                   padding: const EdgeInsets.symmetric(
-//                                       horizontal: 5.2, vertical: 2),
-//                                   child: Text(
-//                                     widget.packageItemsList[i].name,
-//                                     style: TextStyle(
-//                                         fontFamily: "OnestRegular",
-//                                         fontSize: 12,
-//                                         color: middleBlackColor),
-//                                   ),
-//                                 )),
-//                                 DataCell(Container(
-//                                   width: 100,
-//                                   padding: const EdgeInsets.symmetric(
-//                                       horizontal: 5.2),
-//                                   child: Text(
-//                                     widget.packageItemsList[i].maxquan,
-//                                     style: TextStyle(
-//                                         fontFamily: "OnestRegular",
-//                                         fontSize: 12,
-//                                         color: middleBlackColor),
-//                                   ),
-//                                 )),
-//                                 DataCell(Container(
-//                                     width: 100,
-//                                     padding: const EdgeInsets.symmetric(
-//                                         horizontal: 5.2),
-//                                     child: RegisterTextField(
-//                                         inputFormatter: [
-//                                           FilteringTextInputFormatter
-//                                               .digitsOnly,
-//                                           LengthLimitingTextInputFormatter(2),
-//                                           // FilteringTextInputFormatter.allow(
-//                                           //     RegExp("[1-28]"))
-//                                         ],
-//                                         padding: 8,
-//                                         textAlignVertical:
-//                                             TextAlignVertical.bottom,
-//                                         controller:
-//                                             widget.quantityControllerList[i],
-//                                         hintText: "0",
-//                                         textInputType: TextInputType.number,
-//                                         validation: widget.validation,
-//                                         labelText: ""))),
-//                               ])
-//                           ]),
-//                     ),
-//                     if (showQtyErrorText)
-//                       Column(
-//                         children: [
-//                           const SpaceHeightWidget(height: 8),
-//                           Text(
-//                             "Your selected quantity total should be ${widget.maxQunatity}",
-//                             style: TextStyle(
-//                                 fontFamily: "OnestSemiBold",
-//                                 fontSize: 14,
-//                                 color: redColor),
-//                           )
-//                         ],
-//                       ),
-//                     const SpaceHeightWidget(height: 20),
-//                     loading
-//                         ? loader
-//                         : Container(
-//                             padding: const EdgeInsets.all(10),
-//                             alignment: Alignment.bottomCenter,
-//                             child: Row(
-//                               mainAxisSize: MainAxisSize.min,
-//                               children: [
-//                                 SizedBox(
-//                                     height: 30,
-//                                     width: 130,
-//                                     child: CustomElevatedButton(
-//                                         onTapFun: () async {
-//                                           int countQty = 0;
-//                                           for (int i = 0;
-//                                               i <
-//                                                   widget.quantityControllerList
-//                                                       .length;
-//                                               i++) {
-//                                             if (widget.quantityControllerList[i]
-//                                                     .text !=
-//                                                 "") {
-//                                               countQty = countQty +
-//                                                   int.parse(widget
-//                                                       .quantityControllerList[i]
-//                                                       .text);
-//                                             }
-//                                           }
-//                                           if (countQty ==
-//                                               int.parse(widget.maxQunatity)) {
-//                                             setState(() {
-//                                               showQtyErrorText = false;
-//                                               loading = true;
-//                                             });
-
-//                                             print("add to car fun");
-//                                              Map parameters = {
-//                                               "Action": "addCartitems",
-//                                               "dtype": "Package",
-//                                               "qty": "1",
-//                                               "uniqid": uniqId,
-//                                               "sessid": sessionId,
-//                                               "Jointype": "Retailer"
-//                                             };
-//                                             await MainController()
-//                                                 .getAddToCart(parameters);
-//                                             // setState(() {
-//                                             //   loading = false;
-//                                             // });
-//                                           } else {
-//                                             setState(() {
-//                                               showQtyErrorText = true;
-//                                             });
-//                                           }
-
-//                                           // await Constants.prefs.setInt("cart_count", 1);
-//                                           // Get.back();
-//                                           // Get.to(() => const EnrollPackageScreen());
-//                                         },
-//                                         title: "Add To Cart")),
-//                                 const SpaceWidthWidget(width: 10),
-//                                 SizedBox(
-//                                   width: 100,
-//                                   height: 30,
-//                                   child: CustomElevatedButton(
-//                                       onTapFun: () {
-//                                         Get.back();
-//                                       },
-//                                       title: "Cancel"),
-//                                 ),
-//                               ],
-//                             ),
-//                           )
-//                   ],
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 }

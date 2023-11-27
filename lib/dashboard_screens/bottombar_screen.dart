@@ -10,8 +10,9 @@ import 'account_screen.dart';
 import 'promotions_screen.dart';
 
 class BottomBarScreen extends StatefulWidget {
+  final int? productIndex;
   final int? index;
-  const BottomBarScreen({Key? key, this.index})
+  const BottomBarScreen({Key? key, this.index, this.productIndex})
       : super(
           key: key,
         );
@@ -24,7 +25,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   int selectedIndex = 0;
 
   /// widget list
-  final List<Widget> bottomBarPages = [
+  List<Widget> bottomBarPages = [
     const HomeScreen(),
     const ProductsScreen(
       from: "bottombar",
@@ -40,6 +41,20 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   void initState() {
     super.initState();
     selectedIndex = widget.index ?? 0;
+    if (widget.index != null) {
+      bottomBarPages = [
+        const HomeScreen(),
+        ProductsScreen(
+          from: "bottombar",
+          index: widget.productIndex,
+        ),
+        const CartScreen(
+          from: "bottombar",
+        ),
+        const PromotionsScreen(),
+        const AccountScreen()
+      ];
+    }
     badgeCount = Constants.prefs.getInt("cart_count") ?? 0;
   }
 

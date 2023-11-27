@@ -140,8 +140,8 @@ class ProductImage {
 }
 
 class Tabcontent {
-  String title;
-  String content;
+  dynamic title;
+  dynamic content;
 
   Tabcontent({
     required this.title,

@@ -50,7 +50,7 @@ class CustomElevatedButton extends StatelessWidget {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(blackColor),
           minimumSize:
-              const MaterialStatePropertyAll(Size(double.infinity, 45)),
+              const MaterialStatePropertyAll(Size(double.infinity, 40)),
         ),
         child: Text(
           title,
@@ -1113,16 +1113,18 @@ class PromotionItemWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Column(
-                mainAxisAlignment: MainAxisAlignment.end,
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SpaceHeightWidget(height: 5),
+                  // const SpaceHeightWidget(height: 5),
                   Stack(
                     alignment: Alignment.bottomLeft,
                     children: [
                       Container(
+                        width: double.infinity,
+                        alignment: Alignment.center,
                         margin: const EdgeInsets.only(top: 3),
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(5),
                         child: Image.asset(
                           imagePath,
                           height: 100,
@@ -1163,12 +1165,14 @@ class PromotionItemWidget extends StatelessWidget {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(4.0),
                     child: Text(
-                      itemName.capitalize.toString().replaceAll("d1", "D1"),
-                      maxLines: 2,
+                      itemName.toString(),
+                      // .capitalize.toString().replaceAll("d1", "D1"),
+                      maxLines: 4,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(fontFamily: "OnestRegular"),
+                      style: const TextStyle(
+                          fontFamily: "OnestSemiBold", fontSize: 12),
                     ),
                   ),
                 ],
@@ -1219,17 +1223,19 @@ class HomeScreenProductCategory extends StatelessWidget {
   final String imagePath;
   final String productName;
   final double? height;
+  final double? width;
   const HomeScreenProductCategory(
       {super.key,
       required this.imagePath,
       required this.productName,
+      this.width,
       this.height});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(1),
-      width: 60,
+      margin: const EdgeInsets.all(5),
+      width: width ?? 70,
       height: height ?? 100,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -1742,10 +1748,12 @@ class CategroyItemWidget extends StatelessWidget {
   final String imagePath;
   final String titile;
   final VoidCallback onTapFun;
+  final String? amount;
   const CategroyItemWidget(
       {super.key,
       required this.imagePath,
       required this.titile,
+      this.amount,
       required this.onTapFun});
 
   @override
@@ -1756,17 +1764,19 @@ class CategroyItemWidget extends StatelessWidget {
       child: Card(
         color: whiteColor,
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
           decoration: BoxDecoration(
               border: Border.all(color: lightBlackColor, width: 0.2),
               color: whiteColor,
               borderRadius: BorderRadius.circular(15)),
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CommonCachedNetworkImage(
                   imagePath: imagePath,
-                  height: 100,
+                  height: 95,
                 ),
                 // CachedNetworkImage(
                 //   imageUrl: imagePath,
@@ -1777,15 +1787,29 @@ class CategroyItemWidget extends StatelessWidget {
                 //     height: 100,
                 //   ),
                 // ),
+                const SpaceHeightWidget(height: 5),
                 Text(
-                  titile.capitalizeFirst.toString().replaceAll("d1", "D1"),
-                  maxLines: 2,
+                  titile.toString(),
+                  // capitalizeFirst.toString().replaceAll("d1", "D1"),
+                  textAlign: TextAlign.center,
+                  maxLines: 4,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                       fontFamily: "OnestSemiBold",
-                      fontSize: 14,
+                      fontSize: 11,
                       color: blackColor),
-                )
+                ),
+                const SpaceHeightWidget(height: 5),
+                if (amount != "" && amount != null)
+                  Text(
+                    "$amount",
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontFamily: "OnestSemiBold",
+                        fontSize: 12,
+                        color: blackColor),
+                  ),
               ]),
         ),
       ),
@@ -2438,9 +2462,11 @@ class CartItemWidget extends StatelessWidget {
   final String itemname;
   final String imagePath;
   final String itemsPrice;
+  final bool? removeCartOption;
 
   const CartItemWidget(
       {super.key,
+      this.removeCartOption,
       required this.removeFun,
       required this.imagePath,
       required this.itemname,
@@ -2527,17 +2553,18 @@ class CartItemWidget extends StatelessWidget {
                               fontSize: 12,
                               color: blackColor.withOpacity(0.5)))
                     ])),
-                    GestureDetector(
-                        onTap: removeFun,
-                        child: CircleAvatar(
-                          radius: 15,
-                          backgroundColor: darkRedColor,
-                          child: Icon(
-                            Icons.delete_forever,
-                            color: whiteColor,
-                            size: 17,
-                          ),
-                        ))
+                    if (removeCartOption != true)
+                      GestureDetector(
+                          onTap: removeFun,
+                          child: CircleAvatar(
+                            radius: 15,
+                            backgroundColor: darkRedColor,
+                            child: Icon(
+                              Icons.delete_forever,
+                              color: whiteColor,
+                              size: 17,
+                            ),
+                          ))
                   ],
                 ),
                 const SpaceHeightWidget(height: 5),
@@ -2874,6 +2901,8 @@ class RegisterDropDown extends StatelessWidget {
           ),
           isDense: true,
           decoration: InputDecoration(
+              fillColor: whiteColor,
+              filled: true,
               isDense: true,
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -3472,7 +3501,448 @@ CommonToast(String text) {
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.CENTER,
       timeInSecForIosWeb: 1,
-      backgroundColor: Colors.red,
+      backgroundColor: darkRedColor,
       textColor: Colors.white,
       fontSize: 16.0);
+}
+
+CommonToastTrue(String text) {
+  return Fluttertoast.showToast(
+      msg: text,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: greenColor,
+      textColor: Colors.white,
+      fontSize: 16.0);
+}
+
+class CommonTextButton extends StatelessWidget {
+  final String title;
+  final VoidCallback onTapFun;
+  const CommonTextButton(
+      {super.key, required this.title, required this.onTapFun});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 40,
+      child: TextButton(
+        onPressed: onTapFun,
+        child: Text(
+          title,
+          style: const TextStyle(fontFamily: "OnestBold", fontSize: 14),
+        ),
+      ),
+    );
+  }
+}
+
+class LoginTextField extends StatelessWidget {
+  final TextEditingController controller;
+  final double? padding;
+  final Color? borderColor;
+  final String hintText;
+  final String labelText;
+  final FocusNode? focusNode;
+  final TextAlignVertical? textAlignVertical;
+  final TextInputType textInputType;
+  final String? Function(String?)? validation;
+  final List<TextInputFormatter>? inputFormatter;
+  final Function(PointerDownEvent)? outsideFun;
+  final VoidCallback? onTapFun;
+  final bool? readOnly;
+  final Function(String)? onchangeFun;
+  final VoidCallback? editFun;
+  final Widget? suffix;
+  final bool? obscureText;
+
+  const LoginTextField(
+      {super.key,
+      this.obscureText,
+      required this.controller,
+      this.suffix,
+      this.onchangeFun,
+      this.editFun,
+      this.padding,
+      this.readOnly,
+      this.onTapFun,
+      this.outsideFun,
+      this.borderColor,
+      this.inputFormatter,
+      this.textAlignVertical,
+      this.focusNode,
+      required this.hintText,
+      required this.textInputType,
+      required this.validation,
+      required this.labelText});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: TextFormField(
+        // scrollPadding: const EdgeInsets.all(40),
+        obscureText: obscureText ?? false,
+        onEditingComplete: editFun,
+        onChanged: onchangeFun,
+        readOnly: readOnly ?? false,
+        onTap: onTapFun,
+        onTapOutside: outsideFun,
+        focusNode: focusNode,
+        textAlignVertical: textAlignVertical ?? TextAlignVertical.center,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        controller: controller,
+        keyboardType: textInputType,
+        style: TextStyle(
+            fontFamily: "OnestSemiBold",
+            fontSize: 14,
+            color: blackColor.withOpacity(0.6)),
+        validator: validation,
+        inputFormatters: inputFormatter ?? [],
+        decoration: InputDecoration(
+            filled: true,
+            fillColor: whiteColor,
+            suffixIconConstraints: const BoxConstraints(
+              maxHeight: 20,
+            ),
+            suffixIcon: Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: suffix,
+            ),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: BorderSide(
+                    color: borderColor ?? lightDarKBlue.withOpacity(0.3))),
+            isDense: true,
+            hintText: hintText,
+            hintStyle: TextStyle(
+                fontFamily: "OnestRegular",
+                fontSize: 14,
+                color: blackColor.withOpacity(0.5)),
+            label: Text(labelText),
+            labelStyle: TextStyle(
+                fontFamily: "OnestSemiBold", fontSize: 14, color: blackColor),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: BorderSide(
+                    color: borderColor ?? lightDarKBlue.withOpacity(0.3))),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide:
+                    BorderSide(width: 3.5, color: blueColor.withOpacity(0.5)))),
+      ),
+    );
+  }
+}
+
+class AccountTitleWidget extends StatelessWidget {
+  final String title;
+  const AccountTitleWidget({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      style: TextStyle(
+          fontFamily: "OnestSemiBold", color: blackColor, fontSize: 15),
+    );
+  }
+}
+
+class AccountWidgetT extends StatelessWidget {
+  final String title;
+  const AccountWidgetT({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      style: TextStyle(
+          fontFamily: "OnestRegular", color: blackColor, fontSize: 13),
+    );
+  }
+}
+
+class AccountTextField extends StatelessWidget {
+  final TextEditingController controller;
+  final Color? borderColor;
+  final String hintText;
+  final FocusNode? focusNode;
+  final TextAlignVertical? textAlignVertical;
+  final TextInputType textInputType;
+  final String? Function(String?)? validation;
+  final List<TextInputFormatter>? inputFormatter;
+  final Function(PointerDownEvent)? outsideFun;
+  final VoidCallback? onTapFun;
+  final bool? readOnly;
+  final Function(String)? onchangeFun;
+  final VoidCallback? editFun;
+
+  const AccountTextField({
+    super.key,
+    required this.controller,
+    this.onchangeFun,
+    this.editFun,
+    this.readOnly,
+    this.onTapFun,
+    this.outsideFun,
+    this.borderColor,
+    this.inputFormatter,
+    this.textAlignVertical,
+    this.focusNode,
+    required this.hintText,
+    required this.textInputType,
+    required this.validation,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 5, bottom: 10),
+      child: TextFormField(
+        onEditingComplete: editFun,
+        onChanged: onchangeFun,
+        readOnly: readOnly ?? false,
+        onTap: onTapFun,
+        onTapOutside: outsideFun,
+        focusNode: focusNode,
+        textAlignVertical: textAlignVertical ?? TextAlignVertical.center,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        controller: controller,
+        keyboardType: textInputType,
+        style: TextStyle(
+            fontFamily: "OnestSemiBold",
+            fontSize: 14,
+            color: blackColor.withOpacity(0.6)),
+        validator: validation,
+        inputFormatters: inputFormatter ?? [],
+        decoration: InputDecoration(
+            filled: true,
+            fillColor: whiteColor,
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: BorderSide(
+                    color: borderColor ?? lightDarKBlue.withOpacity(0.3))),
+            isDense: true,
+            hintText: hintText,
+            hintStyle: TextStyle(
+                fontFamily: "OnestRegular",
+                fontSize: 14,
+                color: blackColor.withOpacity(0.5)),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide: BorderSide(
+                    color: borderColor ?? lightDarKBlue.withOpacity(0.3))),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5),
+                borderSide:
+                    BorderSide(width: 3.5, color: blueColor.withOpacity(0.5)))),
+      ),
+    );
+  }
+}
+
+class MyAccountWidget extends StatelessWidget {
+  final VoidCallback onTapFun;
+  final String title;
+  final IconData? leadingIcon;
+  final String? imagePath;
+  const MyAccountWidget(
+      {super.key,
+      required this.onTapFun,
+      required this.title,
+      this.imagePath,
+      this.leadingIcon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ListTile(
+          onTap: onTapFun,
+          dense: true,
+          leading: imagePath != null
+              ? Image.asset(
+                  imagePath!,
+                  height: imagePath!.contains("view-module") ? 13 : 20,
+                  color: middleBlackColor,
+                )
+              : Icon(leadingIcon, size: 20, color: middleBlackColor),
+          title: Text(
+            title,
+            style: const TextStyle(fontSize: 14, fontFamily: "OnestRegular"),
+          ),
+          trailing: const Icon(
+            Icons.arrow_forward_ios,
+            size: 15,
+          ),
+        ),
+        Divider(
+          color: woodColor,
+          thickness: 1.5,
+          height: 0,
+        )
+      ],
+    );
+  }
+}
+
+class CommissionWidget extends StatelessWidget {
+  final String title;
+  final String amountType;
+  final String amount;
+  final Color? textColor;
+  final Color? backgroundColor;
+  const CommissionWidget(
+      {super.key,
+      this.backgroundColor,
+      this.textColor,
+      required this.title,
+      required this.amountType,
+      required this.amount});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: backgroundColor ?? lightDarKBlue,
+          borderRadius: BorderRadius.circular(10)),
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      child: Column(
+        children: [
+          Text(
+            title,
+            maxLines: 3,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontFamily: "OnestSemiBold",
+                color: textColor ?? whiteColor,
+                fontSize: 10),
+          ),
+          Text(
+            amountType != "" ? "($amountType)" : "\n",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontFamily: "OnestSemiBold",
+                color: textColor ?? whiteColor,
+                fontSize: 10),
+          ),
+          const SpaceHeightWidget(height: 10),
+          Text(
+            amount,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontFamily: "OnestSemiBold",
+                color: textColor != null
+                    ? textColor!.withOpacity(0.5)
+                    : whiteColor.withOpacity(0.8),
+                fontSize: 10),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class CommonVerticalDivider extends StatelessWidget {
+  final double? height;
+  const CommonVerticalDivider({super.key, this.height});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(top: 10),
+      height: height ?? 90,
+      width: 0.8,
+      color: middleBlackColor.withOpacity(0.2),
+    );
+  }
+}
+
+class RedeemWidget extends StatelessWidget {
+  final VoidCallback onTapFun;
+  final String points;
+  final String title;
+  const RedeemWidget(
+      {super.key,
+      required this.onTapFun,
+      required this.title,
+      required this.points});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SpaceHeightWidget(height: 10),
+        Text(
+          points,
+          style: TextStyle(
+              fontFamily: "OnestRegular", color: greenColor, fontSize: 22),
+        ),
+        const SpaceHeightWidget(height: 5),
+        Text(
+          title,
+          style: TextStyle(
+              fontFamily: "OnestRegular",
+              color: middleBlackColor,
+              fontSize: 12),
+        ),
+        SizedBox(
+          height: 40,
+          child: CommonTextButton(
+            onTapFun: onTapFun,
+            title: "Click To Redeem >",
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class RankWidget extends StatelessWidget {
+  const RankWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            "Rank",
+            style: TextStyle(
+                fontFamily: "OnestSemiBold", color: blackColor, fontSize: 16),
+          ),
+        ),
+        Card(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+            child: Column(
+              children: [
+                Text(
+                  "D' Life Changer",
+                  style: TextStyle(
+                      fontFamily: "OnestSemiBold",
+                      color: blackColor,
+                      fontSize: 12),
+                ),
+                Image.asset(
+                  "assets/images/rank.png",
+                  height: 140,
+                )
+              ],
+            ),
+          ),
+        )
+      ],
+    );
+  }
 }

@@ -1,10 +1,8 @@
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
-import 'package:destina_1_international/dashboard_screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:motion_toast/motion_toast.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 import '../commons/colors.dart';
@@ -14,7 +12,8 @@ import '../inside_screens/register_cart_screen.dart';
 class RegisterScreen extends StatefulWidget {
   final String countryId;
   final String packageCode;
-  const RegisterScreen({super.key, required this.countryId, required this.packageCode});
+  const RegisterScreen(
+      {super.key, required this.countryId, required this.packageCode});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -40,7 +39,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController zipcodeTController = TextEditingController();
 
   String groupVal = "";
-  String namePrefix = "Mr";
+  String namePrefix = "";
   String gender = "Male";
   String? state;
   String stateId = "";
@@ -342,7 +341,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Expanded(
                             flex: 1,
                             child: RegisterDropDown(
-                              hintText: "Mr",
+                              labelText: "Title",
+                              hintText: "Title",
                               items: const [
                                 "Mr",
                                 "Mrs",
@@ -403,7 +403,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                       RegisterDropDown(
-                        hintText: "Male",
+                        hintText: "Gender",
                         labelText: "GENDER",
                         items: const ["Male", "Female"],
                         onChangedFun: (val) {
@@ -423,11 +423,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       RegisterTextField(
                         textInputType: TextInputType.emailAddress,
                         labelText: "EMAIL ADDRESS",
-                        hintText: "jhonlee@gmail.com",
+                        hintText: "EX: jhonlee@gmail.com",
                         controller: emailTController,
                         validation: (val) {
+                          const String email = "tony@starkindustries.com";
+
+                          RegExp reg = RegExp(
+                              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+
                           if (val!.isEmpty) {
                             return "Email address";
+                          } else if (!reg.hasMatch(val)) {
+                            return "Enter valid email";
                           } else {
                             return null;
                           }
@@ -444,6 +451,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         validation: (val) {
                           if (val!.isEmpty) {
                             return "Address";
+                          } else if (val.length < 3) {
+                            return "Enter valid address";
                           } else {
                             return null;
                           }
@@ -457,6 +466,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         validation: (val) {
                           if (val!.isEmpty) {
                             return "Address";
+                          } else if (val.length < 3) {
+                            return "Enter valid address";
                           } else {
                             return null;
                           }
@@ -470,6 +481,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         validation: (val) {
                           if (val!.isEmpty) {
                             return "City/Area";
+                          } else if (val.length < 3) {
+                            return "Enter valid City/Area";
                           } else {
                             return null;
                           }
@@ -487,6 +500,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         validation: (val) {
                           if (val!.isEmpty) {
                             return "Area/Zip Code";
+                          } else if (val.length < 5) {
+                            return "Enter valid Area/Zip Code";
                           } else {
                             return null;
                           }
@@ -600,6 +615,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             return "User Name Already Exists";
                           } else if (val!.isEmpty) {
                             return "Username";
+                          } else if (val.length < 3) {
+                            return "Enter valid username";
                           } else {
                             return null;
                           }
@@ -615,8 +632,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: "Enter your Login/Transaction password",
                         controller: passwordTController,
                         validation: (val) {
+                          RegExp pattern =
+                              RegExp(r'[~`!@#\$%^&*()\-_+={}[\]\\|;:"<>,./]');
                           if (val!.isEmpty) {
                             return "Your Login/Transaction password";
+                          } else if (pattern.hasMatch(val)) {
+                            return "Input should not contains special characters";
+                          } else if (val.length < 6) {
+                            return "Characters should be more than 5";
                           } else {
                             return null;
                           }
@@ -679,6 +702,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     // _focusNode.unfocus();
                                     FocusScope.of(context).unfocus();
                                     if (formKey.currentState!.validate()) {
+                                      setState(() {
+                                        submitLoad = true;
+                                      });
                                       if (groupVal != "") {
                                         bool sponsor =
                                             await sponsorIdCheckFun();
@@ -700,6 +726,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             }
                                           }
                                         }
+                                        setState(() {
+                                          submitLoad = true;
+                                        });
                                       } else {
                                         CommonToast(
                                             "Select placement Left or Right");
@@ -753,9 +782,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   bool submitLoad = false;
   signUpFun() async {
-    setState(() {
-      submitLoad = true;
-    });
     Map params = {
       "SprID": sponsorNameTController.text,
       "placementID": palcementNameTController.text,
@@ -780,19 +806,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
     dynamic res = await registerController.getRegister(params);
     if (res['Msg'].toString().toLowerCase() == "success") {
       // ignore: use_build_context_synchronously
-      MotionToast.success(
-        title: const Text("Congartulations!"),
-        description: const Text("Successfully Registered."),
-      ).show(context);
-      Get.to(() =>  RegisterCartScreen(
-packageCode: widget.packageCode ,
-
-      ));
+      // MotionToast.success(
+      //   title: const Text("Congartulations!"),
+      //   description: const Text("Successfully Registered."),
+      // ).show(context);
+      Get.back();
+      Get.off(() => RegisterCartScreen(
+            sponsorId: sponsorIdTController.text.removeAllWhitespace,
+            packageCode: widget.packageCode,
+          ));
     } else {
       CommonToast(res['Message']);
     }
-    setState(() {
-      submitLoad = false;
-    });
   }
 }

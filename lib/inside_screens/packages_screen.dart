@@ -132,6 +132,7 @@ class _PackageScreenState extends State<PackageScreen> {
                                     horizontal: 11, vertical: 2),
                                 child: HomeScreenProductCategory(
                                   height: i == 0 ? 100 : 90,
+                                  width: 60,
                                   imagePath: productsCategoriesOnTap[i].image,
                                   productName: productsCategoriesOnTap[i].title,
                                 ),
@@ -149,6 +150,7 @@ class _PackageScreenState extends State<PackageScreen> {
                                         vertical: 2, horizontal: 11),
                                     child: HomeScreenProductCategory(
                                       height: i == 0 ? 100 : 90,
+                                      width: 60,
                                       imagePath: productsCategories[i].image,
                                       productName: productsCategories[i].title,
                                     ),
@@ -192,6 +194,8 @@ class _PackageScreenState extends State<PackageScreen> {
                                               childAspectRatio: 1 / 1.35),
                                       itemBuilder: (context, i) {
                                         return CategroyItemWidget(
+                                            amount: packageController
+                                                .selPackageItemList[i].mrp,
                                             onTapFun: () {
                                               Get.to(() => PackageDetailsScreen(
                                                     from: widget.from,
@@ -205,7 +209,9 @@ class _PackageScreenState extends State<PackageScreen> {
                                             },
                                             imagePath:
                                                 "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                            // selPackageItemList[i].pImage,
+                                            // packageController
+                                            //     .selPackageItemList[i]
+                                            //     .pImage,
                                             titile: packageController
                                                 .selPackageItemList[i].pkname);
                                       },
@@ -256,7 +262,9 @@ class _PackageScreenState extends State<PackageScreen> {
                                                         ));
                                                   },
                                                   imagePath:
-                                                      // relPackageItemList[i].img,
+                                                      //  packageController
+                                                      //     .relPackageItemList[i]
+                                                      //     .img,
                                                       "https://admin.destina1.com/admin/RetailImages/20151.jpg",
                                                   titile: packageController
                                                       .relPackageItemList[i]
