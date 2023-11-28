@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../authentication_screens/login_screen.dart';
 import 'constants.dart';
@@ -116,10 +117,14 @@ class CustomFixedElevatedButton extends StatelessWidget {
 
 class CommonFormFieldwidget extends StatelessWidget {
   final Icon prefixIcon;
+  final String? hintText;
   final Function(String)? onChangeFun;
 
   const CommonFormFieldwidget(
-      {super.key, required this.prefixIcon, required this.onChangeFun});
+      {super.key,
+      required this.prefixIcon,
+      required this.onChangeFun,
+      this.hintText});
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +132,11 @@ class CommonFormFieldwidget extends StatelessWidget {
       onChanged: onChangeFun,
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: TextStyle(
+          color: blackColor.withOpacity(0.3),
+          fontSize: 14,
+        ),
         prefixIcon: prefixIcon,
         prefixIconColor: appthemeColor,
         isDense: true,
@@ -2091,7 +2101,7 @@ PreferredSizeWidget commonAppBar(
       backgroundColor: lightBlackColor,
       toolbarHeight: 0,
       bottom: PreferredSize(
-        preferredSize: const Size(1000, 50),
+        preferredSize: const Size(double.infinity, 50),
         child: Card(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
           color: whiteColor,
@@ -2101,8 +2111,10 @@ PreferredSizeWidget commonAppBar(
             height: 50,
             width: double.infinity,
             child: ListTile(
+                minLeadingWidth: 0,
                 leading: backNavigation
                     ? IconButton(
+                        padding: const EdgeInsets.all(0),
                         icon: const Icon(
                           Icons.keyboard_arrow_left,
                         ),
@@ -2115,8 +2127,10 @@ PreferredSizeWidget commonAppBar(
                     : const SizedBox.shrink(),
                 title: Text(
                   title ?? "",
-                  style: const TextStyle(
-                      fontFamily: "OnestSemiBold", fontSize: 19),
+                  style: TextStyle(
+                      fontFamily: "OnestSemiBold",
+                      overflow: TextOverflow.ellipsis,
+                      fontSize: title!.length > 20 ? 16 : 19),
                 )),
           ),
         ),
@@ -3681,23 +3695,24 @@ class AccountTextField extends StatelessWidget {
   final bool? readOnly;
   final Function(String)? onchangeFun;
   final VoidCallback? editFun;
+  final Color? backgroundColor;
 
-  const AccountTextField({
-    super.key,
-    required this.controller,
-    this.onchangeFun,
-    this.editFun,
-    this.readOnly,
-    this.onTapFun,
-    this.outsideFun,
-    this.borderColor,
-    this.inputFormatter,
-    this.textAlignVertical,
-    this.focusNode,
-    required this.hintText,
-    required this.textInputType,
-    required this.validation,
-  });
+  const AccountTextField(
+      {super.key,
+      required this.controller,
+      this.onchangeFun,
+      this.editFun,
+      this.readOnly,
+      this.onTapFun,
+      this.outsideFun,
+      this.borderColor,
+      this.inputFormatter,
+      this.textAlignVertical,
+      this.focusNode,
+      required this.hintText,
+      required this.textInputType,
+      required this.validation,
+      this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
@@ -3722,7 +3737,7 @@ class AccountTextField extends StatelessWidget {
         inputFormatters: inputFormatter ?? [],
         decoration: InputDecoration(
             filled: true,
-            fillColor: whiteColor,
+            fillColor: backgroundColor ?? whiteColor,
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
                 borderSide: BorderSide(
@@ -3754,10 +3769,14 @@ class MyAccountWidget extends StatelessWidget {
   final String title;
   final IconData? leadingIcon;
   final String? imagePath;
+  final bool? trailing;
+  final VoidCallback traillingFun;
   const MyAccountWidget(
       {super.key,
+      required this.traillingFun,
       required this.onTapFun,
       required this.title,
+      this.trailing,
       this.imagePath,
       this.leadingIcon});
 
@@ -3765,6 +3784,11 @@ class MyAccountWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Divider(
+          color: woodColor,
+          thickness: 1.5,
+          height: 0,
+        ),
         ListTile(
           onTap: onTapFun,
           dense: true,
@@ -3779,17 +3803,52 @@ class MyAccountWidget extends StatelessWidget {
             title,
             style: const TextStyle(fontSize: 14, fontFamily: "OnestRegular"),
           ),
-          trailing: const Icon(
-            Icons.arrow_forward_ios,
-            size: 15,
-          ),
+          trailing: trailing == null
+              ? const Icon(
+                  Icons.keyboard_arrow_right_rounded,
+                  size: 15,
+                )
+              : InkWell(
+                  onTap: traillingFun,
+                  child: trailing == false
+                      ? const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          size: 15,
+                        )
+                      : const Icon(
+                          Icons.keyboard_arrow_up_rounded,
+                          size: 15,
+                        ),
+                ),
         ),
-        Divider(
-          color: woodColor,
-          thickness: 1.5,
-          height: 0,
-        )
       ],
+    );
+  }
+}
+
+class MyAccountItemWidget extends StatelessWidget {
+  final VoidCallback onTapFun;
+  final String title;
+  const MyAccountItemWidget({
+    super.key,
+    required this.onTapFun,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      visualDensity: const VisualDensity(vertical: -4),
+      onTap: onTapFun,
+      dense: true,
+      leading: Image.asset(
+        "assets/images/arrow_right.png",
+        height: 15,
+      ),
+      title: Text(
+        title,
+        style: const TextStyle(fontSize: 14, fontFamily: "OnestRegular"),
+      ),
     );
   }
 }
@@ -3945,4 +4004,227 @@ class RankWidget extends StatelessWidget {
       ],
     );
   }
+}
+
+class DownLineWidget extends StatelessWidget {
+  final String title;
+  final String subtitle;
+
+  const DownLineWidget(
+      {super.key, required this.title, required this.subtitle});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ListTile(
+          dense: false,
+          leading: Container(
+            padding: const EdgeInsets.all(8),
+            width: 50,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                border:
+                    Border.all(color: greenColor.withOpacity(0.5), width: 2.5)),
+            child: Icon(
+              Icons.person,
+              size: 28,
+              color: lightDarKBlue,
+            ),
+          ),
+          title: const Text(
+            "DESTINA22",
+            style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 13),
+          ),
+          subtitle: const Text(
+            "Destina Test",
+            style: TextStyle(fontFamily: "OnestRegular", fontSize: 11),
+          ),
+          trailing: Image.asset(
+            "assets/images/share_mail.png",
+            height: 33,
+          ),
+        ),
+        const CommonDivider()
+      ],
+    );
+  }
+}
+
+class ViewProfileWidget extends StatelessWidget {
+  final String title;
+  final String info;
+  const ViewProfileWidget({super.key, required this.title, required this.info});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(3.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: Text(
+              title,
+              style: const TextStyle(fontFamily: "OnestRegular", fontSize: 14),
+            ),
+          ),
+          Text(
+            info,
+            style: const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ProfileDropDown extends StatelessWidget {
+  final void Function(String?)? onChangedFun;
+  final List<String> items;
+  final String? value;
+  final String? labelText;
+  final String? hintText;
+  final String? Function(String?)? validationFun;
+  const ProfileDropDown(
+      {super.key,
+      required this.onChangedFun,
+      this.validationFun,
+      this.value,
+      this.labelText,
+      this.hintText,
+      required this.items});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      // height: 40,
+      child: DropdownButtonFormField<String>(
+          // menuMaxHeight: 20,
+          // itemHeight: 40,
+          value: value,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: validationFun,
+          icon: Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: blackColor.withOpacity(0.5),
+          ),
+          isDense: true,
+          decoration: InputDecoration(
+              fillColor: whiteColor,
+              filled: true,
+              isDense: true,
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide:
+                      BorderSide(color: lightDarKBlue.withOpacity(0.3))),
+              labelText: labelText,
+              hintText: hintText,
+              hintStyle: TextStyle(
+                  fontFamily: "OnestRegular",
+                  fontSize: 14,
+                  color: blackColor.withOpacity(0.5)),
+              labelStyle: TextStyle(
+                  fontFamily: "OnestSemiBold", fontSize: 14, color: blackColor),
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              // contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide:
+                      BorderSide(color: lightDarKBlue.withOpacity(0.3))),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5),
+                  borderSide: BorderSide(
+                      width: 3.5, color: blueColor.withOpacity(0.5)))),
+          padding: const EdgeInsets.all(0),
+          borderRadius: BorderRadius.circular(5),
+          style: TextStyle(
+              fontFamily: "OnestRegular", color: blackColor.withOpacity(0.7)),
+          items: items
+              .map((e) =>
+                  DropdownMenuItem<String>(value: e, child: Text(e.toString())))
+              .toList(),
+          onChanged: onChangedFun),
+    );
+  }
+}
+
+class SideTitle extends StatelessWidget {
+  final String title;
+  const SideTitle({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      style: const TextStyle(fontFamily: "OnestRegular", fontSize: 14),
+    );
+  }
+}
+
+class ImageOptionsDialog extends StatelessWidget {
+  final VoidCallback cameraFun;
+  final VoidCallback galleryFun;
+  const ImageOptionsDialog(
+      {super.key, required this.cameraFun, required this.galleryFun});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: whiteColor,
+      title: const Text(
+        "Choose your image selection from?",
+        style: TextStyle(fontFamily: "OnestRegular", fontSize: 16),
+      ),
+      content: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          InkWell(
+            onTap: cameraFun,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.camera_alt_outlined,
+                  size: 35,
+                  color: appthemeColor,
+                ),
+                Text(
+                  "Camera",
+                  style: TextStyle(color: appthemeColor),
+                )
+              ],
+            ),
+          ),
+          InkWell(
+            onTap: galleryFun,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.image_outlined,
+                  size: 35,
+                  color: appthemeColor,
+                ),
+                Text(
+                  "Gallery",
+                  style: TextStyle(color: appthemeColor),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+imagePickFun(String from) async {
+  final ImagePicker picker = ImagePicker();
+  final XFile? image = await picker.pickImage(
+      source: from == "gallery" ? ImageSource.gallery : ImageSource.camera);
+  return image;
 }

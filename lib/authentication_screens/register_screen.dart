@@ -426,8 +426,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: "EX: jhonlee@gmail.com",
                         controller: emailTController,
                         validation: (val) {
-                          const String email = "tony@starkindustries.com";
-
                           RegExp reg = RegExp(
                               r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
 
