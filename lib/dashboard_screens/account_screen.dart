@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 
 import '../authentication_screens/login_screen.dart';
 import '../inside_screens/myaccount_screen.dart';
-import '../inside_screens/personal_details_screen.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -46,9 +45,9 @@ class _AccountScreenState extends State<AccountScreen>
     // Run the animation
     _controller.repeat(reverse: true);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Timer(const Duration(milliseconds: 500), () {
-        Get.to(() => const PersonalDetailsScreen());
-      });
+      // Timer(const Duration(milliseconds: 500), () {
+      //   Get.to(() => const PersonalDetailsScreen());
+      // });
     });
   }
 

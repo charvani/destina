@@ -464,7 +464,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     itemName:
                                         "D1 ADVANCE SCALAR ENERGIZED SCALARVIA",
                                     amount: "2465",
-                                    memberAmount: "",
                                     exclusiveProduct: false,
                                   ),
                                 )

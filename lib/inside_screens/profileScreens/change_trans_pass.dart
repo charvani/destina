@@ -72,9 +72,10 @@ class _ChangeTransPassScreenState extends State<ChangeTransPassScreen> {
                   controller: newpassController,
                   validation: (val) {
                     if (val!.isEmpty) {
-                      return "New Password";
-                    } else if (val.length < 6) {
-                      return "Characters more than 5";
+                      return "Confirm Password";
+                    } else if (newpassController.text !=
+                        confirmPassController.text) {
+                      return "New password and confirm password\nshould be same";
                     } else {
                       return null;
                     }

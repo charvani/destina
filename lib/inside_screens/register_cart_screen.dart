@@ -9,15 +9,17 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../commons/colors.dart';
+import 'checkout_screen.dart';
 
 class RegisterCartScreen extends StatefulWidget {
   final String packageCode;
   final String sponsorId;
-  const RegisterCartScreen({
-    super.key,
-    required this.packageCode,
-    required this.sponsorId,
-  });
+  final String countryId;
+  const RegisterCartScreen(
+      {super.key,
+      required this.packageCode,
+      required this.sponsorId,
+      required this.countryId});
 
   @override
   State<RegisterCartScreen> createState() => _RegisterCartScreenState();
@@ -426,9 +428,11 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                           height: 35,
                                           child: IconElevatedButton(
                                             onTapFun: () async {
-                                              print("sess...$sessionId");
+                                              // print("sess...$sessionId");
+                                              // print(
+                                              //     "https://showcase.worldunityfoundation.org/checkwebitems.html?countrycode=MY&sprno=${widget.sponsorId}&sessid=$sessionId&uniqId=$uniqId");
                                               print(
-                                                  "https://showcase.worldunityfoundation.org/checkwebitems.html?countrycode=MY&sprno=${widget.sponsorId}&sessid=$sessionId&uniqId=$uniqId");
+                                                  "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
 
                                               // Map parameters = {
                                               //   "Action": "checkoutitems_MA",
@@ -449,9 +453,9 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                               //         .toString()
                                               //         .toLowerCase() ==
                                               //     "success") {
-                                              // Get.off(() => CheckOutScreen(
-                                              //     redirectUrl:
-                                              //         "https://showcase.worldunityfoundation.org/checkwebitems.html?countrycode=MY&sprno=${widget.sponsorId}&sessid=$sessionId&uniqId=$uniqId"));
+                                              Get.off(() => CheckOutScreen(
+                                                  redirectUrl:
+                                                      "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&sessid=$sessionId&uniqId=$uniqId"));
 
                                               // }
                                             },

@@ -1,16 +1,34 @@
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/inside_screens/profileScreens/update_photo.dart';
+import 'package:destina_1_international/inside_screens/servicesScreens/downloads_screen.dart';
+import 'package:destina_1_international/inside_screens/servicesScreens/kyc_upload.dart';
+import 'package:destina_1_international/inside_screens/servicesScreens/trainingtools_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import 'moneysummary_screen.dart';
+import 'myEmoney/ecart_topupreq_screen.dart';
+import 'myEmoney/transaction_pass_screen.dart';
+import 'myTeams/group_sales_screen.dart';
+import 'myTeams/my_genealogy.dart';
+import 'myTeams/mylistview_screen.dart';
+import 'myTeams/myteam_view.dart';
+import 'myTeams/team_builderview.dart';
+import 'myorderScreens/order_acknowledge_screen.dart';
+import 'myorderScreens/orders_reportselection_screen.dart';
+import 'profileDashBoard/profile_dashboard_screen.dart';
+import 'profileScreens/award_qualifiers.dart';
 import 'profileScreens/change_password.dart';
 import 'profileScreens/change_trans_pass.dart';
+import 'profileScreens/d1voucher_screen.dart';
+import 'profileScreens/forgot_transpass.dart';
 import 'profileScreens/listof_requests.dart';
 import 'profileScreens/profile_update.dart';
 import 'profileScreens/view_profile.dart';
+import 'servicesScreens/forms_agreements_screen.dart';
+import 'servicesScreens/salesstools_screen.dart';
+import 'servicesScreens/upload_id_screen.dart';
 
 class MyAccountScreen extends StatefulWidget {
   const MyAccountScreen({super.key});
@@ -277,17 +295,24 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           title: "List of Request",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const ForgotTransPassScreen());
+          },
           title: "Forgot Trans Password",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const AwardQualifiersScreen());
+          },
           title: "Awards Qualifiers",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const D1VoucherScreen());
+          },
           title: "D1 Voucher",
         ),
+        const SpaceHeightWidget(height: 13)
       ],
     );
   }
@@ -296,29 +321,42 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     return Column(
       children: [
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const SalesToolsScreen());
+          },
           title: "Sales & Marketing Tools",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const TrainingToolsScreen());
+          },
           title: "Training Tools",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const FormsAgreementScreen());
+          },
           title: "Forms & Agreement",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const DownloadsScreen());
+          },
           title: "Downloads",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
-          title: "Upload kYC",
+          onTapFun: () {
+            Get.to(() => const UploadKYCScreen());
+          },
+          title: "Upload KYC",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const UploadIDScreen());
+          },
           title: "Upload ID",
         ),
+        const SpaceHeightWidget(height: 13)
       ],
     );
   }
@@ -327,25 +365,36 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     return Column(
       children: [
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const MyGenealogy());
+          },
           title: "My Genealogy",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const TeamBuilderViewScreen());
+          },
           title: "Team Builder View",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const MyTeamViewScreen());
+          },
           title: "My Team View",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const MyListViewScreen());
+          },
           title: "My List View",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const GroupSalesSelectionScreen());
+          },
           title: "Group Sales",
         ),
+        const SpaceHeightWidget(height: 13)
       ],
     );
   }
@@ -354,13 +403,18 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     return Column(
       children: [
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const OrdersSectionScreen());
+          },
           title: "Orders Report",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const OrderAknowledgeScreen());
+          },
           title: "Order Acknowledge",
         ),
+        const SpaceHeightWidget(height: 13)
       ],
     );
   }
@@ -369,31 +423,57 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     return Column(
       children: [
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const TransactionPasswordScreen(
+                  from: "E-Card",
+                ));
+          },
           title: "E-Card",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const TransactionPasswordScreen(
+                  from: "Commission",
+                ));
+          },
           title: "Commission eMoney",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const TransactionPasswordScreen(
+                  from: "Redemption",
+                ));
+          },
           title: "Redemption eMoney",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const TransactionPasswordScreen(
+                  from: "Prepaid",
+                ));
+          },
           title: "Prepaid eMoney",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const TransactionPasswordScreen(
+                  from: "Stockist",
+                ));
+          },
           title: "Stockist eMoney",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const TransactionPasswordScreen(
+                  from: "Withdrawal",
+                ));
+          },
           title: "Withdrawal Status",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const EcardTopupRequestScreen());
+          },
           title: "Ecard Topup Request",
         ),
         MyAccountItemWidget(
@@ -412,6 +492,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           onTapFun: () {},
           title: "DP Wallet",
         ),
+        const SpaceHeightWidget(height: 13)
       ],
     );
   }
@@ -435,6 +516,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           onTapFun: () {},
           title: "Dp Mall",
         ),
+        const SpaceHeightWidget(height: 13)
       ],
     );
   }
@@ -502,6 +584,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           onTapFun: () {},
           title: "Flush CV Report",
         ),
+        const SpaceHeightWidget(height: 13)
       ],
     );
   }
@@ -525,6 +608,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           onTapFun: () {},
           title: "FTA Form Report",
         ),
+        const SpaceHeightWidget(height: 13)
       ],
     );
   }

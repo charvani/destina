@@ -814,89 +814,95 @@ class AboutUsScreenWidget extends StatelessWidget {
 class MyOrderItemWidget extends StatelessWidget {
   final String itemName;
   final String imgPath;
-  final String categoryName;
+  final VoidCallback shippingFun;
+  final VoidCallback invoiceFun;
   final String mrpRate;
-  final String itemRate;
-  final String orderStatus;
-  final int itemCount;
-  const MyOrderItemWidget({
-    super.key,
-    required this.itemName,
-    required this.orderStatus,
-    required this.imgPath,
-    required this.categoryName,
-    required this.mrpRate,
-    required this.itemRate,
-    required this.itemCount,
-  });
+  final String date;
+  final String ordercode;
+  const MyOrderItemWidget(
+      {super.key,
+      required this.shippingFun,
+      required this.itemName,
+      required this.imgPath,
+      required this.mrpRate,
+      required this.ordercode,
+      required this.invoiceFun,
+      required this.date});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Text(
-              orderStatus,
-              style: TextStyle(
-                  fontSize: 15,
-                  color: orderStatus == "Cancelled"
-                      ? redColor
-                      : orderStatus == "Delivered"
-                          ? greenColor
-                          : blackColor),
-            ),
-          ),
-          const SpaceHeightWidget(height: 5),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Image.asset(
-                  imgPath,
-                  height: 90,
-                ),
+    return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: lightDarKBlue.withOpacity(0.3))),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset(
+                    imgPath,
+                    height: 90,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          itemName.toUpperCase(),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontFamily: "OnestBold",
+                              fontSize: 16,
+                              color: lightDarKBlue),
+                        ),
+                        const Text(
+                          "Buy",
+                          style: TextStyle(
+                            fontFamily: "OnestRegular",
+                            fontSize: 10,
+                          ),
+                        ),
+                        const SpaceHeightWidget(height: 15),
+                        SizedBox(
+                            height: 25,
+                            width: 120,
+                            child: CommonOulineTextButton(
+                                onTapFun: shippingFun,
+                                title: "Shipping History"))
+                      ],
+                    ),
+                  )
+                ],
               ),
-              // const SpaceWidthWidget(width: 13),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+            const SpaceHeightWidget(height: 10),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(8),
+              color: lightDarKBlue.withOpacity(0.15),
+              child: Column(children: [
+                ViewProfileWidget(title: "Order Placed", info: date),
+                ViewProfileWidget(title: "Total Amount", info: mrpRate),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("$itemCount x $itemName"),
-                    Text(
-                      categoryName,
-                      style: const TextStyle(fontSize: 10),
-                    ),
-                    Row(children: [
-                      const Text(
-                        "MRP ₹ ",
-                        style: TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.normal),
-                      ),
-                      Text("$mrpRate.00",
-                          style: const TextStyle(
-                              decoration: TextDecoration.lineThrough,
-                              fontSize: 12,
-                              fontWeight: FontWeight.normal)),
-                    ]),
-                    Text("₹ $itemRate"),
-                    const Text(
-                      "(incl.of all taxes)",
-                      style: TextStyle(fontSize: 10),
-                    ),
+                    SideTitle(title: "Order# $ordercode"),
+                    SizedBox(
+                        height: 28,
+                        width: 100,
+                        child: CustomElevatedButton(
+                            onTapFun: invoiceFun, title: "Invoice"))
                   ],
-                ),
-              )
-            ],
-          ),
-        ],
-      ),
-    );
+                )
+              ]),
+            )
+          ],
+        ));
   }
 }
 
@@ -1038,7 +1044,7 @@ class FreeDeliveryBanner extends StatelessWidget {
           ),
           const SpaceWidthWidget(width: 20),
           Text(
-            "Free delivery! When order up to $amount Baht",
+            "Free delivery! When order up to $amount RM",
             style: TextStyle(color: limeColor, fontFamily: "OnestRegular"),
           )
         ],
@@ -1089,19 +1095,18 @@ class PromotionItemWidget extends StatelessWidget {
   final String imagePath;
   final String itemName;
   final String amount;
-  final String memberAmount;
   final bool exclusiveProduct;
   final Color? amountColor;
   final VoidCallback onTapFun;
-  const PromotionItemWidget(
-      {super.key,
-      required this.imagePath,
-      required this.itemName,
-      required this.amount,
-      this.amountColor,
-      required this.onTapFun,
-      required this.exclusiveProduct,
-      required this.memberAmount});
+  const PromotionItemWidget({
+    super.key,
+    required this.imagePath,
+    required this.itemName,
+    required this.amount,
+    this.amountColor,
+    required this.onTapFun,
+    required this.exclusiveProduct,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -1120,7 +1125,7 @@ class PromotionItemWidget extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 mainAxisSize: MainAxisSize.min,
@@ -1187,40 +1192,32 @@ class PromotionItemWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              const SpaceHeightWidget(height: 5),
-              if (memberAmount != "")
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text("฿ ",
-                              style: TextStyle(
-                                  fontFamily: "OnestSemiBold",
-                                  fontSize: 14,
-                                  color: amountColor ?? blackColor)),
-                          Text(
-                            amount,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text("RM ",
                             style: TextStyle(
                                 fontFamily: "OnestSemiBold",
-                                fontSize: 20,
-                                color: amountColor ?? blackColor),
-                          )
-                        ],
-                      ),
-                      Text(
-                        "Member ฿ $memberAmount",
-                        style: TextStyle(
-                            fontFamily: "OnestRegular",
-                            fontSize: 11,
-                            color: blackColor.withOpacity(0.8)),
-                      )
-                    ],
-                  ),
+                                fontSize: 14,
+                                color: amountColor ?? blackColor)),
+                        Text(
+                          amount,
+                          style: TextStyle(
+                              fontFamily: "OnestSemiBold",
+                              fontSize: 20,
+                              color: amountColor ?? blackColor),
+                        )
+                      ],
+                    ),
+                    const SpaceHeightWidget(height: 5)
+                  ],
                 ),
+              ),
             ],
           ),
         ),
@@ -1274,13 +1271,23 @@ class HomeScreenProductCategory extends StatelessWidget {
 class CommonTitle extends StatelessWidget {
   final String titleName;
   final String? fontFamily;
-  const CommonTitle({super.key, required this.titleName, this.fontFamily});
+  final double? size;
+  final Color? fontColor;
+  const CommonTitle(
+      {super.key,
+      required this.titleName,
+      this.fontFamily,
+      this.size,
+      this.fontColor});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       titleName,
-      style: TextStyle(fontFamily: fontFamily ?? "OnestSemiBold", fontSize: 18),
+      style: TextStyle(
+          fontFamily: fontFamily ?? "OnestSemiBold",
+          fontSize: size ?? 18,
+          color: fontColor),
     );
   }
 }
@@ -1304,14 +1311,13 @@ class HomeScreenNewArrivalItemWidget extends StatelessWidget {
   final VoidCallback onTapFun;
   final String itemName;
   final String amount;
-  final String memberAmount;
-  const HomeScreenNewArrivalItemWidget(
-      {super.key,
-      required this.onTapFun,
-      required this.imagePath,
-      required this.itemName,
-      required this.amount,
-      required this.memberAmount});
+  const HomeScreenNewArrivalItemWidget({
+    super.key,
+    required this.onTapFun,
+    required this.imagePath,
+    required this.itemName,
+    required this.amount,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -1352,7 +1358,7 @@ class HomeScreenNewArrivalItemWidget extends StatelessWidget {
                       const SpaceHeightWidget(height: 8),
                       Row(
                         children: [
-                          Text("฿ ",
+                          Text("RM ",
                               style: TextStyle(
                                   fontFamily: "OnestSemiBold",
                                   fontSize: 14,
@@ -1366,11 +1372,6 @@ class HomeScreenNewArrivalItemWidget extends StatelessWidget {
                           )
                         ],
                       ),
-                      Text(
-                        "Member price ฿ $memberAmount",
-                        style: const TextStyle(
-                            fontFamily: "OnestRegular", fontSize: 10),
-                      )
                     ],
                   ),
                 ),
@@ -1630,11 +1631,11 @@ class SopCarouselWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("฿",
+                        Text("RM ",
                             style: TextStyle(
-                                fontFamily: "OnestExtraBold",
+                                fontFamily: "OnestRegular",
                                 fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                                // fontWeight: FontWeight.bold,
                                 color: blackColor)),
                         Text(
                           amount,
@@ -2096,6 +2097,7 @@ PreferredSizeWidget commonAppBar(
     {BuildContext? context,
     String? title,
     VoidCallback? onTapFun,
+    Widget? action,
     bool backNavigation = false}) {
   return AppBar(
       backgroundColor: lightBlackColor,
@@ -2111,27 +2113,29 @@ PreferredSizeWidget commonAppBar(
             height: 50,
             width: double.infinity,
             child: ListTile(
-                minLeadingWidth: 0,
-                leading: backNavigation
-                    ? IconButton(
-                        padding: const EdgeInsets.all(0),
-                        icon: const Icon(
-                          Icons.keyboard_arrow_left,
-                        ),
-                        onPressed: onTapFun ??
-                            () {
-                              Get.back();
-                              // Navigator.pop(context!);
-                            },
-                      )
-                    : const SizedBox.shrink(),
-                title: Text(
-                  title ?? "",
-                  style: TextStyle(
-                      fontFamily: "OnestSemiBold",
-                      overflow: TextOverflow.ellipsis,
-                      fontSize: title!.length > 20 ? 16 : 19),
-                )),
+              minLeadingWidth: 0,
+              leading: backNavigation
+                  ? IconButton(
+                      padding: const EdgeInsets.all(0),
+                      icon: const Icon(
+                        Icons.keyboard_arrow_left,
+                      ),
+                      onPressed: onTapFun ??
+                          () {
+                            Get.back();
+                            // Navigator.pop(context!);
+                          },
+                    )
+                  : const SizedBox.shrink(),
+              title: Text(
+                title ?? "",
+                style: TextStyle(
+                    fontFamily: "OnestSemiBold",
+                    overflow: TextOverflow.ellipsis,
+                    fontSize: title!.length > 20 ? 16 : 19),
+              ),
+              trailing: action,
+            ),
           ),
         ),
       ));
@@ -3696,10 +3700,12 @@ class AccountTextField extends StatelessWidget {
   final Function(String)? onchangeFun;
   final VoidCallback? editFun;
   final Color? backgroundColor;
+  final int? minLines;
 
   const AccountTextField(
       {super.key,
       required this.controller,
+      this.minLines,
       this.onchangeFun,
       this.editFun,
       this.readOnly,
@@ -3729,6 +3735,8 @@ class AccountTextField extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: controller,
         keyboardType: textInputType,
+        minLines: minLines,
+        maxLines: null,
         style: TextStyle(
             fontFamily: "OnestSemiBold",
             fontSize: 14,
@@ -4054,7 +4062,11 @@ class DownLineWidget extends StatelessWidget {
 class ViewProfileWidget extends StatelessWidget {
   final String title;
   final String info;
-  const ViewProfileWidget({super.key, required this.title, required this.info});
+  const ViewProfileWidget({
+    super.key,
+    required this.title,
+    required this.info,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -4102,7 +4114,8 @@ class ProfileDropDown extends StatelessWidget {
       // height: 40,
       child: DropdownButtonFormField<String>(
           // menuMaxHeight: 20,
-          // itemHeight: 40,
+          itemHeight: null,
+          isExpanded: true,
           value: value,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: validationFun,
@@ -4144,8 +4157,12 @@ class ProfileDropDown extends StatelessWidget {
           style: TextStyle(
               fontFamily: "OnestRegular", color: blackColor.withOpacity(0.7)),
           items: items
-              .map((e) =>
-                  DropdownMenuItem<String>(value: e, child: Text(e.toString())))
+              .map((e) => DropdownMenuItem<String>(
+                  value: e.contains("Government") ? e.replaceAll("\n", "") : e,
+                  child: Text(
+                    e.contains("Government") ? e.replaceAll("\n", " ") : e,
+                    style: const TextStyle(overflow: TextOverflow.ellipsis),
+                  )))
               .toList(),
           onChanged: onChangedFun),
     );
@@ -4227,4 +4244,229 @@ imagePickFun(String from) async {
   final XFile? image = await picker.pickImage(
       source: from == "gallery" ? ImageSource.gallery : ImageSource.camera);
   return image;
+}
+
+class ServiceToolWidget extends StatelessWidget {
+  final VoidCallback onTapFun;
+  final String title;
+  final String date;
+  const ServiceToolWidget(
+      {super.key,
+      required this.onTapFun,
+      required this.date,
+      required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: onTapFun,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(
+                            fontFamily: "OnestSemiBold", fontSize: 13),
+                      ),
+                      Text(
+                        date,
+                        style: TextStyle(
+                            fontFamily: "OnestRegular",
+                            fontSize: 12,
+                            color: middleBlackColor.withOpacity(0.5)),
+                      ),
+                    ],
+                  ),
+                ),
+                const SpaceWidthWidget(width: 15),
+                const Row(
+                  children: [
+                    Text(
+                      "View",
+                      style:
+                          TextStyle(fontFamily: "OnestSemiBold", fontSize: 12),
+                    ),
+                    Icon(Icons.keyboard_arrow_right_rounded)
+                  ],
+                )
+              ],
+            ),
+          ),
+          const CommonDivider()
+        ],
+      ),
+    );
+  }
+}
+
+class lllllll extends StatelessWidget {
+  final VoidCallback removeFun;
+  final String itemCount;
+  final String productCode;
+  final String itemname;
+  final String imagePath;
+  final String itemsPrice;
+  final bool? removeCartOption;
+
+  const lllllll(
+      {super.key,
+      this.removeCartOption,
+      required this.removeFun,
+      required this.imagePath,
+      required this.itemname,
+      required this.itemsPrice,
+      required this.productCode,
+      required this.itemCount});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CommonCachedNetworkImage(
+            imagePath: imagePath,
+            height: 90,
+          ),
+          const SpaceWidthWidget(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  itemname,
+                  maxLines: 3,
+                  style: TextStyle(
+                      fontFamily: "OnestRegular",
+                      fontSize: 11,
+                      color: blackColor),
+                ),
+                const SpaceHeightWidget(height: 5),
+                RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                    text: "Product Code: ",
+                    style: TextStyle(
+                        fontFamily: "OnestRegular",
+                        fontSize: 12,
+                        color: blackColor.withOpacity(0.7)),
+                  ),
+                  TextSpan(
+                      text: productCode,
+                      style: TextStyle(
+                          fontFamily: "OnestRegular",
+                          fontSize: 12,
+                          color: blackColor.withOpacity(0.5)))
+                ])),
+                const SpaceHeightWidget(height: 5),
+                RichText(
+                    text: TextSpan(children: [
+                  TextSpan(
+                    text: "Quantity: ",
+                    style: TextStyle(
+                        fontFamily: "OnestRegular",
+                        fontSize: 12,
+                        color: blackColor.withOpacity(0.7)),
+                  ),
+                  TextSpan(
+                      text: itemCount,
+                      style: TextStyle(
+                          fontFamily: "OnestRegular",
+                          fontSize: 12,
+                          color: blackColor.withOpacity(0.5)))
+                ])),
+                const SpaceHeightWidget(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    RichText(
+                        text: TextSpan(children: [
+                      TextSpan(
+                        text: "MRP: ",
+                        style: TextStyle(
+                            fontFamily: "OnestRegular",
+                            fontSize: 12,
+                            color: blackColor.withOpacity(0.7)),
+                      ),
+                      TextSpan(
+                          text: itemsPrice,
+                          style: TextStyle(
+                              fontFamily: "OnestRegular",
+                              fontSize: 12,
+                              color: blackColor.withOpacity(0.5)))
+                    ])),
+                    if (removeCartOption != true)
+                      GestureDetector(
+                          onTap: removeFun,
+                          child: CircleAvatar(
+                            radius: 15,
+                            backgroundColor: darkRedColor,
+                            child: Icon(
+                              Icons.delete_forever,
+                              color: whiteColor,
+                              size: 17,
+                            ),
+                          ))
+                  ],
+                ),
+                const SpaceHeightWidget(height: 5),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class TableHeadingWidget extends StatelessWidget {
+  final String title;
+  const TableHeadingWidget({
+    super.key,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Text(
+          title,
+          style: TextStyle(
+              fontFamily: "OnestSemiBold", fontSize: 12, color: blackColor),
+        ),
+      );
+    }
+  }
+}
+
+class TableInfoWidget extends StatelessWidget {
+  final String info;
+  const TableInfoWidget({super.key, required this.info});
+
+  @override
+  Widget build(BuildContext context) {
+    {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Text(
+          info,
+          style: TextStyle(
+              fontFamily: "OnestRegular", fontSize: 12, color: blackColor),
+        ),
+      );
+    }
+  }
 }

@@ -309,9 +309,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             behavior: HitTestBehavior.translucent,
                             onTap: () {
                               Get.offAll(() => BottomBarScreen(
-                                index: 1,
-                                productIndex: i,
-                              ));
+                                    index: 1,
+                                    productIndex: i,
+                                  ));
                             },
                             child: HomeScreenProductCategory(
                               imagePath: productsCategories[i].image,
@@ -375,8 +375,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     .title
                                                     .capitalizeFirst
                                                     .toString(),
-                            amount: "2465",
-                            memberAmount: "2240",
+                            amount: "2${i}3",
                           );
                         },
                         options: CarouselOptions(
@@ -491,7 +490,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       shrinkWrap: true,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2, childAspectRatio: 1 / 1.5),
+                              crossAxisCount: 2, childAspectRatio: 1 / 1.3),
                       itemBuilder: (context, i) {
                         return PromotionItemWidget(
                           onTapFun: () {
@@ -522,8 +521,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               .title
                                               .capitalize
                                               .toString(),
-                          amount: "2465",
-                          memberAmount: "2240",
+                          amount: "23$i",
                           exclusiveProduct: false,
                         );
                       },
@@ -590,7 +588,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       // crossAxisCount: i == 2 ? 1 : 2,
                       // childAspectRatio: i == 2 ? 1.3 : 1 / 1.55
                       crossAxisCount: 2,
-                      childAspectRatio: 1 / 1.5),
+                      childAspectRatio: 1 / 1.35),
                   itemBuilder: (context, index) {
                     return PromotionItemWidget(
                       onTapFun: () {
@@ -641,8 +639,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               .title
                                                           : promotionItems[9]
                                                               .title,
-                      amount: "2465",
-                      memberAmount: "2240",
+                      amount: "3${i}5",
                       exclusiveProduct: true,
                     );
                   },

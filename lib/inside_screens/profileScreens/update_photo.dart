@@ -83,7 +83,15 @@ class _UpdatePhotoScreenState extends State<UpdatePhotoScreen> {
                 padding: const EdgeInsets.symmetric(
                   horizontal: 25,
                 ),
-                child: CustomElevatedButton(onTapFun: () {}, title: "UPDATE"),
+                child: CustomElevatedButton(
+                    onTapFun: () {
+                      if (image != null) {
+                        print("image fun");
+                      } else {
+                        CommonToast("Select image");
+                      }
+                    },
+                    title: "UPDATE"),
               ),
             ],
           ),

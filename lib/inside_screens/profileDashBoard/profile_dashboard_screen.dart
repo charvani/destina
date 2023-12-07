@@ -1,6 +1,9 @@
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'redeem_screen.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({super.key});
@@ -104,7 +107,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               children: [
                 Expanded(
                   child: RedeemWidget(
-                    onTapFun: () {},
+                    onTapFun: () {
+                      Get.to(() => const DashboardRedeemScreen(
+                            title: "D1 CASH BACK POINTS REDEEM",
+                            rmval: " RM 6",
+                            points: "0",
+                          ));
+                    },
                     title: "D1 CASH BACK POINTS",
                     points: "0",
                   ),
@@ -114,9 +123,15 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
                 Expanded(
                   child: RedeemWidget(
-                    onTapFun: () {},
-                    title: "D1 CASH BACK POINTS",
-                    points: "0",
+                    onTapFun: () {
+                      Get.to(() => const DashboardRedeemScreen(
+                            title: "D1 CREDIT REBATE POINTS REDEEM",
+                            rmval: "RM 7",
+                            points: "100",
+                          ));
+                    },
+                    title: "D1 CREDIT REBATE POINTS",
+                    points: "100",
                   ),
                 )
               ],
@@ -212,19 +227,21 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ),
             ),
           ),
-          myDataSelectedInd == 0
-              ? myIncomeWidget()
-              : myDataSelectedInd == 1
-                  ? businessWidget()
-                  : myDataSelectedInd == 2
-                      ? cvStatisticsWidget()
-                      : myDataSelectedInd == 3
-                          ? packageWidget()
-                          : myDataSelectedInd == 4
-                              ? maintenanceWidget()
-                              : myDataSelectedInd == 5
-                                  ? licenseWidget()
-                                  : personalWidget(),
+          Container(
+              margin: const EdgeInsets.symmetric(horizontal: 5),
+              child: myDataSelectedInd == 0
+                  ? myIncomeWidget()
+                  : myDataSelectedInd == 1
+                      ? businessWidget()
+                      : myDataSelectedInd == 2
+                          ? cvStatisticsWidget()
+                          : myDataSelectedInd == 3
+                              ? packageWidget()
+                              : myDataSelectedInd == 4
+                                  ? maintenanceWidget()
+                                  : myDataSelectedInd == 5
+                                      ? licenseWidget()
+                                      : personalWidget()),
           const SpaceHeightWidget(height: 150)
         ]),
       ),

@@ -812,6 +812,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       Get.off(() => RegisterCartScreen(
             sponsorId: sponsorIdTController.text.removeAllWhitespace,
             packageCode: widget.packageCode,
+            countryId: widget.countryId,
           ));
     } else {
       CommonToast(res['Message']);

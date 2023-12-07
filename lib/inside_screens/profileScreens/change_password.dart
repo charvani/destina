@@ -99,7 +99,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       return "Confirm Password";
                     } else if (newpassController.text !=
                         confirmPassController.text) {
-                      return "Characters more than 5";
+                      return "New password and confirm password\nshould be same";
                     } else {
                       return null;
                     }
