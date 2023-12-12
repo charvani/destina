@@ -1,4 +1,5 @@
 import 'package:destina_1_international/authentication_screens/register_screen.dart';
+import 'package:destina_1_international/authentication_screens/sponsor_check_screen.dart';
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/commons/constants.dart';
@@ -104,9 +105,10 @@ class _EnrollPackageScreenState extends State<EnrollPackageScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: CustomElevatedButton(
                         onTapFun: () {
-                          Get.to(() => RegisterScreen(
+                          Get.to(() => SponsorCheckScreen(
                               packageCode: widget.packageCoded,
-                              countryId: widget.countyId));
+                              countryId: widget.countyId
+                              ));
                         },
                         title: "Submit"),
                   ),

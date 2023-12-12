@@ -3,19 +3,20 @@ import 'package:flutter/material.dart';
 
 import '../../commons/colors.dart';
 
-class GetReportScreen extends StatefulWidget {
+class MyListViewGetReportScreen extends StatefulWidget {
   final String? fromDate;
   final String? toDate;
   final String? onDate;
   final String? all;
-  const GetReportScreen(
+  const MyListViewGetReportScreen(
       {super.key, this.fromDate, this.toDate, this.onDate, this.all});
 
   @override
-  State<GetReportScreen> createState() => _GetReportScreenState();
+  State<MyListViewGetReportScreen> createState() =>
+      _MyListViewGetReportScreenState();
 }
 
-class _GetReportScreenState extends State<GetReportScreen> {
+class _MyListViewGetReportScreenState extends State<MyListViewGetReportScreen> {
   @override
   void initState() {
     super.initState();
@@ -31,7 +32,7 @@ class _GetReportScreenState extends State<GetReportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: " ", backNavigation: true),
+      appBar: commonAppBar(title: "My List View", backNavigation: true),
       body: Container(
         color: whiteColor,
         child: SingleChildScrollView(

@@ -1,0 +1,243 @@
+import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+
+import '../../commons/colors.dart';
+import 'customer_acquisition_screen.dart';
+import 'direct_distributor_bonusscreen.dart';
+import 'flush_cvscreen.dart';
+import 'personal_salesscreen.dart';
+import 'retail_bonusscreen.dart';
+import 'special_leadership_screen.dart';
+import 'teambuilder_buissiness_screen.dart';
+import 'upgrade_acquisition_screen.dart';
+
+class BonusDateSelectionScreen extends StatefulWidget {
+  final String from;
+  const BonusDateSelectionScreen({super.key, required this.from});
+
+  @override
+  State<BonusDateSelectionScreen> createState() =>
+      _BonusDateSelectionScreenState();
+}
+
+class _BonusDateSelectionScreenState extends State<BonusDateSelectionScreen> {
+  DateTime fromSelectedDate = DateTime.now();
+  DateTime toSelectedDate = DateTime.now();
+  TextEditingController fromDateTController = TextEditingController();
+  TextEditingController toDateTController = TextEditingController();
+  TextEditingController distributorIDTController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    print("from....${widget.from}");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: commonAppBar(title: "", backNavigation: true),
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+              border: Border.all(
+                color: lightDarKBlue.withOpacity(0.2),
+              ),
+              borderRadius: BorderRadius.circular(15)),
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+          margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SideTitle(title: "Date From"),
+                    SizedBox(
+                      width: 150,
+                      child: LoginTextField(
+                          readOnly: true,
+                          onTapFun: () async {
+                            final DateTime? picked = await showDatePicker(
+                              builder: (context, child) {
+                                return Theme(
+                                    data: Theme.of(context).copyWith(
+                                      primaryColor: blackColor,
+                                      colorScheme: ColorScheme.light(
+                                          primary: blackColor,
+                                          onPrimary: whiteColor),
+                                      buttonTheme: const ButtonThemeData(
+                                          textTheme: ButtonTextTheme.primary),
+                                    ),
+                                    child: child!);
+                              },
+                              lastDate: DateTime.now(),
+                              context: context,
+                              initialDate: fromSelectedDate,
+                              firstDate: DateTime(1900, 0),
+                            );
+                            if (picked != null) {
+                              print(picked);
+                              final DateFormat formatter =
+                                  DateFormat('dd-MM-yyyy');
+                              setState(() {
+                                fromDateTController.text =
+                                    formatter.format(picked);
+                              });
+                            }
+                          },
+                          suffix: Icon(
+                            Icons.calendar_month_rounded,
+                            color: middleBlackColor.withOpacity(0.5),
+                          ),
+                          controller: fromDateTController,
+                          hintText: "dd-mm-yyyy",
+                          textInputType: TextInputType.datetime,
+                          validation: (val) {
+                            if (val!.isEmpty) {
+                              return "Select From date";
+                            } else {
+                              return null;
+                            }
+                          },
+                          labelText: ""),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SideTitle(title: "Date To"),
+                    SizedBox(
+                      width: 150,
+                      child: LoginTextField(
+                          readOnly: true,
+                          onTapFun: () async {
+                            final DateTime? picked = await showDatePicker(
+                              builder: (context, child) {
+                                return Theme(
+                                    data: Theme.of(context).copyWith(
+                                      primaryColor: blackColor,
+                                      colorScheme: ColorScheme.light(
+                                          primary: blackColor,
+                                          onPrimary: whiteColor),
+                                      buttonTheme: const ButtonThemeData(
+                                          textTheme: ButtonTextTheme.primary),
+                                    ),
+                                    child: child!);
+                              },
+                              lastDate: DateTime.now(),
+                              context: context,
+                              initialDate: toSelectedDate,
+                              firstDate: DateTime(1900, 0),
+                            );
+                            if (picked != null) {
+                              print(picked);
+                              final DateFormat formatter =
+                                  DateFormat('dd-MM-yyyy');
+                              setState(() {
+                                toDateTController.text =
+                                    formatter.format(picked);
+                              });
+                            }
+                          },
+                          suffix: Icon(
+                            Icons.calendar_month_rounded,
+                            color: middleBlackColor.withOpacity(0.5),
+                          ),
+                          controller: toDateTController,
+                          hintText: "dd-mm-yyyy",
+                          textInputType: TextInputType.datetime,
+                          validation: (val) {
+                            if (val!.isEmpty) {
+                              return "Select To date";
+                            } else {
+                              return null;
+                            }
+                          },
+                          labelText: ""),
+                    ),
+                  ],
+                ),
+                if (widget.from == "Customer Acquisition" ||
+                    widget.from == "Upgrade Acquisition" ||
+                    widget.from == "Special Leadership")
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SpaceHeightWidget(height: 8),
+                      const SideTitle(title: "From Distributor ID"),
+                      AccountTextField(
+                        onchangeFun: (val) {},
+                        outsideFun: (val) async {},
+                        textInputType: TextInputType.name,
+                        hintText: "",
+                        controller: distributorIDTController,
+                        validation: (val) {
+                          if (val!.isEmpty) {
+                            return "From distributor ID";
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                const SpaceHeightWidget(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      child: CustomElevatedButton(
+                          onTapFun: () {
+                            setState(() {
+                              fromDateTController.text = "";
+                              toDateTController.text = "";
+                            });
+                          },
+                          title: "Reset"),
+                    ),
+                    SizedBox(
+                      width: 100,
+                      child: CustomElevatedButton(
+                          onTapFun: () {
+                            if (_formKey.currentState!.validate()) {
+                              if (widget.from == "Retail") {
+                                Get.to(() => const RetailBonusSCreen());
+                              } else if (widget.from ==
+                                  "Customer Acquisition") {
+                                Get.to(() => const CustomerAcquisitionScreen());
+                              } else if (widget.from == "Upgrade Acquisition") {
+                                Get.to(() => const UpgradeAcquistionScreen());
+                              } else if (widget.from ==
+                                  "TeamBuilder Buisiness") {
+                                Get.to(
+                                    () => const TeamBuilderBussinessScreen());
+                              } else if (widget.from == "Special Leadership") {
+                                Get.to(() => const SpecialLeadershipScreen());
+                              } else if (widget.from == "Direct Distributor") {
+                                Get.to(
+                                    () => const DirectDistributorBonusScreen());
+                              } else if (widget.from == "Personal Sales") {
+                                Get.to(() => const PersonalSalesScreen());
+                              } 
+                            }
+                          },
+                          title: "Submit"),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

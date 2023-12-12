@@ -84,7 +84,6 @@ class _MemberScreenState extends State<MemberScreen> {
   final MainController checkController = Get.put(MainController());
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
@@ -316,6 +315,16 @@ class _MemberScreenState extends State<MemberScreen> {
                                       0 &&
                                   (pcTap == true))
                                 MemberScreenInfoWidget(
+                                  signupFun: () {
+                                    Get.to(() => PackageScreen(
+                                          from: ddcTap
+                                              ? "DDC"
+                                              : ddTap
+                                                  ? "DD"
+                                                  : "PC",
+                                          countryId: widget.countryId,
+                                        ));
+                                  },
                                   amount: checkController
                                       .checkCountryData.value.pcRenFee,
                                   questioningText:
@@ -337,6 +346,16 @@ class _MemberScreenState extends State<MemberScreen> {
                                       0 &&
                                   (ddcTap == true))
                                 MemberScreenInfoWidget(
+                                  signupFun: () {
+                                    Get.to(() => PackageScreen(
+                                          from: ddcTap
+                                              ? "DDC"
+                                              : ddTap
+                                                  ? "DD"
+                                                  : "PC",
+                                          countryId: widget.countryId,
+                                        ));
+                                  },
                                   amount: checkController
                                       .checkCountryData.value.dcRenFee,
                                   questioningText:
@@ -362,6 +381,16 @@ class _MemberScreenState extends State<MemberScreen> {
                                   //       0 &&
                                   (ddTap == true))
                                 MemberScreenInfoWidget(
+                                  signupFun: () {
+                                    Get.to(() => PackageScreen(
+                                          from: ddcTap
+                                              ? "DDC"
+                                              : ddTap
+                                                  ? "DD"
+                                                  : "PC",
+                                          countryId: widget.countryId,
+                                        ));
+                                  },
                                   amount: checkController
                                       .checkCountryData.value.dRenFee,
                                   questioningText: "Why Become a Distributor?",
@@ -460,13 +489,12 @@ class _MemberScreenState extends State<MemberScreen> {
                                                     ? darkRedColor
                                                     : darkBlue,
                                             onTapFun: () {
-                                              Get.to(() =>
-                                                  // RegisterScreen(from: ddcTap ? "ddc" : "dd"));
-                                                  // const ProductsScreen(
-                                                  //   from: "register",
-                                                  // ));
-                                                  PackageScreen(
-                                                    from: "register",
+                                              Get.to(() => PackageScreen(
+                                                    from: ddcTap
+                                                        ? "DDC"
+                                                        : ddTap
+                                                            ? "DD"
+                                                            : "PC",
                                                     countryId: widget.countryId,
                                                   ));
                                             },

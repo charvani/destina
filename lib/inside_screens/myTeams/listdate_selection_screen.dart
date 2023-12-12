@@ -4,16 +4,19 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../commons/colors.dart';
-import 'getreport_screen.dart';
+import '../upgrade/upgrade_listscreen.dart';
+import 'mylistview_getreport_screen.dart';
 
-class MyListViewScreen extends StatefulWidget {
-  const MyListViewScreen({super.key});
+class MyDateListSelectionScreen extends StatefulWidget {
+  final String from;
+  const MyDateListSelectionScreen({super.key, required this.from});
 
   @override
-  State<MyListViewScreen> createState() => _MyListViewScreenState();
+  State<MyDateListSelectionScreen> createState() =>
+      _MyDateListSelectionScreenState();
 }
 
-class _MyListViewScreenState extends State<MyListViewScreen> {
+class _MyDateListSelectionScreenState extends State<MyDateListSelectionScreen> {
   dynamic selectedRadio;
   DateTime onSelectedDate = DateTime.now();
   DateTime fromSelectedDate = DateTime.now();
@@ -26,7 +29,7 @@ class _MyListViewScreenState extends State<MyListViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "My List View", backNavigation: true),
+      appBar: commonAppBar(title: "", backNavigation: true),
       body: SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
@@ -267,20 +270,33 @@ class _MyListViewScreenState extends State<MyListViewScreen> {
                     onTapFun: () {
                       if (selectedRadio != null) {
                         if (selectedRadio == "All") {
-                          Get.to(() => const GetReportScreen(
-                                all: "All",
-                              ));
+                          widget.from == "Upgrade"
+                              ? Get.to(() => const UpgradeListScreen(
+                                    all: "All",
+                                  ))
+                              : Get.to(() => const MyListViewGetReportScreen(
+                                    all: "All",
+                                  ));
                         } else {
                           if (_formKey.currentState!.validate()) {
                             if (selectedRadio == "On") {
-                              Get.to(() => GetReportScreen(
-                                    onDate: onDateTController.text,
-                                  ));
+                              widget.from == "Upgrade"
+                                  ? Get.to(() => UpgradeListScreen(
+                                        onDate: onDateTController.text,
+                                      ))
+                                  : Get.to(() => MyListViewGetReportScreen(
+                                        onDate: onDateTController.text,
+                                      ));
                             } else {
-                              Get.to(() => GetReportScreen(
-                                    fromDate: fromDateTController.text,
-                                    toDate: toDateTController.text,
-                                  ));
+                              widget.from == "Upgrade"
+                                  ? Get.to(() => UpgradeListScreen(
+                                        fromDate: fromDateTController.text,
+                                        toDate: toDateTController.text,
+                                      ))
+                                  : Get.to(() => MyListViewGetReportScreen(
+                                        fromDate: fromDateTController.text,
+                                        toDate: toDateTController.text,
+                                      ));
                             }
                           }
                         }

@@ -1135,18 +1135,20 @@ class PromotionItemWidget extends StatelessWidget {
                   Stack(
                     alignment: Alignment.bottomLeft,
                     children: [
-                      Container(
-                        width: double.infinity,
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.only(top: 3),
-                        padding: const EdgeInsets.all(5),
-                        child: Image.asset(
-                          imagePath,
-                          height: 100,
-                          width: 100,
-                          // fit: BoxFit.fill,
-                        ),
-                      ),
+                      imagePath.contains("assets")
+                          ? Container(
+                              width: double.infinity,
+                              alignment: Alignment.center,
+                              margin: const EdgeInsets.only(top: 3),
+                              padding: const EdgeInsets.all(5),
+                              child: Image.asset(
+                                imagePath,
+                                height: 100,
+                                width: 100,
+                                // fit: BoxFit.fill,
+                              ),
+                            )
+                          : CommonCachedNetworkImage(imagePath: imagePath),
                       if (exclusiveProduct)
                         Container(
                           height: 25,
@@ -1192,32 +1194,33 @@ class PromotionItemWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Text("RM ",
+              if (amount != "")
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text("RM ",
+                              style: TextStyle(
+                                  fontFamily: "OnestSemiBold",
+                                  fontSize: 14,
+                                  color: amountColor ?? blackColor)),
+                          Text(
+                            amount,
                             style: TextStyle(
                                 fontFamily: "OnestSemiBold",
-                                fontSize: 14,
-                                color: amountColor ?? blackColor)),
-                        Text(
-                          amount,
-                          style: TextStyle(
-                              fontFamily: "OnestSemiBold",
-                              fontSize: 20,
-                              color: amountColor ?? blackColor),
-                        )
-                      ],
-                    ),
-                    const SpaceHeightWidget(height: 5)
-                  ],
+                                fontSize: 20,
+                                color: amountColor ?? blackColor),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+              const SpaceHeightWidget(height: 5)
             ],
           ),
         ),
@@ -2816,9 +2819,11 @@ class RegisterTextField extends StatelessWidget {
   final bool? readOnly;
   final Function(String)? onchangeFun;
   final VoidCallback? editFun;
+  final Function(String)? filedSubmitFun;
 
   const RegisterTextField(
       {super.key,
+      this.filedSubmitFun,
       required this.controller,
       this.onchangeFun,
       this.editFun,
@@ -2844,6 +2849,7 @@ class RegisterTextField extends StatelessWidget {
         onChanged: onchangeFun,
         readOnly: readOnly ?? false,
         onTap: onTapFun,
+        onFieldSubmitted: filedSubmitFun,
         onTapOutside: outsideFun,
         focusNode: focusNode,
         textAlignVertical: textAlignVertical ?? TextAlignVertical.center,
@@ -3290,6 +3296,7 @@ class MemberScreenInfoWidget extends StatelessWidget {
   final String heading2;
   final String questioningText;
   final String amount;
+  final VoidCallback signupFun;
   const MemberScreenInfoWidget(
       {super.key,
       required this.heading2,
@@ -3298,6 +3305,7 @@ class MemberScreenInfoWidget extends StatelessWidget {
       required this.ddcInfo,
       required this.questioningText,
       required this.amount,
+      required this.signupFun,
       required this.applicationInfo});
 
   @override
@@ -3341,13 +3349,17 @@ class MemberScreenInfoWidget extends StatelessWidget {
                             color: activeColor),
                       ),
                       const SpaceHeightWidget(height: 15),
-                      Text(
-                        "SIGN UP here! >",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontFamily: "OnestSemiBold",
-                            fontSize: 13,
-                            color: activeColor),
+                      GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: signupFun,
+                        child: Text(
+                          "SIGN UP here! >",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontFamily: "OnestSemiBold",
+                              fontSize: 13,
+                              color: activeColor),
+                        ),
                       ),
                     ]),
               ),
@@ -3701,9 +3713,11 @@ class AccountTextField extends StatelessWidget {
   final VoidCallback? editFun;
   final Color? backgroundColor;
   final int? minLines;
+  final double? bottomGap;
 
   const AccountTextField(
       {super.key,
+      this.bottomGap,
       required this.controller,
       this.minLines,
       this.onchangeFun,
@@ -3723,7 +3737,7 @@ class AccountTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 5, bottom: 10),
+      padding: EdgeInsets.only(top: 5, bottom: bottomGap ?? 10),
       child: TextFormField(
         onEditingComplete: editFun,
         onChanged: onchangeFun,
@@ -4432,8 +4446,10 @@ class lllllll extends StatelessWidget {
 
 class TableHeadingWidget extends StatelessWidget {
   final String title;
+  final String? fontFamily;
   const TableHeadingWidget({
     super.key,
+    this.fontFamily,
     required this.title,
   });
 
@@ -4445,7 +4461,7 @@ class TableHeadingWidget extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-              fontFamily: "OnestSemiBold", fontSize: 12, color: blackColor),
+              fontFamily:fontFamily?? "OnestSemiBold", fontSize: 12, color: blackColor),
         ),
       );
     }
@@ -4468,5 +4484,20 @@ class TableInfoWidget extends StatelessWidget {
         ),
       );
     }
+  }
+}
+
+class NotAvailableText extends StatelessWidget {
+  final String text;
+  const NotAvailableText({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child: Text(
+      text,
+      style: TextStyle(
+          fontFamily: "OnestRegular", fontSize: 12, color: middleBlackColor),
+    ));
   }
 }

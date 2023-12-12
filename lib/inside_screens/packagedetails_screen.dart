@@ -13,6 +13,7 @@ import 'package:motion_toast/motion_toast.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../authentication_screens/enrollpackage_screen.dart';
+import '../authentication_screens/sponsor_check_screen.dart';
 import 'heroanimation_screen.dart';
 
 class PackageDetailsScreen extends StatefulWidget {
@@ -182,7 +183,7 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                       packageLoading
                           ? loader
                           : SizedBox(
-                              width: 110,
+                              width: 150,
                               height: 35,
                               child: IconElevatedButton(
                                 onTapFun: () async {
@@ -235,7 +236,7 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                 imagePath: 'assets/images/cart_icon.png',
                                 labelColor: whiteColor,
                                 buttonColor: blackColor,
-                                titile: "Add",
+                                titile: "Add to Cart",
                               ),
                             )
                     ],
@@ -740,7 +741,7 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                                         ));
                                                   } else {
                                                     Get.off(
-                                                        () => RegisterScreen(
+                                                        () => SponsorCheckScreen(
                                                               packageCode: widget
                                                                   .packageCode,
                                                               countryId: widget

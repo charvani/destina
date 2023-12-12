@@ -164,8 +164,11 @@ class _ProductsScreenState extends State<ProductsScreen> {
                               return productController.loading.value
                                   ? loader
                                   : productController.productItemList.isEmpty
-                                      ? SizedBox(
-                                          height: 100, child: notAvailableW)
+                                      ? const SizedBox(
+                                          height: 100,
+                                          child: NotAvailableText(
+                                            text: "Packages not available",
+                                          ))
                                       : GridView.builder(
                                           padding: const EdgeInsets.all(0),
                                           physics:
@@ -177,16 +180,12 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                                   childAspectRatio: 1 / 1.5),
                                           itemBuilder: (context, i) {
                                             return CategroyItemWidget(
-                                                amount: 
-                                                productController
-                                                    .productItemList[i]
-                                                    .dp>0?"${productController
-                                                    .productItemList[i]
-                                                    .currency} ${productController
-                                                    .productItemList[i]
-                                                    .dp}":""
-                                                
-                                                   ,
+                                                amount: productController
+                                                            .productItemList[i]
+                                                            .dp >
+                                                        0
+                                                    ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
+                                                    : "",
                                                 onTapFun: () {
                                                   Get.to(() =>
                                                       ProductDetailsScreen(

@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'commission_screen.dart';
+import 'd1cashback_points_screen.dart';
+import 'd1credit_rebatepoints_screen.dart';
+import 'dpwallet_screen.dart';
+import 'ecard_reqreport_screen.dart';
 import 'ecart_screen.dart';
 import 'prepaid_screen.dart';
 import 'redemption_screen.dart';
@@ -75,6 +79,14 @@ class _TransactionPasswordScreenState extends State<TransactionPasswordScreen> {
                         Get.to(() => const StockistScreen());
                       } else if (widget.from == "Withdrawal") {
                         Get.to(() => const WithdrawalStatusScreen());
+                      } else if (widget.from == "Ecard Request") {
+                        Get.to(() => const EcardReqReportScreen());
+                      } else if (widget.from == "D1 Cash Back") {
+                        Get.to(() => const D1CashBackPointsScreen());
+                      } else if (widget.from == "D1 Credit Rebate") {
+                        Get.to(() => const D1CreditRebatePointsScreen());
+                      } else if (widget.from == "DP Wallet") {
+                        Get.to(() => const DpWallateScreen());
                       }
                     }
                   },

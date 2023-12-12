@@ -208,7 +208,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         packageLoading
                             ? loader
                             : SizedBox(
-                                width: 110,
+                                width: 150,
                                 height: 35,
                                 child: IconElevatedButton(
                                   onTapFun: () async {
@@ -256,7 +256,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   imagePath: 'assets/images/cart_icon.png',
                                   labelColor: whiteColor,
                                   buttonColor: blackColor,
-                                  titile: "Add",
+                                  titile: "Add to Cart",
                                 ),
                               )
                       ],
@@ -432,7 +432,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ),
                         const SpaceHeightWidget(height: 15),
                         const Padding(
-                          padding: EdgeInsets.all(20),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
                           child: Text(
                             "Similar Products",
                             style: TextStyle(
@@ -458,12 +459,35 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                           ));
                                     },
                                     amountColor: darkBlue,
-                                    imagePath: i == 0
-                                        ? "assets/images/Product 1-1.jpg"
-                                        : "assets/images/Product 1-3.jpg",
-                                    itemName:
-                                        "D1 ADVANCE SCALAR ENERGIZED SCALARVIA",
-                                    amount: "2465",
+                                    imagePath: productDetailsController
+                                        .productDetails
+                                        .value
+                                        .similarProducts[i]
+                                        .image,
+                                    itemName: productDetailsController
+                                        .productDetails
+                                        .value
+                                        .similarProducts[i]
+                                        .packageName,
+                                    amount: productDetailsController
+                                                    .productDetails
+                                                    .value
+                                                    .similarProducts[i]
+                                                    .currency !=
+                                                null &&
+                                            productDetailsController
+                                                    .productDetails
+                                                    .value
+                                                    .similarProducts[i]
+                                                    .dp !=
+                                                0.0
+                                        ? productDetailsController
+                                            .productDetails
+                                            .value
+                                            .similarProducts[i]
+                                            .dp
+                                            .toString()
+                                        : "",
                                     exclusiveProduct: false,
                                   ),
                                 )

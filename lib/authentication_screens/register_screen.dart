@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +14,16 @@ import '../inside_screens/register_cart_screen.dart';
 class RegisterScreen extends StatefulWidget {
   final String countryId;
   final String packageCode;
+  final String groupVal;
+  final String placementId;
+  final String sponsorId;
   const RegisterScreen(
-      {super.key, required this.countryId, required this.packageCode});
+      {super.key,
+      required this.placementId,
+      required this.sponsorId,
+      required this.countryId,
+      required this.packageCode,
+      required this.groupVal});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -22,7 +32,6 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   MainController registerController = Get.put(MainController());
   final formKey = GlobalKey<FormState>();
-  TextEditingController userIdController = TextEditingController();
   TextEditingController sponsorIdTController = TextEditingController();
   TextEditingController sponsorNameTController = TextEditingController();
   TextEditingController placementIdTController = TextEditingController();
@@ -37,18 +46,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController address2TController = TextEditingController();
   TextEditingController cityTController = TextEditingController();
   TextEditingController zipcodeTController = TextEditingController();
-
-  String groupVal = "";
+  bool passwordVisible = false;
+  bool confirmPassVisible = false;
+  dynamic groupVal;
   String namePrefix = "";
   String gender = "Male";
   String? state;
   String stateId = "";
   String? country;
-  final FocusNode _focusNode = FocusNode();
   @override
   void initState() {
     super.initState();
-    print("register screen from...${widget.countryId}");
+    print("register screen countryId...${widget.countryId}");
+    print("register screen packageCode...${widget.packageCode}");
+    print("register screen groupVal...${widget.groupVal}");
+    print("register screen sponsorId...${widget.sponsorId}");
+    print("register screen placementId...${widget.placementId}");
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       stateDataFun();
     });
@@ -197,143 +211,146 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const SpaceHeightWidget(height: 10),
-                      const RegisterTitleWidget(title: "SPONSOR INFORMATION"),
+                      // const SpaceHeightWidget(height: 10),
+                      // const RegisterTitleWidget(title: "SPONSOR INFORMATION"),
+                      // const SpaceHeightWidget(height: 15),
+                      // RegisterTextField(
+                      //   filedSubmitFun: (val) {
+                      //     print("ch.....${sponsorIdTController.text}");
+                      //   },
+                      //   editFun: () {
+                      //     print("chrerrrr.....${sponsorIdTController.text}");
+                      //   },
+                      //   onchangeFun: (val) {
+                      //     setState(() {
+                      //       sponsorIdInvalid = false;
+                      //     });
+                      //   },
+                      //   outsideFun: (val) async {
+                      //     // sponsorIdCheckFun();
+                      //     // placementPlaceCheckFun();
+                      //   },
+                      //   textInputType: TextInputType.name,
+                      //   hintText: "ex: John Lee",
+                      //   labelText: "Sponsor User ID",
+                      //   controller: sponsorIdTController,
+                      //   validation: (val) {
+                      //     if (sponsorIdInvalid) {
+                      //       return "Invalid sponsor id";
+                      //     } else if (val!.isEmpty) {
+                      //       return "Sponsor user id";
+                      //     } else {
+                      //       return null;
+                      //     }
+                      //   },
+                      // ),
+                      // RegisterTextField(
+                      //   readOnly: true,
+                      //   onTapFun: () {
+                      //     sponsorIdCheckFun();
+                      //     placementPlaceCheckFun();
+                      //   },
+                      //   textInputType: TextInputType.name,
+                      //   labelText: "Sponsor Name",
+                      //   hintText: "ex: John Lee",
+                      //   controller: sponsorNameTController,
+                      //   validation: (val) {
+                      //     return null;
+                      //   },
+                      // ),
+                      // RegisterTextField(
+                      //   onchangeFun: (val) {
+                      //     setState(() {
+                      //       placemetnIdInvalid = false;
+                      //     });
+                      //   },
+                      //   outsideFun: (val) async {
+                      //     // placementIdCheckFun();
+                      //     // placementPlaceCheckFun();
+                      //   },
+                      //   textInputType: TextInputType.name,
+                      //   labelText: "Placement ID",
+                      //   hintText: "ex: John Lee133",
+                      //   controller: placementIdTController,
+                      //   validation: (val) {
+                      //     if (placemetnIdInvalid) {
+                      //       return "Invalid placement id";
+                      //     } else if (val!.isEmpty) {
+                      //       return "Placement id";
+                      //     } else {
+                      //       return null;
+                      //     }
+                      //   },
+                      // ),
+                      // RegisterTextField(
+                      //   onTapFun: () {
+                      //     placementIdCheckFun();
+                      //     placementPlaceCheckFun();
+                      //   },
+                      //   readOnly: true,
+                      //   textInputType: TextInputType.name,
+                      //   labelText: "Placement ID Name",
+                      //   hintText: "ex: John Lee",
+                      //   controller: palcementNameTController,
+                      //   validation: (val) {
+                      //     return null;
+                      //   },
+                      // ),
+                      // Stack(
+                      //   alignment: AlignmentDirectional.topStart,
+                      //   children: [
+                      //     Container(
+                      //       margin: const EdgeInsets.only(top: 10),
+                      //       height: 40,
+                      //       width: double.infinity,
+                      //       decoration: BoxDecoration(
+                      //           borderRadius: BorderRadius.circular(5),
+                      //           border: Border.all(
+                      //               color: lightDarKBlue.withOpacity(0.3))),
+                      //       child: Row(
+                      //         children: [
+                      //           Radio(
+                      //               value: "Left",
+                      //               groupValue: groupVal,
+                      //               onChanged: (val) {
+                      //                 setState(() {
+                      //                   groupVal = val.toString();
+                      //                 });
+                      //                 placementPlaceCheckFun();
+                      //                 sponsorIdCheckFun();
+                      //                 placementIdCheckFun();
+                      //               }),
+                      //           const Text("Left"),
+                      //           Radio(
+                      //               value: "Right",
+                      //               groupValue: groupVal,
+                      //               onChanged: (val) {
+                      //                 setState(() {
+                      //                   groupVal = val.toString();
+                      //                 });
+                      //                 placementPlaceCheckFun();
+                      //                 sponsorIdCheckFun();
+                      //                 placementIdCheckFun();
+                      //               }),
+                      //           const Text("Right")
+                      //         ],
+                      //       ),
+                      //     ),
+                      //     Container(
+                      //         margin: const EdgeInsets.all(3),
+                      //         alignment: Alignment.center,
+                      //         color: whiteColor,
+                      //         width: 95,
+                      //         child: Text(
+                      //           "Select Placement",
+                      //           style: TextStyle(
+                      //               fontFamily: "OnestSemiBold",
+                      //               fontSize: 10,
+                      //               color: blackColor),
+                      //         ))
+                      //   ],
+                      // ),
                       const SpaceHeightWidget(height: 15),
-                      RegisterTextField(
-                        // editFun: (){
-                        //   print(object)
-                        // },
-                        onchangeFun: (val) {
-                          setState(() {
-                            sponsorIdInvalid = false;
-                          });
-                        },
-                        outsideFun: (val) async {
-                          // sponsorIdCheckFun();
-                          // placementPlaceCheckFun();
-                        },
-                        textInputType: TextInputType.name,
-                        hintText: "ex: John Lee",
-                        labelText: "Sponsor User ID",
-                        controller: sponsorIdTController,
-                        validation: (val) {
-                          if (sponsorIdInvalid) {
-                            return "Invalid sponsor id";
-                          } else if (val!.isEmpty) {
-                            return "Sponsor user id";
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
-                      RegisterTextField(
-                        readOnly: true,
-                        onTapFun: () {
-                          sponsorIdCheckFun();
-                          placementPlaceCheckFun();
-                        },
-                        textInputType: TextInputType.name,
-                        labelText: "Sponsor Name",
-                        hintText: "ex: John Lee",
-                        controller: sponsorNameTController,
-                        validation: (val) {
-                          return null;
-                        },
-                      ),
-                      RegisterTextField(
-                        onchangeFun: (val) {
-                          setState(() {
-                            placemetnIdInvalid = false;
-                          });
-                        },
-                        outsideFun: (val) async {
-                          // placementIdCheckFun();
-                          // placementPlaceCheckFun();
-                        },
-                        textInputType: TextInputType.name,
-                        labelText: "Placement ID",
-                        hintText: "ex: John Lee133",
-                        controller: placementIdTController,
-                        validation: (val) {
-                          if (placemetnIdInvalid) {
-                            return "Invalid placement id";
-                          } else if (val!.isEmpty) {
-                            return "Placement id";
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
-                      RegisterTextField(
-                        onTapFun: () {
-                          placementIdCheckFun();
-                          placementPlaceCheckFun();
-                        },
-                        readOnly: true,
-                        textInputType: TextInputType.name,
-                        labelText: "Placement ID Name",
-                        hintText: "ex: John Lee",
-                        controller: palcementNameTController,
-                        validation: (val) {
-                          return null;
-                        },
-                      ),
-                      Stack(
-                        alignment: AlignmentDirectional.topStart,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            height: 40,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(
-                                    color: lightDarKBlue.withOpacity(0.3))),
-                            child: Row(
-                              children: [
-                                Radio(
-                                    value: "Left",
-                                    groupValue: groupVal,
-                                    onChanged: (val) {
-                                      setState(() {
-                                        groupVal = val.toString();
-                                      });
-                                      placementPlaceCheckFun();
-                                      sponsorIdCheckFun();
-                                      placementIdCheckFun();
-                                    }),
-                                const Text("Left"),
-                                Radio(
-                                    value: "Right",
-                                    groupValue: groupVal,
-                                    onChanged: (val) {
-                                      setState(() {
-                                        groupVal = val.toString();
-                                      });
-                                      placementPlaceCheckFun();
-                                      sponsorIdCheckFun();
-                                      placementIdCheckFun();
-                                    }),
-                                const Text("Right")
-                              ],
-                            ),
-                          ),
-                          Container(
-                              margin: const EdgeInsets.all(3),
-                              alignment: Alignment.center,
-                              color: whiteColor,
-                              width: 95,
-                              child: Text(
-                                "Select Placement",
-                                style: TextStyle(
-                                    fontFamily: "OnestSemiBold",
-                                    fontSize: 10,
-                                    color: blackColor),
-                              ))
-                        ],
-                      ),
-                      const SpaceHeightWidget(height: 35),
                       const RegisterTitleWidget(title: "PERSONAL INFORMATION"),
                       const SpaceHeightWidget(height: 10),
                       Row(
@@ -498,7 +515,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         validation: (val) {
                           if (val!.isEmpty) {
                             return "Area/Zip Code";
-                          } else if (val.length < 5) {
+                          } else if (val.length < 4) {
                             return "Enter valid Area/Zip Code";
                           } else {
                             return null;
@@ -620,7 +637,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                         },
                       ),
-                      RegisterTextField(
+                      // RegisterTextField(
+                      //   onTapFun: () {
+                      //     print("heloo");
+                      //     userCheckFun();
+                      //   },
+                      //   textInputType: TextInputType.name,
+                      //   labelText: "LOGIN/TRANSACTION PASSWORD",
+                      //   hintText: "Enter your Login/Transaction password",
+                      //   controller: passwordTController,
+                      //   validation: (val) {
+                      //     RegExp pattern =
+                      //         RegExp(r'[~`!@#\$%^&*()\-_+={}[\]\\|;:"<>,./]');
+                      //     if (val!.isEmpty) {
+                      //       return "Your Login/Transaction password";
+                      //     } else if (pattern.hasMatch(val)) {
+                      //       return "Input should not contains special characters";
+                      //     } else if (val.length < 6) {
+                      //       return "Characters should be more than 5";
+                      //     } else {
+                      //       return null;
+                      //     }
+                      //   },
+                      // ),
+                      const SpaceHeightWidget(height: 5),
+                      LoginTextField(
+                        obscureText: passwordVisible,
+                        suffix: GestureDetector(
+                          behavior: HitTestBehavior.translucent,
+                          onTap: () {
+                            setState(() {
+                              passwordVisible = !passwordVisible;
+                            });
+                          },
+                          child: Icon(
+                            !passwordVisible
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined,
+                            color: middleBlackColor.withOpacity(0.5),
+                          ),
+                        ),
                         onTapFun: () {
                           print("heloo");
                           userCheckFun();
@@ -643,7 +699,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                         },
                       ),
-                      RegisterTextField(
+                      const SpaceHeightWidget(height: 5),
+                      LoginTextField(
+                        obscureText: confirmPassVisible,
+                        suffix: GestureDetector(
+                          behavior: HitTestBehavior.translucent,
+                          onTap: () {
+                            setState(() {
+                              confirmPassVisible = !confirmPassVisible;
+                            });
+                          },
+                          child: Icon(
+                            !confirmPassVisible
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined,
+                            color: middleBlackColor.withOpacity(0.5),
+                          ),
+                        ),
                         onTapFun: () {
                           userCheckFun();
                         },
@@ -703,34 +775,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       setState(() {
                                         submitLoad = true;
                                       });
-                                      if (groupVal != "") {
-                                        bool sponsor =
-                                            await sponsorIdCheckFun();
-                                        if (sponsor) {
-                                          bool placementId =
-                                              await placementIdCheckFun();
-                                          if (placementId) {
-                                            bool placecheck =
-                                                await placementPlaceCheckFun();
-                                            if (placecheck) {
-                                              bool userchek =
-                                                  await userCheckFun();
-                                              if (userchek) {
-                                                signUpFun();
-                                              }
-                                              //  else {
-                                              //   CommonToast("Please check all data");
-                                              // }
-                                            }
-                                          }
-                                        }
-                                        setState(() {
-                                          submitLoad = true;
-                                        });
-                                      } else {
-                                        CommonToast(
-                                            "Select placement Left or Right");
+                                      // if (groupVal != "") {
+                                      // bool sponsor =
+                                      //     await sponsorIdCheckFun();
+                                      // if (sponsor) {
+                                      //   bool placementId =
+                                      //       await placementIdCheckFun();
+                                      //   if (placementId) {
+                                      //     bool placecheck =
+                                      //         await placementPlaceCheckFun();
+                                      //     if (placecheck) {
+
+                                      bool userchek = await userCheckFun();
+                                      if (userchek) {
+                                        signUpFun();
                                       }
+                                      //  else {
+                                      //   CommonToast("Please check all data");
+                                      // }
+                                      // }
+                                      // }
+                                      // }
+                                      setState(() {
+                                        submitLoad = true;
+                                      });
+                                      // }
+                                      //  else {
+                                      //   CommonToast(
+                                      //       "Select placement Left or Right");
+                                      // }
                                     }
                                     // Get.to(
                                     //     () => const CartScreen(from: "after_enroll"));
@@ -781,9 +854,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool submitLoad = false;
   signUpFun() async {
     Map params = {
-      "SprID": sponsorNameTController.text,
-      "placementID": palcementNameTController.text,
-      "Place": groupVal == "Left" ? "0" : "1",
+      "SprID": widget.sponsorId,
+      "placementID": widget.placementId,
+      "Place": widget.groupVal,
       "hidUid": Constants.prefs.get("uniq_id"),
       "Password": passwordTController.text,
       "Title": namePrefix,

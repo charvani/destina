@@ -181,7 +181,7 @@ class _AccountScreenState extends State<AccountScreen>
                               ),
                             ],
                           ),
-                          const SpaceWidthWidget(width: 5),
+                          // const SpaceWidthWidget(width: 5),
                           Column(
                             children: [
                               const SpaceHeightWidget(height: 16),
@@ -189,7 +189,7 @@ class _AccountScreenState extends State<AccountScreen>
                                   animation: _animation,
                                   builder: (context, child) {
                                     return Text(
-                                      '฿ 100',
+                                      'RM 100',
                                       style: TextStyle(
                                           fontSize: _animation.value,
                                           color: lightYellow),
@@ -200,43 +200,6 @@ class _AccountScreenState extends State<AccountScreen>
                         ],
                       ))
                 ],
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 8),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                              color: appthemeColor.withOpacity(0.5),
-                            )),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Become a Member",
-                                style: TextStyle(
-                                    fontFamily: "OnestSemiBold",
-                                    fontSize: 10,
-                                    color: blackColor),
-                              ),
-                              Text(
-                                "฿ 100",
-                                style: TextStyle(
-                                    fontFamily: "OnestBold",
-                                    fontSize: 14,
-                                    color: appthemeColor),
-                              ),
-                            ]),
-                      ),
-                    ),
-                  ],
-                ),
               ),
               Container(
                 // height: 40,

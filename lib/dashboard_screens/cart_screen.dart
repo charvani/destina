@@ -1,3 +1,4 @@
+import 'package:destina_1_international/authentication_screens/login_screen.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
@@ -662,7 +663,11 @@ class _CartScreenState extends State<CartScreen> {
           SizedBox(
               width: 95,
               height: 35,
-              child: CustomElevatedButton(onTapFun: () {}, title: "Sign in")),
+              child: CustomElevatedButton(
+                  onTapFun: () {
+                    Get.to(() => const LoginScreen());
+                  },
+                  title: "Sign in")),
           const SpaceWidthWidget(width: 5)
         ],
       ),
