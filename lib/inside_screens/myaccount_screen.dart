@@ -1,9 +1,9 @@
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
-import 'package:destina_1_international/inside_screens/profileScreens/update_photo.dart';
-import 'package:destina_1_international/inside_screens/servicesScreens/downloads_screen.dart';
-import 'package:destina_1_international/inside_screens/servicesScreens/kyc_upload.dart';
-import 'package:destina_1_international/inside_screens/servicesScreens/trainingtools_screen.dart';
+import 'package:destina_1_international/inside_screens/profile/update_photo.dart';
+import 'package:destina_1_international/inside_screens/services/downloads_screen.dart';
+import 'package:destina_1_international/inside_screens/services/kyc_upload.dart';
+import 'package:destina_1_international/inside_screens/services/trainingtools_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -20,20 +20,22 @@ import 'myTeams/listdate_selection_screen.dart';
 import 'myTeams/my_genealogy.dart';
 import 'myTeams/myteam_view.dart';
 import 'myTeams/team_builderview.dart';
-import 'myorderScreens/order_acknowledge_screen.dart';
-import 'myorderScreens/orders_reportselection_screen.dart';
+import 'myorder/order_acknowledge_screen.dart';
+import 'myorder/orders_reportselection_screen.dart';
 import 'profileDashBoard/profile_dashboard_screen.dart';
-import 'profileScreens/award_qualifiers.dart';
-import 'profileScreens/change_password.dart';
-import 'profileScreens/change_trans_pass.dart';
-import 'profileScreens/d1voucher_screen.dart';
-import 'profileScreens/forgot_transpass.dart';
-import 'profileScreens/listof_requests.dart';
-import 'profileScreens/profile_update.dart';
-import 'profileScreens/view_profile.dart';
-import 'servicesScreens/forms_agreements_screen.dart';
-import 'servicesScreens/salesstools_screen.dart';
-import 'servicesScreens/upload_id_screen.dart';
+import 'profile/award_qualifiers.dart';
+import 'profile/change_password.dart';
+import 'profile/change_trans_pass.dart';
+import 'profile/d1voucher_screen.dart';
+import 'profile/forgot_transpass.dart';
+import 'profile/listof_requests.dart';
+import 'profile/profile_update.dart';
+import 'profile/view_profile.dart';
+import 'services/forms_agreements_screen.dart';
+import 'services/salesstools_screen.dart';
+import 'services/upload_id_screen.dart';
+import 'tools/faqs_screen.dart';
+import 'tools/package_reviewscreen.dart';
 
 class MyAccountScreen extends StatefulWidget {
   const MyAccountScreen({super.key});
@@ -570,7 +572,11 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           title: "Upgrade Acquisition Bonus",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const BonusDateSelectionScreen(
+                  from: "Rollup Bonus",
+                ));
+          },
           title: "Rollup Bonus",
         ),
         MyAccountItemWidget(
@@ -594,11 +600,19 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           title: "Global Leadership Bonus",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const BonusDateSelectionScreen(
+                  from: "Special Bonus",
+                ));
+          },
           title: "Special Bonus",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const BonusDateSelectionScreen(
+                  from: "Special Bonus(Sponsor)",
+                ));
+          },
           title: "Special Bonus(Sponsor)",
         ),
         MyAccountItemWidget(
@@ -626,7 +640,11 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           title: "Personal Sales Bonus",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const BonusDateSelectionScreen(
+                  from: "Activation Bonus",
+                ));
+          },
           title: "Activation Bonus",
         ),
         MyAccountItemWidget(
@@ -644,11 +662,15 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     return Column(
       children: [
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const FAQsScreen());
+          },
           title: "FAQS",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const PackageReviewScreen());
+          },
           title: "Package Review",
         ),
         MyAccountItemWidget(

@@ -1,6 +1,6 @@
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
-import 'package:destina_1_international/inside_screens/servicesScreens/downloadview_screen.dart';
+import 'package:destina_1_international/inside_screens/services/downloadview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

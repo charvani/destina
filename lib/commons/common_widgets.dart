@@ -4461,7 +4461,9 @@ class TableHeadingWidget extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-              fontFamily:fontFamily?? "OnestSemiBold", fontSize: 12, color: blackColor),
+              fontFamily: fontFamily ?? "OnestSemiBold",
+              fontSize: 12,
+              color: blackColor),
         ),
       );
     }
@@ -4499,5 +4501,125 @@ class NotAvailableText extends StatelessWidget {
       style: TextStyle(
           fontFamily: "OnestRegular", fontSize: 12, color: middleBlackColor),
     ));
+  }
+}
+
+class CustomAutoWidthButton extends StatelessWidget {
+  final VoidCallback onTapFun;
+  final String title;
+  final Color? bcolor;
+  final double? textSize;
+  const CustomAutoWidthButton(
+      {super.key,
+      required this.onTapFun,
+      required this.title,
+      this.bcolor,
+      this.textSize});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: onTapFun,
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(bcolor ?? blackColor),
+          // minimumSize: const MaterialStatePropertyAll(Size(40)),
+        ),
+        child: Text(
+          title,
+          style: TextStyle(
+              color: whiteColor,
+              fontFamily: "OnestSemiBold",
+              fontSize: textSize),
+        ));
+  }
+}
+
+class PackageReviewWidget extends StatelessWidget {
+  final String itemName;
+  final String imgPath;
+  final VoidCallback reviewFun;
+  final String mrpRate;
+  final String packagecode;
+  final String reviewTitle;
+  const PackageReviewWidget({
+    super.key,
+    required this.reviewTitle,
+    required this.itemName,
+    required this.imgPath,
+    required this.mrpRate,
+    required this.packagecode,
+    required this.reviewFun,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: whiteColor,
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: whiteColor,
+            border: Border.all(color: lightDarKBlue.withOpacity(0.2))),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Column(
+                children: [
+                  const SpaceHeightWidget(height: 8),
+                  Image.asset(
+                    imgPath,
+                    height: 90,
+                  ),
+                  const SpaceHeightWidget(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                        child: Text(
+                          itemName.toUpperCase(),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontFamily: "OnestBold",
+                              fontSize: 13,
+                              color: lightDarKBlue),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SpaceHeightWidget(height: 5),
+                  CommonTitle(
+                    titleName: "Product Code: $packagecode",
+                    fontFamily: "OnestRegular",
+                    size: 11,
+                  ),
+                  CommonTitle(
+                    titleName: "DP: $mrpRate",
+                    fontFamily: "OnestSemiBold",
+                    size: 11,
+                  ),
+                ],
+              ),
+            ),
+            Column(
+              children: [
+                const CommonDivider(),
+                const SpaceHeightWidget(height: 5),
+                SizedBox(
+                    height: 28,
+                    child: CustomAutoWidthButton(
+                        // bcolor: darkNaviBlueColor,
+                        textSize: 10.5,
+                        onTapFun: reviewFun,
+                        title: reviewTitle)),
+                const SpaceHeightWidget(height: 8),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

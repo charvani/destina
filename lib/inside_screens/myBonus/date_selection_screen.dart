@@ -1,15 +1,18 @@
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/inside_screens/myBonus/special_bonus_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../commons/colors.dart';
+import 'activation_bonusscreen.dart';
 import 'customer_acquisition_screen.dart';
 import 'direct_distributor_bonusscreen.dart';
-import 'flush_cvscreen.dart';
 import 'personal_salesscreen.dart';
 import 'retail_bonusscreen.dart';
+import 'rollup_bounusscreen.dart';
 import 'special_leadership_screen.dart';
+import 'special_sponsorbonus_screen.dart';
 import 'teambuilder_buissiness_screen.dart';
 import 'upgrade_acquisition_screen.dart';
 
@@ -166,7 +169,8 @@ class _BonusDateSelectionScreenState extends State<BonusDateSelectionScreen> {
                 ),
                 if (widget.from == "Customer Acquisition" ||
                     widget.from == "Upgrade Acquisition" ||
-                    widget.from == "Special Leadership")
+                    widget.from == "Special Leadership" ||
+                    widget.from == "Rollup Bonus")
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -181,6 +185,28 @@ class _BonusDateSelectionScreenState extends State<BonusDateSelectionScreen> {
                         validation: (val) {
                           if (val!.isEmpty) {
                             return "From distributor ID";
+                          } else {
+                            return null;
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                if (widget.from == "Activation Bonus")
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SpaceHeightWidget(height: 8),
+                      const SideTitle(title: "Received From Licensee"),
+                      AccountTextField(
+                        onchangeFun: (val) {},
+                        outsideFun: (val) async {},
+                        textInputType: TextInputType.name,
+                        hintText: "",
+                        controller: distributorIDTController,
+                        validation: (val) {
+                          if (val!.isEmpty) {
+                            return "Received From Licensee";
                           } else {
                             return null;
                           }
@@ -226,7 +252,16 @@ class _BonusDateSelectionScreenState extends State<BonusDateSelectionScreen> {
                                     () => const DirectDistributorBonusScreen());
                               } else if (widget.from == "Personal Sales") {
                                 Get.to(() => const PersonalSalesScreen());
-                              } 
+                              } else if (widget.from == "Special Bonus") {
+                                Get.to(() => const SpecialBonusScreen());
+                              } else if (widget.from ==
+                                  "Special Bonus(Sponsor)") {
+                                Get.to(() => const SpecialSponsorBonusScreen());
+                              } else if (widget.from == "Activation Bonus") {
+                                Get.to(() => const ActivationBonusScreen());
+                              } else if (widget.from == "Rollup Bonus") {
+                                Get.to(() => const RollupBonusScreen());
+                              }
                             }
                           },
                           title: "Submit"),
