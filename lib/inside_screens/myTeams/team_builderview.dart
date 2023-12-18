@@ -11,7 +11,10 @@ class TeamBuilderViewScreen extends StatefulWidget {
 }
 
 class _TeamBuilderViewScreenState extends State<TeamBuilderViewScreen> {
-  ScrollController teamScrollController = ScrollController();
+  ScrollController teamScrollController1 = ScrollController();
+  ScrollController teamScrollController2 = ScrollController();
+  ScrollController teamScrollController3 = ScrollController();
+  ScrollController teamScrollController4 = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,12 +35,26 @@ class _TeamBuilderViewScreenState extends State<TeamBuilderViewScreen> {
                       fontColor: darkBlue,
                     ),
                     Scrollbar(
-                      controller: teamScrollController,
+                      controller: i == 1
+                          ? teamScrollController1
+                          : i == 2
+                              ? teamScrollController2
+                              : i == 3
+                                  ? teamScrollController3
+                                  : teamScrollController4,
                       thumbVisibility: true,
                       trackVisibility: true,
                       thickness: 5,
+                      interactive: true,
                       radius: const Radius.circular(10),
                       child: SingleChildScrollView(
+                        controller: i == 1
+                            ? teamScrollController1
+                            : i == 2
+                                ? teamScrollController2
+                                : i == 3
+                                    ? teamScrollController3
+                                    : teamScrollController4,
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [

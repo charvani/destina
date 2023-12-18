@@ -1,5 +1,6 @@
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/inside_screens/profile/update_photo.dart';
 import 'package:destina_1_international/inside_screens/services/downloads_screen.dart';
 import 'package:destina_1_international/inside_screens/services/kyc_upload.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import '../authentication_screens/members_screen.dart';
 import 'maintenance/maintenance_screen.dart';
 import 'myBonus/bussiness_devselection_screen.dart';
 import 'myBonus/date_selection_screen.dart';
@@ -22,7 +24,6 @@ import 'myTeams/myteam_view.dart';
 import 'myTeams/team_builderview.dart';
 import 'myorder/order_acknowledge_screen.dart';
 import 'myorder/orders_reportselection_screen.dart';
-import 'profileDashBoard/profile_dashboard_screen.dart';
 import 'profile/award_qualifiers.dart';
 import 'profile/change_password.dart';
 import 'profile/change_trans_pass.dart';
@@ -31,10 +32,14 @@ import 'profile/forgot_transpass.dart';
 import 'profile/listof_requests.dart';
 import 'profile/profile_update.dart';
 import 'profile/view_profile.dart';
+import 'profileDashBoard/profile_dashboard_screen.dart';
 import 'services/forms_agreements_screen.dart';
 import 'services/salesstools_screen.dart';
 import 'services/upload_id_screen.dart';
+import 'shopping/salesmall_screen.dart';
 import 'tools/faqs_screen.dart';
+import 'tools/ftaform_reportscreen.dart';
+import 'tools/ftareg_formscreen.dart';
 import 'tools/package_reviewscreen.dart';
 
 class MyAccountScreen extends StatefulWidget {
@@ -524,19 +529,34 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     return Column(
       children: [
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const SalesMallScreen(
+                  from: "Sales",
+                ));
+          },
           title: "Sales Mall",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const SalesMallScreen(
+                  from: "Redemption",
+                ));
+          },
           title: "Redemption Mall",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () async {
+            Get.to(() => MemberScreen(
+                countryId: Constants.prefs.getString("country_id")!));
+          },
           title: "Signup Mall",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+             Get.to(() => const SalesMallScreen(
+                  from: "Dp",
+                ));
+          },
           title: "Dp Mall",
         ),
         const SpaceHeightWidget(height: 13)
@@ -674,11 +694,15 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           title: "Package Review",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const FTARegistrationFormScreen());
+          },
           title: "FTA Registration Form",
         ),
         MyAccountItemWidget(
-          onTapFun: () {},
+          onTapFun: () {
+            Get.to(() => const FTAFormReportScreen());
+          },
           title: "FTA Form Report",
         ),
         const SpaceHeightWidget(height: 13)

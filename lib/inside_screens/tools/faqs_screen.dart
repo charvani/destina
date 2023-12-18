@@ -53,7 +53,7 @@ class _FAQsScreenState extends State<FAQsScreen> {
           const SpaceHeightWidget(height: 10),
           for (int i = 0; i < 4; i++)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
               child: Card(
                 child: ExpansionTile(
                   childrenPadding:

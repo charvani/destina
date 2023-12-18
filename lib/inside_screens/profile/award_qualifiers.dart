@@ -14,6 +14,11 @@ class AwardQualifiersScreen extends StatefulWidget {
 class _AwardQualifiersScreenState extends State<AwardQualifiersScreen> {
   TextEditingController emailTController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final ScrollController _scrollController1 = ScrollController();
+  final ScrollController _scrollController2 = ScrollController();
+  final ScrollController _scrollController3 = ScrollController();
+  final ScrollController _scrollController4 = ScrollController();
+
   dynamic award;
   bool selected = false;
   BoxDecoration decr = BoxDecoration(
@@ -110,71 +115,81 @@ class _AwardQualifiersScreenState extends State<AwardQualifiersScreen> {
                           color: blackColor),
                     ),
                   ),
-                  SingleChildScrollView(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    scrollDirection: Axis.horizontal,
-                    child: DataTable(
-                        border: TableBorder.all(
-                            color: appthemeColor.withOpacity(0.1)),
-                        columnSpacing: 0,
-                        dataRowMaxHeight: 60,
-                        horizontalMargin: 0,
-                        columns: [
-                          DataColumn(
-                            label: tableTitleWidget(""),
-                          ),
-                          DataColumn(
-                            label: tableTitleWidget("To Qualify"),
-                          ),
-                          DataColumn(
-                            label: tableTitleWidget("	You Have Done"),
-                          ),
-                          DataColumn(
-                            label: tableTitleWidget("More To Go"),
-                          ),
-                        ],
-                        rows: [
-                          if (award == "D1 CRUISE TOUR PROMOTION")
-                            for (int i = 0; i < dTableDataR1.length; i++)
-                              DataRow(
-                                  color: MaterialStatePropertyAll(i.isEven
-                                      ? appthemeColor.withOpacity(0.1)
-                                      : whiteColor),
-                                  cells: [
-                                    DataCell(tableDataWidget(
-                                      dTableDataR1[i].title,
-                                    )),
-                                    DataCell(tableDataWidget(
-                                      dTableDataR1[i].qualify,
-                                    )),
-                                    DataCell(tableDataWidget(
-                                      dTableDataR1[i].youHaveDone,
-                                    )),
-                                    DataCell(tableDataWidget(
-                                      dTableDataR1[i].moreToGo,
-                                    )),
-                                  ])
-                          else
-                            for (int i = 0; i < greatTableDataR1.length; i++)
-                              DataRow(
-                                  color: MaterialStatePropertyAll(i.isEven
-                                      ? appthemeColor.withOpacity(0.1)
-                                      : whiteColor),
-                                  cells: [
-                                    DataCell(tableDataWidget(
-                                      greatTableDataR1[i].title,
-                                    )),
-                                    DataCell(tableDataWidget(
-                                      greatTableDataR1[i].qualify,
-                                    )),
-                                    DataCell(tableDataWidget(
-                                      greatTableDataR1[i].youHaveDone,
-                                    )),
-                                    DataCell(tableDataWidget(
-                                      greatTableDataR1[i].moreToGo,
-                                    )),
-                                  ])
-                        ]),
+                  Scrollbar(
+                    interactive: true,
+                    trackVisibility: true,
+                    controller: _scrollController1,
+                    thumbVisibility: true,
+                    thickness: 8,
+                    radius: const Radius.circular(10),
+                    scrollbarOrientation: ScrollbarOrientation.bottom,
+                    child: SingleChildScrollView(
+                      controller: _scrollController1,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      scrollDirection: Axis.horizontal,
+                      child: DataTable(
+                          border: TableBorder.all(
+                              color: appthemeColor.withOpacity(0.1)),
+                          columnSpacing: 0,
+                          dataRowMaxHeight: 60,
+                          horizontalMargin: 0,
+                          columns: [
+                            DataColumn(
+                              label: tableTitleWidget(""),
+                            ),
+                            DataColumn(
+                              label: tableTitleWidget("To Qualify"),
+                            ),
+                            DataColumn(
+                              label: tableTitleWidget("	You Have Done"),
+                            ),
+                            DataColumn(
+                              label: tableTitleWidget("More To Go"),
+                            ),
+                          ],
+                          rows: [
+                            if (award == "D1 CRUISE TOUR PROMOTION")
+                              for (int i = 0; i < dTableDataR1.length; i++)
+                                DataRow(
+                                    color: MaterialStatePropertyAll(i.isEven
+                                        ? appthemeColor.withOpacity(0.1)
+                                        : whiteColor),
+                                    cells: [
+                                      DataCell(tableDataWidget(
+                                        dTableDataR1[i].title,
+                                      )),
+                                      DataCell(tableDataWidget(
+                                        dTableDataR1[i].qualify,
+                                      )),
+                                      DataCell(tableDataWidget(
+                                        dTableDataR1[i].youHaveDone,
+                                      )),
+                                      DataCell(tableDataWidget(
+                                        dTableDataR1[i].moreToGo,
+                                      )),
+                                    ])
+                            else
+                              for (int i = 0; i < greatTableDataR1.length; i++)
+                                DataRow(
+                                    color: MaterialStatePropertyAll(i.isEven
+                                        ? appthemeColor.withOpacity(0.1)
+                                        : whiteColor),
+                                    cells: [
+                                      DataCell(tableDataWidget(
+                                        greatTableDataR1[i].title,
+                                      )),
+                                      DataCell(tableDataWidget(
+                                        greatTableDataR1[i].qualify,
+                                      )),
+                                      DataCell(tableDataWidget(
+                                        greatTableDataR1[i].youHaveDone,
+                                      )),
+                                      DataCell(tableDataWidget(
+                                        greatTableDataR1[i].moreToGo,
+                                      )),
+                                    ])
+                          ]),
+                    ),
                   ),
                   const SpaceHeightWidget(height: 20),
                   if (award == "D1 CRUISE TOUR PROMOTION")
@@ -192,50 +207,60 @@ class _AwardQualifiersScreenState extends State<AwardQualifiersScreen> {
                                 color: blackColor),
                           ),
                         ),
-                        SingleChildScrollView(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          scrollDirection: Axis.horizontal,
-                          child: DataTable(
-                              border: TableBorder.all(
-                                  color: appthemeColor.withOpacity(0.1)),
-                              columnSpacing: 0,
-                              dataRowMaxHeight: 60,
-                              horizontalMargin: 0,
-                              columns: [
-                                DataColumn(
-                                  label: tableTitleWidget(""),
-                                ),
-                                DataColumn(
-                                  label: tableTitleWidget("To Qualify"),
-                                ),
-                                DataColumn(
-                                  label: tableTitleWidget("	You Have Done"),
-                                ),
-                                DataColumn(
-                                  label: tableTitleWidget("More To Go"),
-                                ),
-                              ],
-                              rows: [
-                                for (int i = 0; i < dTableDataR3.length; i++)
-                                  DataRow(
-                                      color: MaterialStatePropertyAll(i.isEven
-                                          ? appthemeColor.withOpacity(0.1)
-                                          : whiteColor),
-                                      cells: [
-                                        DataCell(tableDataWidget(
-                                          dTableDataR3[i].title,
-                                        )),
-                                        DataCell(tableDataWidget(
-                                          dTableDataR3[i].qualify,
-                                        )),
-                                        DataCell(tableDataWidget(
-                                          dTableDataR3[i].youHaveDone,
-                                        )),
-                                        DataCell(tableDataWidget(
-                                          dTableDataR3[i].moreToGo,
-                                        )),
-                                      ])
-                              ]),
+                        Scrollbar(
+                          interactive: true,
+                          trackVisibility: true,
+                          controller: _scrollController3,
+                          thumbVisibility: true,
+                          thickness: 8,
+                          radius: const Radius.circular(10),
+                          scrollbarOrientation: ScrollbarOrientation.bottom,
+                          child: SingleChildScrollView(
+                            controller: _scrollController3,
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            scrollDirection: Axis.horizontal,
+                            child: DataTable(
+                                border: TableBorder.all(
+                                    color: appthemeColor.withOpacity(0.1)),
+                                columnSpacing: 0,
+                                dataRowMaxHeight: 60,
+                                horizontalMargin: 0,
+                                columns: [
+                                  DataColumn(
+                                    label: tableTitleWidget(""),
+                                  ),
+                                  DataColumn(
+                                    label: tableTitleWidget("To Qualify"),
+                                  ),
+                                  DataColumn(
+                                    label: tableTitleWidget("	You Have Done"),
+                                  ),
+                                  DataColumn(
+                                    label: tableTitleWidget("More To Go"),
+                                  ),
+                                ],
+                                rows: [
+                                  for (int i = 0; i < dTableDataR3.length; i++)
+                                    DataRow(
+                                        color: MaterialStatePropertyAll(i.isEven
+                                            ? appthemeColor.withOpacity(0.1)
+                                            : whiteColor),
+                                        cells: [
+                                          DataCell(tableDataWidget(
+                                            dTableDataR3[i].title,
+                                          )),
+                                          DataCell(tableDataWidget(
+                                            dTableDataR3[i].qualify,
+                                          )),
+                                          DataCell(tableDataWidget(
+                                            dTableDataR3[i].youHaveDone,
+                                          )),
+                                          DataCell(tableDataWidget(
+                                            dTableDataR3[i].moreToGo,
+                                          )),
+                                        ])
+                                ]),
+                          ),
                         ),
                         const SpaceHeightWidget(height: 20)
                       ],

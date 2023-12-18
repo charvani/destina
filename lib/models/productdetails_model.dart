@@ -28,7 +28,7 @@ class ProductDetails {
   String description;
   String currency;
   String price;
-  String downloadpdf;
+  dynamic downloadpdf;
   String pType;
   String howtoUse;
   String videoUrl;

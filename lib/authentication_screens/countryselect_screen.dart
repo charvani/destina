@@ -15,7 +15,6 @@ class CountySelectScreen extends StatefulWidget {
 }
 
 class _CountySelectScreenState extends State<CountySelectScreen> {
-  
   int? currentIndex;
   final MainController _countryController = Get.put(MainController());
   @override
@@ -56,6 +55,10 @@ class _CountySelectScreenState extends State<CountySelectScreen> {
                                         countryId: _countryController
                                             .countriesList[i].countryId,
                                       ));
+                                  Constants.prefs.setString(
+                                      "country_id",
+                                      _countryController
+                                          .countriesList[i].countryId);
                                 });
                                 Timer(const Duration(seconds: 1), () {
                                   setState(() {

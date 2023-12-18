@@ -2,17 +2,20 @@ import 'dart:math';
 
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 
 class SpecialSponsorBonusScreen extends StatefulWidget {
   const SpecialSponsorBonusScreen({super.key});
 
   @override
-  State<SpecialSponsorBonusScreen> createState() => _SpecialSponsorBonusScreenState();
+  State<SpecialSponsorBonusScreen> createState() =>
+      _SpecialSponsorBonusScreenState();
 }
 
 class _SpecialSponsorBonusScreenState extends State<SpecialSponsorBonusScreen> {
   DataTableSource tSource = MyData();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,71 +37,98 @@ class _SpecialSponsorBonusScreenState extends State<SpecialSponsorBonusScreen> {
             //       DataColumn(label: TableHeadingWidget(title: "Credit Amount")),
             //     ],
             //     source: tSource),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DataTable(
-                    // dataRowMaxHeight: 50,
-                    horizontalMargin: 0,
-                    columnSpacing: 0,
-                    // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
-                    headingRowColor: MaterialStatePropertyAll(
-                        lightDarKBlue.withOpacity(0.2)),
-                    border: TableBorder.all(
-                      color: middleBlackColor.withOpacity(0.15),
-                    ),
-                    columns: const [
-                      DataColumn(label: TableHeadingWidget(title: "S.No")),
-                      DataColumn(
-                          label: TableHeadingWidget(title: "Distributor ID")),
-                      DataColumn(
-                          label: TableHeadingWidget(title: "Distributor Name")),
-                      DataColumn(
-                          label: TableHeadingWidget(title: "From Distributor")),
-                      DataColumn(label: TableHeadingWidget(title: "Package")),
-                      DataColumn(label: TableHeadingWidget(title: "Date")),
-                      DataColumn(
-                          label: TableHeadingWidget(title: "Bonus (D1 \$)")),
-                      DataColumn(
-                          label: TableHeadingWidget(
-                              title: "Redemption Points(RP)")),
-                      DataColumn(
-                          label:
-                              TableHeadingWidget(title: "Net Bonus (D1 \$)")),
-                    ],
-                    rows: [
-                      for (int i = 1; i < 1; i++)
-                        DataRow(cells: [
-                          DataCell(
-                            TableInfoWidget(info: i.toString()),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "DESTINA1INT"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "DESTINA1"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "DESTINA1"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "07122023/10819"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "50"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "06 Dec 2023"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "27.96"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "50"),
-                          ),
-                        ])
-                    ]),
+            Container(
+              height: 60,
+              padding: const EdgeInsets.all(8.0),
+              child: CommonFormFieldwidget(
+                hintText: "Search",
+                onChangeFun: (val) {
+                  print("vall...$val");
+                },
+                prefixIcon: Icon(
+                  FeatherIcons.search,
+                  size: 18,
+                  color: blackColor.withOpacity(0.3),
+                ),
+              ),
+            ),
+            Scrollbar(
+              interactive: true,
+              trackVisibility: true,
+              controller: _scrollController,
+              thumbVisibility: true,
+              thickness: 8,
+              radius: const Radius.circular(10),
+              scrollbarOrientation: ScrollbarOrientation.bottom,
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DataTable(
+                      // dataRowMaxHeight: 50,
+                      horizontalMargin: 0,
+                      columnSpacing: 0,
+                      // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
+                      headingRowColor: MaterialStatePropertyAll(
+                          lightDarKBlue.withOpacity(0.2)),
+                      border: TableBorder.all(
+                        color: middleBlackColor.withOpacity(0.15),
+                      ),
+                      columns: const [
+                        DataColumn(label: TableHeadingWidget(title: "S.No")),
+                        DataColumn(
+                            label: TableHeadingWidget(title: "Distributor ID")),
+                        DataColumn(
+                            label:
+                                TableHeadingWidget(title: "Distributor Name")),
+                        DataColumn(
+                            label:
+                                TableHeadingWidget(title: "From Distributor")),
+                        DataColumn(label: TableHeadingWidget(title: "Package")),
+                        DataColumn(label: TableHeadingWidget(title: "Date")),
+                        DataColumn(
+                            label: TableHeadingWidget(title: "Bonus (D1 \$)")),
+                        DataColumn(
+                            label: TableHeadingWidget(
+                                title: "Redemption Points(RP)")),
+                        DataColumn(
+                            label:
+                                TableHeadingWidget(title: "Net Bonus (D1 \$)")),
+                      ],
+                      rows: [
+                        for (int i = 1; i < 2; i++)
+                          DataRow(cells: [
+                            DataCell(
+                              TableInfoWidget(info: i.toString()),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "DESTINA1INT"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "DESTINA1"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "DESTINA1"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "07122023/10819"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "50"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "06 Dec 2023"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "27.96"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "50"),
+                            ),
+                          ])
+                      ]),
+                ),
               ),
             ),
             const SpaceHeightWidget(height: 25)

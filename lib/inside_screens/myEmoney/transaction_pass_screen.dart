@@ -8,7 +8,7 @@ import 'd1cashback_points_screen.dart';
 import 'd1credit_rebatepoints_screen.dart';
 import 'dpwallet_screen.dart';
 import 'ecard_reqreport_screen.dart';
-import 'ecart_screen.dart';
+import 'ecard_screen.dart';
 import 'prepaid_screen.dart';
 import 'redemption_screen.dart';
 import 'stockist_screen.dart';

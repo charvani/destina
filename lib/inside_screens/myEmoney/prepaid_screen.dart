@@ -14,6 +14,8 @@ class PrepaidScreen extends StatefulWidget {
 }
 
 class _PrepaidScreenState extends State<PrepaidScreen> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +36,8 @@ class _PrepaidScreenState extends State<PrepaidScreen> {
                   child: CustomElevatedButton(
                       onTapFun: () {
                         Get.to(() => const EcardTransferScreen(
-                          from: "Prepaid",
-                        ));
+                              from: "Prepaid",
+                            ));
                       },
                       title: "Prepaid EMoney Transfer")),
             ),
@@ -61,66 +63,78 @@ class _PrepaidScreenState extends State<PrepaidScreen> {
                 ),
               ),
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DataTable(
-                    // dataRowMaxHeight: 50,
-                    horizontalMargin: 0,
-                    columnSpacing: 0,
-                    // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
-                    headingRowColor: MaterialStatePropertyAll(
-                        lightDarKBlue.withOpacity(0.2)),
-                    border: TableBorder.all(
-                      color: middleBlackColor.withOpacity(0.15),
-                    ),
-                    columns: const [
-                      DataColumn(label: TableHeadingWidget(title: "S.No")),
-                      DataColumn(label: TableHeadingWidget(title: "Date")),
-                      DataColumn(
-                          label: TableHeadingWidget(title: "Credit Amount")),
-                      DataColumn(
-                          label: TableHeadingWidget(title: "Debit Amount")),
-                      DataColumn(
-                          label: TableHeadingWidget(title: "Balance Amount")),
-                      DataColumn(label: TableHeadingWidget(title: "Remarks")),
-                      DataColumn(
-                          label: TableHeadingWidget(title: "Description")),
-                      DataColumn(label: TableHeadingWidget(title: "View Slip")),
-                    ],
-                    rows: [
-                      for (int i = 1; i < 9; i++)
-                        DataRow(cells: [
-                          DataCell(
-                            TableInfoWidget(info: i.toString()),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "06 Dec 2023"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "0"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "54376"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "22149.61"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(
-                                info: "Amount Deducted For Bill 28112023/7055"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(
-                                info:
-                                    "Ecard Transfer To Ecard Of Destina1USAHQ (Malaysia)"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "Details"),
-                          ),
-                        ])
-                    ]),
+            Scrollbar(
+              interactive: true,
+              trackVisibility: true,
+              controller: _scrollController,
+              thumbVisibility: true,
+              thickness: 8,
+              radius: const Radius.circular(10),
+              scrollbarOrientation: ScrollbarOrientation.bottom,
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DataTable(
+                      // dataRowMaxHeight: 50,
+                      horizontalMargin: 0,
+                      columnSpacing: 0,
+                      // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
+                      headingRowColor: MaterialStatePropertyAll(
+                          lightDarKBlue.withOpacity(0.2)),
+                      border: TableBorder.all(
+                        color: middleBlackColor.withOpacity(0.15),
+                      ),
+                      columns: const [
+                        DataColumn(label: TableHeadingWidget(title: "S.No")),
+                        DataColumn(label: TableHeadingWidget(title: "Date")),
+                        DataColumn(
+                            label: TableHeadingWidget(title: "Credit Amount")),
+                        DataColumn(
+                            label: TableHeadingWidget(title: "Debit Amount")),
+                        DataColumn(
+                            label: TableHeadingWidget(title: "Balance Amount")),
+                        DataColumn(label: TableHeadingWidget(title: "Remarks")),
+                        DataColumn(
+                            label: TableHeadingWidget(title: "Description")),
+                        DataColumn(
+                            label: TableHeadingWidget(title: "View Slip")),
+                      ],
+                      rows: [
+                        for (int i = 1; i < 6; i++)
+                          DataRow(cells: [
+                            DataCell(
+                              TableInfoWidget(info: i.toString()),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "06 Dec 2023"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "0"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "54376"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "22149.61"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(
+                                  info:
+                                      "Amount Deducted For Bill 28112023/7055"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(
+                                  info:
+                                      "Ecard Transfer To Ecard Of Destina1USAHQ (Malaysia)"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "Details"),
+                            ),
+                          ])
+                      ]),
+                ),
               ),
             ),
             const SpaceHeightWidget(height: 25)

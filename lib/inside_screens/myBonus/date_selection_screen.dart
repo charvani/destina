@@ -233,36 +233,33 @@ class _BonusDateSelectionScreenState extends State<BonusDateSelectionScreen> {
                       width: 100,
                       child: CustomElevatedButton(
                           onTapFun: () {
-                            if (_formKey.currentState!.validate()) {
-                              if (widget.from == "Retail") {
-                                Get.to(() => const RetailBonusSCreen());
-                              } else if (widget.from ==
-                                  "Customer Acquisition") {
-                                Get.to(() => const CustomerAcquisitionScreen());
-                              } else if (widget.from == "Upgrade Acquisition") {
-                                Get.to(() => const UpgradeAcquistionScreen());
-                              } else if (widget.from ==
-                                  "TeamBuilder Buisiness") {
-                                Get.to(
-                                    () => const TeamBuilderBussinessScreen());
-                              } else if (widget.from == "Special Leadership") {
-                                Get.to(() => const SpecialLeadershipScreen());
-                              } else if (widget.from == "Direct Distributor") {
-                                Get.to(
-                                    () => const DirectDistributorBonusScreen());
-                              } else if (widget.from == "Personal Sales") {
-                                Get.to(() => const PersonalSalesScreen());
-                              } else if (widget.from == "Special Bonus") {
-                                Get.to(() => const SpecialBonusScreen());
-                              } else if (widget.from ==
-                                  "Special Bonus(Sponsor)") {
-                                Get.to(() => const SpecialSponsorBonusScreen());
-                              } else if (widget.from == "Activation Bonus") {
-                                Get.to(() => const ActivationBonusScreen());
-                              } else if (widget.from == "Rollup Bonus") {
-                                Get.to(() => const RollupBonusScreen());
-                              }
+                            // if (_formKey.currentState!.validate()) {
+                            if (widget.from == "Retail") {
+                              Get.to(() => const RetailBonusSCreen());
+                            } else if (widget.from == "Customer Acquisition") {
+                              Get.to(() => const CustomerAcquisitionScreen());
+                            } else if (widget.from == "Upgrade Acquisition") {
+                              Get.to(() => const UpgradeAcquistionScreen());
+                            } else if (widget.from == "TeamBuilder Buisiness") {
+                              Get.to(() => const TeamBuilderBussinessScreen());
+                            } else if (widget.from == "Special Leadership") {
+                              Get.to(() => const SpecialLeadershipScreen());
+                            } else if (widget.from == "Direct Distributor") {
+                              Get.to(
+                                  () => const DirectDistributorBonusScreen());
+                            } else if (widget.from == "Personal Sales") {
+                              Get.to(() => const PersonalSalesScreen());
+                            } else if (widget.from == "Special Bonus") {
+                              Get.to(() => const SpecialBonusScreen());
+                            } else if (widget.from ==
+                                "Special Bonus(Sponsor)") {
+                              Get.to(() => const SpecialSponsorBonusScreen());
+                            } else if (widget.from == "Activation Bonus") {
+                              Get.to(() => const ActivationBonusScreen());
+                            } else if (widget.from == "Rollup Bonus") {
+                              Get.to(() => const RollupBonusScreen());
                             }
+                            // }
                           },
                           title: "Submit"),
                     ),

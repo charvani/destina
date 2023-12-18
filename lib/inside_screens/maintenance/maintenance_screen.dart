@@ -14,6 +14,8 @@ class AccountMaintenanceScreen extends StatefulWidget {
 }
 
 class _AccountMaintenanceScreenState extends State<AccountMaintenanceScreen> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,51 +50,61 @@ class _AccountMaintenanceScreenState extends State<AccountMaintenanceScreen> {
                   fontSize: 10),
             ),
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: DataTable(
-                  dataRowMaxHeight: 50,
-                  horizontalMargin: 0,
-                  columnSpacing: 0,
-                  headingRowColor:
-                      MaterialStatePropertyAll(lightDarKBlue.withOpacity(0.15)),
-                  border: TableBorder.all(
-                      color: middleBlackColor.withOpacity(0.15)),
-                  columns: const [
-                    DataColumn(label: TableHeadingWidget(title: "S.No")),
-                    DataColumn(label: TableHeadingWidget(title: "Amount")),
-                    DataColumn(label: TableHeadingWidget(title: "CV")),
-                    DataColumn(label: TableHeadingWidget(title: "Date")),
-                    DataColumn(
-                        label: TableHeadingWidget(title: "Month & Year")),
-                    DataColumn(
-                        label: TableHeadingWidget(title: "Maintenance Type")),
-                  ],
-                  rows: [
-                    for (int i = 1; i < 9; i++)
-                      DataRow(cells: [
-                        DataCell(
-                          TableInfoWidget(info: i.toString()),
-                        ),
-                        const DataCell(
-                          TableInfoWidget(info: "RM 454.10"),
-                        ),
-                        DataCell(
-                          orderNumTextWidget("50"),
-                        ),
-                        const DataCell(
-                          TableInfoWidget(info: "01 Jun 2019"),
-                        ),
-                        const DataCell(
-                          TableInfoWidget(info: "Jul 2019"),
-                        ),
-                        const DataCell(
-                          TableInfoWidget(info: "PURCHASE MAINTENANCE"),
-                        ),
-                      ])
-                  ]),
+          Scrollbar(
+            interactive: true,
+            trackVisibility: true,
+            controller: _scrollController,
+            thumbVisibility: true,
+            thickness: 8,
+            radius: const Radius.circular(10),
+            scrollbarOrientation: ScrollbarOrientation.bottom,
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              scrollDirection: Axis.horizontal,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DataTable(
+                    dataRowMaxHeight: 50,
+                    horizontalMargin: 0,
+                    columnSpacing: 0,
+                    headingRowColor: MaterialStatePropertyAll(
+                        lightDarKBlue.withOpacity(0.15)),
+                    border: TableBorder.all(
+                        color: middleBlackColor.withOpacity(0.15)),
+                    columns: const [
+                      DataColumn(label: TableHeadingWidget(title: "S.No")),
+                      DataColumn(label: TableHeadingWidget(title: "Amount")),
+                      DataColumn(label: TableHeadingWidget(title: "CV")),
+                      DataColumn(label: TableHeadingWidget(title: "Date")),
+                      DataColumn(
+                          label: TableHeadingWidget(title: "Month & Year")),
+                      DataColumn(
+                          label: TableHeadingWidget(title: "Maintenance Type")),
+                    ],
+                    rows: [
+                      for (int i = 1; i < 9; i++)
+                        DataRow(cells: [
+                          DataCell(
+                            TableInfoWidget(info: i.toString()),
+                          ),
+                          const DataCell(
+                            TableInfoWidget(info: "RM 454.10"),
+                          ),
+                          DataCell(
+                            orderNumTextWidget("50"),
+                          ),
+                          const DataCell(
+                            TableInfoWidget(info: "01 Jun 2019"),
+                          ),
+                          const DataCell(
+                            TableInfoWidget(info: "Jul 2019"),
+                          ),
+                          const DataCell(
+                            TableInfoWidget(info: "PURCHASE MAINTENANCE"),
+                          ),
+                        ])
+                    ]),
+              ),
             ),
           )
         ],

@@ -202,9 +202,9 @@ class _BuissinessDevBonusScreenState extends State<BuissinessDevBonusScreen> {
                       Expanded(
                         child: CustomElevatedButton(
                             onTapFun: () {
-                              if (_formKey.currentState!.validate()) {
-                                Get.to(() => const BusssinessDevScreen());
-                              }
+                              // if (_formKey.currentState!.validate()) {
+                              Get.to(() => const BusssinessDevScreen());
+                              // }
                             },
                             title: "Submit"),
                       ),

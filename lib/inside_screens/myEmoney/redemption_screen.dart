@@ -11,6 +11,8 @@ class RedemptionScreen extends StatefulWidget {
 }
 
 class _RedemptionScreenState extends State<RedemptionScreen> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,60 +45,71 @@ class _RedemptionScreenState extends State<RedemptionScreen> {
                 ),
               ),
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DataTable(
-                    // dataRowMaxHeight: 50,
-                    horizontalMargin: 0,
-                    columnSpacing: 0,
-                    // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
-                    headingRowColor: MaterialStatePropertyAll(
-                        lightDarKBlue.withOpacity(0.2)),
-                    border: TableBorder.all(
-                      color: middleBlackColor.withOpacity(0.15),
-                    ),
-                    columns: const [
-                      DataColumn(label: TableHeadingWidget(title: "S.No")),
-                      DataColumn(label: TableHeadingWidget(title: "Date")),
-                      DataColumn(
-                          label: TableHeadingWidget(title: "Credit Amount")),
-                      DataColumn(
-                          label: TableHeadingWidget(title: "Debit Amount")),
-                      DataColumn(
-                          label: TableHeadingWidget(title: "Balance Amount")),
-                      DataColumn(label: TableHeadingWidget(title: "Remarks")),
-                      DataColumn(
-                          label: TableHeadingWidget(title: "Description")),
-                    ],
-                    rows: [
-                      for (int i = 1; i < 9; i++)
-                        DataRow(cells: [
-                          DataCell(
-                            TableInfoWidget(info: i.toString()),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "29 Nov 2023"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "0"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "64.47"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "18789.91"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "Redem"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(
-                                info: "Amount Deducted For Bill 29112023/3436"),
-                          ),
-                        ])
-                    ]),
+            Scrollbar(
+              interactive: true,
+              trackVisibility: true,
+              controller: _scrollController,
+              thumbVisibility: true,
+              thickness: 8,
+              radius: const Radius.circular(10),
+              scrollbarOrientation: ScrollbarOrientation.bottom,
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DataTable(
+                      // dataRowMaxHeight: 50,
+                      horizontalMargin: 0,
+                      columnSpacing: 0,
+                      // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
+                      headingRowColor: MaterialStatePropertyAll(
+                          lightDarKBlue.withOpacity(0.2)),
+                      border: TableBorder.all(
+                        color: middleBlackColor.withOpacity(0.15),
+                      ),
+                      columns: const [
+                        DataColumn(label: TableHeadingWidget(title: "S.No")),
+                        DataColumn(label: TableHeadingWidget(title: "Date")),
+                        DataColumn(
+                            label: TableHeadingWidget(title: "Credit Amount")),
+                        DataColumn(
+                            label: TableHeadingWidget(title: "Debit Amount")),
+                        DataColumn(
+                            label: TableHeadingWidget(title: "Balance Amount")),
+                        DataColumn(label: TableHeadingWidget(title: "Remarks")),
+                        DataColumn(
+                            label: TableHeadingWidget(title: "Description")),
+                      ],
+                      rows: [
+                        for (int i = 1; i < 6; i++)
+                          DataRow(cells: [
+                            DataCell(
+                              TableInfoWidget(info: i.toString()),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "29 Nov 2023"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "0"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "64.47"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "18789.91"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "Redem"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(
+                                  info:
+                                      "Amount Deducted For Bill 29112023/3436"),
+                            ),
+                          ])
+                      ]),
+                ),
               ),
             ),
             const SpaceHeightWidget(height: 25)

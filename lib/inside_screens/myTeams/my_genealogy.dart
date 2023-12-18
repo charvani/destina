@@ -132,104 +132,66 @@ class _MyGenealogyState extends State<MyGenealogy> {
                     child: Scrollbar(
                       scrollbarOrientation: ScrollbarOrientation.left,
                       controller: leftScrollController,
-                      // interactive: true,
+                      interactive: true,
                       radius: const Radius.circular(15),
                       trackVisibility: true,
                       thumbVisibility: true,
                       thickness: 7,
                       child: SingleChildScrollView(
-                        // controller: ,
+                        controller: leftScrollController,
                         child: Column(children: [
                           for (int i = 0; i < data.length; i++)
-                            GestureDetector(
-                              behavior: HitTestBehavior.translucent,
-                              onTap: () {
-                                Get.dialog(detialsDilog());
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  if (data[i]['type'] == "male")
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          "assets/images/arrow_right.png",
-                                          color: data[i]['active'] == false
-                                              ? middleBlackColor
-                                              : whiteColor,
-                                          height: 20,
-                                        ),
-                                        Column(
-                                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/arrow_right.png",
+                                      color: data[i]['active'] == false
+                                          ? middleBlackColor
+                                          : whiteColor,
+                                      height: 20,
+                                    ),
+                                    GestureDetector(
+                                      behavior: HitTestBehavior.translucent,
+                                      onTap: () {
+                                        Get.dialog(detialsDilog());
+                                      },
+                                      child: Column(
+                                        children: [
+                                          if (data[i]['type'] == "male")
                                             Image.asset(
                                               (data[i]['active'] == true)
                                                   ? "assets/images/active_male.png"
                                                   : "assets/images/inactive_male.png",
                                               height: 55,
                                             ),
-                                            idTextStyle(data[i]['id'])
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  if (data[i]['type'] == "female")
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          "assets/images/arrow_right.png",
-                                          color: data[i]['active'] == false
-                                              ? middleBlackColor
-                                              : whiteColor,
-                                          height: 20,
-                                        ),
-                                        Column(
-                                          children: [
+                                          if (data[i]['type'] == "female")
                                             Image.asset(
                                               data[i]['active'] == true
                                                   ? "assets/images/active_female.png"
                                                   : "assets/images/inactive_female.png",
                                               height: 55,
                                             ),
-                                            idTextStyle(data[i]['id'])
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  if (data[i]['type'] == "business")
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          "assets/images/arrow_right.png",
-                                          color: data[i]['active'] == false
-                                              ? middleBlackColor
-                                              : whiteColor,
-                                          height: 20,
-                                        ),
-                                        Column(
-                                          children: [
+                                          if (data[i]['type'] == "business")
                                             Image.asset(
                                               data[i]['active'] == true
                                                   ? "assets/images/active_bussinessid.png"
                                                   : "assets/images/inactive_businessid.png",
                                               height: 55,
                                             ),
-                                            idTextStyle(data[i]['id'])
-                                          ],
-                                        ),
-                                      ],
+                                          idTextStyle(data[i]['id'])
+                                        ],
+                                      ),
                                     ),
-                                  const SpaceHeightWidget(height: 8)
-                                ],
-                              ),
+                                  ],
+                                ),
+                                const SpaceHeightWidget(height: 8)
+                              ],
                             )
                         ]),
                       ),
@@ -238,89 +200,77 @@ class _MyGenealogyState extends State<MyGenealogy> {
                 ),
               ),
               Expanded(
-                child: Container(
+                child: Padding(
                   padding: const EdgeInsets.only(right: 10),
-                  height: 320,
-                  child: Scrollbar(
-                    controller: rightScrollController,
-                    // interactive: true,
-                    radius: const Radius.circular(15),
-                    trackVisibility: true,
-                    thumbVisibility: true,
-                    thickness: 7,
-                    child: ListView.builder(
+                  child: SizedBox(
+                    height: 320,
+                    child: Scrollbar(
+                      scrollbarOrientation: ScrollbarOrientation.right,
+                      controller: rightScrollController,
+                      interactive: true,
+                      radius: const Radius.circular(15),
+                      trackVisibility: true,
+                      thumbVisibility: true,
+                      thickness: 7,
+                      child: SingleChildScrollView(
                         controller: rightScrollController,
-                        itemCount: data.length,
-                        itemBuilder: (context, i) {
-                          return GestureDetector(
-                            behavior: HitTestBehavior.translucent,
-                            onTap: () {
-                              Get.dialog(detialsDilog());
-                            },
-                            child: Column(
+                        child: Column(children: [
+                          for (int i = 0; i < data.length; i++)
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                if (data[i]['type'] == "male")
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/arrow_right.png",
-                                        color: data[i]['active'] == false
-                                            ? middleBlackColor
-                                            : whiteColor,
-                                        height: 20,
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/arrow_right.png",
+                                      color: data[i]['active'] == false
+                                          ? middleBlackColor
+                                          : whiteColor,
+                                      height: 20,
+                                    ),
+                                    GestureDetector(
+                                      behavior: HitTestBehavior.translucent,
+                                      onTap: () {
+                                        Get.dialog(detialsDilog());
+                                      },
+                                      child: Column(
+                                        children: [
+                                          if (data[i]['type'] == "male")
+                                            Image.asset(
+                                              (data[i]['active'] == true)
+                                                  ? "assets/images/active_male.png"
+                                                  : "assets/images/inactive_male.png",
+                                              height: 55,
+                                            ),
+                                          if (data[i]['type'] == "female")
+                                            Image.asset(
+                                              data[i]['active'] == true
+                                                  ? "assets/images/active_female.png"
+                                                  : "assets/images/inactive_female.png",
+                                              height: 55,
+                                            ),
+                                          if (data[i]['type'] == "business")
+                                            Image.asset(
+                                              data[i]['active'] == true
+                                                  ? "assets/images/active_bussinessid.png"
+                                                  : "assets/images/inactive_businessid.png",
+                                              height: 55,
+                                            ),
+                                          idTextStyle(data[i]['id'])
+                                        ],
                                       ),
-                                      Image.asset(
-                                        (data[i]['active'] == true)
-                                            ? "assets/images/active_male.png"
-                                            : "assets/images/inactive_male.png",
-                                        height: 55,
-                                      ),
-                                    ],
-                                  ),
-                                if (data[i]['type'] == "female")
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/arrow_right.png",
-                                        color: data[i]['active'] == false
-                                            ? middleBlackColor
-                                            : whiteColor,
-                                        height: 20,
-                                      ),
-                                      Image.asset(
-                                        data[i]['active'] == true
-                                            ? "assets/images/active_female.png"
-                                            : "assets/images/inactive_female.png",
-                                        height: 55,
-                                      ),
-                                    ],
-                                  ),
-                                if (data[i]['type'] == "business")
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/arrow_right.png",
-                                        color: data[i]['active'] == false
-                                            ? middleBlackColor
-                                            : whiteColor,
-                                        height: 20,
-                                      ),
-                                      Image.asset(
-                                        data[i]['active'] == true
-                                            ? "assets/images/active_bussinessid.png"
-                                            : "assets/images/inactive_businessid.png",
-                                        height: 55,
-                                      ),
-                                    ],
-                                  ),
-                                idTextStyle(data[i]['id'])
+                                    ),
+                                  ],
+                                ),
+                                const SpaceHeightWidget(height: 8)
                               ],
-                            ),
-                          );
-                        }),
+                            )
+                        ]),
+                      ),
+                    ),
                   ),
                 ),
               ),

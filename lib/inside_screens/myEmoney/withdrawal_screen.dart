@@ -11,6 +11,8 @@ class WithdrawalStatusScreen extends StatefulWidget {
 }
 
 class _WithdrawalStatusScreenState extends State<WithdrawalStatusScreen> {
+  final ScrollController _scrollController = ScrollController();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,61 +40,72 @@ class _WithdrawalStatusScreenState extends State<WithdrawalStatusScreen> {
                 ),
               ),
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DataTable(
-                    // dataRowMaxHeight: 50,
-                    horizontalMargin: 0,
-                    columnSpacing: 0,
-                    // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
-                    headingRowColor: MaterialStatePropertyAll(
-                        lightDarKBlue.withOpacity(0.2)),
-                    border: TableBorder.all(
-                      color: middleBlackColor.withOpacity(0.15),
-                    ),
-                    columns: const [
-                      DataColumn(label: TableHeadingWidget(title: "S.No")),
-                      DataColumn(
-                          label: TableHeadingWidget(title: "Request Code")),
-                      DataColumn(
-                          label: TableHeadingWidget(title: "Request  Amount")),
-                      DataColumn(
-                          label: TableHeadingWidget(title: "Request Date")),
-                      DataColumn(label: TableHeadingWidget(title: "Status")),
-                      DataColumn(label: TableHeadingWidget(title: "Remarks")),
-                      DataColumn(
-                          label: TableHeadingWidget(title: "Email Messages")),
-                    ],
-                    rows: [
-                      for (int i = 1; i < 9; i++)
-                        DataRow(cells: [
-                          DataCell(
-                            TableInfoWidget(info: i.toString()),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "WDL/2019-00006"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "50"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "12 Sep 2019"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: "Pending"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(
-                                info:
-                                    "Credit Amount : D1 \$ 50.00</br>Cancellation Fee : D1 \$ 1.00</br>Test123"),
-                          ),
-                          const DataCell(
-                            TableInfoWidget(info: ""),
-                          ),
-                        ])
-                    ]),
+            Scrollbar(
+              interactive: true,
+              trackVisibility: true,
+              controller: _scrollController,
+              thumbVisibility: true,
+              thickness: 8,
+              radius: const Radius.circular(10),
+              scrollbarOrientation: ScrollbarOrientation.bottom,
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DataTable(
+                      // dataRowMaxHeight: 50,
+                      horizontalMargin: 0,
+                      columnSpacing: 0,
+                      // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
+                      headingRowColor: MaterialStatePropertyAll(
+                          lightDarKBlue.withOpacity(0.2)),
+                      border: TableBorder.all(
+                        color: middleBlackColor.withOpacity(0.15),
+                      ),
+                      columns: const [
+                        DataColumn(label: TableHeadingWidget(title: "S.No")),
+                        DataColumn(
+                            label: TableHeadingWidget(title: "Request Code")),
+                        DataColumn(
+                            label:
+                                TableHeadingWidget(title: "Request  Amount")),
+                        DataColumn(
+                            label: TableHeadingWidget(title: "Request Date")),
+                        DataColumn(label: TableHeadingWidget(title: "Status")),
+                        DataColumn(label: TableHeadingWidget(title: "Remarks")),
+                        DataColumn(
+                            label: TableHeadingWidget(title: "Email Messages")),
+                      ],
+                      rows: [
+                        for (int i = 1; i < 4; i++)
+                          DataRow(cells: [
+                            DataCell(
+                              TableInfoWidget(info: i.toString()),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "WDL/2019-00006"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "50"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "12 Sep 2019"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: "Pending"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(
+                                  info:
+                                      "Credit Amount : D1 \$ 50.00</br>Cancellation Fee : D1 \$ 1.00</br>Test123"),
+                            ),
+                            const DataCell(
+                              TableInfoWidget(info: ""),
+                            ),
+                          ])
+                      ]),
+                ),
               ),
             ),
             const SpaceHeightWidget(height: 25)

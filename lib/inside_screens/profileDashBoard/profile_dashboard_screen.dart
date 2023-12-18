@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/inside_screens/shopping/salesmall_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,6 +29,28 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     "Personal Details"
   ];
   int myDataSelectedInd = 0;
+  Timer? eligibilityTimer;
+  DateTime givenDate = DateTime(2024, 2, 16);
+  DateTime currentDate = DateTime.now();
+  dynamic daysDifference;
+  String? todayVal;
+  String? hourVal;
+  String? minVal;
+  String? secVal;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        daysDifference = givenDate.difference(currentDate).inDays;
+        todayVal = DateTime.now().day.toString();
+        hourVal = DateTime.now().hour.toString();
+        minVal = DateTime.now().minute.toString();
+        secVal = DateTime.now().second.toString();
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,35 +59,81 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       body: SingleChildScrollView(
         child: Column(children: [
           const SpaceHeightWidget(height: 20),
+          const CommonTitle(
+            titleName: "Your Upgrade Eligibility Will Expire In",
+            size: 16,
+          ),
+          if (daysDifference != null)
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    TimerWidget(
+                      timeValue: todayVal!,
+                      markedRangeVal: daysDifference.toString(),
+                      type: "Days",
+                    ),
+                    TimerWidget(
+                      timeValue: hourVal!,
+                      type: "Hours",
+                      markedRangeVal: "24",
+                    ),
+                    TimerWidget(
+                      timeValue: minVal!,
+                      type: "Minutes",
+                      markedRangeVal: "60",
+                    ),
+                    TimerWidget(
+                      timeValue: secVal!,
+                      type: "Seconds",
+                      markedRangeVal: "60",
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(right: 10),
+                height: 30,
+                child: CustomAutoWidthButton(
+                    onTapFun: () {
+                      Get.to(() => const SalesMallScreen(from: "Upgrade"));
+                    },
+                    title: "Click to Upgrade"),
+              )
+            ],
+          ),
+          const SpaceHeightWidget(height: 20),
           Text(
             "e-Money Summary",
             style: TextStyle(
                 fontFamily: "OnestSemiBold", color: blackColor, fontSize: 16),
           ),
-          const Row(
-            children: [
-              Expanded(
-                child: CommissionWidget(
+          const SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                CommissionWidget(
                   title: "COMMISSION\nEMONEY",
                   amount: "18918.85",
                   amountType: "D1 \$",
                 ),
-              ),
-              Expanded(
-                child: CommissionWidget(
+                CommissionWidget(
                   title: "PREPAID\nEMONEY",
                   amount: "96300.63",
                   amountType: "RM",
                 ),
-              ),
-              Expanded(
-                child: CommissionWidget(
+                CommissionWidget(
                   title: "Country License\nEmoney",
                   amount: "107.6",
                   amountType: "D1 \$",
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const CommonDivider(),
           Row(
@@ -280,13 +351,15 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             Container(
               alignment: Alignment.center,
               color: lightDarKBlue.withOpacity(0.1),
-              child: const Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CommonDivider(),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Row(
+                  const CommonDivider(),
+                  Container(
+                    color:
+                        i.isOdd ? whiteColor : lightDarKBlue.withOpacity(0.1),
+                    padding: const EdgeInsets.all(8.0),
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Flexible(

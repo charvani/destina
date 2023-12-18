@@ -2135,7 +2135,7 @@ PreferredSizeWidget commonAppBar(
                 style: TextStyle(
                     fontFamily: "OnestSemiBold",
                     overflow: TextOverflow.ellipsis,
-                    fontSize: title!.length > 20 ? 16 : 19),
+                    fontSize: title!.length > 20 ? 16 : 18),
               ),
               trailing: action,
             ),
@@ -3897,6 +3897,7 @@ class CommissionWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(10)),
       padding: const EdgeInsets.all(10),
       margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      constraints: const BoxConstraints(minWidth: 110),
       child: Column(
         children: [
           Text(
@@ -4460,6 +4461,7 @@ class TableHeadingWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Text(
           title,
+          textAlign: TextAlign.center,
           style: TextStyle(
               fontFamily: fontFamily ?? "OnestSemiBold",
               fontSize: 12,
@@ -4620,6 +4622,60 @@ class PackageReviewWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class TimerWidget extends StatelessWidget {
+  final String type;
+  final String timeValue;
+  final String markedRangeVal;
+  const TimerWidget(
+      {super.key,
+      required this.timeValue,
+      required this.type,
+      required this.markedRangeVal});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 8),
+          height: 70,
+          width: 70,
+          child: markedRangeVal == "0"
+              ? CircularProgressIndicator(
+                  color: darkNaviBlueColor,
+                  backgroundColor: darkNaviBlueColor.withOpacity(0.2),
+                  strokeWidth: 5,
+                  value: 0)
+              : CircularProgressIndicator(
+                  color: whiteColor.withOpacity(0.8),
+                  backgroundColor: darkNaviBlueColor,
+                  strokeWidth: 5,
+                  value: double.parse(timeValue) / double.parse(markedRangeVal),
+                ),
+        ),
+        Column(
+          children: [
+            CommonTitle(
+              titleName: (type == "Days")
+                  ? markedRangeVal
+                  : (int.parse(markedRangeVal) - int.parse(timeValue))
+                      .toString(),
+              size: 12,
+              fontFamily: "OnestSemiBold",
+            ),
+            CommonTitle(
+              titleName: type,
+              size: 12,
+              fontFamily: "OnestSemiBold",
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
