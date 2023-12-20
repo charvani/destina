@@ -12,7 +12,10 @@ import 'promotions_screen.dart';
 class BottomBarScreen extends StatefulWidget {
   final int? productIndex;
   final int? index;
-  const BottomBarScreen({Key? key, this.index, this.productIndex})
+  final List<String>? bannerPopup;
+
+  const BottomBarScreen(
+      {Key? key, this.index, this.productIndex, this.bannerPopup})
       : super(
           key: key,
         );
@@ -43,7 +46,9 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
     selectedIndex = widget.index ?? 0;
     if (widget.index != null) {
       bottomBarPages = [
-        const HomeScreen(),
+        HomeScreen(
+          bannerPopUpImages: widget.bannerPopup,
+        ),
         ProductsScreen(
           from: "bottombar",
           index: widget.productIndex,

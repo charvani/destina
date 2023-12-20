@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../commons/common_widgets.dart';
+import '../dashboard_screens/bottombar_screen.dart';
 import 'onboard_screen.dart';
 // import 'package:video_player/video_player.dart';
 
@@ -22,9 +23,15 @@ class _SplashScreenState extends State<SplashScreen> {
   bool splashAnimation = true;
   // late VideoPlayerController _controller;
   late bool onboard;
+  late String login;
   navgationFun() {
-    Get.offAll(
-        () => onboard == false ? const OnboardScreen() : const LoginScreen());
+    Get.offAll(() => onboard == false
+        ? const OnboardScreen()
+        : login == "false" || login == "null"
+            ? const LoginScreen()
+            : const BottomBarScreen(
+                index: 0,
+              ));
   }
 
   countyCodeFun() async {
@@ -42,6 +49,8 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     onboard = Constants.prefs.getBool("onboard") ?? false;
+    login = Constants.prefs.getString("user_id") ?? "false";
+
     countyCodeFun();
     Timer(const Duration(seconds: 4), () {
       navgationFun();

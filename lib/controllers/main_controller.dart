@@ -121,6 +121,7 @@ class MainController extends GetxController {
   RxList<RegisterCartItemsModel> registerCartItems =
       <RegisterCartItemsModel>[].obs;
   RxDouble totalAmount = 0.0.obs;
+  RxList<String> bannerPopUp = <String>[].obs;
 
 // ********************************************************************************************
   getCountryCode() async {
@@ -352,6 +353,25 @@ class MainController extends GetxController {
     if (from == "init") {
       loading.value = false;
     }
+    return res;
+  }
+
+  getMemberLogin(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().login, params: parameters);
+    if (res != null) {
+      if (res['Msg'].toString().toUpperCase() == "SUCCESS") {
+        for (int i = 0; i < res['MemberPopuprpt'].length; i++) {
+          if (res['MemberPopuprpt'][i]['MemPopup'] != null ||
+              res['MemberPopuprpt'][i]['MemPopup'] != "") {
+            bannerPopUp.add(res['MemberPopuprpt'][i]['MemPopup']);
+          }
+        }
+      }
+      print("bbbb....${bannerPopUp.length}");
+    }
+    loading.value = false;
     return res;
   }
 }

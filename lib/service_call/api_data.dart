@@ -23,4 +23,5 @@ class ApiData {
   String userChkLoginID = "ChkLoginID";
   String register = "InsertSignUpData";
   String registerCart = "SGCartItems";
+  String login = "MemberLogin";
 }

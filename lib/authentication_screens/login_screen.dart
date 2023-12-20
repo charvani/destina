@@ -1,8 +1,14 @@
+import 'package:destina_1_international/controllers/main_controller.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:device_information/device_information.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mac_address/mac_address.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../commons/colors.dart';
 import '../commons/common_widgets.dart';
+import '../commons/constants.dart';
 import '../dashboard_screens/bottombar_screen.dart';
 import 'countryselect_screen.dart';
 import 'forgotpass_screen.dart';
@@ -19,6 +25,47 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController idTController = TextEditingController();
   TextEditingController passwordTController = TextEditingController();
   bool visible = false;
+  dynamic mobileInfo;
+  final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+  String? imei, macAddress;
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  bool getPermission = false;
+  String? deviceImei;
+  String message = "Please allow permission request!";
+  final MainController _loginController = Get.put(MainController());
+  deviceInfoFun() async {
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    macAddress = await GetMac.macAddress;
+    imei = await DeviceInformation.deviceIMEINumber;
+
+    mobileInfo = "MOBILENO:"
+        ";SIMSERIAL:"
+        ";IMEI:$imei;SUBID:"
+        ";WLANMAC:$macAddress;ANDROIDID:${androidInfo.id};VERSION:${Constants.appversion}";
+    print("mobile infor....$mobileInfo");
+  }
+
+  void checkPermission() async {
+    var status = await Permission.phone.status;
+    if (status != PermissionStatus.granted) {
+      status = await Permission.phone.request();
+      if (status != PermissionStatus.granted) {
+        // Handle the case where the user denies the permission request.
+      }
+    }
+
+    // Now you can proceed with using the READ_PHONE_STATE permission.
+    deviceInfoFun();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      checkPermission();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,16 +206,44 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         ),
                         const SpaceHeightWidget(height: 10),
-                        CustomElevatedButton(
-                            onTapFun: () {
-                              if (_formKey.currentState!.validate()) {}
-                              // Get.to(() => const PackageDetailsScreen(
-                              //       from: "register",
-                              //       countryid: "1",
-                              //       packageCode: "MYJD01",
-                              //     ));
-                            },
-                            title: "Submit"),
+                        Obx(() {
+                          return _loginController.loading.value
+                              ? loader
+                              : CustomElevatedButton(
+                                  onTapFun: () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      print("charvani");
+                                      Map bodyData = {
+                                        "idno": idTController.text,
+                                        "Pwd": passwordTController.text,
+                                        "FcmId": "1233455",
+                                        "IMEI": imei,
+                                        "MOBINFO": mobileInfo,
+                                      };
+                                      dynamic res = await _loginController
+                                          .getMemberLogin(bodyData);
+                                      if (res != null) {
+                                        print(res);
+                                        if (res['Msg']
+                                                .toString()
+                                                .toUpperCase() ==
+                                            "SUCCESS") {
+                                          CommonToastTrue("Login successful");
+                                          Constants.prefs.setString(
+                                              "user_id", idTController.text);
+                                          Constants.prefs.setString("password",
+                                              passwordTController.text);
+                                          Get.offAll(() => BottomBarScreen(
+                                                index: 0,
+                                                bannerPopup: _loginController
+                                                    .bannerPopUp,
+                                              ));
+                                        }
+                                      }
+                                    }
+                                  },
+                                  title: "Submit");
+                        }),
                         Center(
                           child: CommonTextButton(
                             onTapFun: () {

@@ -972,7 +972,7 @@ class VersionText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "version ${Constants().appversion}",
+      "version ${Constants.appversion}",
       style: TextStyle(
           fontFamily: "OnestLight",
           color: middleBlackColor.withOpacity(0.5),
@@ -1276,10 +1276,12 @@ class CommonTitle extends StatelessWidget {
   final String? fontFamily;
   final double? size;
   final Color? fontColor;
+  final TextAlign? textAlign;
   const CommonTitle(
       {super.key,
       required this.titleName,
       this.fontFamily,
+      this.textAlign,
       this.size,
       this.fontColor});
 
@@ -1287,6 +1289,7 @@ class CommonTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       titleName,
+      textAlign: textAlign ?? TextAlign.left,
       style: TextStyle(
           fontFamily: fontFamily ?? "OnestSemiBold",
           fontSize: size ?? 18,
@@ -4676,6 +4679,123 @@ class TimerWidget extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+class UniwaveProductDetails extends StatelessWidget {
+  final String dataText;
+  const UniwaveProductDetails({super.key, required this.dataText});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            "assets/images/leaf.png",
+            height: 30,
+          ),
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 6),
+              child: CommonTitle(
+                titleName: dataText,
+                size: 12.5,
+                fontFamily: "OnestRegular",
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class UniwaveRitchTextWidget extends StatelessWidget {
+  final String boldText;
+  final String plainText;
+  const UniwaveRitchTextWidget(
+      {super.key, required this.boldText, required this.plainText});
+
+  @override
+  Widget build(BuildContext context) {
+    return RichText(
+        text: TextSpan(children: [
+      TextSpan(
+          text: boldText,
+          style: TextStyle(
+              fontFamily: "OnestSemiBold", fontSize: 12, color: blackColor)),
+      TextSpan(
+          text: " $plainText",
+          style: TextStyle(
+              fontFamily: "OnestRegular", fontSize: 12, color: blackColor)),
+    ]));
+  }
+}
+
+class BiomatrixImageWidget extends StatelessWidget {
+  final String title1;
+  final String title2;
+  final String count;
+  final String imagename;
+  const BiomatrixImageWidget(
+      {super.key,
+      required this.count,
+      required this.imagename,
+      required this.title1,
+      required this.title2});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                CommonTitle(
+                  titleName: title1,
+                  size: 12,
+                  fontFamily: "OnestRegular",
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CommonTitle(
+                      titleName: count,
+                      size: 12,
+                      fontFamily: "OnestRegular",
+                    ),
+                    const CommonTitle(
+                      titleName: "BMS",
+                      size: 12,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Image.asset(
+              "assets/images/$imagename.png",
+              height: 35,
+            ),
+          ),
+          Expanded(
+            child: CommonTitle(
+              titleName: title2,
+              size: 10,
+              fontFamily: "OnestRegular",
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:destina_1_international/authentication_screens/login_screen.dart';
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:destina_1_international/dashboard_screens/bottombar_screen.dart';
 import 'package:destina_1_international/inside_screens/productdetails_screen.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +14,8 @@ import '../models/onboarding_model.dart';
 import '../models/productitem_model.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final List<String>? bannerPopUpImages;
+  const HomeScreen({super.key, this.bannerPopUpImages});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -98,27 +102,43 @@ List<ProductItemModel> personalProductItems = [
 ];
 
 class _HomeScreenState extends State<HomeScreen> {
+  final MainController _homeController = Get.put(MainController());
   @override
   void initState() {
     super.initState();
-    // Timer(const Duration(microseconds: 500), () {
-    //   Get.dialog(AlertDialog(
-    //     titlePadding: EdgeInsets.zero,
-    //     title: Container(
-    //       width: double.maxFinite,
-    //       alignment: Alignment.topRight,
-    //       child: IconButton(
-    //           onPressed: () {
-    //             Get.back();
-    //           },
-    //           icon: Icon(
-    //             Icons.cancel_outlined,
-    //             color: redColor,
-    //           )),
-    //     ),
-    //     content: Image.asset("assets/images/add.png"),
-    //   ));
-    // });
+    if (widget.bannerPopUpImages!.isNotEmpty) {
+      print(widget.bannerPopUpImages!.length);
+
+      Timer(const Duration(microseconds: 500), () {
+        Get.dialog(AlertDialog(
+            insetPadding: const EdgeInsets.symmetric(horizontal: 10),
+            titlePadding: EdgeInsets.zero,
+            title: Container(
+              width: double.maxFinite,
+              alignment: Alignment.topRight,
+              child: IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: Icon(
+                    Icons.cancel_outlined,
+                    color: redColor,
+                  )),
+            ),
+            contentPadding:
+                const EdgeInsets.only(top: 0, left: 3, right: 3, bottom: 18),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (int i = 0; i < widget.bannerPopUpImages!.length; i++)
+                    CommonCachedNetworkImage(
+                        imagePath: widget.bannerPopUpImages![i])
+                ],
+              ),
+            )));
+      });
+    }
   }
 
   @override
