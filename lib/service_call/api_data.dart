@@ -24,4 +24,8 @@ class ApiData {
   String register = "InsertSignUpData";
   String registerCart = "SGCartItems";
   String login = "MemberLogin";
+  String logout = "AppLogout";
+
+  String dashboard = "Dashboard";
+  String viewProfile = "ViewProfile";
 }

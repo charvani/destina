@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../commons/common_widgets.dart';
-import '../dashboard_screens/bottombar_screen.dart';
 import 'onboard_screen.dart';
 // import 'package:video_player/video_player.dart';
 
@@ -25,13 +24,15 @@ class _SplashScreenState extends State<SplashScreen> {
   late bool onboard;
   late String login;
   navgationFun() {
-    Get.offAll(() => onboard == false
-        ? const OnboardScreen()
-        : login == "false" || login == "null"
-            ? const LoginScreen()
-            : const BottomBarScreen(
-                index: 0,
-              ));
+    Get.offAll(
+        () => onboard == false ? const OnboardScreen() : const LoginScreen()
+        // login == "false" || login == "null"
+        //     ? const LoginScreen()
+        //     : const BottomBarScreen(
+        //         index: 0,
+        //       )
+
+        );
   }
 
   countyCodeFun() async {

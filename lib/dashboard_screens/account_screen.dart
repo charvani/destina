@@ -9,6 +9,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../authentication_screens/login_screen.dart';
+import '../commons/constants.dart';
+import '../controllers/main_controller.dart';
 import '../inside_screens/myaccount_screen.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -26,6 +28,7 @@ class _AccountScreenState extends State<AccountScreen>
   late AnimationController _controller;
   late Animation<double> _animation;
   int carouselIndex = 3;
+  final MainController _logoutController = Get.put(MainController());
 
   @override
   void initState() {
@@ -72,14 +75,16 @@ class _AccountScreenState extends State<AccountScreen>
                           width: double.infinity,
                           child: SvgPicture.asset("assets/svg/grey_banner.svg",
                               fit: BoxFit.cover)),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30),
-                        child: IconButton(
-                            onPressed: () {
-                              _scaffoldKey.currentState!.openDrawer();
-                            },
-                            icon: Icon(Icons.menu, color: woodColor)),
-                      ),
+                      if (Constants.prefs.getString("user_id") != null &&
+                          Constants.prefs.getString("user_id") != "false")
+                        Padding(
+                          padding: const EdgeInsets.only(top: 30),
+                          child: IconButton(
+                              onPressed: () {
+                                _scaffoldKey.currentState!.openDrawer();
+                              },
+                              icon: Icon(Icons.menu, color: woodColor)),
+                        ),
                     ],
                   ),
                   SafeArea(
@@ -173,12 +178,16 @@ class _AccountScreenState extends State<AccountScreen>
                                     color: whiteColor),
                               ),
                               const SpaceHeightWidget(height: 10),
-                              CustomFixedElevatedButton(
-                                onTapFun: () {
-                                  Get.to(() => const LoginScreen());
-                                },
-                                title: "Sign Up / Sign in",
-                              ),
+                              if (Constants.prefs.getString("user_id") ==
+                                      null ||
+                                  Constants.prefs.getString("user_id") ==
+                                      "false")
+                                CustomFixedElevatedButton(
+                                  onTapFun: () {
+                                    Get.to(() => const LoginScreen());
+                                  },
+                                  title: "Sign Up / Sign in",
+                                ),
                             ],
                           ),
                           // const SpaceWidthWidget(width: 5),
@@ -268,6 +277,32 @@ class _AccountScreenState extends State<AccountScreen>
                 onTapFun: () {},
                 title: "Privacy Policy",
               ),
+              if (Constants.prefs.getString("user_id") != null &&
+                  Constants.prefs.getString("user_id") != "false")
+                Obx(() {
+                  return _logoutController.loading.value
+                      ? SizedBox(height: 45, child: loader)
+                      : AboutUsScreenWidget(
+                          leadingIcon: FeatherIcons.logOut,
+                          onTapFun: () async {
+                            Map bdata = {
+                              "UserId": Constants.prefs.getString("user_id"),
+                              "Pwd": Constants.prefs.getString("password"),
+                            };
+                            dynamic res =
+                                await _logoutController.getLogout(bdata);
+                            if (res != null) {
+                              if (res['Msg'] == "SUCCESS") {
+                                Constants.prefs.remove("user_id");
+                                Constants.prefs.remove("password");
+                                CommonToastTrue("Successfully logout");
+                                Get.offAll(() => const LoginScreen());
+                              }
+                            }
+                          },
+                          title: "Logout",
+                        );
+                }),
               const SpaceHeightWidget(height: 45),
               const VersionText(),
               const SpaceHeightWidget(height: 10),

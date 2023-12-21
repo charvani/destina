@@ -3993,7 +3993,8 @@ class RedeemWidget extends StatelessWidget {
 }
 
 class RankWidget extends StatelessWidget {
-  const RankWidget({super.key});
+  final String title;
+  const RankWidget({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -4013,7 +4014,7 @@ class RankWidget extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  "D' Life Changer",
+                  title,
                   style: TextStyle(
                       fontFamily: "OnestSemiBold",
                       color: blackColor,
@@ -4035,9 +4036,13 @@ class RankWidget extends StatelessWidget {
 class DownLineWidget extends StatelessWidget {
   final String title;
   final String subtitle;
+  final String imagpath;
 
   const DownLineWidget(
-      {super.key, required this.title, required this.subtitle});
+      {super.key,
+      required this.title,
+      required this.subtitle,
+      required this.imagpath});
 
   @override
   Widget build(BuildContext context) {
@@ -4045,26 +4050,35 @@ class DownLineWidget extends StatelessWidget {
       children: [
         ListTile(
           dense: false,
-          leading: Container(
-            padding: const EdgeInsets.all(8),
-            width: 50,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                border:
-                    Border.all(color: greenColor.withOpacity(0.5), width: 2.5)),
-            child: Icon(
-              Icons.person,
-              size: 28,
-              color: lightDarKBlue,
+          leading: CircleAvatar(
+            backgroundColor: lightBlackColor,
+            radius: 23,
+            child: CommonCachedNetworkImage(
+              imagePath: imagpath,
+              height: 35,
             ),
           ),
-          title: const Text(
-            "DESTINA22",
-            style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 13),
+          //  Container(
+          //     padding: const EdgeInsets.all(8),
+          //     width: 50,
+          //     decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.circular(50),
+          //         border: Border.all(
+          //             color: greenColor.withOpacity(0.5), width: 2.5)),
+          //     child:
+          //     Icon(
+          //       Icons.person,
+          //       size: 28,
+          //       color: lightDarKBlue,
+          //     ),
+          //     ),
+          title: Text(
+            title,
+            style: const TextStyle(fontFamily: "OnestSemiBold", fontSize: 13),
           ),
-          subtitle: const Text(
-            "Destina Test",
-            style: TextStyle(fontFamily: "OnestRegular", fontSize: 11),
+          subtitle: Text(
+            subtitle,
+            style: const TextStyle(fontFamily: "OnestRegular", fontSize: 11),
           ),
           trailing: Image.asset(
             "assets/images/share_mail.png",

@@ -29,7 +29,9 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
 
   /// widget list
   List<Widget> bottomBarPages = [
-    const HomeScreen(),
+    HomeScreen(
+      bannerPopUpImages: const [],
+    ),
     const ProductsScreen(
       from: "bottombar",
     ),
@@ -47,7 +49,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
     if (widget.index != null) {
       bottomBarPages = [
         HomeScreen(
-          bannerPopUpImages: widget.bannerPopup,
+          bannerPopUpImages: widget.bannerPopup ?? [],
         ),
         ProductsScreen(
           from: "bottombar",

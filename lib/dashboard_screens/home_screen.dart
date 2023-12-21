@@ -10,12 +10,13 @@ import 'package:destina_1_international/inside_screens/productdetails_screen.dar
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../commons/constants.dart';
 import '../models/onboarding_model.dart';
 import '../models/productitem_model.dart';
 
 class HomeScreen extends StatefulWidget {
-  final List<String>? bannerPopUpImages;
-  const HomeScreen({super.key, this.bannerPopUpImages});
+  List<String> bannerPopUpImages = [];
+  HomeScreen({super.key, required this.bannerPopUpImages});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -106,8 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.bannerPopUpImages!.isNotEmpty) {
-      print(widget.bannerPopUpImages!.length);
+    if (widget.bannerPopUpImages.isNotEmpty) {
+      print(widget.bannerPopUpImages.length);
 
       Timer(const Duration(microseconds: 500), () {
         Get.dialog(AlertDialog(
@@ -131,9 +132,9 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  for (int i = 0; i < widget.bannerPopUpImages!.length; i++)
+                  for (int i = 0; i < widget.bannerPopUpImages.length; i++)
                     CommonCachedNetworkImage(
-                        imagePath: widget.bannerPopUpImages![i])
+                        imagePath: widget.bannerPopUpImages[i])
                 ],
               ),
             )));
@@ -209,18 +210,20 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: double.infinity,
                               fit: BoxFit.fill,
                             ),
-                            Container(
-                              margin: const EdgeInsets.only(
-                                  bottom: 15, left: 12, top: 10),
-                              // height: 35,
-                              // width: 155,
-                              child: CustomFixedElevatedButton(
-                                onTapFun: () {
-                                  Get.to(() => const LoginScreen());
-                                },
-                                title: "Sign Up / Sign in",
-                              ),
-                            )
+                            if (Constants.prefs.getString("user_id") == null ||
+                                Constants.prefs.getString("user_id") == "false")
+                              Container(
+                                margin: const EdgeInsets.only(
+                                    bottom: 15, left: 12, top: 10),
+                                // height: 35,
+                                // width: 155,
+                                child: CustomFixedElevatedButton(
+                                  onTapFun: () {
+                                    Get.to(() => const LoginScreen());
+                                  },
+                                  title: "Sign Up / Sign in",
+                                ),
+                              )
                           ],
                         )),
                   ),

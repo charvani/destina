@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/commons/constants.dart';
+import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:destina_1_international/inside_screens/shopping/salesmall_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +18,8 @@ class DashBoardScreen extends StatefulWidget {
 }
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
+  final MainController _dashboardController = Get.put(MainController());
+
   List<String> downlineList = ["Left", "Right"];
   int downlistSelectedInd = 0;
 
@@ -41,6 +45,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      dataFun();
+    });
     Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         daysDifference = givenDate.difference(currentDate).inDays;
@@ -52,270 +59,327 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     });
   }
 
+  dataFun() {
+    Map bdata = {
+      "UserId": Constants.prefs.getString("user_id"),
+      "Pwd": Constants.prefs.getString("password"),
+    };
+    _dashboardController.getDashboard(bdata);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar(title: "Dashboard", backNavigation: true),
-      body: SingleChildScrollView(
-        child: Column(children: [
-          const SpaceHeightWidget(height: 20),
-          const CommonTitle(
-            titleName: "Your Upgrade Eligibility Will Expire In",
-            size: 16,
-          ),
-          if (daysDifference != null)
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    TimerWidget(
-                      timeValue: todayVal!,
-                      markedRangeVal: daysDifference.toString(),
-                      type: "Days",
-                    ),
-                    TimerWidget(
-                      timeValue: hourVal!,
-                      type: "Hours",
-                      markedRangeVal: "24",
-                    ),
-                    TimerWidget(
-                      timeValue: minVal!,
-                      type: "Minutes",
-                      markedRangeVal: "60",
-                    ),
-                    TimerWidget(
-                      timeValue: secVal!,
-                      type: "Seconds",
-                      markedRangeVal: "60",
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                padding: const EdgeInsets.only(right: 10),
-                height: 30,
-                child: CustomAutoWidthButton(
-                    onTapFun: () {
-                      Get.to(() => const SalesMallScreen(from: "Upgrade"));
-                    },
-                    title: "Click to Upgrade"),
-              )
-            ],
-          ),
-          const SpaceHeightWidget(height: 20),
-          Text(
-            "e-Money Summary",
-            style: TextStyle(
-                fontFamily: "OnestSemiBold", color: blackColor, fontSize: 16),
-          ),
-          const SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                CommissionWidget(
-                  title: "COMMISSION\nEMONEY",
-                  amount: "18918.85",
-                  amountType: "D1 \$",
-                ),
-                CommissionWidget(
-                  title: "PREPAID\nEMONEY",
-                  amount: "96300.63",
-                  amountType: "RM",
-                ),
-                CommissionWidget(
-                  title: "Country License\nEmoney",
-                  amount: "107.6",
-                  amountType: "D1 \$",
-                ),
-              ],
-            ),
-          ),
-          const CommonDivider(),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: CommissionWidget(
-                  title: "PREPAID ECARD",
-                  amount: "\n76930.4",
-                  amountType: "RM",
-                  textColor: blackColor,
-                  backgroundColor: whiteColor,
-                ),
-              ),
-              const CommonVerticalDivider(),
-              Expanded(
-                child: CommissionWidget(
-                  title: "REDEMPTION\nEMONEY",
-                  amount: "21055.61",
-                  amountType: "RP",
-                  textColor: blackColor,
-                  backgroundColor: whiteColor,
-                ),
-              ),
-              const CommonVerticalDivider(),
-              Expanded(
-                child: CommissionWidget(
-                  title: "DP POINTS",
-                  amount: "5100.75",
-                  amountType: "",
-                  textColor: blackColor,
-                  backgroundColor: whiteColor,
-                ),
-              ),
-            ],
-          ),
-          const CommonDivider(),
-          Container(
-            padding: const EdgeInsets.all(15),
-            color: lightDarKBlue.withOpacity(0.08),
-            child: Row(
-              children: [
-                Expanded(
-                  child: RedeemWidget(
-                    onTapFun: () {
-                      Get.to(() => const DashboardRedeemScreen(
-                            title: "D1 CASH BACK POINTS REDEEM",
-                            rmval: " RM 6",
-                            points: "0",
-                          ));
-                    },
-                    title: "D1 CASH BACK POINTS",
-                    points: "0",
-                  ),
-                ),
-                const CommonVerticalDivider(
-                  height: 100,
-                ),
-                Expanded(
-                  child: RedeemWidget(
-                    onTapFun: () {
-                      Get.to(() => const DashboardRedeemScreen(
-                            title: "D1 CREDIT REBATE POINTS REDEEM",
-                            rmval: "RM 7",
-                            points: "100",
-                          ));
-                    },
-                    title: "D1 CREDIT REBATE POINTS",
-                    points: "100",
-                  ),
-                )
-              ],
-            ),
-          ),
-          const SpaceHeightWidget(height: 15),
-          const RankWidget(),
-          const SpaceHeightWidget(height: 15),
-          Text(
-            "My Immediate Downline",
-            style: TextStyle(
-                fontFamily: "OnestSemiBold", color: blackColor, fontSize: 16),
-          ),
-          Card(
-            margin: const EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Row(
-                    children: [
-                      for (int i = 0; i < downlineList.length; i++)
-                        i == downlistSelectedInd
-                            ? SizedBox(
-                                width: 100,
-                                height: 35,
-                                child: CustomElevatedButton(
-                                    onTapFun: () {}, title: downlineList[i]),
-                              )
-                            : InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    downlistSelectedInd = i;
-                                  });
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  child: Text(
-                                    downlineList[i],
-                                    style: TextStyle(
-                                        fontFamily: "OnestSemiBold",
-                                        color: blackColor,
-                                        fontSize: 14),
-                                  ),
-                                ),
-                              ),
-                    ],
-                  ),
-                ),
-                for (int i = 0; i < 5; i++)
-                  const DownLineWidget(
-                    title: "DESTINA22",
-                    subtitle: "Destina Test",
-                  ),
-              ],
-            ),
-          ),
-          const SpaceHeightWidget(height: 15),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  for (int i = 0; i < myData.length; i++)
-                    i == myDataSelectedInd
-                        ? SizedBox(
-                            width: i == 4 ? 220 : 160,
-                            height: 35,
-                            child: CustomElevatedButton(
-                                onTapFun: () {}, title: myData[i]),
-                          )
-                        : InkWell(
-                            onTap: () {
-                              setState(() {
-                                myDataSelectedInd = i;
-                              });
-                            },
+      body: Obx(() {
+        return _dashboardController.loading.value
+            ? SizedBox(height: 500, child: loader)
+            : SingleChildScrollView(
+                child: Column(children: [
+                  const SpaceHeightWidget(height: 20),
+                  if (_dashboardController.dashboardData.value.showRes !=
+                      "hide")
+                    Column(
+                      children: [
+                        const CommonTitle(
+                          titleName: "Your Upgrade Eligibility Will Expire In",
+                          size: 16,
+                        ),
+                        if (daysDifference != null)
+                          SingleChildScrollView(
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Text(
-                                myData[i],
-                                style: TextStyle(
-                                    fontFamily: "OnestSemiBold",
-                                    color: blackColor,
-                                    fontSize: 14),
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  TimerWidget(
+                                    timeValue: todayVal!,
+                                    markedRangeVal: daysDifference.toString(),
+                                    type: "Days",
+                                  ),
+                                  TimerWidget(
+                                    timeValue: hourVal!,
+                                    type: "Hours",
+                                    markedRangeVal: "24",
+                                  ),
+                                  TimerWidget(
+                                    timeValue: minVal!,
+                                    type: "Minutes",
+                                    markedRangeVal: "60",
+                                  ),
+                                  TimerWidget(
+                                    timeValue: secVal!,
+                                    type: "Seconds",
+                                    markedRangeVal: "60",
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-              margin: const EdgeInsets.symmetric(horizontal: 5),
-              child: myDataSelectedInd == 0
-                  ? myIncomeWidget()
-                  : myDataSelectedInd == 1
-                      ? businessWidget()
-                      : myDataSelectedInd == 2
-                          ? cvStatisticsWidget()
-                          : myDataSelectedInd == 3
-                              ? packageWidget()
-                              : myDataSelectedInd == 4
-                                  ? maintenanceWidget()
-                                  : myDataSelectedInd == 5
-                                      ? licenseWidget()
-                                      : personalWidget()),
-          const SpaceHeightWidget(height: 150)
-        ]),
-      ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.only(right: 10),
+                              height: 30,
+                              child: CustomAutoWidthButton(
+                                  onTapFun: () {
+                                    Get.to(() =>
+                                        const SalesMallScreen(from: "Upgrade"));
+                                  },
+                                  title: "Click to Upgrade"),
+                            )
+                          ],
+                        ),
+                        const SpaceHeightWidget(height: 20),
+                      ],
+                    ),
+                  Text(
+                    "e-Money Summary",
+                    style: TextStyle(
+                        fontFamily: "OnestSemiBold",
+                        color: blackColor,
+                        fontSize: 16),
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        CommissionWidget(
+                          title: "COMMISSION\nEMONEY",
+                          amount: _dashboardController
+                              .dashboardData.value.commissonEMny,
+                          amountType: "D1 \$",
+                        ),
+                        CommissionWidget(
+                          title: "PREPAID\nEMONEY",
+                          amount: _dashboardController
+                              .dashboardData.value.prepaidEMny,
+                          amountType: "RM",
+                        ),
+                        CommissionWidget(
+                          title: "Country License\nEmoney",
+                          amount: _dashboardController
+                              .dashboardData.value.stockLicEMny,
+                          amountType: "D1 \$",
+                        ),
+                      ],
+                    ),
+                  ),
+                  const CommonDivider(),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: CommissionWidget(
+                          title: "PREPAID ECARD",
+                          amount:
+                              "\n${_dashboardController.dashboardData.value.prepaidECard}",
+                          amountType: "RM",
+                          textColor: blackColor,
+                          backgroundColor: whiteColor,
+                        ),
+                      ),
+                      const CommonVerticalDivider(),
+                      Expanded(
+                        child: CommissionWidget(
+                          title: "REDEMPTION\nEMONEY",
+                          amount: _dashboardController
+                              .dashboardData.value.redmptionEMny,
+                          amountType: "RP",
+                          textColor: blackColor,
+                          backgroundColor: whiteColor,
+                        ),
+                      ),
+                      const CommonVerticalDivider(),
+                      Expanded(
+                        child: CommissionWidget(
+                          title: "DP POINTS",
+                          amount:
+                              _dashboardController.dashboardData.value.dpPts,
+                          amountType: "",
+                          textColor: blackColor,
+                          backgroundColor: whiteColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const CommonDivider(),
+                  Container(
+                    padding: const EdgeInsets.all(15),
+                    color: lightDarKBlue.withOpacity(0.08),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: RedeemWidget(
+                            onTapFun: () {
+                              Get.to(() => const DashboardRedeemScreen(
+                                    title: "D1 CASH BACK POINTS REDEEM",
+                                    rmval: " RM 6",
+                                    points: "0",
+                                  ));
+                            },
+                            title: "D1 CASH BACK POINTS",
+                            points: _dashboardController
+                                .dashboardData.value.cashBack,
+                          ),
+                        ),
+                        const CommonVerticalDivider(
+                          height: 100,
+                        ),
+                        Expanded(
+                          child: RedeemWidget(
+                            onTapFun: () {
+                              Get.to(() => const DashboardRedeemScreen(
+                                    title: "D1 CREDIT REBATE POINTS REDEEM",
+                                    rmval: "RM 7",
+                                    points: "100",
+                                  ));
+                            },
+                            title: "D1 CREDIT REBATE POINTS",
+                            points: _dashboardController
+                                .dashboardData.value.creRebate,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SpaceHeightWidget(height: 15),
+                  RankWidget(
+                    title: _dashboardController.dashboardData.value.rankname,
+                  ),
+                  const SpaceHeightWidget(height: 15),
+                  Text(
+                    "My Immediate Downline",
+                    style: TextStyle(
+                        fontFamily: "OnestSemiBold",
+                        color: blackColor,
+                        fontSize: 16),
+                  ),
+                  Card(
+                    margin: const EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Row(
+                            children: [
+                              for (int i = 0; i < downlineList.length; i++)
+                                i == downlistSelectedInd
+                                    ? SizedBox(
+                                        width: 100,
+                                        height: 35,
+                                        child: CustomElevatedButton(
+                                            onTapFun: () {},
+                                            title: downlineList[i]),
+                                      )
+                                    : InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            downlistSelectedInd = i;
+                                          });
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                          child: Text(
+                                            downlineList[i],
+                                            style: TextStyle(
+                                                fontFamily: "OnestSemiBold",
+                                                color: blackColor,
+                                                fontSize: 14),
+                                          ),
+                                        ),
+                                      ),
+                            ],
+                          ),
+                        ),
+                        if (downlistSelectedInd == 0)
+                          for (int i = 0;
+                              i <
+                                  _dashboardController.dashboardData.value
+                                      .myDownlineLRpt.length;
+                              i++)
+                            DownLineWidget(
+                              imagpath: _dashboardController
+                                  .dashboardData.value.myDownlineLRpt[i].image,
+                              title: _dashboardController
+                                  .dashboardData.value.myDownlineLRpt[i].idno,
+                              subtitle: _dashboardController
+                                  .dashboardData.value.myDownlineLRpt[i].name,
+                            ),
+                        if (downlistSelectedInd == 1)
+                          for (int i = 0;
+                              i <
+                                  _dashboardController.dashboardData.value
+                                      .myDownlineRRpt.length;
+                              i++)
+                            DownLineWidget(
+                              imagpath: _dashboardController
+                                  .dashboardData.value.myDownlineRRpt[i].image,
+                              title: _dashboardController
+                                  .dashboardData.value.myDownlineRRpt[i].idno,
+                              subtitle: _dashboardController
+                                  .dashboardData.value.myDownlineRRpt[i].name,
+                            ),
+                      ],
+                    ),
+                  ),
+                  const SpaceHeightWidget(height: 15),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          for (int i = 0; i < myData.length; i++)
+                            i == myDataSelectedInd
+                                ? SizedBox(
+                                    width: i == 4 ? 220 : 160,
+                                    height: 35,
+                                    child: CustomElevatedButton(
+                                        onTapFun: () {}, title: myData[i]),
+                                  )
+                                : InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        myDataSelectedInd = i;
+                                      });
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      child: Text(
+                                        myData[i],
+                                        style: TextStyle(
+                                            fontFamily: "OnestSemiBold",
+                                            color: blackColor,
+                                            fontSize: 14),
+                                      ),
+                                    ),
+                                  ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 5),
+                      child: myDataSelectedInd == 0
+                          ? myIncomeWidget()
+                          : myDataSelectedInd == 1
+                              ? businessWidget()
+                              : myDataSelectedInd == 2
+                                  ? cvStatisticsWidget()
+                                  : myDataSelectedInd == 3
+                                      ? packageWidget()
+                                      : myDataSelectedInd == 4
+                                          ? maintenanceWidget()
+                                          : myDataSelectedInd == 5
+                                              ? licenseWidget()
+                                              : personalWidget()),
+                  const SpaceHeightWidget(height: 150)
+                ]),
+              );
+      }),
     );
   }
 
@@ -347,7 +411,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ],
             ),
           ),
-          for (int i = 0; i < 5; i++)
+          for (int i = 0;
+              i < _dashboardController.dashboardData.value.myIncome.length;
+              i++)
             Container(
               alignment: Alignment.center,
               color: lightDarKBlue.withOpacity(0.1),
@@ -359,22 +425,24 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     color:
                         i.isOdd ? whiteColor : lightDarKBlue.withOpacity(0.1),
                     padding: const EdgeInsets.all(8.0),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Flexible(
                           child: Text(
-                            "Customer Acquisition Bonus",
+                            _dashboardController
+                                .dashboardData.value.myIncome[i].incName,
                             maxLines: 5,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontFamily: "OnestRegular", fontSize: 14),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(right: 5),
+                          padding: const EdgeInsets.only(right: 5),
                           child: Text(
-                            "	842.22",
-                            style: TextStyle(
+                            _dashboardController
+                                .dashboardData.value.myIncome[i].bonus,
+                            style: const TextStyle(
                                 fontFamily: "OnestRegular", fontSize: 14),
                           ),
                         )
@@ -417,165 +485,83 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             ],
           ),
         ),
-        Container(
-          color: lightDarKBlue.withOpacity(0.1),
-          padding: const EdgeInsets.all(8.0),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Text(
-                  "Activation Business",
-                  maxLines: 2,
-                  style: TextStyle(fontFamily: "OnestRegular", fontSize: 14),
-                ),
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 50,
-                    child: Text(
-                      "0",
-                      style:
-                          TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
-                    ),
-                  ),
-                  // SpaceWidthWidget(width: 20),
-                  SizedBox(
-                    width: 50,
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 5),
-                      child: Text(
-                        "1",
-                        style: TextStyle(
-                            fontFamily: "OnestSemiBold", fontSize: 14),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
+        businessDetailsWidget(
+          "Activation Business",
+          _dashboardController.dashboardData.value.bdActivBuss,
+          _dashboardController.dashboardData.value.bdActivBussM,
+          "yes",
         ),
-        Container(
-          padding: const EdgeInsets.all(8.0),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Text(
-                  "Retail Business",
-                  maxLines: 2,
-                  style: TextStyle(fontFamily: "OnestRegular", fontSize: 14),
-                ),
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 50,
-                    child: Text(
-                      "0",
-                      style:
-                          TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
-                    ),
-                  ),
-                  // SpaceWidthWidget(width: 20),
-                  SizedBox(
-                    width: 50,
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 5),
-                      child: Text(
-                        "1",
-                        style: TextStyle(
-                            fontFamily: "OnestSemiBold", fontSize: 14),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
+        businessDetailsWidget(
+          "Retail Business",
+          _dashboardController.dashboardData.value.bdRetBuss,
+          _dashboardController.dashboardData.value.bdRetBussM,
+          "no",
         ),
-        Container(
-          color: lightDarKBlue.withOpacity(0.1),
-          padding: const EdgeInsets.all(8.0),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Text(
-                  "Preferred Customer Business",
-                  maxLines: 2,
-                  style: TextStyle(fontFamily: "OnestRegular", fontSize: 14),
-                ),
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 50,
-                    child: Text(
-                      "0",
-                      style:
-                          TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
-                    ),
-                  ),
-                  // SpaceWidthWidget(width: 20),
-                  SizedBox(
-                    width: 50,
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 5),
-                      child: Text(
-                        "1",
-                        style: TextStyle(
-                            fontFamily: "OnestSemiBold", fontSize: 14),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
+        businessDetailsWidget(
+          "Preferred Customer Business",
+          _dashboardController.dashboardData.value.bdPreCustBuss,
+          _dashboardController.dashboardData.value.bdPreCustBussM,
+          "yes",
         ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Text(
-                  "Sales Business",
-                  maxLines: 2,
-                  style: TextStyle(fontFamily: "OnestRegular", fontSize: 14),
-                ),
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: 50,
-                    child: Text(
-                      "0",
-                      style:
-                          TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
-                    ),
-                  ),
-                  // SpaceWidthWidget(width: 20),
-                  SizedBox(
-                    width: 50,
-                    child: Padding(
-                      padding: EdgeInsets.only(right: 5),
-                      child: Text(
-                        "1",
-                        style: TextStyle(
-                            fontFamily: "OnestSemiBold", fontSize: 14),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ],
-          ),
-        ),
+        businessDetailsWidget(
+            "Sales Business",
+            _dashboardController.dashboardData.value.bdSalesBuss,
+            _dashboardController.dashboardData.value.bdSalesBussM,
+            "no")
       ]),
+    );
+  }
+
+  businessDetailsWidget(String title, todayB, montlyB, color) {
+    return Container(
+      color: color == "yes" ? lightDarKBlue.withOpacity(0.1) : transperantColor,
+      padding: const EdgeInsets.all(8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: Text(
+              title,
+              maxLines: 2,
+              style: const TextStyle(fontFamily: "OnestRegular", fontSize: 14),
+            ),
+          ),
+          Row(
+            children: [
+              if (todayB != "")
+                SizedBox(
+                  width: 50,
+                  child: Text(
+                    todayB,
+                    style: const TextStyle(
+                        fontFamily: "OnestSemiBold", fontSize: 14),
+                  ),
+                ),
+              // SpaceWidthWidget(width: 20),
+              todayB == ""
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 5),
+                      child: Text(
+                        montlyB,
+                        style: const TextStyle(
+                            fontFamily: "OnestSemiBold", fontSize: 14),
+                      ),
+                    )
+                  : SizedBox(
+                      width: 50,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: Text(
+                          montlyB,
+                          style: const TextStyle(
+                              fontFamily: "OnestSemiBold", fontSize: 14),
+                        ),
+                      ),
+                    )
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -586,121 +572,18 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           borderRadius: BorderRadius.circular(15),
           border: Border.all(color: lightBlackColor.withOpacity(0.5))),
       child: Column(children: [
-        Container(
-          margin: const EdgeInsets.only(top: 15),
-          color: lightDarKBlue.withOpacity(0.1),
-          padding: const EdgeInsets.all(8.0),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Text(
-                  "New Left CV",
-                  maxLines: 2,
-                  style: TextStyle(fontFamily: "OnestRegular", fontSize: 14),
-                ),
-              ),
-              SizedBox(
-                width: 50,
-                child: Text(
-                  "0",
-                  style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8.0),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Text(
-                  "New Right CV",
-                  maxLines: 2,
-                  style: TextStyle(fontFamily: "OnestRegular", fontSize: 14),
-                ),
-              ),
-              SizedBox(
-                width: 50,
-                child: Text(
-                  "0",
-                  style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          color: lightDarKBlue.withOpacity(0.1),
-          padding: const EdgeInsets.all(8.0),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Text(
-                  "Left Carry Forward",
-                  maxLines: 2,
-                  style: TextStyle(fontFamily: "OnestRegular", fontSize: 14),
-                ),
-              ),
-              SizedBox(
-                width: 50,
-                child: Text(
-                  "0",
-                  style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Text(
-                  "Right Carry Forward",
-                  maxLines: 2,
-                  style: TextStyle(fontFamily: "OnestRegular", fontSize: 14),
-                ),
-              ),
-              SizedBox(
-                width: 50,
-                child: Text(
-                  "0",
-                  style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          margin: const EdgeInsets.only(bottom: 15),
-          color: lightDarKBlue.withOpacity(0.1),
-          padding: const EdgeInsets.all(8),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Text(
-                  "Net Steps",
-                  maxLines: 2,
-                  style: TextStyle(fontFamily: "OnestRegular", fontSize: 14),
-                ),
-              ),
-              SizedBox(
-                width: 50,
-                child: Text(
-                  "0",
-                  style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
-                ),
-              ),
-            ],
-          ),
-        ),
+        const SpaceHeightWidget(height: 15),
+        businessDetailsWidget("New Left CV", "",
+            _dashboardController.dashboardData.value.newLeftCv, "yes"),
+        businessDetailsWidget("New Right CV", "",
+            _dashboardController.dashboardData.value.newRightCv, "no"),
+        businessDetailsWidget("Left Carry Forward", "",
+            _dashboardController.dashboardData.value.leftCarryFwd, "yes"),
+        businessDetailsWidget("Right Carry Forward", "",
+            _dashboardController.dashboardData.value.rightCarryFwd, "no"),
+        businessDetailsWidget("Net Steps", "",
+            _dashboardController.dashboardData.value.netSteps, "yes"),
+        const SpaceHeightWidget(height: 15),
       ]),
     );
   }
@@ -717,10 +600,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           margin: const EdgeInsets.only(top: 15),
           color: lightDarKBlue.withOpacity(0.1),
           padding: const EdgeInsets.all(8.0),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "Package Name",
                   maxLines: 2,
@@ -729,9 +612,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ),
               Flexible(
                 child: Text(
-                  "STOCKIST/DIAMOND TO BLUE DIAMOND MIX UPGRADE PROMO",
+                  _dashboardController.dashboardData.value.pkageName,
                   maxLines: 4,
-                  style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+                  style: const TextStyle(
+                      fontFamily: "OnestSemiBold", fontSize: 14),
                 ),
               ),
             ],
@@ -740,10 +624,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         Container(
           // margin: const EdgeInsets.only(bottom: 15),
           padding: const EdgeInsets.all(8),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "Business Development Bonus",
                   maxLines: 2,
@@ -751,8 +635,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Text(
-                "1000 Steps Per Day",
-                style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+                _dashboardController.dashboardData.value.mbdBonus,
+                style:
+                    const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
               ),
             ],
           ),
@@ -772,10 +657,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           margin: const EdgeInsets.only(top: 15),
           color: lightDarKBlue.withOpacity(0.1),
           padding: const EdgeInsets.all(8.0),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "Maintained For Current Month",
                   maxLines: 2,
@@ -785,8 +670,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               SizedBox(
                 width: 50,
                 child: Text(
-                  "NO",
-                  style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+                  _dashboardController.dashboardData.value.mainForCurMnt,
+                  style: const TextStyle(
+                      fontFamily: "OnestSemiBold", fontSize: 14),
                 ),
               ),
             ],
@@ -794,10 +680,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         ),
         Container(
           padding: const EdgeInsets.all(8.0),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "Maintained For Next Month",
                   maxLines: 2,
@@ -807,8 +693,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               SizedBox(
                 width: 50,
                 child: Text(
-                  "	NO",
-                  style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+                  _dashboardController.dashboardData.value.mainForNxtMnt,
+                  style: const TextStyle(
+                      fontFamily: "OnestSemiBold", fontSize: 14),
                 ),
               ),
             ],
@@ -818,10 +705,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           margin: const EdgeInsets.only(bottom: 15),
           color: lightDarKBlue.withOpacity(0.1),
           padding: const EdgeInsets.all(8),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "Recent Months Maintained",
                   maxLines: 2,
@@ -831,8 +718,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               SizedBox(
                 width: 50,
                 child: Text(
-                  "",
-                  style: TextStyle(fontFamily: "OnestRegular", fontSize: 14),
+                  _dashboardController.dashboardData.value.rentMntsMaintain,
+                  style:
+                      const TextStyle(fontFamily: "OnestRegular", fontSize: 14),
                 ),
               ),
             ],
@@ -853,10 +741,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           margin: const EdgeInsets.only(top: 15),
           color: lightDarKBlue.withOpacity(0.1),
           padding: const EdgeInsets.all(8.0),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "Licensee Type",
                   maxLines: 2,
@@ -864,18 +752,19 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Text(
-                "Country Licensee",
-                style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+                _dashboardController.dashboardData.value.licenseType,
+                style:
+                    const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
               ),
             ],
           ),
         ),
         Container(
           padding: const EdgeInsets.all(8.0),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "Commission(%)",
                   maxLines: 2,
@@ -883,8 +772,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Text(
-                "5 %",
-                style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+                _dashboardController.dashboardData.value.commisions,
+                style:
+                    const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
               ),
             ],
           ),
@@ -892,10 +782,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         Container(
           color: lightDarKBlue.withOpacity(0.1),
           padding: const EdgeInsets.all(8.0),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "Licensee Code",
                   maxLines: 2,
@@ -903,18 +793,21 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Text(
-                "MY.SELANGOR.DESTINA1INT",
-                style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+                // "MY.SELANGOR.DESTINA1INT",
+                _dashboardController.dashboardData.value.licenseCode,
+
+                style:
+                    const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
               ),
             ],
           ),
         ),
         Container(
           padding: const EdgeInsets.all(8),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "Licensee Name",
                   maxLines: 2,
@@ -922,8 +815,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Text(
-                "DESTINA1",
-                style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+                _dashboardController.dashboardData.value.licenseName,
+                style:
+                    const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
               ),
             ],
           ),
@@ -931,10 +825,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         Container(
           color: lightDarKBlue.withOpacity(0.1),
           padding: const EdgeInsets.all(8),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "Country",
                   maxLines: 2,
@@ -942,8 +836,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Text(
-                "Malaysia",
-                style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+                _dashboardController.dashboardData.value.country,
+                style:
+                    const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
               ),
             ],
           ),
@@ -951,10 +846,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         Container(
           margin: const EdgeInsets.only(bottom: 15),
           padding: const EdgeInsets.all(8),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "State",
                   maxLines: 2,
@@ -962,8 +857,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Text(
-                "Selangor",
-                style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+                _dashboardController.dashboardData.value.state,
+                style:
+                    const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
               ),
             ],
           ),
@@ -983,10 +879,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           margin: const EdgeInsets.only(top: 15),
           color: lightDarKBlue.withOpacity(0.1),
           padding: const EdgeInsets.all(8.0),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "User ID",
                   maxLines: 2,
@@ -994,18 +890,19 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Text(
-                "DESTINA1INT",
-                style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+                Constants.prefs.getString("user_id").toString().toUpperCase(),
+                style:
+                    const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
               ),
             ],
           ),
         ),
         Container(
           padding: const EdgeInsets.all(8.0),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "Name",
                   maxLines: 2,
@@ -1013,8 +910,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Text(
-                "DESTINA1",
-                style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+                _dashboardController.dashboardData.value.pdName,
+                style:
+                    const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
               ),
             ],
           ),
@@ -1022,10 +920,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         Container(
           color: lightDarKBlue.withOpacity(0.1),
           padding: const EdgeInsets.all(8.0),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "Sponsor ID",
                   maxLines: 2,
@@ -1033,18 +931,21 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Text(
-                "--",
-                style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+                // "--",
+                _dashboardController.dashboardData.value.pdSponsorId,
+
+                style:
+                    const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
               ),
             ],
           ),
         ),
         Container(
           padding: const EdgeInsets.all(8),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "Join Date",
                   maxLines: 2,
@@ -1052,8 +953,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Text(
-                "28 Jul 2012",
-                style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+                // "28 Jul 2012",
+                _dashboardController.dashboardData.value.pdJoinDate,
+
+                style:
+                    const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
               ),
             ],
           ),
@@ -1061,10 +965,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         Container(
           color: lightDarKBlue.withOpacity(0.1),
           padding: const EdgeInsets.all(8),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "Status",
                   maxLines: 2,
@@ -1072,8 +976,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Text(
-                "ACTIVE",
-                style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+                _dashboardController.dashboardData.value.pdStatus,
+                style:
+                    const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
               ),
             ],
           ),
@@ -1081,10 +986,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         Container(
           margin: const EdgeInsets.only(bottom: 15),
           padding: const EdgeInsets.all(8),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Flexible(
+              const Flexible(
                 child: Text(
                   "Mobile No",
                   maxLines: 2,
@@ -1092,8 +997,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
               Text(
-                "162635294",
-                style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+                _dashboardController.dashboardData.value.pdMobileNo,
+                style:
+                    const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
               ),
             ],
           ),

@@ -1,8 +1,10 @@
 import 'package:destina_1_international/models/cartitem_model.dart';
 import 'package:destina_1_international/models/checkcountry_model.dart';
+import 'package:destina_1_international/models/dashboard_model.dart';
 import 'package:destina_1_international/models/loadcountry_model.dart';
 import 'package:destina_1_international/models/packagedetails_model.dart';
 import 'package:destina_1_international/models/selpackage_model.dart';
+import 'package:destina_1_international/models/view_profile_model.dart';
 import 'package:destina_1_international/service_call/api_call.dart';
 import 'package:get/get.dart';
 
@@ -122,6 +124,103 @@ class MainController extends GetxController {
       <RegisterCartItemsModel>[].obs;
   RxDouble totalAmount = 0.0.obs;
   RxList<String> bannerPopUp = <String>[].obs;
+  Rx<DashboardModel> dashboardData = DashboardModel(
+          myIncome: [],
+          myDownlineLRpt: [],
+          myDownlineRRpt: [],
+          msg: "",
+          message: "",
+          pdName: "",
+          pdSponsorId: "",
+          pdJoinDate: "",
+          pdStatus: "",
+          pdMobileNo: "",
+          remdays: "",
+          days: 0,
+          currentDashbordDate: "",
+          bdActivBuss: "",
+          bdRetBuss: "",
+          bdPreCustBuss: "",
+          bdSalesBuss: "",
+          bdActivBussM: "",
+          bdRetBussM: "",
+          bdPreCustBussM: "",
+          bdSalesBussM: "",
+          commissonEMny: "",
+          prepaidEMny: "",
+          stockLicEMny: "",
+          prepaidECard: "",
+          redmptionEMny: "",
+          newLeftCv: "",
+          newRightCv: "",
+          leftCarryFwd: "",
+          rightCarryFwd: "",
+          netSteps: "",
+          cashBack: "",
+          creRebate: "",
+          dpPts: "",
+          redmMsg: "",
+          flushMsg: "",
+          pkageName: "",
+          rankname: "",
+          symbol: "",
+          incRemarks: "",
+          icons: "",
+          mbdBonus: "",
+          mainForCurMnt: "",
+          mainForNxtMnt: "",
+          rentMntsMaintain: "",
+          licenseType: "",
+          commisions: "",
+          licenseCode: "",
+          licenseName: "",
+          country: "",
+          state: "",
+          showRes: "",
+          remainingDays: "",
+          pkmall: "",
+          catRemainingDays: "",
+          reqcv: "",
+          upgcat: "",
+          upgsteps: "",
+          upgpack: "",
+          catUpg: false,
+          catSteps: false)
+      .obs;
+
+  Rx<ViewProfileModel> viewProfileData = ViewProfileModel(
+          msg: "",
+          message: "",
+          fullName: "",
+          fathSpousName: "",
+          dob: "",
+          gender: "",
+          joinType: "",
+          ssnein: "",
+          passport: "",
+          add1: "",
+          add2: "",
+          city: "",
+          state: "",
+          zipCode: "",
+          countryName: "",
+          dialCode: "",
+          landLine: "",
+          email: "",
+          mobile: "",
+          bankid: "",
+          bankName: "",
+          bankBranch: "",
+          acNo: "",
+          ifscCode: "",
+          bankSwiftCode: "",
+          acHolderName: "",
+          typeOfAc: "",
+          nomieeName: "",
+          nomieeRelation: "",
+          eText: "",
+          deduction: "")
+      .obs;
 
 // ********************************************************************************************
   getCountryCode() async {
@@ -370,6 +469,41 @@ class MainController extends GetxController {
         }
       }
       print("bbbb....${bannerPopUp.length}");
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getLogout(Map parameters) async {
+    loading.value = true;
+
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().logout, params: parameters);
+    loading.value = false;
+
+    return res;
+  }
+
+  getDashboard(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().dashboard, params: parameters);
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS") {
+        dashboardData.value = DashboardModel.fromJson(res);
+      }
+    }
+    loading.value = false;
+  }
+
+  getViewProfile(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().viewProfile, params: parameters);
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS") {
+        viewProfileData.value = ViewProfileModel.fromJson(res);
+      }
     }
     loading.value = false;
     return res;
