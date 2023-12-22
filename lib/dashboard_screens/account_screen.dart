@@ -295,6 +295,10 @@ class _AccountScreenState extends State<AccountScreen>
                               if (res['Msg'] == "SUCCESS") {
                                 Constants.prefs.remove("user_id");
                                 Constants.prefs.remove("password");
+                                Constants.prefs.remove("country_name");
+                                Constants.prefs.remove("country_id");
+                                Constants.prefs.remove("city");
+                                Constants.prefs.remove("user_name");
                                 CommonToastTrue("Successfully logout");
                                 Get.offAll(() => const LoginScreen());
                               }

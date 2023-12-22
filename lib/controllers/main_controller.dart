@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:destina_1_international/inside_screens/profile/listofreq_approvedprofile_model.dart';
 import 'package:destina_1_international/models/cartitem_model.dart';
 import 'package:destina_1_international/models/checkcountry_model.dart';
 import 'package:destina_1_international/models/dashboard_model.dart';
+import 'package:destina_1_international/models/listofreq_model.dart';
 import 'package:destina_1_international/models/loadcountry_model.dart';
 import 'package:destina_1_international/models/packagedetails_model.dart';
 import 'package:destina_1_international/models/selpackage_model.dart';
@@ -9,6 +13,7 @@ import 'package:destina_1_international/service_call/api_call.dart';
 import 'package:get/get.dart';
 
 import '../commons/constants.dart';
+import '../models/bank_model.dart';
 import '../models/enrolldata_model.dart';
 import '../models/packageitems_model.dart';
 import '../models/product_categoryitem_model.dart';
@@ -19,6 +24,7 @@ import '../service_call/api_data.dart';
 
 class MainController extends GetxController {
   RxBool loading = false.obs;
+  RxBool listOfMemberLoading = false.obs;
   RxList<ProductCategoryItem> productItemList = <ProductCategoryItem>[].obs;
   Rx<ProductDetails> productDetails = ProductDetails(
           similarProducts: [],
@@ -221,6 +227,62 @@ class MainController extends GetxController {
           eText: "",
           deduction: "")
       .obs;
+  RxList<ListOfReqModel> listofReqs = <ListOfReqModel>[].obs;
+  RxList<BankIdModel> bankIdData = <BankIdModel>[].obs;
+  Rx<ListOfReqProfileApproveModel> approvedProfileData =
+      ListOfReqProfileApproveModel(
+              msg: "",
+              message: "",
+              sno: "",
+              idno: "",
+              regid: "",
+              fname: "",
+              fathername: "",
+              dob: "",
+              sex: "",
+              passport: "",
+              ssn: "",
+              add1: "",
+              add2: "",
+              city: "",
+              pin: "",
+              email: "",
+              mobile: "",
+              stdcode: "",
+              landline: "",
+              bank: "",
+              branch: "",
+              accno: "",
+              ifsccode: "",
+              swiftcode: "",
+              benname: "",
+              benrelation: "",
+              nominee: "",
+              nomrel: "",
+              oadd1: "",
+              oadd2: "",
+              ocity: "",
+              opin: " ",
+              omobile: " ",
+              oemail: "",
+              odcode: "",
+              oline: " ",
+              obenname: "",
+              obank: "",
+              oaccno: "",
+              obranch: "",
+              oifscode: "",
+              oswiftcode: "",
+              obrel: "",
+              onominee: "",
+              onomrel: "",
+              odob: "",
+              osex: "",
+              ofname: "",
+              opasport: "",
+              ossn: "",
+              oname: "")
+          .obs;
 
 // ********************************************************************************************
   getCountryCode() async {
@@ -467,6 +529,10 @@ class MainController extends GetxController {
             bannerPopUp.add(res['MemberPopuprpt'][i]['MemPopup']);
           }
         }
+        Constants.prefs.setString("country_name", res['Country']);
+        Constants.prefs.setString("country_id", res['CountryID']);
+        Constants.prefs.setString("city", res['City']);
+        Constants.prefs.setString("user_name", res['Name']);
       }
       print("bbbb....${bannerPopUp.length}");
     }
@@ -505,6 +571,85 @@ class MainController extends GetxController {
         viewProfileData.value = ViewProfileModel.fromJson(res);
       }
     }
+    loading.value = false;
+    return res;
+  }
+
+  getUpdateProfile(Map parameters) async {
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().updateProfile, params: parameters);
+    return res;
+  }
+
+  getBankInfo(Map parameters) async {
+    bankIdData.clear();
+    dynamic res = await ApiCall()
+        .listPostMethodFun(methodName: ApiData().bankName, params: parameters);
+
+    for (int i = 0; i < res.length; i++) {
+      bankIdData.add(BankIdModel.fromJson(res[i]));
+    }
+    return res;
+  }
+
+  getUploadPhoto(File imageFile) async {
+    loading.value = true;
+
+    dynamic res = await ApiCall().uploadImage(
+      imageFile: imageFile,
+      endUrl: ApiData().uploadPhoto,
+    );
+    print("ressss....$res");
+    loading.value = false;
+
+    return res;
+  }
+
+  getChangePassword(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().changePassword, params: parameters);
+    loading.value = false;
+    return res;
+  }
+
+  getChangeTransPassword(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().changeTransPassword, params: parameters);
+    loading.value = false;
+    return res;
+  }
+
+  getListOfReq(Map parameters) async {
+    loading.value = true;
+    listofReqs.clear();
+
+    List res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().listOfRequest, params: parameters);
+    for (int i = 0; i < res.length; i++) {
+      listofReqs.add(ListOfReqModel.fromJson(res[i]));
+    }
+
+    loading.value = false;
+    return res;
+  }
+
+  getListOfMemberProfile(Map parameters) async {
+    listOfMemberLoading.value = true;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().listOfReqMemberProfile, params: parameters);
+    if (res['Msg'] == "SUCCESS") {
+      approvedProfileData.value = ListOfReqProfileApproveModel.fromJson(res);
+    }
+    listOfMemberLoading.value = false;
+    return res;
+  }
+
+  getForgotTranPass(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().forgotTransPass, params: parameters);
     loading.value = false;
     return res;
   }

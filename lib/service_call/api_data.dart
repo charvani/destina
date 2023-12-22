@@ -28,4 +28,12 @@ class ApiData {
 
   String dashboard = "Dashboard";
   String viewProfile = "ViewProfile";
+  String updateProfile = "ProfileUpdate";
+  String uploadPhoto = "UploadPhoto";
+  String bankName = "BankName";
+  String changePassword = "ChangePwd";
+  String changeTransPassword = "ChangeTransPwd";
+  String listOfRequest = "ListOfRequest";
+  String listOfReqMemberProfile = "ApproveProfileReq";
+  String forgotTransPass = "ForgotTransPwd";
 }

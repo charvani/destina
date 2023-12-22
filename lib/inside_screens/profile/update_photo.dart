@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/commons/constants.dart';
+import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,7 +16,19 @@ class UpdatePhotoScreen extends StatefulWidget {
 }
 
 class _UpdatePhotoScreenState extends State<UpdatePhotoScreen> {
+  final MainController _upoladController = Get.put(MainController());
+
   XFile? image;
+  dynamic userId, name, country;
+
+  @override
+  void initState() {
+    super.initState();
+    userId = Constants.prefs.getString("user_id");
+    name = Constants.prefs.getString("user_name");
+    country = Constants.prefs.getString("country_name");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,18 +43,9 @@ class _UpdatePhotoScreenState extends State<UpdatePhotoScreen> {
           child: Column(
             // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const ViewProfileWidget(
-                title: "User ID",
-                info: "DESTINA1INT",
-              ),
-              const ViewProfileWidget(
-                title: "Name",
-                info: "DESTINA1",
-              ),
-              const ViewProfileWidget(
-                title: "Country",
-                info: "Malaysia",
-              ),
+              ViewProfileWidget(title: "User ID", info: userId),
+              ViewProfileWidget(title: "Name", info: name),
+              ViewProfileWidget(title: "Country", info: country),
               const SpaceHeightWidget(height: 20),
               if (image != null)
                 Container(
@@ -79,20 +84,31 @@ class _UpdatePhotoScreenState extends State<UpdatePhotoScreen> {
                       },
                       title: "Select Image")),
               const SpaceHeightWidget(height: 40),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 25,
-                ),
-                child: CustomElevatedButton(
-                    onTapFun: () {
-                      if (image != null) {
-                        print("image fun");
-                      } else {
-                        CommonToast("Select image");
-                      }
-                    },
-                    title: "UPDATE"),
-              ),
+              Obx(() {
+                return _upoladController.loading.value
+                    ? loader
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 25,
+                        ),
+                        child: CustomElevatedButton(
+                            onTapFun: () async {
+                              if (image != null) {
+                                print("image fun");
+                                dynamic res = await _upoladController
+                                    .getUploadPhoto(File(image!.path));
+                                if (res != null) {
+                                  if (res['Msg'] == "SUCCESS") {
+                                    CommonToastTrue(res['Message']);
+                                  }
+                                }
+                              } else {
+                                CommonToast("Select image");
+                              }
+                            },
+                            title: "UPDATE"),
+                      );
+              }),
             ],
           ),
         ),

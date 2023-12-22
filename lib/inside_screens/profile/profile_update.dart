@@ -34,19 +34,33 @@ class _UpdateProfileState extends State<UpdateProfile> {
   TextEditingController holderNameTController = TextEditingController();
   TextEditingController nomineeNameTController = TextEditingController();
   dynamic gender;
-  dynamic bank;
+  dynamic bankName, bankId;
+  dynamic typeOfBank;
   dynamic relation;
+  dynamic joinType;
+  dynamic state;
+  dynamic country;
+  dynamic buttonLoading = false;
+  dynamic bankLoading = true;
   BoxDecoration dec = BoxDecoration(
       borderRadius: BorderRadius.circular(15),
       border: Border.all(color: lightBlackColor.withOpacity(0.5)));
   final MainController _profileController = Get.put(MainController());
+  bankData() async {
+    Map bdata = {
+      "UserId": Constants.prefs.getString("user_id"),
+      "Pwd": Constants.prefs.getString("password"),
+    };
+    await _profileController.getBankInfo(bdata);
+    await dataFun();
+  }
 
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      dataFun();
+      bankData();
     });
   }
 
@@ -67,6 +81,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
         spouseNameTController.text =
             _profileController.viewProfileData.value.fathSpousName;
         gender = _profileController.viewProfileData.value.gender;
+        joinType = _profileController.viewProfileData.value.joinType;
         panTController.text = _profileController.viewProfileData.value.ssnein;
 
         address1Controller.text = _profileController.viewProfileData.value.add1;
@@ -81,7 +96,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
             _profileController.viewProfileData.value.landLine;
         mobileNumTController.text =
             _profileController.viewProfileData.value.mobile;
-        bank = _profileController.viewProfileData.value.bankName;
+        bankName = _profileController.viewProfileData.value.bankName;
         accountNumTController.text =
             _profileController.viewProfileData.value.acNo;
         swiftNumTController.text =
@@ -99,8 +114,15 @@ class _UpdateProfileState extends State<UpdateProfile> {
             _profileController.viewProfileData.value.nomieeName == "0"
                 ? ""
                 : _profileController.viewProfileData.value.nomieeName;
+        state = _profileController.viewProfileData.value.state;
+        country = _profileController.viewProfileData.value.countryName;
+        typeOfBank = _profileController.viewProfileData.value.typeOfAc;
+        bankId = _profileController.viewProfileData.value.bankid;
       }
     }
+    setState(() {
+      bankLoading = false;
+    });
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -109,7 +131,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     return Scaffold(
       appBar: commonAppBar(title: "Profile Update", backNavigation: true),
       body: Obx(() {
-        return _profileController.loading.value
+        return _profileController.loading.value || bankLoading
             ? loader
             : SingleChildScrollView(
                 child: Form(
@@ -164,7 +186,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                   children: [
                                     itemTitleWidget("Joining Type"),
                                     Text(
-                                      "Personal",
+                                      joinType ?? "",
                                       style: TextStyle(
                                           fontFamily: "OnestSemiBold",
                                           fontSize: 14,
@@ -349,13 +371,13 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                     }
                                   },
                                 ),
-                                const ViewProfileWidget(
+                                ViewProfileWidget(
                                   title: "State/Province",
-                                  info: "Johor",
+                                  info: state ?? "",
                                 ),
-                                const ViewProfileWidget(
+                                ViewProfileWidget(
                                   title: "Country Name",
-                                  info: "Malaysia",
+                                  info: country ?? "",
                                 ),
                                 const SpaceHeightWidget(height: 10),
                                 itemTitleWidget("Land Line"),
@@ -394,120 +416,132 @@ class _UpdateProfileState extends State<UpdateProfile> {
                         const SpaceHeightWidget(height: 10),
                         const CommonTitle(titleName: "Bank Details"),
                         const SpaceHeightWidget(height: 10),
-                        Container(
-                          width: double.infinity,
-                          padding: const EdgeInsets.all(10),
-                          decoration: dec,
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                itemTitleWidget("Bank Name"),
-                                ProfileDropDown(
-                                    value: bank,
-                                    onChangedFun: (val) {
-                                      setState(() {
-                                        bank = val;
-                                      });
+                        if (_profileController.bankIdData.isNotEmpty)
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.all(10),
+                            decoration: dec,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  itemTitleWidget("Bank Name"),
+                                  ProfileDropDown(
+                                      value: bankName,
+                                      onChangedFun: (val) {
+                                        setState(() {
+                                          bankName = val;
+                                        });
+                                        for (int i = 0;
+                                            i <
+                                                _profileController
+                                                    .bankIdData.length;
+                                            i++) {
+                                          if (_profileController
+                                                  .bankIdData[i].bankName ==
+                                              bankName) {
+                                            setState(() {
+                                              bankId = _profileController
+                                                  .bankIdData[i].bankId;
+                                            });
+                                          }
+                                        }
+                                      },
+                                      items: _profileController.bankIdData
+                                          .map((element) => element.bankName)
+                                          .toList()),
+                                  itemTitleWidget("Account Number"),
+                                  AccountTextField(
+                                    onchangeFun: (val) {},
+                                    outsideFun: (val) async {},
+                                    textInputType: TextInputType.name,
+                                    hintText: "Account Number",
+                                    controller: accountNumTController,
+                                    validation: (val) {
+                                      if (val!.isEmpty) {
+                                        return "Account Number";
+                                      } else {
+                                        return null;
+                                      }
                                     },
-                                    items: const [
-                                      "MAYBANK",
-                                      "PUBLIC BANK",
-                                      "CIMB BANK",
-                                      "AM BANK"
-                                    ]),
-                                itemTitleWidget("Account Number"),
-                                AccountTextField(
-                                  onchangeFun: (val) {},
-                                  outsideFun: (val) async {},
-                                  textInputType: TextInputType.name,
-                                  hintText: "Account Number",
-                                  controller: accountNumTController,
-                                  validation: (val) {
-                                    if (val!.isEmpty) {
-                                      return "Account Number";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                ),
-                                itemTitleWidget("Bank Swift Code"),
-                                AccountTextField(
-                                  onchangeFun: (val) {},
-                                  outsideFun: (val) async {},
-                                  textInputType: TextInputType.name,
-                                  hintText: "Bank Swift Code",
-                                  controller: swiftNumTController,
-                                  validation: (val) {
-                                    if (val!.isEmpty) {
-                                      return "Bank Swift Code";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                ),
-                                itemTitleWidget("Type Of Account"),
-                                ProfileDropDown(
-                                    onChangedFun: (val) {
-                                      setState(() {
-                                        bank = val;
-                                      });
+                                  ),
+                                  itemTitleWidget("Bank Swift Code"),
+                                  AccountTextField(
+                                    onchangeFun: (val) {},
+                                    outsideFun: (val) async {},
+                                    textInputType: TextInputType.name,
+                                    hintText: "Bank Swift Code",
+                                    controller: swiftNumTController,
+                                    validation: (val) {
+                                      if (val!.isEmpty) {
+                                        return "Bank Swift Code";
+                                      } else {
+                                        return null;
+                                      }
                                     },
-                                    items: const [
-                                      "Savings",
-                                      "Current",
-                                    ]),
-                                itemTitleWidget("Bank Branch"),
-                                AccountTextField(
-                                  onchangeFun: (val) {},
-                                  outsideFun: (val) async {},
-                                  textInputType: TextInputType.name,
-                                  hintText: "Bank Branch",
-                                  controller: branchTController,
-                                  validation: (val) {
-                                    if (val!.isEmpty) {
-                                      return "Bank Branch";
-                                    } else {
+                                  ),
+                                  itemTitleWidget("Type Of Account"),
+                                  ProfileDropDown(
+                                      onChangedFun: (val) {
+                                        setState(() {
+                                          typeOfBank = val;
+                                        });
+                                      },
+                                      items: const [
+                                        "Savings",
+                                        "Current",
+                                      ]),
+                                  itemTitleWidget("Bank Branch"),
+                                  AccountTextField(
+                                    onchangeFun: (val) {},
+                                    outsideFun: (val) async {},
+                                    textInputType: TextInputType.name,
+                                    hintText: "Bank Branch",
+                                    controller: branchTController,
+                                    validation: (val) {
+                                      if (val!.isEmpty) {
+                                        return "Bank Branch";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                  itemTitleWidget(
+                                      "Bank IFSC Code/Routing Number"),
+                                  AccountTextField(
+                                    onchangeFun: (val) {},
+                                    outsideFun: (val) async {},
+                                    textInputType: TextInputType.name,
+                                    hintText: "Bank IFSC Code/Routing Number",
+                                    controller: ifscTController,
+                                    validation: (val) {
+                                      if (val!.isEmpty) {
+                                        return "Bank IFSC Code/Routing Number";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                  itemTitleWidget(
+                                      "Account Holder's Name(Same as the Bank Account)"),
+                                  AccountTextField(
+                                    onchangeFun: (val) {},
+                                    outsideFun: (val) async {},
+                                    textInputType: TextInputType.name,
+                                    hintText:
+                                        "Account Holder's Name(Same as the Bank Account)",
+                                    controller: holderNameTController,
+                                    validation: (val) {
                                       return null;
-                                    }
-                                  },
-                                ),
-                                itemTitleWidget(
-                                    "Bank IFSC Code/Routing Number"),
-                                AccountTextField(
-                                  onchangeFun: (val) {},
-                                  outsideFun: (val) async {},
-                                  textInputType: TextInputType.name,
-                                  hintText: "Bank IFSC Code/Routing Number",
-                                  controller: ifscTController,
-                                  validation: (val) {
-                                    if (val!.isEmpty) {
-                                      return "Bank IFSC Code/Routing Number";
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                ),
-                                itemTitleWidget(
-                                    "Account Holder's Name(Same as the Bank Account)"),
-                                AccountTextField(
-                                  onchangeFun: (val) {},
-                                  outsideFun: (val) async {},
-                                  textInputType: TextInputType.name,
-                                  hintText:
-                                      "Account Holder's Name(Same as the Bank Account)",
-                                  controller: holderNameTController,
-                                  validation: (val) {
-                                    return null;
 
-                                    // if (val!.isEmpty) {
-                                    //   return "Account Holder's Name(Same as the Bank Account)";
-                                    // } else {
-                                    //   return null;
-                                    // }
-                                  },
-                                ),
-                              ]),
-                        ),
+                                      // if (val!.isEmpty) {
+                                      //   return "Account Holder's Name(Same as the Bank Account)";
+                                      // } else {
+                                      //   return null;
+                                      // }
+                                    },
+                                  ),
+                                ]),
+                          ),
                         const SpaceHeightWidget(height: 10),
                         const CommonTitle(titleName: "Nominee Details"),
                         const SpaceHeightWidget(height: 10),
@@ -555,17 +589,71 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                 ),
                               ]),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 25, vertical: 25),
-                          child: CustomElevatedButton(
-                              onTapFun: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  Map bData = {};
-                                }
-                              },
-                              title: "UPDATE"),
-                        ),
+                        buttonLoading
+                            ? loader
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 25, vertical: 25),
+                                child: CustomElevatedButton(
+                                    onTapFun: () async {
+                                      if (_formKey.currentState!.validate()) {
+                                        setState(() {
+                                          buttonLoading = true;
+                                        });
+                                        Map bData = {
+                                          "UserId": Constants.prefs
+                                              .getString("user_id"),
+                                          "Pwd": Constants.prefs
+                                              .getString("password"),
+                                          "FullName": fullNameTController.text,
+                                          "FathSpousName":
+                                              spouseNameTController.text,
+                                          "DOB":
+                                              // "28/07/2012",
+                                              dateOfBirthTController.text,
+                                          "Gender":
+                                              gender == "Male" ? "0" : "1",
+                                          "JoinType": joinType,
+                                          "SSNEIN": panTController.text,
+                                          "Passport": passportTController.text,
+                                          "Add1": address1Controller.text,
+                                          "Add2": address2TController.text,
+                                          "City": cityTController.text,
+                                          "State": state,
+                                          "ZipCode": areaTController.text,
+                                          "CountryName": country,
+                                          "DialCode": dialTController.text,
+                                          "LandLine": landLineTController.text,
+                                          "Email": emailTController.text,
+                                          "Mobile": mobileNumTController.text,
+                                          "BankId": bankId,
+                                          "BankBranch": branchTController.text,
+                                          "AcNo": accountNumTController.text,
+                                          "IFSCCode": ifscTController.text,
+                                          "BankSwiftCode":
+                                              swiftNumTController.text,
+                                          "AcHolderName":
+                                              holderNameTController.text,
+                                          "TypeOfAc": typeOfBank,
+                                          "NomieeName":
+                                              nomineeNameTController.text,
+                                          "NomieeRelation": relation,
+                                        };
+                                        dynamic res = await _profileController
+                                            .getUpdateProfile(bData);
+                                        if (res != null) {
+                                          if (res['Msg'] == "SUCCESS") {
+                                            CommonToastTrue(res['Message']);
+                                            dataFun();
+                                          }
+                                        }
+                                        setState(() {
+                                          buttonLoading = false;
+                                        });
+                                      }
+                                    },
+                                    title: "UPDATE"),
+                              ),
                       ],
                     ),
                   ),

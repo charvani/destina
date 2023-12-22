@@ -4094,11 +4094,14 @@ class DownLineWidget extends StatelessWidget {
 class ViewProfileWidget extends StatelessWidget {
   final String title;
   final String info;
-  const ViewProfileWidget({
-    super.key,
-    required this.title,
-    required this.info,
-  });
+  final Color? infoColor;
+  final String? fontfamily;
+  const ViewProfileWidget(
+      {super.key,
+      required this.title,
+      required this.info,
+      this.infoColor,
+      this.fontfamily});
 
   @override
   Widget build(BuildContext context) {
@@ -4110,12 +4113,16 @@ class ViewProfileWidget extends StatelessWidget {
           Flexible(
             child: Text(
               title,
-              style: const TextStyle(fontFamily: "OnestRegular", fontSize: 14),
+              style: TextStyle(
+                  fontFamily: fontfamily ?? "OnestRegular", fontSize: 14),
             ),
           ),
           Text(
             info,
-            style: const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+            style: TextStyle(
+                fontFamily: fontfamily ?? "OnestSemiBold",
+                fontSize: 14,
+                color: infoColor),
           ),
         ],
       ),

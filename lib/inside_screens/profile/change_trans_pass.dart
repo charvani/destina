@@ -1,7 +1,10 @@
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../commons/colors.dart';
+import '../../commons/constants.dart';
+import '../../controllers/main_controller.dart';
 
 class ChangeTransPassScreen extends StatefulWidget {
   const ChangeTransPassScreen({super.key});
@@ -15,6 +18,15 @@ class _ChangeTransPassScreenState extends State<ChangeTransPassScreen> {
   TextEditingController newpassController = TextEditingController();
   TextEditingController confirmPassController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final MainController _changeTransPassController = Get.put(MainController());
+  dynamic userId, name, city;
+  @override
+  void initState() {
+    super.initState();
+    userId = Constants.prefs.getString("user_id");
+    name = Constants.prefs.getString("user_name");
+    city = Constants.prefs.getString("city");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +45,17 @@ class _ChangeTransPassScreenState extends State<ChangeTransPassScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const ViewProfileWidget(
+                ViewProfileWidget(
                   title: "User ID",
-                  info: "DESTINA1INT",
+                  info: userId,
                 ),
-                const ViewProfileWidget(
+                ViewProfileWidget(
                   title: "Name",
-                  info: "DESTINA1",
+                  info: name,
                 ),
-                const ViewProfileWidget(
+                ViewProfileWidget(
                   title: "City",
-                  info: "PETALING JAYA",
+                  info: city,
                 ),
                 const SpaceHeightWidget(height: 20),
                 const SideTitle(title: "Old Password"),
@@ -72,10 +84,9 @@ class _ChangeTransPassScreenState extends State<ChangeTransPassScreen> {
                   controller: newpassController,
                   validation: (val) {
                     if (val!.isEmpty) {
-                      return "Confirm Password";
-                    } else if (newpassController.text !=
-                        confirmPassController.text) {
-                      return "New password and confirm password\nshould be same";
+                      return "New Password";
+                    } else if (val.length < 5) {
+                      return "Characters more than 5";
                     } else {
                       return null;
                     }
@@ -100,25 +111,42 @@ class _ChangeTransPassScreenState extends State<ChangeTransPassScreen> {
                       return "Confirm Password";
                     } else if (newpassController.text !=
                         confirmPassController.text) {
-                      return "Characters more than 5";
+                      return "New password and confirm password\nshould be same";
                     } else {
                       return null;
                     }
                   },
                 ),
                 const SpaceHeightWidget(height: 30),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 25,
-                  ),
-                  child: CustomElevatedButton(
-                      onTapFun: () {
-                        if (_formKey.currentState!.validate()) {
-                          print("validate");
-                        }
-                      },
-                      title: "UPDATE"),
-                ),
+                Obx(() {
+                  return _changeTransPassController.loading.value
+                      ? loader
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 25,
+                          ),
+                          child: CustomElevatedButton(
+                              onTapFun: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  Map bdata = {
+                                    "UserId": userId,
+                                    "Pwd":
+                                        Constants.prefs.getString("password"),
+                                    "OldTransPwd": oldpassController.text,
+                                    "NewTransPwd": newpassController.text,
+                                  };
+                                  dynamic res = await _changeTransPassController
+                                      .getChangeTransPassword(bdata);
+                                  if (res != null) {
+                                    if (res['Msg'] == "SUCCESS") {
+                                      CommonToastTrue(res['Message']);
+                                    }
+                                  }
+                                }
+                              },
+                              title: "UPDATE"),
+                        );
+                }),
               ],
             ),
           ),

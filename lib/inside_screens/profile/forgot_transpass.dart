@@ -1,6 +1,10 @@
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/commons/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../controllers/main_controller.dart';
 
 class ForgotTransPassScreen extends StatefulWidget {
   const ForgotTransPassScreen({super.key});
@@ -12,6 +16,7 @@ class ForgotTransPassScreen extends StatefulWidget {
 class _ForgotTransPassScreenState extends State<ForgotTransPassScreen> {
   TextEditingController emailTController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final MainController _forgotController = Get.put(MainController());
 
   @override
   Widget build(BuildContext context) {
@@ -53,18 +58,35 @@ class _ForgotTransPassScreenState extends State<ForgotTransPassScreen> {
                 },
               ),
               const SpaceHeightWidget(height: 15),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 25,
-                ),
-                child: CustomElevatedButton(
-                    onTapFun: () {
-                      if (_formKey.currentState!.validate()) {
-                        print("submit fun");
-                      }
-                    },
-                    title: "SUBMIT"),
-              ),
+              Obx(() {
+                return _forgotController.loading.value
+                    ? loader
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 25,
+                        ),
+                        child: CustomElevatedButton(
+                            onTapFun: () async {
+                              if (_formKey.currentState!.validate()) {
+                                print("submit fun");
+                                Map bdata = {
+                                  "UserId":
+                                      Constants.prefs.getString("user_id"),
+                                  "Pwd": Constants.prefs.getString("password"),
+                                  "EmailId": emailTController.text
+                                };
+                                dynamic res = await _forgotController
+                                    .getForgotTranPass(bdata);
+                                if (res != null) {
+                                  if (res['Msg'] == "SUCCESS") {
+                                    CommonToastTrue(res['Message']);
+                                  }
+                                }
+                              }
+                            },
+                            title: "SUBMIT"),
+                      );
+              }),
             ],
           ),
         ),

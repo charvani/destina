@@ -1,5 +1,8 @@
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/commons/constants.dart';
+import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../commons/colors.dart';
 
@@ -15,6 +18,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   TextEditingController newpassController = TextEditingController();
   TextEditingController confirmPassController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final MainController _changePassController = Get.put(MainController());
+  dynamic userId, name, country;
+  @override
+  void initState() {
+    super.initState();
+    userId = Constants.prefs.getString("user_id");
+    name = Constants.prefs.getString("user_name");
+    country = Constants.prefs.getString("country_name");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,17 +45,17 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const ViewProfileWidget(
+                ViewProfileWidget(
                   title: "User ID",
-                  info: "DESTINA1INT",
+                  info: userId,
                 ),
-                const ViewProfileWidget(
+                ViewProfileWidget(
                   title: "Name",
-                  info: "DESTINA1",
+                  info: name,
                 ),
-                const ViewProfileWidget(
+                ViewProfileWidget(
                   title: "Country",
-                  info: "Malaysia",
+                  info: country,
                 ),
                 const SpaceHeightWidget(height: 20),
                 const SideTitle(title: "Old Password"),
@@ -106,18 +118,42 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   },
                 ),
                 const SpaceHeightWidget(height: 30),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 25,
-                  ),
-                  child: CustomElevatedButton(
-                      onTapFun: () {
-                        if (_formKey.currentState!.validate()) {
-                          print("validate");
-                        }
-                      },
-                      title: "UPDATE"),
-                ),
+                Obx(() {
+                  return _changePassController.loading.value
+                      ? loader
+                      : Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 25,
+                          ),
+                          child: CustomElevatedButton(
+                              onTapFun: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  if (Constants.prefs.getString("password") ==
+                                      oldpassController.text) {
+                                    Map bdata = {
+                                      "UserId": userId,
+                                      "Pwd":
+                                          Constants.prefs.getString("password"),
+                                      "OldPwd": oldpassController.text,
+                                      "NewPwd": newpassController.text,
+                                    };
+                                    dynamic res = await _changePassController
+                                        .getChangePassword(bdata);
+                                    if (res != null) {
+                                      if (res['Msg'] == "SUCCESS") {
+                                        Constants.prefs.setString(
+                                            "password", newpassController.text);
+                                        CommonToastTrue(res['Message']);
+                                      }
+                                    }
+                                  } else {
+                                    CommonToast("Invalid old password");
+                                  }
+                                }
+                              },
+                              title: "UPDATE"),
+                        );
+                }),
               ],
             ),
           ),
