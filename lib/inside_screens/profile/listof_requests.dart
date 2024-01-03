@@ -2,7 +2,6 @@ import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
-import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -46,25 +45,22 @@ class _UpdationReportScreenState extends State<UpdationReportScreen> {
                 child: Column(
                 children: [
                   const SpaceHeightWidget(height: 10),
-                  // SearchWidget(
-                  //     onTapFun: () {},
+
+                  // Container(
+                  //   height: 60,
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: CommonFormFieldwidget(
                   //     hintText: "Search",
-                  //     borderColor: lightBlackColor),
-                  Container(
-                    height: 60,
-                    padding: const EdgeInsets.all(8.0),
-                    child: CommonFormFieldwidget(
-                      hintText: "Search",
-                      onChangeFun: (val) {
-                        print("vall...$val");
-                      },
-                      prefixIcon: Icon(
-                        FeatherIcons.search,
-                        size: 18,
-                        color: blackColor.withOpacity(0.3),
-                      ),
-                    ),
-                  ),
+                  //     onChangeFun: (val) {
+                  //       print("vall...$val");
+                  //     },
+                  //     prefixIcon: Icon(
+                  //       FeatherIcons.search,
+                  //       size: 18,
+                  //       color: blackColor.withOpacity(0.3),
+                  //     ),
+                  //   ),
+                  // ),
                   Scrollbar(
                     interactive: true,
                     trackVisibility: true,

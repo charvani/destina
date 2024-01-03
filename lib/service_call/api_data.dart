@@ -36,4 +36,16 @@ class ApiData {
   String listOfRequest = "ListOfRequest";
   String listOfReqMemberProfile = "ApproveProfileReq";
   String forgotTransPass = "ForgotTransPwd";
+  String awardQuailfiers = "AwardStatus";
+  String awardReport = "AwardStatusReport";
+  String services = "Services";
+  String myGenealogy = "MyGenealogy";
+  String genealogyPopup = "GenealogyPopup";
+  String teamBuliderView = "TeamBuliderView";
+  String teamBuliderViewTeam = "TeamBuliderViewTeam";
+  String myTeamView = "MyTeamView";
+  String myListViewGetLevel = "MyListViewGetLevel";
+  String myListViewGetReport = "MyListViewGetReport";
+  String groupSales = "GroupSales";
+  String groupSalesSummaryReport = "GroupSalesSummaryReport";
 }

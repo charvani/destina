@@ -316,7 +316,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           onTapFun: () {
             Get.to(() => const AwardQualifiersScreen());
           },
-          title: "Awards Qualifiers",
+          title: "Scheme Awards Qualifiers",
         ),
         MyAccountItemWidget(
           onTapFun: () {
@@ -553,7 +553,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         ),
         MyAccountItemWidget(
           onTapFun: () {
-             Get.to(() => const SalesMallScreen(
+            Get.to(() => const SalesMallScreen(
                   from: "Dp",
                 ));
           },

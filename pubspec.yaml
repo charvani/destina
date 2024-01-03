@@ -70,6 +70,7 @@ dependencies:
   device_imei: 0.0.4+2
   permission_handler: ^11.1.0
   device_information:
+  flutter_file_downloader:
   
   
 

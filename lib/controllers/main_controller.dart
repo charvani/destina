@@ -4,6 +4,8 @@ import 'package:destina_1_international/inside_screens/profile/listofreq_approve
 import 'package:destina_1_international/models/cartitem_model.dart';
 import 'package:destina_1_international/models/checkcountry_model.dart';
 import 'package:destina_1_international/models/dashboard_model.dart';
+import 'package:destina_1_international/models/genelogyview_model.dart';
+import 'package:destina_1_international/models/groupsales_model.dart';
 import 'package:destina_1_international/models/listofreq_model.dart';
 import 'package:destina_1_international/models/loadcountry_model.dart';
 import 'package:destina_1_international/models/packagedetails_model.dart';
@@ -13,18 +15,25 @@ import 'package:destina_1_international/service_call/api_call.dart';
 import 'package:get/get.dart';
 
 import '../commons/constants.dart';
+import '../models/awardreport_model.dart';
 import '../models/bank_model.dart';
 import '../models/enrolldata_model.dart';
+import '../models/geneology_popupmodel.dart';
+import '../models/groupsales_cvmodel.dart';
+import '../models/myteam_viewmodel.dart';
 import '../models/packageitems_model.dart';
 import '../models/product_categoryitem_model.dart';
 import '../models/productdetails_model.dart';
 import '../models/registercart_item_model.dart';
+import '../models/serviceslist_model.dart';
 import '../models/signupLoad_model.dart';
 import '../service_call/api_data.dart';
 
 class MainController extends GetxController {
   RxBool loading = false.obs;
   RxBool listOfMemberLoading = false.obs;
+  RxBool genealogyLoading = false.obs;
+
   RxList<ProductCategoryItem> productItemList = <ProductCategoryItem>[].obs;
   Rx<ProductDetails> productDetails = ProductDetails(
           similarProducts: [],
@@ -283,7 +292,269 @@ class MainController extends GetxController {
               ossn: "",
               oname: "")
           .obs;
+  Rx<AwardReportModel> awardReportData = AwardReportModel(
+          countRpt: [],
+          msg: "",
+          message: "",
+          offername: "",
+          sdate: "",
+          edate: "",
+          descr: "",
+          bonusRequirement: false,
+          requirement1: false,
+          requirement2: false,
+          requirement3: false,
+          requirement4: false,
+          requirement5: false,
+          requirement6: false,
+          req1Psales1: "",
+          req1Pcv1: "",
+          req1Lsalecnt1: "",
+          req1Rsalecnt1: "",
+          req1Lsalecv1: "",
+          req1Rsalecv1: "",
+          req1Ldirspr1: "",
+          req1Rdirspr1: "",
+          req1Steps1: "",
+          req1Achpsale1: "",
+          req1Achpcv1: "",
+          req1Lachsalecnt1: "",
+          req1Rachsalecnt1: "",
+          req1Lachsalecv1: "",
+          req1Rachsalecv1: "",
+          req1Lachdirspr1: "",
+          req1Rachdirspr1: "",
+          req1AchSteps1: "",
+          req1Balpsales1: "",
+          req1Balpcv1: "",
+          req1Sts: "",
+          req1Lbalsalecnt1: "",
+          req1Rbalsalecnt1: "",
+          req1Lbalsalecv1: "",
+          req1Rbalsalecv1: "",
+          req1Lbaldirspr1: "",
+          req1Rbaldirspr1: "",
+          req1BalSteps1: "",
+          req1Stps: 0,
+          req1Achstps: 0,
+          req2Psales2: "",
+          req2Pcv2: "",
+          req2Lsalecnt2: "",
+          req2Rsalecnt2: "",
+          req2Lsalecv2: "",
+          req2Rsalecv2: "",
+          req2Ldirspr2: "",
+          req2Rdirspr2: "",
+          req2Steps2: "",
+          req2Achpsale2: "",
+          req2Achpcv2: "",
+          req2Lachsalecnt2: "",
+          req2Rachsalecnt2: "",
+          req2Lachsalecv2: "",
+          req2Rachsalecv2: "",
+          req2Lachdirspr2: "",
+          req2Rachdirspr2: "",
+          req2AchSteps2: "",
+          req2Balpsales2: "",
+          req2Balpcv2: "",
+          req2Sts: "",
+          req3Lsalecnt3: "",
+          req3Rsalecnt3: "",
+          req3Lsalecv3: "",
+          req3Rsalecv3: "",
+          req3Ldirspr3: "",
+          req3Rdirspr3: "",
+          req3Steps3: "",
+          req3Achpsale3: "",
+          req3Achpcv3: "",
+          req3Lachsalecnt3: "",
+          req3Rachsalecnt3: "",
+          req3Lachsalecv3: "",
+          req3Rachsalecv3: "",
+          req3Lachdirspr3: "",
+          req3Rachdirspr3: "",
+          req3AchSteps3: "",
+          req3Balpsales3: "",
+          req3Balpcv3: "",
+          req3Sts: "",
+          req4Steps4: "",
+          req4Achpsale4: "",
+          req4Achpcv4: "",
+          req4Lachsalecnt4: "",
+          req4Rachsalecnt4: "",
+          req4Lachsalecv4: "",
+          req4Rachsalecv4: "",
+          req4Lachdirspr4: "",
+          req4Rachdirspr4: "",
+          req4AchSteps4: "",
+          req4Balpsales4: "",
+          req4Balpcv4: "",
+          req4Sts: "",
+          req5Lsalecnt5: "",
+          req5Rsalecnt5: "",
+          req5Lsalecv5: "",
+          req5Rsalecv5: "",
+          req5Ldirspr5: "",
+          req5Rdirspr5: "",
+          req5Steps5: "",
+          req5Achpsale5: "",
+          req5Achpcv5: "",
+          req5Lachsalecnt5: "",
+          req5Rachsalecnt5: "",
+          req5Lachsalecv5: "",
+          req5Rachsalecv5: "",
+          req5Lachdirspr5: "",
+          req5Rachdirspr5: "",
+          req5AchSteps5: "",
+          req5Balpsales5: "",
+          req5Balpcv5: "",
+          req5Sts: "",
+          req6Achstps: 0,
+          req6OachGrpcv6: "",
+          req6OGrpcv6: "",
+          req6ObalGrpcv6: "",
+          req6IachDirRnk6: "",
+          req6IDirRnk6: "",
+          req6IbalDirRnk6: "",
+          status: "",
+          req4Lbalsalecnt4: "",
+          req4Rbalsalecnt4: "",
+          req4Lbalsalecv4: "",
+          req4Rbalsalecv4: "",
+          req4Lbaldirspr4: "",
+          req4Rbaldirspr4: "",
+          req4BalSteps4: "",
+          req4Stps: 0,
+          req4Achstps: 0,
+          req4OachGrpcv4: "",
+          req4OGrpcv4: "",
+          req4ObalGrpcv4: "",
+          req5Psales5: "",
+          req5Pcv5: "",
+          req2Lbalsalecnt2: "",
+          req2Rbalsalecnt2: "",
+          req2Lbalsalecv2: "",
+          req2Rbalsalecv2: "",
+          req2Lbaldirspr2: "",
+          req2Rbaldirspr2: "",
+          req2BalSteps2: "",
+          req2Lachdircv2: "",
+          req2Rachdircv2: "",
+          req2Ldircv2: "",
+          req2Rdircv2: "",
+          req2Lbaldircv2: "",
+          req2Rbaldircv2: "",
+          req3Odircv3: "",
+          req3Psales3: "",
+          req3Pcv3: "",
+          req3Lbalsalecnt3: "",
+          req3Rbalsalecnt3: "",
+          req3Lbalsalecv3: "",
+          req3Rbalsalecv3: "",
+          req3Lbaldirspr3: "",
+          req3Rbaldirspr3: "",
+          req3BalSteps3: "",
+          req3Obaldircv3: "",
+          req3Oachdircv3: "",
+          req4Psales4: "",
+          req4Pcv4: "",
+          req4Lsalecnt4: "",
+          req4Rsalecnt4: "",
+          req4Lsalecv4: "",
+          req4Rsalecv4: "",
+          req4Ldirspr4: "",
+          req4Rdirspr4: "",
+          req5Lbalsalecnt5: "",
+          req5Rbalsalecnt5: "",
+          req5Lbalsalecv5: "",
+          req5Rbalsalecv5: "",
+          req5Lbaldirspr5: "",
+          req5Rbaldirspr5: "",
+          req5BalSteps5: "",
+          req5OachGrpcv5: "",
+          req5OGrpcv5: "",
+          req5ObalGrpcv5: "",
+          req5AchDirRnk5: "",
+          req5DirRnk5: "",
+          req5BalDirRnk5: "",
+          req6Psales6: "",
+          req6Pcv6: "",
+          req6Lsalecnt6: "",
+          req6Rsalecnt6: "",
+          req6Lsalecv6: "",
+          req6Rsalecv6: "",
+          req6Ldirspr6: "",
+          req6Rdirspr6: "",
+          req6Steps6: "",
+          req6Achpsale6: "",
+          req6Achpcv6: "",
+          req6Lachsalecnt6: "",
+          req6Rachsalecnt6: "",
+          req6Lachsalecv6: "",
+          req6Rachsalecv6: "",
+          req6Lachdirspr6: "",
+          req6Rachdirspr6: "",
+          req6AchSteps6: "",
+          req6Balpsales6: "",
+          req6Balpcv6: "",
+          req6Sts: "",
+          req6Lbalsalecnt6: "",
+          req6Rbalsalecnt6: "",
+          req6Lbalsalecv6: "",
+          req6Rbalsalecv6: "",
+          req6Lbaldirspr6: "",
+          req6Rbaldirspr6: "",
+          req6BalSteps6: "",
+          req2Stps: 0,
+          req2Achstps: 0,
+          req3Stps: 0,
+          req3Achstps: 0,
+          req5Stps: 0,
+          req5Achstps: 0,
+          req6Stps: 0)
+      .obs;
 
+  RxList<ServicesListModel> servicesListData = <ServicesListModel>[].obs;
+  RxList<GeneologyViewModel> myGenelogoyListData = <GeneologyViewModel>[].obs;
+  Rx<GeneologyPopupModel> geneologyPopupData = GeneologyPopupModel(
+          msg: "",
+          message: "",
+          distributorId: "",
+          fullName: "",
+          joinDate: "",
+          sponsorId: "",
+          packageNAme: "",
+          personalCv: "",
+          rankstatus: "",
+          leftCv: "",
+          rightCv: "",
+          totalCv: "",
+          totalCount: "",
+          directs: "",
+          leftCount: "",
+          rightCount: "",
+          cfLeftCv: "",
+          cfRightCv: "")
+      .obs;
+  Rx<GroupSalesModel> groupSalesData = GroupSalesModel(
+          msg: "",
+          message: "",
+          gcvUserId: "",
+          gcvUserNAme: "",
+          gcvFromDate: "",
+          gcvtoDate: "",
+          bussCvTotPrsCv: "",
+          bussCvNetLftGrpCv: "",
+          bussCvNetRghtGrpCv: "",
+          bussCvTotGrpCv: "",
+          bussAmtTotPrsAmt: "",
+          bussAmtNetLftGrpAmt: "",
+          bussAmtNetRgtGrpAmt: "",
+          bussTotGrpAmt: "")
+      .obs;
+  Rx<GroupSalesCvModel> groupsalesCvData =
+      GroupSalesCvModel(groupSalSummaryRpt: [], msg: "", message: "").obs;
+  RxList<MyTeamViewModel> myteamviewList = <MyTeamViewModel>[].obs;
 // ********************************************************************************************
   getCountryCode() async {
     dynamic res = await ApiCall().getMethodFun(url: ApiData().countryUrl);
@@ -650,6 +921,131 @@ class MainController extends GetxController {
     loading.value = true;
     dynamic res = await ApiCall().postMethodFun(
         methodName: ApiData().forgotTransPass, params: parameters);
+    loading.value = false;
+    return res;
+  }
+
+  getAwardDropDownData(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().awardQuailfiers, params: parameters);
+    loading.value = false;
+    return res;
+  }
+
+  getAwardData(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().awardReport, params: parameters);
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS") {
+        awardReportData.value = AwardReportModel.fromJson(res);
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getSalesTools(Map parameters) async {
+    loading.value = true;
+    servicesListData.clear();
+    dynamic res = await ApiCall()
+        .listPostMethodFun(methodName: ApiData().services, params: parameters);
+    for (int i = 0; i < res.length; i++) {
+      servicesListData.add(ServicesListModel.fromJson(res[i]));
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getGenealogyData(Map parameters) async {
+    loading.value = true;
+    myGenelogoyListData.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().myGenealogy, params: parameters);
+    for (int i = 0; i < res.length; i++) {
+      myGenelogoyListData.add(GeneologyViewModel.fromJson(res[i]));
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getGenealogyPopupData(Map parameters) async {
+    genealogyLoading.value = true;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().genealogyPopup, params: parameters);
+    if (res != null && res['Msg'] == "SUCCESS") {
+      geneologyPopupData.value = GeneologyPopupModel.fromJson(res);
+    }
+    genealogyLoading.value = false;
+    return res;
+  }
+
+  getTeamBuilderView(Map parameters) async {
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().teamBuliderView, params: parameters);
+
+    return res;
+  }
+
+  getTeamBuilderViewTeam(Map parameters) async {
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().teamBuliderViewTeam, params: parameters);
+
+    return res;
+  }
+
+  getMyTeamView(Map parameters, String from) async {
+    loading.value = true;
+    myteamviewList.clear();
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().myTeamView, params: parameters);
+    if (res != null) {
+      if (from == "left") {
+        for (int i = 0; i < res['MyLVrpt'].length; i++) {
+          myteamviewList.add(MyTeamViewModel.fromJson(res['MyLVrpt'][i]));
+        }
+      } else {
+        for (int i = 0; i < res['MyRVrpt'].length; i++) {
+          myteamviewList.add(MyTeamViewModel.fromJson(res['MyRVrpt'][i]));
+        }
+      }
+    }
+    loading.value = false;
+
+    return res;
+  }
+
+  getMyListViewLevels(Map parameters) async {
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().myListViewGetLevel, params: parameters);
+    return res;
+  }
+
+  getMyListViewReport(Map parameters) async {
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().myListViewGetReport, params: parameters);
+    return res;
+  }
+
+  getGroupSales(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().groupSales, params: parameters);
+    if (res != null && res['Msg'] == "SUCCESS") {
+      groupSalesData.value = GroupSalesModel.fromJson(res);
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getGroupSalesCvList(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().groupSalesSummaryReport, params: parameters);
+    if (res != null && res['Msg'] == "SUCCESS") {
+      groupsalesCvData.value = GroupSalesCvModel.fromJson(res);
+    }
     loading.value = false;
     return res;
   }
