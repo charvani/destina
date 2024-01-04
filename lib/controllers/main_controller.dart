@@ -8,8 +8,11 @@ import 'package:destina_1_international/models/genelogyview_model.dart';
 import 'package:destina_1_international/models/groupsales_model.dart';
 import 'package:destina_1_international/models/listofreq_model.dart';
 import 'package:destina_1_international/models/loadcountry_model.dart';
+import 'package:destina_1_international/models/order_acknowledgemodel.dart';
+import 'package:destina_1_international/models/order_reportmodel.dart';
 import 'package:destina_1_international/models/packagedetails_model.dart';
 import 'package:destina_1_international/models/selpackage_model.dart';
+import 'package:destina_1_international/models/shipping_ordermodel.dart';
 import 'package:destina_1_international/models/view_profile_model.dart';
 import 'package:destina_1_international/service_call/api_call.dart';
 import 'package:get/get.dart';
@@ -17,10 +20,12 @@ import 'package:get/get.dart';
 import '../commons/constants.dart';
 import '../models/awardreport_model.dart';
 import '../models/bank_model.dart';
+import '../models/checkupdation_model.dart';
 import '../models/enrolldata_model.dart';
 import '../models/geneology_popupmodel.dart';
 import '../models/groupsales_cvmodel.dart';
 import '../models/myteam_viewmodel.dart';
+import '../models/ordermall_model.dart';
 import '../models/packageitems_model.dart';
 import '../models/product_categoryitem_model.dart';
 import '../models/productdetails_model.dart';
@@ -555,6 +560,14 @@ class MainController extends GetxController {
   Rx<GroupSalesCvModel> groupsalesCvData =
       GroupSalesCvModel(groupSalSummaryRpt: [], msg: "", message: "").obs;
   RxList<MyTeamViewModel> myteamviewList = <MyTeamViewModel>[].obs;
+  RxList<OrderMallTypeModel> mallData = <OrderMallTypeModel>[].obs;
+  RxList<OrderReportModel> orderReportData = <OrderReportModel>[].obs;
+  RxList<ShippingOrderModel> shippingOrderData = <ShippingOrderModel>[].obs;
+  RxList<OrderAcknowledgeModel> orderAcknowledgeData =
+      <OrderAcknowledgeModel>[].obs;
+  Rx<CheckUpdationModel> updationData =
+      CheckUpdationModel(chechUpdrpt: [], msg: "", message: "").obs;
+
 // ********************************************************************************************
   getCountryCode() async {
     dynamic res = await ApiCall().getMethodFun(url: ApiData().countryUrl);
@@ -1047,6 +1060,85 @@ class MainController extends GetxController {
       groupsalesCvData.value = GroupSalesCvModel.fromJson(res);
     }
     loading.value = false;
+    return res;
+  }
+
+  getOrdersMall(Map parameters) async {
+    loading.value = true;
+    mallData.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().getOrdersMall, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          mallData.add(OrderMallTypeModel.fromJson(res[i]));
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getOrderReport(Map parameters) async {
+    loading.value = true;
+    orderReportData.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().orderReport, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          orderReportData.add(OrderReportModel.fromJson(res[i]));
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getOrderShipping(Map parameters) async {
+    shippingOrderData.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().shippingHistory, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          shippingOrderData.add(ShippingOrderModel.fromJson(res[i]));
+        }
+      }
+    }
+    print("shippingOrderData...${shippingOrderData.length}");
+    return res;
+  }
+
+  getOrderAcknowledgeReport(Map parameters) async {
+    loading.value = true;
+    orderAcknowledgeData.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().orderAcknowledgeRpt, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          orderAcknowledgeData.add(OrderAcknowledgeModel.fromJson(res[i]));
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getOrderAcknowledgeDetails(Map parameters) async {
+    loading.value = true;
+
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().checkUpdation, params: parameters);
+    updationData.value = CheckUpdationModel.fromJson(res);
+    loading.value = false;
+    return res;
+  }
+
+  getOrderAcknowledgeUpdation(Map parameters) async {
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().updAcknowledge, params: parameters);
     return res;
   }
 }

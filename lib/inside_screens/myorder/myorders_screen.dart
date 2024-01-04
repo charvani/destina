@@ -1,45 +1,103 @@
 import 'package:destina_1_international/commons/common_widgets.dart';
-import 'package:destina_1_international/inside_screens/myorder/invoice_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../commons/colors.dart';
+import '../../commons/constants.dart';
+import '../../controllers/main_controller.dart';
+import 'invoice_screen.dart';
 
 class MyOrdersScreen extends StatefulWidget {
   final String fromDate;
   final String toDate;
+  final String mallId;
   const MyOrdersScreen(
-      {super.key, required this.fromDate, required this.toDate});
+      {super.key,
+      required this.fromDate,
+      required this.toDate,
+      required this.mallId});
 
   @override
   State<MyOrdersScreen> createState() => _MyOrdersScreenState();
 }
 
 class _MyOrdersScreenState extends State<MyOrdersScreen> {
+  final MainController _dataController = Get.put(MainController());
+
   ScrollController dialogScrollController = ScrollController();
+  int? selectedInt;
+  dynamic userid, username, pass;
+  @override
+  void initState() {
+    super.initState();
+    userid = Constants.prefs.getString("user_id");
+    pass = Constants.prefs.getString("password");
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      dataFun();
+    });
+  }
+
+  dataFun() {
+    Map bdata = {
+      "UserId": userid,
+      "Pwd": pass,
+      "Action": "FromToDate",
+      "FromDate": widget.fromDate,
+      "ToDate": widget.toDate,
+      "MallId": widget.mallId
+    };
+    _dataController.getOrderReport(bdata);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar(backNavigation: true, title: ""),
-      body: SingleChildScrollView(
-        child: Column(children: [
-          const SpaceHeightWidget(height: 10),
-          for (int i = 0; i < 5; i++)
-            MyOrderItemWidget(
-              date: "04 Dec 2023",
-              itemName: "D1 ASE SCALARVIA",
-              imgPath: "assets/images/logo.png",
-              mrpRate: "90",
-              ordercode: "04122023/1238",
-              shippingFun: () {
-                Get.dialog(shippingHistoryDialog());
-              },
-              invoiceFun: () {
-                Get.to(() => const InvoiceScreen());
-              },
-            )
-        ]),
-      ),
+      body: Obx(() {
+        return _dataController.loading.value
+            ? loader
+            : _dataController.orderReportData.isEmpty
+                ? const NotAvailableText(text: "Data not found")
+                : SingleChildScrollView(
+                    child: Column(children: [
+                      const SpaceHeightWidget(height: 10),
+                      for (int i = 0;
+                          i < _dataController.orderReportData.length;
+                          i++)
+                        MyOrderItemWidget(
+                          loading: selectedInt == i ? true : false,
+                          date: _dataController.orderReportData[i].orderDate,
+                          itemName: _dataController.orderReportData[i].name,
+                          imgPath: "assets/images/logo.png",
+                          mrpRate: _dataController.orderReportData[i].amt,
+                          ordercode: _dataController.orderReportData[i].orderNo,
+                          shippingFun: () async {
+                            setState(() {
+                              selectedInt = i;
+                            });
+                            Map bdata = {
+                              "UserId": userid,
+                              "Pwd": pass,
+                              "OrderNo":
+                                  _dataController.orderReportData[i].orderNo,
+                              // "21122023/5048"
+                            };
+                            await _dataController.getOrderShipping(bdata);
+                            Get.dialog(shippingHistoryDialog());
+                            setState(() {
+                              selectedInt = null;
+                            });
+                          },
+                          invoiceFun: () {
+                            Get.to(() => InvoiceScreen(
+                                  redirectUrl:
+                                      'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderRpt"&OrderNo=${_dataController.orderReportData[i].orderNo}',
+                                ));
+                          },
+                        )
+                    ]),
+                  );
+      }),
     );
   }
 
@@ -142,32 +200,56 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                             TableHeadingWidget(title: "Track")),
                                   ],
                                   rows: [
-                                    for (int i = 1; i < 3; i++)
+                                    for (int i = 0;
+                                        i <
+                                            _dataController
+                                                .shippingOrderData.length;
+                                        i++)
                                       DataRow(cells: [
                                         DataCell(
-                                          TableInfoWidget(info: i.toString()),
+                                          TableInfoWidget(info: "${i + 1}"),
                                         ),
-                                        const DataCell(
-                                          TableInfoWidget(info: "DESTINA1INT"),
-                                        ),
-                                        const DataCell(
-                                          TableInfoWidget(info: "DESTINA1"),
-                                        ),
-                                        const DataCell(
-                                          TableInfoWidget(info: "DESTINA1"),
-                                        ),
-                                        const DataCell(
+                                        DataCell(
                                           TableInfoWidget(
-                                              info: "07122023/10819"),
+                                              info: _dataController
+                                                  .shippingOrderData[i]
+                                                  .dispatchDtls),
                                         ),
-                                        const DataCell(
-                                          TableInfoWidget(info: "50"),
+                                        DataCell(
+                                          TableInfoWidget(
+                                              info: _dataController
+                                                  .shippingOrderData[i]
+                                                  .shippingRmk),
                                         ),
-                                        const DataCell(
-                                          TableInfoWidget(info: "06 Dec 2023"),
+                                        DataCell(
+                                          TableInfoWidget(
+                                              info: _dataController
+                                                  .shippingOrderData[i]
+                                                  .dispatchDate),
                                         ),
-                                        const DataCell(
-                                          TableInfoWidget(info: "27.96"),
+                                        DataCell(
+                                          TableInfoWidget(
+                                              info: _dataController
+                                                  .shippingOrderData[i]
+                                                  .remarks),
+                                        ),
+                                        DataCell(
+                                          TableInfoWidget(
+                                              info: _dataController
+                                                  .shippingOrderData[i]
+                                                  .addedBy),
+                                        ),
+                                        DataCell(
+                                          TableInfoWidget(
+                                              info: _dataController
+                                                  .shippingOrderData[i]
+                                                  .addedBy),
+                                        ),
+                                        DataCell(
+                                          TableInfoWidget(
+                                              info: _dataController
+                                                  .shippingOrderData[i]
+                                                  .addedBy),
                                         ),
                                       ])
                                   ]),

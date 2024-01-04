@@ -22,17 +22,15 @@ class _MyListViewGetReportScreenState extends State<MyListViewGetReportScreen> {
   List<MyListReportModel> dataList = [];
   List<ScrollController> scrollContollerList = [];
   bool screenLoading = true;
-  dynamic userid, pass;
+  dynamic userid, pass, username;
   @override
   void initState() {
     super.initState();
     userid = Constants.prefs.getString("user_id");
     pass = Constants.prefs.getString("password");
+    username = Constants.prefs.getString("user_name");
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await listCountFun();
-      setState(() {
-        screenLoading = false;
-      });
+      listCountFun();
     });
   }
 
@@ -68,15 +66,26 @@ class _MyListViewGetReportScreenState extends State<MyListViewGetReportScreen> {
     }
 
     dynamic res = await _datacontroller.getMyListViewLevels(bdata);
-    for (int i = 0; i < res.length; i++) {
-      dataList.add(MyListReportModel.fromJson(res[i]));
-      scrollContollerList.add(ScrollController());
+    print("getting res...$res");
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          dataList.add(MyListReportModel.fromJson(res[i]));
+          scrollContollerList.add(ScrollController());
+        }
+        for (int i = 0; i < dataList.length; i++) {
+          dataFun(dataList[i].level, i);
+        }
+        print("dddd...${dataList.length}");
+        setState(() {
+          screenLoading = false;
+        });
+      }
+    } else {
+      setState(() {
+        screenLoading = false;
+      });
     }
-
-    for (int i = 0; i < dataList.length; i++) {
-      dataFun(dataList[i].level, i);
-    }
-    print("dddd...${dataList.length}");
   }
 
   dataFun(String teamNo, int index) async {
@@ -114,9 +123,12 @@ class _MyListViewGetReportScreenState extends State<MyListViewGetReportScreen> {
     }
 
     dynamic res = await _datacontroller.getMyListViewReport(bdata);
-    for (int i = 0; i < res.length; i++) {
-      dataList[index].data.add(MyListReportDataModel.fromJson(res[i]));
+    if (res.length > 0) {
+      for (int i = 0; i < res.length; i++) {
+        dataList[index].data.add(MyListReportDataModel.fromJson(res[i]));
+      }
     }
+
     print("finn....${dataList[index].data.length}");
     setState(() {});
   }
@@ -127,116 +139,138 @@ class _MyListViewGetReportScreenState extends State<MyListViewGetReportScreen> {
       appBar: commonAppBar(title: "My List View", backNavigation: true),
       body: screenLoading
           ? loader
-          : Container(
-              color: whiteColor,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SpaceHeightWidget(height: 15),
-                    for (int i = 0; i < dataList.length; i++)
-                      Column(
-                        children: [
-                          CommonTitle(
-                            titleName: "Team No ${i + 1}",
-                            size: 16,
-                            fontColor: darkBlue,
-                          ),
-                          Scrollbar(
-                            controller: scrollContollerList[i],
-                            thumbVisibility: true,
-                            trackVisibility: true,
-                            thickness: 5,
-                            interactive: true,
-                            radius: const Radius.circular(10),
-                            child: SingleChildScrollView(
-                              controller: scrollContollerList[i],
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: DataTable(
-                                          // dataRowMaxHeight: 50,
-                                          horizontalMargin: 10,
-                                          columnSpacing: 20,
-                                          border: TableBorder.all(
-                                              color: middleBlackColor
-                                                  .withOpacity(0.15),
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          headingRowColor:
-                                              MaterialStatePropertyAll(
-                                                  blackColor.withOpacity(0.8)),
-                                          dataRowColor:
-                                              MaterialStatePropertyAll(
-                                                  lightDarKBlue.withOpacity(0.1)
-                                                  // whiteColor
-                                                  ),
-                                          columns: [
-                                            DataColumn(
-                                                label: idTextStyle("S.No")),
-                                            DataColumn(
-                                                label: idTextStyle("User ID")),
-                                            DataColumn(
-                                                label: idTextStyle("Name")),
-                                            DataColumn(
-                                                label: idTextStyle("Country")),
-                                            DataColumn(
-                                                label: idTextStyle("Sponsor")),
-                                            DataColumn(
-                                                label: idTextStyle(
-                                                    "	Date of Join")),
-                                          ],
-                                          rows: [
-                                            for (int j = 0;
-                                                j < dataList[i].data.length;
-                                                j++)
-                                              DataRow(cells: [
-                                                DataCell(
-                                                  infoTextStyle("${j + 1}"),
-                                                ),
-                                                DataCell(
-                                                  infoTextStyle(dataList[i]
-                                                      .data[j]
-                                                      .userId),
-                                                ),
-                                                DataCell(
-                                                  infoTextStyle(
-                                                      dataList[i].data[j].name),
-                                                ),
-                                                DataCell(
-                                                  infoTextStyle(dataList[i]
-                                                      .data[j]
-                                                      .country),
-                                                ),
-                                                DataCell(
-                                                  infoTextStyle(dataList[i]
-                                                      .data[j]
-                                                      .sponsor),
-                                                ),
-                                                DataCell(
-                                                  infoTextStyle(
-                                                      dataList[i].data[j].doj),
-                                                ),
-                                              ])
-                                          ]),
-                                    ),
-                                  ),
-                                ],
+          : dataList.isEmpty
+              ? const NotAvailableText(text: "No data found")
+              : Container(
+                  color: whiteColor,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SpaceHeightWidget(height: 15),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: ViewProfileWidget(
+                              title: "User Id:", info: userid),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child:
+                              ViewProfileWidget(title: "Name:", info: username),
+                        ),
+                        const SpaceHeightWidget(height: 10),
+                        for (int i = 0; i < dataList.length; i++)
+                          Column(
+                            children: [
+                              CommonTitle(
+                                titleName: "Level - ${dataList[i].level}",
+                                size: 16,
+                                fontColor: darkBlue,
                               ),
-                            ),
+                              Scrollbar(
+                                controller: scrollContollerList[i],
+                                thumbVisibility: true,
+                                trackVisibility: true,
+                                thickness: 5,
+                                interactive: true,
+                                radius: const Radius.circular(10),
+                                child: SingleChildScrollView(
+                                  controller: scrollContollerList[i],
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: DataTable(
+                                              // dataRowMaxHeight: 50,
+                                              horizontalMargin: 10,
+                                              columnSpacing: 20,
+                                              border: TableBorder.all(
+                                                  color: middleBlackColor
+                                                      .withOpacity(0.15),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              headingRowColor:
+                                                  MaterialStatePropertyAll(
+                                                      blackColor
+                                                          .withOpacity(0.8)),
+                                              dataRowColor:
+                                                  MaterialStatePropertyAll(
+                                                      lightDarKBlue
+                                                          .withOpacity(0.1)
+                                                      // whiteColor
+                                                      ),
+                                              columns: [
+                                                DataColumn(
+                                                    label: idTextStyle("S.No")),
+                                                DataColumn(
+                                                    label:
+                                                        idTextStyle("User ID")),
+                                                DataColumn(
+                                                    label: idTextStyle("Name")),
+                                                DataColumn(
+                                                    label:
+                                                        idTextStyle("Country")),
+                                                DataColumn(
+                                                    label:
+                                                        idTextStyle("Sponsor")),
+                                                DataColumn(
+                                                    label: idTextStyle(
+                                                        "	Date of Join")),
+                                              ],
+                                              rows: [
+                                                for (int j = 0;
+                                                    j < dataList[i].data.length;
+                                                    j++)
+                                                  DataRow(cells: [
+                                                    DataCell(
+                                                      infoTextStyle("${j + 1}"),
+                                                    ),
+                                                    DataCell(
+                                                      infoTextStyle(dataList[i]
+                                                          .data[j]
+                                                          .userId),
+                                                    ),
+                                                    DataCell(
+                                                      infoTextStyle(dataList[i]
+                                                          .data[j]
+                                                          .name),
+                                                    ),
+                                                    DataCell(
+                                                      infoTextStyle(dataList[i]
+                                                          .data[j]
+                                                          .country),
+                                                    ),
+                                                    DataCell(
+                                                      infoTextStyle(dataList[i]
+                                                          .data[j]
+                                                          .sponsor),
+                                                    ),
+                                                    DataCell(
+                                                      infoTextStyle(dataList[i]
+                                                          .data[j]
+                                                          .doj),
+                                                    ),
+                                                  ])
+                                              ]),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SpaceHeightWidget(
+                                height: 18,
+                              )
+                            ],
                           ),
-                          const SpaceHeightWidget(
-                            height: 18,
-                          )
-                        ],
-                      ),
-                  ],
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
     );
   }
 

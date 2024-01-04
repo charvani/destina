@@ -819,8 +819,10 @@ class MyOrderItemWidget extends StatelessWidget {
   final String mrpRate;
   final String date;
   final String ordercode;
+  final bool loading;
   const MyOrderItemWidget(
       {super.key,
+      required this.loading,
       required this.shippingFun,
       required this.itemName,
       required this.imgPath,
@@ -843,6 +845,7 @@ class MyOrderItemWidget extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // CommonCachedNetworkImage(imagePath: imgPath),
                   Image.asset(
                     imgPath,
                     height: 90,
@@ -861,7 +864,7 @@ class MyOrderItemWidget extends StatelessWidget {
                               color: lightDarKBlue),
                         ),
                         const Text(
-                          "Buy",
+                          " Buy",
                           style: TextStyle(
                             fontFamily: "OnestRegular",
                             fontSize: 10,
@@ -871,9 +874,11 @@ class MyOrderItemWidget extends StatelessWidget {
                         SizedBox(
                             height: 25,
                             width: 120,
-                            child: CommonOulineTextButton(
-                                onTapFun: shippingFun,
-                                title: "Shipping History"))
+                            child: loading
+                                ? loader
+                                : CommonOulineTextButton(
+                                    onTapFun: shippingFun,
+                                    title: "Shipping History"))
                       ],
                     ),
                   )

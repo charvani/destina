@@ -48,4 +48,10 @@ class ApiData {
   String myListViewGetReport = "MyListViewGetReport";
   String groupSales = "GroupSales";
   String groupSalesSummaryReport = "GroupSalesSummaryReport";
+  String getOrdersMall = "GetOrdersMall";
+  String orderReport = "OrderReport";
+  String shippingHistory = "ShippingHistory";
+  String orderAcknowledgeRpt = "OrderAcknowledgeRpt";
+  String checkUpdation = "CheckUpdation";
+  String updAcknowledge = "UpdAcknowledge";
 }

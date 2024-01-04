@@ -77,7 +77,7 @@ class _TeamBuilderViewScreenState extends State<TeamBuilderViewScreen> {
                       Column(
                         children: [
                           CommonTitle(
-                            titleName: "Team No ${i + 1}",
+                            titleName: dataList[i].team,
                             size: 16,
                             fontColor: darkBlue,
                           ),

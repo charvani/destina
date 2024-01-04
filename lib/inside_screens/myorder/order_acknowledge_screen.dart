@@ -1,11 +1,12 @@
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
-import 'package:destina_1_international/inside_screens/myorder/invoice_screen.dart';
-import 'package:feather_icons/feather_icons.dart';
+import 'package:destina_1_international/commons/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/main_controller.dart';
 import 'details_screen.dart';
+import 'invoice_screen.dart';
 
 class OrderAknowledgeScreen extends StatefulWidget {
   const OrderAknowledgeScreen({super.key});
@@ -14,114 +15,95 @@ class OrderAknowledgeScreen extends StatefulWidget {
   State<OrderAknowledgeScreen> createState() => _OrderAknowledgeScreenState();
 }
 
+final MainController _dataController = Get.put(MainController());
+
 class _OrderAknowledgeScreenState extends State<OrderAknowledgeScreen> {
+  DataTableSource tSource = MyData();
+
   final ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      dataFun();
+    });
+  }
+
+  dataFun() async {
+    Map bdata = {
+      "UserId": Constants.prefs.getString("user_id"),
+      "Pwd": Constants.prefs.getString("password"),
+    };
+    await _dataController.getOrderAcknowledgeReport(bdata);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar(title: "Order Acknowledge", backNavigation: true),
-      body: SingleChildScrollView(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SpaceHeightWidget(height: 10),
-          Container(
-            height: 60,
-            padding: const EdgeInsets.all(8.0),
-            child: CommonFormFieldwidget(
-              hintText: "Search",
-              onChangeFun: (val) {
-                print("vall...$val");
-              },
-              prefixIcon: Icon(
-                FeatherIcons.search,
-                size: 18,
-                color: blackColor.withOpacity(0.3),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Text(
-              "Note: Click on Order Number to get Invoice",
-              style: TextStyle(
-                  fontFamily: "OnestRegular",
-                  color: darkRedColor,
-                  fontSize: 10),
-            ),
-          ),
-          Scrollbar(
-            interactive: true,
-            trackVisibility: true,
-            controller: _scrollController,
-            thumbVisibility: true,
-            thickness: 8,
-            radius: const Radius.circular(10),
-            scrollbarOrientation: ScrollbarOrientation.bottom,
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DataTable(
-                    dataRowMaxHeight: 50,
-                    horizontalMargin: 0,
-                    columnSpacing: 0,
-                    headingRowColor: MaterialStatePropertyAll(
-                        lightDarKBlue.withOpacity(0.15)),
-                    border: TableBorder.all(
-                        color: middleBlackColor.withOpacity(0.15)),
-                    columns: [
-                      DataColumn(label: tableTitleWidget("S.No")),
-                      DataColumn(label: tableTitleWidget("Order No")),
-                      DataColumn(label: tableTitleWidget("Collection Mode")),
-                      DataColumn(label: tableTitleWidget("Date Of Dispatch")),
-                      DataColumn(label: tableTitleWidget("Licensee Collected")),
-                      DataColumn(label: tableTitleWidget("Acknowledge Date")),
-                      DataColumn(
-                          label: tableTitleWidget(
-                              "Product Collection Acknowledge")),
-                      DataColumn(label: tableTitleWidget("Status")),
-                      DataColumn(label: tableTitleWidget("Updation")),
-                    ],
-                    rows: [
-                      for (int i = 1; i < 9; i++)
-                        DataRow(cells: [
-                          DataCell(
-                            rowTextWidget(i.toString()),
-                          ),
-                          DataCell(
-                            orderNumTextWidget("1209034_1727"),
-                          ),
-                          DataCell(
-                            rowTextWidget("Self Collect"),
-                          ),
-                          DataCell(
-                            rowTextWidget("16 Sep 2012"),
-                          ),
-                          DataCell(
-                            rowTextWidget(""),
-                          ),
-                          DataCell(
-                            rowTextWidget("16 Sep 2012"),
-                          ),
-                          DataCell(
-                            rowTextWidget("OldData"),
-                          ),
-                          DataCell(
-                            rowTextWidget("Acknowledged"),
-                          ),
-                          DataCell(
-                            orderNumTextWidget("Details"),
-                          ),
-                        ])
-                    ]),
-              ),
-            ),
-          )
-        ],
-      )),
+      body: Obx(() {
+        return _dataController.loading.value
+            ? loader
+            : SingleChildScrollView(
+                child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SpaceHeightWidget(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      "Note: Click on Order Number to get Invoice",
+                      style: TextStyle(
+                          fontFamily: "OnestRegular",
+                          color: darkRedColor,
+                          fontSize: 10),
+                    ),
+                  ),
+                  Scrollbar(
+                    interactive: true,
+                    trackVisibility: true,
+                    controller: _scrollController,
+                    thumbVisibility: true,
+                    thickness: 8,
+                    radius: const Radius.circular(10),
+                    scrollbarOrientation: ScrollbarOrientation.bottom,
+                    child: PaginatedDataTable(
+                        controller: _scrollController,
+                        columnSpacing: 0,
+                        horizontalMargin: 0,
+                        headingRowColor: MaterialStatePropertyAll(
+                            lightDarKBlue.withOpacity(0.2)),
+                        columns: [
+                          DataColumn(label: tableTitleWidget("S.No")),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(label: tableTitleWidget("Order No")),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(
+                              label: tableTitleWidget("Collection Mode")),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(
+                              label: tableTitleWidget("Date Of Dispatch")),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(
+                              label: tableTitleWidget("Licensee Collected")),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(
+                              label: tableTitleWidget("Acknowledge Date")),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(
+                              label: tableTitleWidget(
+                                  "Product Collection Acknowledge")),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(label: tableTitleWidget("Status")),
+                          DataColumn(label: _verticalDivider),
+                          DataColumn(label: tableTitleWidget("Updation")),
+                        ],
+                        source: tSource),
+                  ),
+                  const SpaceHeightWidget(height: 20),
+                ],
+              ));
+      }),
     );
   }
 
@@ -135,36 +117,227 @@ class _OrderAknowledgeScreenState extends State<OrderAknowledgeScreen> {
       ),
     );
   }
+}
 
-  rowTextWidget(String title) {
-    return Padding(
+rowTextWidget(String title) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    child: Text(
+      title,
+      style: TextStyle(
+          fontFamily: "OnestRegular", fontSize: 12, color: blackColor),
+    ),
+  );
+}
+
+orderNumTextWidget(String from, title, int index) {
+  return GestureDetector(
+    behavior: HitTestBehavior.translucent,
+    onTap: () {
+      if (from == "ordernum") {
+        Get.to(() => InvoiceScreen(
+              redirectUrl:
+                  'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderAknowledge"&OrderNo=${_dataController.orderAcknowledgeData[index].orderNo}',
+            ));
+      } else if (from == "details") {
+        Get.to(() => OrderDetailsScreen(
+              billno: _dataController.orderAcknowledgeData[index].orderNo,
+              rmidNum: _dataController.orderAcknowledgeData[index].rmid,
+            ));
+      } else if (from == "license") {
+        Get.dialog(licenseDetialsDilog(index));
+      }
+    },
+    child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Text(
         title,
         style: TextStyle(
-            fontFamily: "OnestRegular", fontSize: 12, color: blackColor),
+            fontFamily: "OnestRegular", fontSize: 12, color: darkBlue),
       ),
-    );
+    ),
+  );
+}
+
+BoxDecoration dec = BoxDecoration(
+    borderRadius: BorderRadius.circular(15),
+    border: Border.all(color: lightBlackColor.withOpacity(0.5)));
+Dialog licenseDetialsDilog(int i) {
+  return Dialog(
+    insetPadding: const EdgeInsets.symmetric(horizontal: 6),
+    backgroundColor: blackColor.withOpacity(0.8),
+    child: StatefulBuilder(builder: (context, myState) {
+      return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: blackColor.withOpacity(0.8)),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: Icon(
+                        Icons.close,
+                        size: 16,
+                        color: whiteColor,
+                      ))
+                ],
+              ),
+            ),
+            Container(
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)),
+                color: whiteColor,
+              ),
+              padding: const EdgeInsets.all(7),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SpaceHeightWidget(height: 20),
+                  SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            children: [
+                              const CommonTitle(
+                                titleName: "Member Details",
+                                size: 13,
+                              ),
+                              const SpaceHeightWidget(height: 5),
+                              Container(
+                                width: 450,
+                                padding: const EdgeInsets.all(5),
+                                decoration: dec,
+                                child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      ViewProfileWidget(
+                                        title: "Licensee Code :",
+                                        info: _dataController
+                                            .orderAcknowledgeData[i]
+                                            .licenseCode,
+                                      ),
+                                      ViewProfileWidget(
+                                        title: "Name :",
+                                        info: _dataController
+                                            .orderAcknowledgeData[i]
+                                            .licenseName,
+                                      ),
+                                      ViewProfileWidget(
+                                        title: "Address :",
+                                        info: _dataController
+                                            .orderAcknowledgeData[i].licenseAdd,
+                                      ),
+                                      ViewProfileWidget(
+                                        title: "Email :",
+                                        info: _dataController
+                                            .orderAcknowledgeData[i]
+                                            .licenseEmail,
+                                      ),
+                                      ViewProfileWidget(
+                                        title: "Contact No :",
+                                        info: _dataController
+                                            .orderAcknowledgeData[i]
+                                            .licenseContctNo,
+                                      ),
+                                    ]),
+                              ),
+                            ],
+                          ),
+                        ],
+                      )),
+                  const SpaceHeightWidget(height: 20),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }),
+  );
+}
+
+class MyData extends DataTableSource {
+  @override
+  DataRow? getRow(int index) {
+    return DataRow(cells: [
+      DataCell(
+        rowTextWidget("${index + 1}"),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        orderNumTextWidget("ordernum",
+            _dataController.orderAcknowledgeData[index].orderNo, index),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        rowTextWidget(
+            _dataController.orderAcknowledgeData[index].collectionMode),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        rowTextWidget(
+            _dataController.orderAcknowledgeData[index].dateOfDispatch),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        // rowTextWidget(
+        //     _dataController.orderAcknowledgeData[index].licenseCollected),
+        orderNumTextWidget(
+            "license",
+            _dataController.orderAcknowledgeData[index].licenseCollected,
+            index),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        rowTextWidget(
+            _dataController.orderAcknowledgeData[index].acknowledgeDate),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        rowTextWidget(
+            _dataController.orderAcknowledgeData[index].acknowledgeTrough),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        rowTextWidget(_dataController.orderAcknowledgeData[index].status),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        orderNumTextWidget(
+            "details",
+            _dataController.orderAcknowledgeData[index].status != "Acknowledged"
+                ? "Details"
+                : "",
+            index),
+      ),
+    ]);
   }
 
-  orderNumTextWidget(String title) {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () {
-        if (title != "Details") {
-          Get.to(() => const InvoiceScreen());
-        } else {
-          Get.to(() => const OrderDetailsScreen());
-        }
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Text(
-          title,
-          style: TextStyle(
-              fontFamily: "OnestRegular", fontSize: 12, color: darkBlue),
-        ),
-      ),
-    );
-  }
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => _dataController.orderAcknowledgeData.length;
+
+  @override
+  int get selectedRowCount => 0;
 }
+
+Widget _verticalDivider = VerticalDivider(
+  color: lightBlackColor,
+  thickness: 1,
+);

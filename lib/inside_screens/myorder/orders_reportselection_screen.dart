@@ -1,4 +1,6 @@
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/commons/constants.dart';
+import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -14,12 +16,37 @@ class OrdersSectionScreen extends StatefulWidget {
 }
 
 class _OrdersSectionScreenState extends State<OrdersSectionScreen> {
+  final MainController _dataController = Get.put(MainController());
   DateTime fromSelectedDate = DateTime.now();
   DateTime toSelectedDate = DateTime.now();
   TextEditingController fromDateTController = TextEditingController();
   TextEditingController toDateTController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  dynamic mallType;
+  dynamic mallType, mallId;
+  List<String> dropDownData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      dataFun();
+    });
+  }
+
+  dataFun() async {
+    Map bdata = {
+      "UserId": Constants.prefs.getString("user_id"),
+      "Pwd": Constants.prefs.getString("password"),
+    };
+    dynamic res = await _dataController.getOrdersMall(bdata);
+    if (res != null) {
+      _dataController.mallData.map((element) {
+        return dropDownData.add(element.mallType);
+      }).toList();
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,39 +177,33 @@ class _OrdersSectionScreenState extends State<OrdersSectionScreen> {
                   ),
                   const SpaceHeightWidget(height: 5),
                   const SideTitle(title: "Mall Type"),
-                  ProfileDropDown(
-                    value: mallType,
-                    hintText: "Select Mall",
-                    onChangedFun: (val) {
-                      setState(() {
-                        mallType = val!;
-                      });
-                    },
-                    items: const [
-                      "All",
-                      "Auto Maintenance Mall",
-                      "DP Mall",
-                      "Enrollment Renewal",
-                      "Guest Shoppers",
-                      "Maintenance Mall",
-                      "Manual Maintenance",
-                      "Membership Mall",
-                      "Membership Upgrade Mall",
-                      "Partner Brand Mall",
-                      "Redemption Mall",
-                      "Reward Shoppers",
-                      "Sales Mall",
-                      "Signup Mall",
-                      "Upgrade Mall"
-                    ],
-                    validationFun: (val) {
-                      if (val == "" || val == null) {
-                        return "Select Mall";
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
+                  dropDownData.isEmpty
+                      ? SizedBox(height: 50, child: loader)
+                      : ProfileDropDown(
+                          value: mallType,
+                          hintText: "Select Mall",
+                          onChangedFun: (val) {
+                            mallType = val!;
+
+                            for (int i = 0;
+                                i < _dataController.mallData.length;
+                                i++) {
+                              if (mallType ==
+                                  _dataController.mallData[i].mallType) {
+                                mallId = _dataController.mallData[i].mallId;
+                              }
+                            }
+                            setState(() {});
+                          },
+                          items: dropDownData,
+                          validationFun: (val) {
+                            if (val == "" || val == null) {
+                              return "Select Mall";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
                   Row(
                     children: [
                       Expanded(
@@ -204,10 +225,8 @@ class _OrdersSectionScreenState extends State<OrdersSectionScreen> {
                                 Get.to(() => MyOrdersScreen(
                                       fromDate: fromDateTController.text,
                                       toDate: toDateTController.text,
+                                      mallId: mallId ?? "0",
                                     ));
-
-                                // fromDateTController.text = "";
-                                // toDateTController.text = "";
                               }
                             },
                             title: "Submit"),

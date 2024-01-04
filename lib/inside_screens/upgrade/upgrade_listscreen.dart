@@ -1,8 +1,9 @@
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
-import 'package:destina_1_international/inside_screens/myorder/invoice_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../myorder/invoice_screen.dart';
 
 class UpgradeListScreen extends StatefulWidget {
   final String? fromDate;
@@ -126,7 +127,9 @@ class _UpgradeListScreenState extends State<UpgradeListScreen> {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        Get.to(() => const InvoiceScreen());
+        Get.to(() => const InvoiceScreen(
+              redirectUrl: "",
+            ));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),

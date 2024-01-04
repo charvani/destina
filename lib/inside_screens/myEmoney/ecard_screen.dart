@@ -1,10 +1,11 @@
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
-import 'package:destina_1_international/inside_screens/myorder/invoice_screen.dart';
+import 'package:destina_1_international/inside_screens/myorder/invoicedesign_screen.dart';
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../myorder/invoice_screen.dart';
 import 'ecard_transfer_screen.dart';
 
 class EcardScreen extends StatefulWidget {
@@ -213,7 +214,9 @@ class _EcardScreenState extends State<EcardScreen> {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        Get.to(() => const InvoiceScreen());
+        Get.to(() =>  InvoiceScreen(
+          redirectUrl: "",
+        ));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
