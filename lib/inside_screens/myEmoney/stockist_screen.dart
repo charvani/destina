@@ -1,17 +1,27 @@
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
-import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../commons/constants.dart';
+import '../../controllers/main_controller.dart';
+import 'ecard_transfer_screen.dart';
+import 'withdrawal_screen.dart';
 
 class StockistScreen extends StatefulWidget {
-  const StockistScreen({super.key});
+  final String transPass;
+
+  const StockistScreen({super.key, required this.transPass});
 
   @override
   State<StockistScreen> createState() => _StockistScreenState();
 }
 
+final MainController _dataController = Get.put(MainController());
+
 class _StockistScreenState extends State<StockistScreen> {
   final ScrollController _scrollController = ScrollController();
+  DataTableSource tSource = MyData();
 
   @override
   Widget build(BuildContext context) {
@@ -20,109 +30,100 @@ class _StockistScreenState extends State<StockistScreen> {
         title: "Stockist eMoney",
         backNavigation: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SpaceHeightWidget(height: 10),
-            Container(
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: cardDetailsWidget(),
-            ),
-            Container(
-              height: 60,
-              padding: const EdgeInsets.all(8.0),
-              child: CommonFormFieldwidget(
-                hintText: "Search",
-                onChangeFun: (val) {
-                  print("vall...$val");
-                },
-                prefixIcon: Icon(
-                  FeatherIcons.search,
-                  size: 18,
-                  color: blackColor.withOpacity(0.3),
-                ),
-              ),
-            ),
-            Scrollbar(
-              interactive: true,
-              trackVisibility: true,
-              controller: _scrollController,
-              thumbVisibility: true,
-              thickness: 8,
-              radius: const Radius.circular(10),
-              scrollbarOrientation: ScrollbarOrientation.bottom,
-              child: SingleChildScrollView(
-                controller: _scrollController,
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DataTable(
-                      // dataRowMaxHeight: 50,
-                      horizontalMargin: 0,
-                      columnSpacing: 0,
-                      // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
-                      headingRowColor: MaterialStatePropertyAll(
-                          lightDarKBlue.withOpacity(0.2)),
-                      border: TableBorder.all(
-                        color: middleBlackColor.withOpacity(0.15),
-                      ),
-                      columns: const [
-                        DataColumn(label: TableHeadingWidget(title: "S.No")),
-                        DataColumn(label: TableHeadingWidget(title: "Date")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Credit Amount")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Debit Amount")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Balance Amount")),
-                        DataColumn(label: TableHeadingWidget(title: "Remarks")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Description")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "View Slip")),
+      body: Obx(() {
+        return _dataController.loading.value
+            ? loader
+            : SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SpaceHeightWidget(height: 10),
+                    Row(
+                      children: [
+                        const SpaceWidthWidget(width: 10),
+                        if (_dataController.ecardData.value.withDrawButton)
+                          SizedBox(
+                              height: 30,
+                              child: CustomAutoWidthButton(
+                                  onTapFun: () {
+                                    Get.to(() => WithdrawalScreen(
+                                          transPass: widget.transPass,
+                                        ));
+                                  },
+                                  title: "Withdrawal")),
+                        const SpaceWidthWidget(width: 10),
+                        if (_dataController.ecardData.value.ecardButton)
+                          SizedBox(
+                            height: 30,
+                            child: CustomAutoWidthButton(
+                                onTapFun: () {
+                                  Get.to(() => EcardTransferScreen(
+                                        from: "Redemption",
+                                        transPass: widget.transPass,
+                                        bal: _dataController
+                                            .ecardData.value.balenceAmount,
+                                        symbol: _dataController
+                                            .ecardData.value.symbol,
+                                      ));
+                                },
+                                title: "EMoney Transfer"),
+                          ),
                       ],
-                      rows: [
-                        for (int i = 1; i < 7; i++)
-                          DataRow(cells: [
-                            DataCell(
-                              TableInfoWidget(info: i.toString()),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "06 Dec 2023"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "0"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "54376"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "22149.61"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "Bonus Payout"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(
-                                  info:
-                                      "Activation Bonus for the Day 08-Apr-2019"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "Details"),
-                            ),
-                          ])
-                      ]),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: cardDetailsWidget(),
+                    ),
+                    Scrollbar(
+                      interactive: true,
+                      trackVisibility: true,
+                      controller: _scrollController,
+                      thumbVisibility: true,
+                      thickness: 8,
+                      radius: const Radius.circular(10),
+                      scrollbarOrientation: ScrollbarOrientation.bottom,
+                      child: PaginatedDataTable(
+                          controller: _scrollController,
+                          columnSpacing: 0,
+                          horizontalMargin: 0,
+                          headingRowColor: MaterialStatePropertyAll(
+                              lightDarKBlue.withOpacity(0.2)),
+                          columns: [
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "S.No")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "Date")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label:
+                                    TableHeadingWidget(title: "Credit Amount")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label:
+                                    TableHeadingWidget(title: "Debit Amount")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "Balance Amount")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "Remarks")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label:
+                                    TableHeadingWidget(title: "Description")),
+                          ],
+                          source: tSource),
+                    ),
+                    const SpaceHeightWidget(height: 25)
+                  ],
                 ),
-              ),
-            ),
-            const SpaceHeightWidget(height: 25)
-          ],
-        ),
-      ),
+              );
+      }),
     );
   }
 
@@ -135,21 +136,23 @@ class _StockistScreenState extends State<StockistScreen> {
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(10), topRight: Radius.circular(10)),
           ),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: ViewProfileWidget(
               title: "Total Credit",
-              info: "RM  23,382.61",
+              info:
+                  "${_dataController.ecardData.value.symbol} ${_dataController.ecardData.value.totalCredit}",
             ),
           ),
         ),
         Container(
           color: lightYellow.withOpacity(0.8),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: ViewProfileWidget(
               title: "Total Debit",
-              info: "RM  2,924.40",
+              info:
+                  "${_dataController.ecardData.value.symbol} ${_dataController.ecardData.value.totalDebit}",
             ),
           ),
         ),
@@ -160,11 +163,12 @@ class _StockistScreenState extends State<StockistScreen> {
                 bottomLeft: Radius.circular(10),
                 bottomRight: Radius.circular(10)),
           ),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: ViewProfileWidget(
               title: "Balance",
-              info: "RM 20,458.21",
+              info:
+                  "${_dataController.ecardData.value.symbol} ${_dataController.ecardData.value.balenceAmount}",
             ),
           ),
         ),
@@ -172,3 +176,60 @@ class _StockistScreenState extends State<StockistScreen> {
     );
   }
 }
+
+class MyData extends DataTableSource {
+  @override
+  DataRow? getRow(int index) {
+    return DataRow(cells: [
+      DataCell(
+        TableInfoWidget(info: "${index + 1}"),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.ecardData.value.emoneyrpt[index].date),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info:
+                _dataController.ecardData.value.emoneyrpt[index].creditAmount),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.ecardData.value.emoneyrpt[index].debitAmount),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info:
+                _dataController.ecardData.value.emoneyrpt[index].balanceAmount),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.ecardData.value.emoneyrpt[index].remarks),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.ecardData.value.emoneyrpt[index].description),
+      ),
+    ]);
+  }
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => _dataController.ecardData.value.emoneyrpt.length;
+
+  @override
+  int get selectedRowCount => 0;
+}
+
+Widget _verticalDivider = VerticalDivider(
+  color: lightBlackColor,
+  thickness: 1,
+);

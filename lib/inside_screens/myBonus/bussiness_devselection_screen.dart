@@ -6,15 +6,16 @@ import 'package:intl/intl.dart';
 import '../../commons/colors.dart';
 import 'business_development_screen.dart';
 
-class BuissinessDevBonusScreen extends StatefulWidget {
-  const BuissinessDevBonusScreen({super.key});
+class BuissinessBonusSelectionScreen extends StatefulWidget {
+  const BuissinessBonusSelectionScreen({super.key});
 
   @override
-  State<BuissinessDevBonusScreen> createState() =>
-      _BuissinessDevBonusScreenState();
+  State<BuissinessBonusSelectionScreen> createState() =>
+      _BuissinessBonusSelectionScreenState();
 }
 
-class _BuissinessDevBonusScreenState extends State<BuissinessDevBonusScreen> {
+class _BuissinessBonusSelectionScreenState
+    extends State<BuissinessBonusSelectionScreen> {
   DateTime fromSelectedDate = DateTime.now();
   DateTime toSelectedDate = DateTime.now();
   TextEditingController fromDateTController = TextEditingController();
@@ -177,11 +178,13 @@ class _BuissinessDevBonusScreenState extends State<BuissinessDevBonusScreen> {
                     hintText: "",
                     controller: stepTController,
                     validation: (val) {
-                      if (val!.isEmpty) {
-                        return "From distributor ID";
-                      } else {
-                        return null;
-                      }
+                      return null;
+
+                      // if (val!.isEmpty) {
+                      //   return "";
+                      // } else {
+                      //   return null;
+                      // }
                     },
                   ),
                   Row(
@@ -203,7 +206,16 @@ class _BuissinessDevBonusScreenState extends State<BuissinessDevBonusScreen> {
                         child: CustomElevatedButton(
                             onTapFun: () {
                               // if (_formKey.currentState!.validate()) {
-                              Get.to(() => const BusssinessDevScreen());
+                              Get.to(() => BusssinessDevScreen(
+                                    fromDate: fromDateTController.text != ""
+                                        ? fromDateTController.text
+                                        : "01/01/1900",
+                                    toDate: toDateTController.text != ""
+                                        ? toDateTController.text
+                                        : "01/01/2100",
+                                    steps: stepType ?? "",
+                                    stepInfo: stepTController.text,
+                                  ));
                               // }
                             },
                             title: "Submit"),

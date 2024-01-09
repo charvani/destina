@@ -1,163 +1,209 @@
+import 'dart:async';
+
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
-import 'package:feather_icons/feather_icons.dart';
+import 'package:destina_1_international/commons/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class WithdrawalStatusScreen extends StatefulWidget {
-  const WithdrawalStatusScreen({super.key});
+import '../../controllers/main_controller.dart';
+
+class WithdrawalScreen extends StatefulWidget {
+  final String transPass;
+
+  const WithdrawalScreen({
+    super.key,
+    required this.transPass,
+  });
 
   @override
-  State<WithdrawalStatusScreen> createState() => _WithdrawalStatusScreenState();
+  State<WithdrawalScreen> createState() => _WithdrawalScreenState();
 }
 
-class _WithdrawalStatusScreenState extends State<WithdrawalStatusScreen> {
-  final ScrollController _scrollController = ScrollController();
-  
+class _WithdrawalScreenState extends State<WithdrawalScreen> {
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController withdrawalAmountTController = TextEditingController();
+
+  TextEditingController passwordTController = TextEditingController();
+  final MainController _dataController = Get.put(MainController());
+
+  bool visible = true;
+  dynamic eMoneyType, userId;
+  bool transferLoad = false;
+
+  @override
+  void initState() {
+    super.initState();
+    userId = Constants.prefs.getString("user_id");
+    passwordTController.text = widget.transPass;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      dataFun();
+    });
+  }
+
+  dataFun() {
+    Map bdata = {
+      "UserId": userId,
+      "Pwd": Constants.prefs.getString("password"),
+    };
+    _dataController.getWithdrawalInfo(bdata);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(
-        title: "Withdrawal Status",
-        backNavigation: true,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SpaceHeightWidget(height: 10),
-            Container(
-              height: 60,
-              padding: const EdgeInsets.all(8.0),
-              child: CommonFormFieldwidget(
-                hintText: "Search",
-                onChangeFun: (val) {
-                  print("vall...$val");
-                },
-                prefixIcon: Icon(
-                  FeatherIcons.search,
-                  size: 18,
-                  color: blackColor.withOpacity(0.3),
-                ),
-              ),
-            ),
-            Scrollbar(
-              interactive: true,
-              trackVisibility: true,
-              controller: _scrollController,
-              thumbVisibility: true,
-              thickness: 8,
-              radius: const Radius.circular(10),
-              scrollbarOrientation: ScrollbarOrientation.bottom,
-              child: SingleChildScrollView(
-                controller: _scrollController,
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DataTable(
-                      // dataRowMaxHeight: 50,
-                      horizontalMargin: 0,
-                      columnSpacing: 0,
-                      // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
-                      headingRowColor: MaterialStatePropertyAll(
-                          lightDarKBlue.withOpacity(0.2)),
-                      border: TableBorder.all(
-                        color: middleBlackColor.withOpacity(0.15),
-                      ),
-                      columns: const [
-                        DataColumn(label: TableHeadingWidget(title: "S.No")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Request Code")),
-                        DataColumn(
-                            label:
-                                TableHeadingWidget(title: "Request  Amount")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Request Date")),
-                        DataColumn(label: TableHeadingWidget(title: "Status")),
-                        DataColumn(label: TableHeadingWidget(title: "Remarks")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Email Messages")),
+      appBar: commonAppBar(backNavigation: true, title: "Withdrawal"),
+      body: Obx(() {
+        return _dataController.loading.value
+            ? loader
+            : SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Container(
+                    margin: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border:
+                            Border.all(color: lightDarKBlue.withOpacity(0.3))),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ViewProfileWidget(
+                            title: "User ID",
+                            info: userId.toString().toUpperCase()),
+                        ViewProfileWidget(
+                            title: "Name",
+                            info:
+                                _dataController.withdrawalInfoData.value.name),
+                        ViewProfileWidget(
+                            title: "City",
+                            info:
+                                _dataController.withdrawalInfoData.value.city),
+                        ViewProfileWidget(
+                            title: "Balance (D1 \$)",
+                            info: _dataController
+                                .withdrawalInfoData.value.balance),
+                        const SpaceHeightWidget(height: 10),
+                        const SideTitle(title: "Withdrawal Amount (D1 \$)"),
+                        AccountTextField(
+                          onchangeFun: (val) {},
+                          outsideFun: (val) async {},
+                          textInputType: TextInputType.number,
+                          hintText: "",
+                          controller: withdrawalAmountTController,
+                          validation: (val) {
+                            if (val!.isEmpty) {
+                              return "Enter withdrawal amount";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        const SideTitle(title: "Transaction Password"),
+                        LoginTextField(
+                          obscureText: visible,
+                          suffix: GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () {
+                              setState(() {
+                                visible = !visible;
+                              });
+                            },
+                            child: Icon(
+                              !visible
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                              color: middleBlackColor.withOpacity(0.5),
+                            ),
+                          ),
+                          padding: 5,
+                          textInputType: TextInputType.name,
+                          labelText: "",
+                          hintText: "Password",
+                          controller: passwordTController,
+                          validation: (val) {
+                            if (val!.isEmpty) {
+                              return "Enter Transaction Password";
+                            } else if (val.length < 5) {
+                              return "Enter valid password";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        const SpaceHeightWidget(height: 15),
+                        transferLoad
+                            ? SizedBox(height: 55, child: loader)
+                            : CustomAutoWidthButton(
+                                onTapFun: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    setState(() {
+                                      transferLoad = true;
+                                    });
+                                    submitFun();
+                                  }
+                                },
+                                title: "Submit"),
+                        const SpaceHeightWidget(height: 10),
+                        ViewProfileWidget(
+                            title: "Minimum Withdrawal Amount :",
+                            info: _dataController
+                                .withdrawalInfoData.value.minWithdrawalAmount),
+                        ViewProfileWidget(
+                            title:
+                                "${_dataController.withdrawalInfoData.value.schead} :",
+                            info:
+                                "${_dataController.withdrawalInfoData.value.symbol} ${_dataController.withdrawalInfoData.value.scChrgs}"),
+                        ViewProfileWidget(
+                            title:
+                                "${_dataController.withdrawalInfoData.value.tchead}:",
+                            info:
+                                "${_dataController.withdrawalInfoData.value.tChrgs} %"),
                       ],
-                      rows: [
-                        for (int i = 1; i < 4; i++)
-                          DataRow(cells: [
-                            DataCell(
-                              TableInfoWidget(info: i.toString()),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "WDL/2019-00006"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "50"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "12 Sep 2019"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "Pending"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(
-                                  info:
-                                      "Credit Amount : D1 \$ 50.00</br>Cancellation Fee : D1 \$ 1.00</br>Test123"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: ""),
-                            ),
-                          ])
-                      ]),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            const SpaceHeightWidget(height: 25)
-          ],
-        ),
-      ),
+              );
+      }),
     );
   }
 
-  cardDetailsWidget() {
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: limeColor.withOpacity(0.5),
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-          ),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: ViewProfileWidget(
-              title: "Total Credit",
-              info: "RM  23,382.61",
-            ),
-          ),
-        ),
-        Container(
-          color: lightYellow.withOpacity(0.8),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: ViewProfileWidget(
-              title: "Total Debit",
-              info: "RM  2,924.40",
-            ),
-          ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: limeColor.withOpacity(0.5),
-            borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10)),
-          ),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: ViewProfileWidget(
-              title: "Balance",
-              info: "RM 20,458.21",
-            ),
-          ),
-        ),
-      ],
-    );
+  submitFun() async {
+    Map bdata = {
+      "UserId": userId,
+      "Pwd": Constants.prefs.getString("password"),
+      "From": userId,
+      "Action": "Insert",
+      "regid": userId,
+      "amount": withdrawalAmountTController.text,
+      "ip": _dataController.withdrawalInfoData.value.symbol,
+      "frmdate": "1/1/1990",
+      "Todate": "1/1/1990",
+      "distid": "",
+      "status": "0",
+      "countryid": "0",
+      "sesuser": "",
+      "withdrawaltype": "Manual",
+      "dollarvalue": _dataController.withdrawalInfoData.value.dollarValue,
+      "Tchead": _dataController.withdrawalInfoData.value.tchead,
+      "TChrgsType": _dataController.withdrawalInfoData.value.tChrgsType,
+      "Schead": _dataController.withdrawalInfoData.value.schead,
+      "SCChrgsType": _dataController.withdrawalInfoData.value.scChrgsType,
+      "TChrgs": _dataController.withdrawalInfoData.value.tChrgs,
+      "SCChrgs": _dataController.withdrawalInfoData.value.scChrgs,
+    };
+    dynamic res = await _dataController.getWithdrawalAmt(bdata);
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS") {
+        CommonToastTrue(res["Message"]);
+        Timer(const Duration(seconds: 1), () {
+          Get.back();
+        });
+      }
+    }
+    setState(() {
+      transferLoad = false;
+    });
   }
 }

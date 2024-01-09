@@ -1,15 +1,50 @@
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../commons/constants.dart';
+import '../../controllers/main_controller.dart';
 
 class CVScreen extends StatefulWidget {
-  const CVScreen({super.key});
+  final String month, year, monthType;
+  const CVScreen(
+      {super.key,
+      required this.month,
+      required this.monthType,
+      required this.year});
 
   @override
   State<CVScreen> createState() => _CVScreenState();
 }
 
 class _CVScreenState extends State<CVScreen> {
+  final MainController _dataController = Get.put(MainController());
+  dynamic userid, password;
+  Map bData = {};
+  @override
+  void initState() {
+    super.initState();
+    userid = Constants.prefs.getString("user_id");
+    password = Constants.prefs.getString("password");
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      dataFun();
+    });
+  }
+
+  dataFun() {
+    bData = {
+      "UserId": userid,
+      "Pwd": password,
+      "action": "Main",
+      "Month": widget.month,
+      "year": widget.year,
+      "Mtype": widget.monthType
+    };
+    _dataController.getMaintenanceDetails(bData);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

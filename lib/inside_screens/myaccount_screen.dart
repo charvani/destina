@@ -202,7 +202,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
             onTapFun: () {
               Get.to(() => const MyDateListSelectionScreen(from: "Upgrade"));
             },
-            title: "Upgrade",
+            title: "Upgrade List",
           ),
           MyAccountWidget(
             traillingFun: () {
@@ -601,7 +601,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         ),
         MyAccountItemWidget(
           onTapFun: () {
-            Get.to(() => const BuissinessDevBonusScreen());
+            Get.to(() => const BuissinessBonusSelectionScreen());
           },
           title: "Business Development Bonus",
         ),

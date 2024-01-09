@@ -49,20 +49,21 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: commonAppBar(
-            backNavigation: true,
-            title: "",
-            onTapFun: () async {
-              // Get.dialog(ConfrimationDialog(
-              //   onTapFun: () async {
-              //     Get.back();
-              //     Get.back();
-              //     Get.back();
-              //     await Constants.prefs.remove("uniq_id");
-              //     await Constants.prefs.remove("ss_id");
-              //   },
-              //   title: "Do you want to clear these items from your cart?",
-              // ));
-            }),
+          backNavigation: true,
+          title: "",
+          // onTapFun: () async {
+          // Get.dialog(ConfrimationDialog(
+          //   onTapFun: () async {
+          //     Get.back();
+          //     Get.back();
+          //     Get.back();
+          //     await Constants.prefs.remove("uniq_id");
+          //     await Constants.prefs.remove("ss_id");
+          //   },
+          //   title: "Do you want to clear these items from your cart?",
+          // ));
+          // }
+        ),
         body: WillPopScope(
           onWillPop: () async {
             // Get.dialog(ConfrimationDialog(

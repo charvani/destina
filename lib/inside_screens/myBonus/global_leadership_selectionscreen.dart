@@ -120,8 +120,10 @@ class _GlobalLeadershipSelctionScreenState
                         child: CustomElevatedButton(
                             onTapFun: () {
                               if (_formKey.currentState!.validate()) {
-                                Get.to(
-                                    () => const GlobalLeadershipBonusScreen());
+                                Get.to(() => GlobalLeadershipBonusScreen(
+                                      selMonth: salesMonth,
+                                      selYear: salesYear,
+                                    ));
                               }
                             },
                             title: "Submit"),

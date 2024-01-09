@@ -96,7 +96,7 @@ class _UpdatePhotoScreenState extends State<UpdatePhotoScreen> {
                               if (image != null) {
                                 print("image fun");
                                 dynamic res = await _upoladController
-                                    .getUploadPhoto(File(image!.path));
+                                    .getUploadPhoto(XFile(image!.path));
                                 if (res != null) {
                                   if (res['Msg'] == "SUCCESS") {
                                     CommonToastTrue(res['Message']);

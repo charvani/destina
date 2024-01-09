@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/service_call/encryption.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 import '../commons/common_widgets.dart';
@@ -30,8 +31,11 @@ class ApiCall {
         body: {"Info": encryptedText.toString()});
     print("cherry.....");
     dynamic convertedData = convert.jsonDecode(response.body);
+    print(
+        "response.statusCode...${convertedData['Msg'].toString().toLowerCase()}");
     if (response.statusCode == 200 &&
         convertedData['Msg'].toString().toLowerCase() == "success") {
+      print("kkkkkkk");
       return convertedData;
     } else {
       CommonToast(convertedData['Message']);
@@ -73,11 +77,12 @@ class ApiCall {
       "UserId": Constants.prefs.getString("user_id"),
       "Pwd": Constants.prefs.getString("password"),
       "Name": Constants.prefs.getString("user_name"),
-      "Country": Constants.prefs.getString("county"),
-      'Filename': imageFile.path
-      // await MultipartFile.fromFile(imageFile.path, filename: 'image.png'),
+      "Country": Constants.prefs.getString("country_name"),
+      "Filename":
+          // imageFile
+          await MultipartFile.fromFile(imageFile, filename: 'image.png'),
     };
-
+    print("image bdata...$bData");
 //encryption
     dynamic encryptedText =
         Encrypt.encryptJsonObjectResponse(json.encode(bData));

@@ -1,147 +1,103 @@
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
-import 'package:destina_1_international/inside_screens/myorder/invoicedesign_screen.dart';
-import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/main_controller.dart';
 import '../myorder/invoice_screen.dart';
 import 'ecard_transfer_screen.dart';
 
 class EcardScreen extends StatefulWidget {
-  const EcardScreen({super.key});
+  final String transPass;
+  const EcardScreen({super.key, required this.transPass});
 
   @override
   State<EcardScreen> createState() => _EcardScreenState();
 }
 
+final MainController _dataController = Get.put(MainController());
+
 class _EcardScreenState extends State<EcardScreen> {
   final ScrollController _scrollController = ScrollController();
+  DataTableSource tSource = MyData();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(
-          title: "E-Card",
-          backNavigation: true,
-          action: SizedBox(
-              height: 30,
-              width: 150,
-              child: CustomElevatedButton(
-                  onTapFun: () {
-                    Get.to(() => const EcardTransferScreen(
-                          from: "E-Card",
-                        ));
-                  },
-                  title: "Ecard Transfer"))),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: cardDetailsWidget(),
-            ),
-            Container(
-              height: 60,
-              padding: const EdgeInsets.all(8.0),
-              child: CommonFormFieldwidget(
-                hintText: "Search",
-                onChangeFun: (val) {
-                  print("vall...$val");
-                },
-                prefixIcon: Icon(
-                  FeatherIcons.search,
-                  size: 18,
-                  color: blackColor.withOpacity(0.3),
+        appBar: commonAppBar(
+            title: "E-Card",
+            backNavigation: true,
+            action: _dataController.ecardData.value.ecardButton
+                ? SizedBox(
+                    height: 30,
+                    width: 150,
+                    child: CustomElevatedButton(
+                        onTapFun: () {
+                          Get.to(() => EcardTransferScreen(
+                                from: "E-Card",
+                                transPass: widget.transPass,
+                                bal: _dataController
+                                    .ecardData.value.balenceAmount,
+                                symbol: _dataController.ecardData.value.symbol,
+                              ));
+                        },
+                        title: "Ecard Transfer"))
+                : const SizedBox.shrink()),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
                 ),
+                child: cardDetailsWidget(),
               ),
-            ),
-            Scrollbar(
-              interactive: true,
-              trackVisibility: true,
-              controller: _scrollController,
-              thumbVisibility: true,
-              thickness: 8,
-              radius: const Radius.circular(10),
-              scrollbarOrientation: ScrollbarOrientation.bottom,
-              child: SingleChildScrollView(
+              Scrollbar(
+                interactive: true,
+                trackVisibility: true,
                 controller: _scrollController,
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DataTable(
-                      // dataRowMaxHeight: 50,
-                      horizontalMargin: 0,
-                      columnSpacing: 0,
-                      // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
-                      headingRowColor: MaterialStatePropertyAll(
-                          lightDarKBlue.withOpacity(0.2)),
-                      border: TableBorder.all(
-                        color: middleBlackColor.withOpacity(0.15),
-                      ),
-                      columns: const [
-                        DataColumn(label: TableHeadingWidget(title: "S.No")),
-                        DataColumn(label: TableHeadingWidget(title: "Date")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Credit Amount")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Debit Amount")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Balance Amount")),
-                        DataColumn(label: TableHeadingWidget(title: "Remarks")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Description")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "View Slip")),
-                      ],
-                      rows: [
-                        for (int i = 1; i < 4; i++)
-                          DataRow(cells: [
-                            DataCell(
-                              TableInfoWidget(info: i.toString()),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "06 Dec 2023"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "0"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "54376"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "22149.61"),
-                            ),
-                            DataCell(
-                              i.isEven
-                                  ? remarkTextWidget(
-                                      "Amount Deducted For Bill 28112023/7055",
-                                      i)
-                                  : const TableInfoWidget(
-                                      info:
-                                          "Amount Deducted For Bill 28112023/7055"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(
-                                  info:
-                                      "Ecard Transfer To Ecard Of Destina1USAHQ (Malaysia)"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "Details"),
-                            ),
-                          ])
-                      ]),
-                ),
+                thumbVisibility: true,
+                thickness: 8,
+                radius: const Radius.circular(10),
+                scrollbarOrientation: ScrollbarOrientation.bottom,
+                child: PaginatedDataTable(
+                    controller: _scrollController,
+                    columnSpacing: 0,
+                    horizontalMargin: 0,
+                    headingRowColor: MaterialStatePropertyAll(
+                        lightDarKBlue.withOpacity(0.2)),
+                    columns: [
+                      const DataColumn(
+                          label: TableHeadingWidget(title: "S.No")),
+                      DataColumn(label: _verticalDivider),
+                      const DataColumn(
+                          label: TableHeadingWidget(title: "Date")),
+                      DataColumn(label: _verticalDivider),
+                      const DataColumn(
+                          label: TableHeadingWidget(title: "Credit Amount")),
+                      DataColumn(label: _verticalDivider),
+                      const DataColumn(
+                          label: TableHeadingWidget(title: "Debit Amount")),
+                      DataColumn(label: _verticalDivider),
+                      const DataColumn(
+                          label: TableHeadingWidget(title: "Balance Amount")),
+                      DataColumn(label: _verticalDivider),
+                      const DataColumn(
+                          label: TableHeadingWidget(title: "Remarks")),
+                      DataColumn(label: _verticalDivider),
+                      const DataColumn(
+                          label: TableHeadingWidget(title: "Description")),
+                      DataColumn(label: _verticalDivider),
+                      const DataColumn(
+                          label: TableHeadingWidget(title: "View Slip")),
+                    ],
+                    source: tSource),
               ),
-            ),
-            const SpaceHeightWidget(height: 25)
-          ],
-        ),
-      ),
-    );
+              const SpaceHeightWidget(height: 25)
+            ],
+          ),
+        ));
   }
 
   cardDetailsWidget() {
@@ -153,41 +109,43 @@ class _EcardScreenState extends State<EcardScreen> {
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(10), topRight: Radius.circular(10)),
           ),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: ViewProfileWidget(
               title: "Ecard",
-              info: "89uQABC5DpEF",
+              info: _dataController.ecardData.value.ecard,
             ),
           ),
         ),
         Container(
           color: lightYellow.withOpacity(0.8),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: ViewProfileWidget(
               title: "Pin",
-              info: "6EtQYbABCDEF",
+              info: _dataController.ecardData.value.ePin,
             ),
           ),
         ),
         Container(
           color: limeColor.withOpacity(0.5),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: ViewProfileWidget(
               title: "Total Credit",
-              info: "RM  387,508.30",
+              info:
+                  "${_dataController.ecardData.value.symbol} ${_dataController.ecardData.value.totalCredit}",
             ),
           ),
         ),
         Container(
           color: lightYellow.withOpacity(0.8),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: ViewProfileWidget(
               title: "Total Debit",
-              info: "RM  365,358.69",
+              info:
+                  "${_dataController.ecardData.value.symbol} ${_dataController.ecardData.value.totalDebit}",
             ),
           ),
         ),
@@ -198,34 +156,100 @@ class _EcardScreenState extends State<EcardScreen> {
                 bottomLeft: Radius.circular(10),
                 bottomRight: Radius.circular(10)),
           ),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: ViewProfileWidget(
               title: "Balance",
-              info: "RM 22,149.61",
+              info:
+                  "${_dataController.ecardData.value.symbol} ${_dataController.ecardData.value.balenceAmount}",
             ),
           ),
         ),
       ],
     );
   }
+}
 
-  remarkTextWidget(String title, int i) {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onTap: () {
-        Get.to(() =>  InvoiceScreen(
-          redirectUrl: "",
-        ));
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Text(
-          title,
-          style: TextStyle(
-              fontFamily: "OnestRegular", fontSize: 12, color: darkBlue),
-        ),
+class MyData extends DataTableSource {
+  @override
+  DataRow? getRow(int index) {
+    return DataRow(cells: [
+      DataCell(
+        TableInfoWidget(info: "${index + 1}"),
       ),
-    );
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.ecardData.value.emoneyrpt[index].date),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info:
+                _dataController.ecardData.value.emoneyrpt[index].creditAmount),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.ecardData.value.emoneyrpt[index].debitAmount),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info:
+                _dataController.ecardData.value.emoneyrpt[index].balanceAmount),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        _dataController.ecardData.value.emoneyrpt[index].remarks
+                .contains("Amount Deducted For Bill")
+            ? remarkTextWidget(
+                _dataController.ecardData.value.emoneyrpt[index].remarks, index)
+            : TableInfoWidget(
+                info: _dataController.ecardData.value.emoneyrpt[index].remarks),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.ecardData.value.emoneyrpt[index].description),
+      ),
+      DataCell(_verticalDivider),
+      const DataCell(
+        TableInfoWidget(info: ""),
+      ),
+    ]);
   }
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => _dataController.ecardData.value.emoneyrpt.length;
+
+  @override
+  int get selectedRowCount => 0;
+}
+
+Widget _verticalDivider = VerticalDivider(
+  color: lightBlackColor,
+  thickness: 1,
+);
+remarkTextWidget(String title, int i) {
+  return GestureDetector(
+    behavior: HitTestBehavior.translucent,
+    onTap: () {
+      Get.to(() => InvoiceScreen(
+            redirectUrl:
+                "https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?BillNo=${_dataController.ecardData.value.emoneyrpt[i].billNo}",
+          ));
+    },
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Text(
+        title,
+        style: TextStyle(
+            fontFamily: "OnestRegular", fontSize: 12, color: darkBlue),
+      ),
+    ),
+  );
 }

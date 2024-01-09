@@ -1,7 +1,10 @@
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
-import 'package:feather_icons/feather_icons.dart';
+import 'package:destina_1_international/commons/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../controllers/main_controller.dart';
 
 class EcardReqReportScreen extends StatefulWidget {
   const EcardReqReportScreen({super.key});
@@ -10,8 +13,11 @@ class EcardReqReportScreen extends StatefulWidget {
   State<EcardReqReportScreen> createState() => _EcardReqReportScreenState();
 }
 
+final MainController _dataController = Get.put(MainController());
+
 class _EcardReqReportScreenState extends State<EcardReqReportScreen> {
   final ScrollController _scrollController = ScrollController();
+  DataTableSource tSource = MyData();
 
   @override
   Widget build(BuildContext context) {
@@ -20,175 +26,184 @@ class _EcardReqReportScreenState extends State<EcardReqReportScreen> {
         title: "Ecard Topup Request Report",
         backNavigation: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: cardDetailsWidget(),
-            ),
-            Container(
-              height: 60,
-              padding: const EdgeInsets.all(8.0),
-              child: CommonFormFieldwidget(
-                hintText: "Search",
-                onChangeFun: (val) {
-                  print("vall...$val");
-                },
-                prefixIcon: Icon(
-                  FeatherIcons.search,
-                  size: 18,
-                  color: blackColor.withOpacity(0.3),
+      body: Obx(() {
+        return _dataController.loading.value
+            ? loader
+            : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Scrollbar(
+                      interactive: true,
+                      trackVisibility: true,
+                      controller: _scrollController,
+                      thumbVisibility: true,
+                      thickness: 8,
+                      radius: const Radius.circular(10),
+                      scrollbarOrientation: ScrollbarOrientation.bottom,
+                      child: PaginatedDataTable(
+                          controller: _scrollController,
+                          columnSpacing: 0,
+                          horizontalMargin: 0,
+                          headingRowColor: MaterialStatePropertyAll(
+                              lightDarKBlue.withOpacity(0.2)),
+                          columns: [
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "S.No")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "Transaction ID")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label:
+                                    TableHeadingWidget(title: "Requested By")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "Dated")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "Request Amount")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "Approve Amount")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "Status")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label:
+                                    TableHeadingWidget(title: "Deposit Slip")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "Remarks")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "Country")),
+                          ],
+                          source: tSource),
+                    ),
+                    const SpaceHeightWidget(height: 25)
+                  ],
                 ),
-              ),
-            ),
-            Scrollbar(
-              interactive: true,
-              trackVisibility: true,
-              controller: _scrollController,
-              thumbVisibility: true,
-              thickness: 8,
-              radius: const Radius.circular(10),
-              scrollbarOrientation: ScrollbarOrientation.bottom,
-              child: SingleChildScrollView(
-                controller: _scrollController,
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DataTable(
-                      // dataRowMaxHeight: 50,
-                      horizontalMargin: 0,
-                      columnSpacing: 0,
-                      // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
-                      headingRowColor: MaterialStatePropertyAll(
-                          lightDarKBlue.withOpacity(0.2)),
-                      border: TableBorder.all(
-                        color: middleBlackColor.withOpacity(0.15),
-                      ),
-                      columns: const [
-                        DataColumn(label: TableHeadingWidget(title: "S.No")),
-                        DataColumn(label: TableHeadingWidget(title: "Date")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Credit Amount")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Debit Amount")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Balance Amount")),
-                        DataColumn(label: TableHeadingWidget(title: "Remarks")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Description")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "View Slip")),
-                      ],
-                      rows: [
-                        for (int i = 1; i < 5; i++)
-                          DataRow(cells: [
-                            DataCell(
-                              TableInfoWidget(info: i.toString()),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "06 Dec 2023"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "0"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "54376"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "22149.61"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(
-                                  info:
-                                      "Amount Deducted For Bill 28112023/7055"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(
-                                  info:
-                                      "Ecard Transfer To Ecard Of Destina1USAHQ (Malaysia)"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "Details"),
-                            ),
-                          ])
-                      ]),
-                ),
-              ),
-            ),
-            const SpaceHeightWidget(height: 25)
-          ],
-        ),
-      ),
-    );
-  }
-
-  cardDetailsWidget() {
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: limeColor.withOpacity(0.5),
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-          ),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: ViewProfileWidget(
-              title: "Ecard",
-              info: "89uQABC5DpEF",
-            ),
-          ),
-        ),
-        Container(
-          color: lightYellow.withOpacity(0.8),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: ViewProfileWidget(
-              title: "Pin",
-              info: "6EtQYbABCDEF",
-            ),
-          ),
-        ),
-        Container(
-          color: limeColor.withOpacity(0.5),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: ViewProfileWidget(
-              title: "Total Credit",
-              info: "RM  387,508.30",
-            ),
-          ),
-        ),
-        Container(
-          color: lightYellow.withOpacity(0.8),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: ViewProfileWidget(
-              title: "Total Debit",
-              info: "RM  365,358.69",
-            ),
-          ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: limeColor.withOpacity(0.5),
-            borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10)),
-          ),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: ViewProfileWidget(
-              title: "Balance",
-              info: "RM 22,149.61",
-            ),
-          ),
-        ),
-      ],
+              );
+      }),
     );
   }
 }
+
+dipositSlipWidget(
+  String imagePath,
+) {
+  return GestureDetector(
+    behavior: HitTestBehavior.translucent,
+    onTap: () {
+      // Get.to(() => HeroAnimationScreen(
+      //       tagData: imagePath,
+      //     ));
+      Get.dialog(Dialog(
+        backgroundColor: whiteColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.close)),
+                ],
+              ),
+              CommonCachedNetworkImage(imagePath: imagePath),
+            ],
+          ),
+        ),
+      ));
+    },
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Text(
+        "View Receipt",
+        style: TextStyle(
+            fontFamily: "OnestRegular", fontSize: 12, color: darkBlue),
+      ),
+    ),
+  );
+}
+
+class MyData extends DataTableSource {
+  @override
+  DataRow? getRow(int index) {
+    return DataRow(cells: [
+      DataCell(
+        TableInfoWidget(info: "${index + 1}"),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.ecardReqReportList[index].transid),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(info: _dataController.ecardReqReportList[index].reqby),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.ecardReqReportList[index].approveDate),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info:
+                "${_dataController.ecardReqReportList[index].symbol} ${_dataController.ecardReqReportList[index].totAmount}"),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info:
+                "${_dataController.ecardReqReportList[index].symbol} ${_dataController.ecardReqReportList[index].approveamt}"),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(info: _dataController.ecardReqReportList[index].sts),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+          dipositSlipWidget(_dataController.ecardReqReportList[index].imagepath)
+          // TableInfoWidget(
+          //     info: ),
+          ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.ecardReqReportList[index].remarks),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.ecardReqReportList[index].country),
+      ),
+    ]);
+  }
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => _dataController.ecardReqReportList.length;
+
+  @override
+  int get selectedRowCount => 0;
+}
+
+Widget _verticalDivider = VerticalDivider(
+  color: lightBlackColor,
+  thickness: 1,
+);

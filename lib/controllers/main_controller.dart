@@ -1,9 +1,11 @@
-import 'dart:io';
-
 import 'package:destina_1_international/inside_screens/profile/listofreq_approvedprofile_model.dart';
+import 'package:destina_1_international/models/activationbonus_model.dart';
+import 'package:destina_1_international/models/businessbonus_model.dart';
 import 'package:destina_1_international/models/cartitem_model.dart';
 import 'package:destina_1_international/models/checkcountry_model.dart';
+import 'package:destina_1_international/models/customerbonus_model.dart';
 import 'package:destina_1_international/models/dashboard_model.dart';
+import 'package:destina_1_international/models/ecard_model.dart';
 import 'package:destina_1_international/models/genelogyview_model.dart';
 import 'package:destina_1_international/models/groupsales_model.dart';
 import 'package:destina_1_international/models/listofreq_model.dart';
@@ -11,19 +13,28 @@ import 'package:destina_1_international/models/loadcountry_model.dart';
 import 'package:destina_1_international/models/order_acknowledgemodel.dart';
 import 'package:destina_1_international/models/order_reportmodel.dart';
 import 'package:destina_1_international/models/packagedetails_model.dart';
+import 'package:destina_1_international/models/personalbonus_model.dart';
+import 'package:destina_1_international/models/retailbonus_model.dart';
 import 'package:destina_1_international/models/selpackage_model.dart';
 import 'package:destina_1_international/models/shipping_ordermodel.dart';
+import 'package:destina_1_international/models/special_leadershipmodel.dart';
 import 'package:destina_1_international/models/view_profile_model.dart';
+import 'package:destina_1_international/models/withdraw_statusmodel.dart';
+import 'package:destina_1_international/models/withdrawal_infomodel.dart';
 import 'package:destina_1_international/service_call/api_call.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../commons/constants.dart';
 import '../models/awardreport_model.dart';
 import '../models/bank_model.dart';
 import '../models/checkupdation_model.dart';
+import '../models/d1cashbackpoints_model.dart';
+import '../models/ecard_reqreport_model.dart';
 import '../models/enrolldata_model.dart';
 import '../models/geneology_popupmodel.dart';
 import '../models/groupsales_cvmodel.dart';
+import '../models/maintenancelist_model.dart';
 import '../models/myteam_viewmodel.dart';
 import '../models/ordermall_model.dart';
 import '../models/packageitems_model.dart';
@@ -32,6 +43,8 @@ import '../models/productdetails_model.dart';
 import '../models/registercart_item_model.dart';
 import '../models/serviceslist_model.dart';
 import '../models/signupLoad_model.dart';
+import '../models/teambuilder_model.dart';
+import '../models/upgradeList_model.dart';
 import '../service_call/api_data.dart';
 
 class MainController extends GetxController {
@@ -567,8 +580,75 @@ class MainController extends GetxController {
       <OrderAcknowledgeModel>[].obs;
   Rx<CheckUpdationModel> updationData =
       CheckUpdationModel(chechUpdrpt: [], msg: "", message: "").obs;
+  Rx<EcardModel> ecardData = EcardModel(
+          emoneyrpt: [],
+          msg: "",
+          message: "",
+          ecard: "",
+          ePin: "",
+          totalCredit: "",
+          totalDebit: "",
+          balenceAmount: "",
+          symbol: "",
+          ecardButton: false,
+          withDrawButton: false)
+      .obs;
 
-// ********************************************************************************************
+  Rx<WithdrawalnfoModel> withdrawalInfoData = WithdrawalnfoModel(
+          msg: "",
+          message: "",
+          userId: "",
+          name: "",
+          city: "",
+          balance: "",
+          withdrawalAmount: "",
+          minWithdrawalAmount: "",
+          tChrgsType: "",
+          scChrgsType: "",
+          symbol: "",
+          schead: "",
+          tchead: "",
+          scChrgs: "",
+          tChrgs: "",
+          dollarValue: "",
+          ecardButton: false,
+          withdrawalButton: false)
+      .obs;
+  Rx<WithdraStatusModel> withdrawStatusData = WithdraStatusModel(
+          tpCheckWithdrawrpt: [], msg: "", message: "", ecardButton: false)
+      .obs;
+  RxList<EcardReqReportModel> ecardReqReportList = <EcardReqReportModel>[].obs;
+  Rx<D1CashBackPointsModel> d1cashbackpointsData = D1CashBackPointsModel(
+          d1CreditRSummaryRpt: [],
+          msg: "",
+          message: "",
+          totalD1Credit: "",
+          totalD1Debit: "",
+          d1BalenceAmount: "",
+          ecardButton: false,
+          withDrawButton: false)
+      .obs;
+  RxList<UpgradeListModel> upgradeList = <UpgradeListModel>[].obs;
+  RxList<MaintenanceListModel> maintenanceList = <MaintenanceListModel>[].obs;
+  RxList<RetailBonusModel> retailBonusList = <RetailBonusModel>[].obs;
+  RxDouble retailTotal = 0.0.obs;
+  RxList<CustomerBonusModel> customerBonusList = <CustomerBonusModel>[].obs;
+  RxDouble customerBonusTotal = 0.0.obs;
+  RxList<BusinessBonusModel> businessBonusList = <BusinessBonusModel>[].obs;
+  RxDouble businessBonusTotal = 0.0.obs;
+  RxList<TeamBuilderBonusModel> teamBuilderBonusList =
+      <TeamBuilderBonusModel>[].obs;
+  RxDouble teamBuilderBonusTotal = 0.0.obs;
+  RxList<SpecialLeadershipBonusModel> specialLeaderBonusList =
+      <SpecialLeadershipBonusModel>[].obs;
+  RxDouble specialLeaderBonusTotal = 0.0.obs;
+  RxList<PersonalBonusModel> pesonalBonusList = <PersonalBonusModel>[].obs;
+  RxDouble pesonalBonusTotal = 0.0.obs;
+  RxList<ActivationBonusModel> activationBonusList =
+      <ActivationBonusModel>[].obs;
+  RxDouble activationBonusTotal = 0.0.obs;
+
+// *********************** *********************************************************************
   getCountryCode() async {
     dynamic res = await ApiCall().getMethodFun(url: ApiData().countryUrl);
     return res;
@@ -876,11 +956,11 @@ class MainController extends GetxController {
     return res;
   }
 
-  getUploadPhoto(File imageFile) async {
+  getUploadPhoto(XFile imageFile) async {
     loading.value = true;
 
     dynamic res = await ApiCall().uploadImage(
-      imageFile: imageFile,
+      imageFile: imageFile.path,
       endUrl: ApiData().uploadPhoto,
     );
     print("ressss....$res");
@@ -1139,6 +1219,419 @@ class MainController extends GetxController {
   getOrderAcknowledgeUpdation(Map parameters) async {
     dynamic res = await ApiCall().listPostMethodFun(
         methodName: ApiData().updAcknowledge, params: parameters);
+    return res;
+  }
+
+  getEcard(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().tPCheckEcard, params: parameters);
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS") {
+        ecardData.value = EcardModel.fromJson(res);
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getEcardMoneyType(Map parameters) async {
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().emoneyType, params: parameters);
+    return res;
+  }
+
+  getEcardTransferMoney(Map parameters) async {
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().ecardTransfer, params: parameters);
+    return res;
+  }
+
+  getCommission(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().tPCheckEcard, params: parameters);
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS") {
+        ecardData.value = EcardModel.fromJson(res);
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getWithdrawalInfo(Map parameters) async {
+    loading.value = true;
+
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().withdrawalEMoney, params: parameters);
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS") {
+        withdrawalInfoData.value = WithdrawalnfoModel.fromJson(res);
+      }
+    }
+    loading.value = false;
+
+    return res;
+  }
+
+  getWithdrawalAmt(Map parameters) async {
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().withdrawalEMoneySubmit, params: parameters);
+    return res;
+  }
+
+  getWithdrawalStatus(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().tPCheckWithdraw, params: parameters);
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS") {
+        withdrawStatusData.value = WithdraStatusModel.fromJson(res);
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getEcardReqReports(Map parameters) async {
+    loading.value = true;
+    ecardReqReportList.clear();
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().ecardRequestReport, params: parameters);
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS") {
+        if (res.length > 0) {
+          for (int i = 0; i < res['GetECardRpt'].length; i++) {
+            ecardReqReportList
+                .add(EcardReqReportModel.fromJson(res['GetECardRpt'][i]));
+          }
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getD1cashBack(Map parameters) async {
+    loading.value = true;
+
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().d1CashBackSummary, params: parameters);
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS") {
+        d1cashbackpointsData.value = D1CashBackPointsModel.fromJson(res);
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getD1creditRebate(Map parameters) async {
+    loading.value = true;
+
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().d1CreditRSummary, params: parameters);
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS") {
+        d1cashbackpointsData.value = D1CashBackPointsModel.fromJson(res);
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getDPSummary(Map parameters) async {
+    loading.value = true;
+
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().dPSummary, params: parameters);
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS") {
+        d1cashbackpointsData.value = D1CashBackPointsModel.fromJson(res);
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getUpgradeList(Map parameters) async {
+    loading.value = true;
+    upgradeList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().upgradeReport, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          upgradeList.add(UpgradeListModel.fromJson(res[i]));
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getMaintenance(Map parameters) async {
+    loading.value = true;
+    maintenanceList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().accMaintence, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          maintenanceList.add(MaintenanceListModel.fromJson(res[i]));
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getMaintenanceDetails(Map parameters) async {
+    loading.value = true;
+    // maintenanceList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().accMaintenceDetails, params: parameters);
+    if (res != null) {
+      // if (res.length > 0) {
+      //   for (int i = 0; i < res.length; i++) {
+      //     maintenanceList.add(MaintenanceListModel.fromJson(res[i]));
+      //   }
+      // }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getRetailBonus(Map parameters) async {
+    loading.value = true;
+    retailTotal.value = 0.0;
+    retailBonusList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().retailBonus, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          retailBonusList.add(RetailBonusModel.fromJson(res[i]));
+          if (retailBonusList[i].netAmt != "") {
+            retailTotal.value =
+                retailTotal.value + double.parse(retailBonusList[i].netAmt);
+          }
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getCustomerBonus(Map parameters) async {
+    loading.value = true;
+    customerBonusTotal.value = 0.0;
+    customerBonusList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().custAcqBonus, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          customerBonusList.add(CustomerBonusModel.fromJson(res[i]));
+          if (customerBonusList[i].netBonus != "") {
+            customerBonusTotal.value = customerBonusTotal.value +
+                double.parse(customerBonusList[i].netBonus);
+          }
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getUpgradeBonus(Map parameters) async {
+    loading.value = true;
+    customerBonusTotal.value = 0.0;
+    customerBonusList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().upgAcqBonus, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          customerBonusList.add(CustomerBonusModel.fromJson(res[i]));
+          if (customerBonusList[i].netBonus != "") {
+            customerBonusTotal.value = customerBonusTotal.value +
+                double.parse(customerBonusList[i].netBonus);
+          }
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getBusinessBonus(Map parameters) async {
+    loading.value = true;
+    businessBonusTotal.value = 0.0;
+    businessBonusList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().bussDevBonus, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          businessBonusList.add(BusinessBonusModel.fromJson(res[i]));
+          if (businessBonusList[i].netBonus != "") {
+            businessBonusTotal.value = businessBonusTotal.value +
+                double.parse(businessBonusList[i].netBonus);
+          }
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getTeamBuilderBonus(Map parameters) async {
+    loading.value = true;
+    teamBuilderBonusTotal.value = 0.0;
+    teamBuilderBonusList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().teamBuildBonus, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          teamBuilderBonusList.add(TeamBuilderBonusModel.fromJson(res[i]));
+          if (teamBuilderBonusList[i].netBonus != "") {
+            teamBuilderBonusTotal.value = teamBuilderBonusTotal.value +
+                double.parse(teamBuilderBonusList[i].netBonus);
+          }
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getGlobalLBonus(Map parameters) async {
+    loading.value = true;
+    // teamBuilderBonusTotal.value = 0.0;
+    // teamBuilderBonusList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().globalLeadBonus, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        // for (int i = 0; i < res.length; i++) {
+        //   teamBuilderBonusList.add(TeamBuilderBonusModel.fromJson(res[i]));
+        //   if (teamBuilderBonusList[i].netBonus != "") {
+        //     teamBuilderBonusTotal.value = teamBuilderBonusTotal.value +
+        //         double.parse(teamBuilderBonusList[i].netBonus);
+        //   }
+        // }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getSpecialBonus(Map parameters) async {
+    loading.value = true;
+    // teamBuilderBonusTotal.value = 0.0;
+    // teamBuilderBonusList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().specialBonus, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        // for (int i = 0; i < res.length; i++) {
+        //   teamBuilderBonusList.add(TeamBuilderBonusModel.fromJson(res[i]));
+        //   if (teamBuilderBonusList[i].netBonus != "") {
+        //     teamBuilderBonusTotal.value = teamBuilderBonusTotal.value +
+        //         double.parse(teamBuilderBonusList[i].netBonus);
+        //   }
+        // }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getSpecialBonusSponsor(Map parameters) async {
+    loading.value = true;
+    // teamBuilderBonusTotal.value = 0.0;
+    // teamBuilderBonusList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().specialBonusSpr, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        // for (int i = 0; i < res.length; i++) {
+        //   teamBuilderBonusList.add(TeamBuilderBonusModel.fromJson(res[i]));
+        //   if (teamBuilderBonusList[i].netBonus != "") {
+        //     teamBuilderBonusTotal.value = teamBuilderBonusTotal.value +
+        //         double.parse(teamBuilderBonusList[i].netBonus);
+        //   }
+        // }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getSpecialLeadershipBonus(Map parameters) async {
+    loading.value = true;
+    specialLeaderBonusTotal.value = 0.0;
+    specialLeaderBonusList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().specialLeadrBonus, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          specialLeaderBonusList
+              .add(SpecialLeadershipBonusModel.fromJson(res[i]));
+          if (specialLeaderBonusList[i].netBonus != "") {
+            specialLeaderBonusTotal.value = specialLeaderBonusTotal.value +
+                double.parse(specialLeaderBonusList[i].netBonus);
+          }
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getPersonalBonus(Map parameters) async {
+    loading.value = true;
+    pesonalBonusTotal.value = 0.0;
+    pesonalBonusList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().personalSaleBonus, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          pesonalBonusList.add(PersonalBonusModel.fromJson(res[i]));
+          if (pesonalBonusList[i].netBonus != "") {
+            pesonalBonusTotal.value = pesonalBonusTotal.value +
+                double.parse(pesonalBonusList[i].netBonus);
+          }
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getActivationBonus(Map parameters) async {
+    loading.value = true;
+    activationBonusTotal.value = 0.0;
+    activationBonusList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().activationBonus, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          activationBonusList.add(ActivationBonusModel.fromJson(res[i]));
+          if (activationBonusList[i].netProfit != "") {
+            activationBonusTotal.value = activationBonusTotal.value +
+                double.parse(activationBonusList[i].netProfit);
+          }
+        }
+      }
+    }
+    loading.value = false;
     return res;
   }
 }

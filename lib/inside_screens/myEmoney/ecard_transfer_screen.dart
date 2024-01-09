@@ -1,10 +1,22 @@
+import 'dart:async';
+
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/commons/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../controllers/main_controller.dart';
 
 class EcardTransferScreen extends StatefulWidget {
-  final String from;
-  const EcardTransferScreen({super.key,required this.from});
+  final String from, transPass, bal, symbol;
+
+  const EcardTransferScreen(
+      {super.key,
+      required this.from,
+      required this.transPass,
+      required this.bal,
+      required this.symbol});
 
   @override
   State<EcardTransferScreen> createState() => _EcardTransferScreenState();
@@ -13,11 +25,45 @@ class EcardTransferScreen extends StatefulWidget {
 class _EcardTransferScreenState extends State<EcardTransferScreen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController toTController = TextEditingController();
+  TextEditingController transferAmtController = TextEditingController();
   TextEditingController remarksController = TextEditingController();
   TextEditingController passwordTController = TextEditingController();
+  final MainController _dataController = Get.put(MainController());
 
-  bool visible = false;
-  dynamic eMoneyType;
+  bool visible = true;
+  dynamic eMoneyType, userId;
+  bool transferLoad = false;
+
+  @override
+  void initState() {
+    super.initState();
+    userId = Constants.prefs.getString("user_id");
+    passwordTController.text = widget.transPass;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.from == "E-Card") {
+        moneyTypeFun();
+      }
+    });
+  }
+
+  List<String> dropdownData = [];
+  moneyTypeFun() async {
+    Map bdata = {
+      "UserId": userId,
+      "Pwd": Constants.prefs.getString("password"),
+      "Action": "getemoneytype",
+      "EType": "Ecard",
+      "Mallname": ""
+    };
+    dynamic res = await _dataController.getEcardMoneyType(bdata);
+    if (res != null) {
+      for (int i = 0; i < res.length; i++) {
+        dropdownData.add(res[i]['toemoney']);
+      }
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +80,8 @@ class _EcardTransferScreenState extends State<EcardTransferScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const ViewProfileWidget(title: "From", info: "DESTINA1INT"),
+                ViewProfileWidget(
+                    title: "From", info: userId.toString().toUpperCase()),
                 const SpaceHeightWidget(height: 10),
                 const SideTitle(title: "To"),
                 AccountTextField(
@@ -51,7 +98,8 @@ class _EcardTransferScreenState extends State<EcardTransferScreen> {
                     }
                   },
                 ),
-                const ViewProfileWidget(title: "Balance", info: "22149.61 RM"),
+                ViewProfileWidget(
+                    title: "Balance", info: "${widget.symbol} ${widget.bal}"),
                 const SpaceHeightWidget(height: 10),
                 const SideTitle(title: "Transfer Amount"),
                 AccountTextField(
@@ -59,7 +107,7 @@ class _EcardTransferScreenState extends State<EcardTransferScreen> {
                   outsideFun: (val) async {},
                   textInputType: TextInputType.name,
                   hintText: "",
-                  controller: toTController,
+                  controller: transferAmtController,
                   validation: (val) {
                     if (val!.isEmpty) {
                       return "Enter Transfer Amount";
@@ -69,25 +117,27 @@ class _EcardTransferScreenState extends State<EcardTransferScreen> {
                   },
                 ),
                 const SideTitle(title: "EMoney Type"),
-                ProfileDropDown(
-                  value: eMoneyType,
-                  hintText: "Select",
-                  onChangedFun: (val) {
-                    setState(() {
-                      eMoneyType = val!;
-                    });
-                  },
-                  items: const [
-                    "Ecard",
-                  ],
-                  validationFun: (val) {
-                    if (val == "" || val == null) {
-                      return "Select EMoney Type";
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
+                Obx(() {
+                  return _dataController.loading.value
+                      ? loader
+                      : ProfileDropDown(
+                          value: eMoneyType,
+                          hintText: "Select",
+                          onChangedFun: (val) {
+                            setState(() {
+                              eMoneyType = val!;
+                            });
+                          },
+                          items: dropdownData,
+                          validationFun: (val) {
+                            if (val == "" || val == null) {
+                              return "Select EMoney Type";
+                            } else {
+                              return null;
+                            }
+                          },
+                        );
+                }),
                 const SideTitle(title: "Remarks"),
                 AccountTextField(
                   minLines: 3,
@@ -139,11 +189,47 @@ class _EcardTransferScreenState extends State<EcardTransferScreen> {
                   },
                 ),
                 const SpaceHeightWidget(height: 15),
-                CustomElevatedButton(
-                    onTapFun: () {
-                      if (_formKey.currentState!.validate()) {}
-                    },
-                    title: "Submit")
+                transferLoad
+                    ? SizedBox(height: 55, child: loader)
+                    : CustomElevatedButton(
+                        onTapFun: () async {
+                          if (_formKey.currentState!.validate()) {
+                            setState(() {
+                              transferLoad = true;
+                            });
+                            Map bdata = {
+                              "UserId": userId,
+                              "Pwd": Constants.prefs.getString("password"),
+                              "From": userId,
+                              "To": toTController.text,
+                              "Action": "Insert",
+                              "Balance": widget.bal,
+                              "TranferAmount": transferAmtController.text,
+                              "FromEmontyType": "Ecard",
+                              "ToEmontyType": eMoneyType,
+                              "Remarks": remarksController.text,
+                              "TransPassword": widget.transPass,
+                            };
+                            print("checking bdata...$bdata");
+                            dynamic res = await _dataController
+                                .getEcardTransferMoney(bdata);
+                            if (res != null) {
+                              if (res['Msg'] == "SUCCESS") {
+                                CommonToastTrue(res["Message"]);
+                                Timer(const Duration(seconds: 1), () {
+                                  Get.back();
+                                  Get.back();
+                                  Get.back();
+                                });
+                              }
+                            }
+
+                            setState(() {
+                              transferLoad = false;
+                            });
+                          }
+                        },
+                        title: "Submit")
               ],
             ),
           ),

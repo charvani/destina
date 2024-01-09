@@ -32,11 +32,14 @@ class _BonusDateSelectionScreenState extends State<BonusDateSelectionScreen> {
   TextEditingController toDateTController = TextEditingController();
   TextEditingController distributorIDTController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
+  late dynamic formattedDate;
   @override
   void initState() {
     super.initState();
+    var date = DateTime.now();
+    formattedDate = "${date.day}/${date.month}/${date.year}";
     print("from....${widget.from}");
+    print("formattedDate....$formattedDate");
   }
 
   @override
@@ -235,27 +238,98 @@ class _BonusDateSelectionScreenState extends State<BonusDateSelectionScreen> {
                           onTapFun: () {
                             // if (_formKey.currentState!.validate()) {
                             if (widget.from == "Retail") {
-                              Get.to(() => const RetailBonusSCreen());
+                              Get.to(() => RetailBonusSCreen(
+                                    fromDate: fromDateTController.text != ""
+                                        ? fromDateTController.text
+                                        : "01/01/1900",
+                                    toDate: toDateTController.text != ""
+                                        ? toDateTController.text
+                                        : "01/01/2100",
+                                  ));
                             } else if (widget.from == "Customer Acquisition") {
-                              Get.to(() => const CustomerAcquisitionScreen());
+                              Get.to(() => CustomerAcquisitionScreen(
+                                    fromDate: fromDateTController.text != ""
+                                        ? fromDateTController.text
+                                        : "01/01/1900",
+                                    toDate: toDateTController.text != ""
+                                        ? toDateTController.text
+                                        : "01/01/2100",
+                                    distributorId:
+                                        distributorIDTController.text,
+                                  ));
                             } else if (widget.from == "Upgrade Acquisition") {
-                              Get.to(() => const UpgradeAcquistionScreen());
+                              Get.to(() => UpgradeAcquistionScreen(
+                                    fromDate: fromDateTController.text != ""
+                                        ? fromDateTController.text
+                                        : "01/01/1900",
+                                    toDate: toDateTController.text != ""
+                                        ? toDateTController.text
+                                        : "01/01/2100",
+                                    distributorId:
+                                        distributorIDTController.text,
+                                  ));
                             } else if (widget.from == "TeamBuilder Buisiness") {
-                              Get.to(() => const TeamBuilderBussinessScreen());
+                              Get.to(() => TeamBuilderBussinessScreen(
+                                    fromDate: fromDateTController.text != ""
+                                        ? fromDateTController.text
+                                        : "01/01/1900",
+                                    toDate: toDateTController.text != ""
+                                        ? toDateTController.text
+                                        : formattedDate,
+                                  ));
                             } else if (widget.from == "Special Leadership") {
-                              Get.to(() => const SpecialLeadershipScreen());
+                              Get.to(() => SpecialLeadershipScreen(
+                                    fromDate: fromDateTController.text != ""
+                                        ? fromDateTController.text
+                                        : "01/01/1900",
+                                    toDate: toDateTController.text != ""
+                                        ? toDateTController.text
+                                        : "01/01/2100",
+                                    distributorId:
+                                        distributorIDTController.text,
+                                  ));
                             } else if (widget.from == "Direct Distributor") {
                               Get.to(
                                   () => const DirectDistributorBonusScreen());
                             } else if (widget.from == "Personal Sales") {
-                              Get.to(() => const PersonalSalesScreen());
+                              Get.to(() => PersonalSalesScreen(
+                                    fromDate: fromDateTController.text != ""
+                                        ? fromDateTController.text
+                                        : "01/01/1900",
+                                    toDate: toDateTController.text != ""
+                                        ? toDateTController.text
+                                        : formattedDate,
+                                  ));
                             } else if (widget.from == "Special Bonus") {
-                              Get.to(() => const SpecialBonusScreen());
+                              Get.to(() => SpecialBonusScreen(
+                                    fromDate: fromDateTController.text != ""
+                                        ? fromDateTController.text
+                                        : "01/01/1900",
+                                    toDate: toDateTController.text != ""
+                                        ? toDateTController.text
+                                        : formattedDate,
+                                  ));
                             } else if (widget.from ==
                                 "Special Bonus(Sponsor)") {
-                              Get.to(() => const SpecialSponsorBonusScreen());
+                              Get.to(() => SpecialSponsorBonusScreen(
+                                    fromDate: fromDateTController.text != ""
+                                        ? fromDateTController.text
+                                        : "01/01/1900",
+                                    toDate: toDateTController.text != ""
+                                        ? toDateTController.text
+                                        : formattedDate,
+                                  ));
                             } else if (widget.from == "Activation Bonus") {
-                              Get.to(() => const ActivationBonusScreen());
+                              Get.to(() => ActivationBonusScreen(
+                                    fromDate: fromDateTController.text != ""
+                                        ? fromDateTController.text
+                                        : "01/01/1900",
+                                    toDate: toDateTController.text != ""
+                                        ? toDateTController.text
+                                        : "01/01/2100",
+                                    distributorId:
+                                        distributorIDTController.text,
+                                  ));
                             } else if (widget.from == "Rollup Bonus") {
                               Get.to(() => const RollupBonusScreen());
                             }

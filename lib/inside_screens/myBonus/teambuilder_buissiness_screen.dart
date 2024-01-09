@@ -1,22 +1,58 @@
-import 'dart:math';
-
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
-import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../commons/constants.dart';
+import '../../controllers/main_controller.dart';
 
 class TeamBuilderBussinessScreen extends StatefulWidget {
-  const TeamBuilderBussinessScreen({super.key});
+  final String fromDate, toDate;
+  const TeamBuilderBussinessScreen(
+      {super.key, required this.fromDate, required this.toDate});
 
   @override
   State<TeamBuilderBussinessScreen> createState() =>
       _TeamBuilderBussinessScreenState();
 }
 
+final MainController _dataController = Get.put(MainController());
+
 class _TeamBuilderBussinessScreenState
     extends State<TeamBuilderBussinessScreen> {
   DataTableSource tSource = MyData();
   final ScrollController _scrollController = ScrollController();
+  dynamic userid, password;
+  Map bData = {};
+  @override
+  void initState() {
+    super.initState();
+    userid = Constants.prefs.getString("user_id");
+    password = Constants.prefs.getString("password");
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      dataFun();
+    });
+  }
+
+  dataFun() {
+    bData = {
+      "UserId": userid,
+      "Pwd": password,
+      "FromDate": widget.fromDate,
+      "ToDate": widget.toDate,
+      "FIdNo": userid,
+      "TIdNo": null,
+      "FCategory": null,
+      "TCategory": null,
+      "Steps": null,
+      "StpsSym": null,
+      "SalesMnth": null,
+      "SalesYr": null,
+      "BonusType": "TBDB",
+    };
+    _dataController.getTeamBuilderBonus(bData);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,158 +61,154 @@ class _TeamBuilderBussinessScreenState
         title: "TeamBuilder Business Development Bonus",
         backNavigation: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: 60,
-              padding: const EdgeInsets.all(8.0),
-              child: CommonFormFieldwidget(
-                hintText: "Search",
-                onChangeFun: (val) {
-                  print("vall...$val");
-                },
-                prefixIcon: Icon(
-                  FeatherIcons.search,
-                  size: 18,
-                  color: blackColor.withOpacity(0.3),
+      body: Obx(() {
+        return _dataController.loading.value
+            ? loader
+            : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ViewProfileWidget(
+                          infoColor: redColor,
+                          title: "Grand Total",
+                          info: _dataController.teamBuilderBonusTotal.value
+                              .toStringAsFixed(2)),
+                    ),
+                    Scrollbar(
+                      interactive: true,
+                      trackVisibility: true,
+                      controller: _scrollController,
+                      thumbVisibility: true,
+                      thickness: 8,
+                      radius: const Radius.circular(10),
+                      scrollbarOrientation: ScrollbarOrientation.bottom,
+                      child: PaginatedDataTable(
+                          controller: _scrollController,
+                          columnSpacing: 0,
+                          horizontalMargin: 0,
+                          headingRowColor: MaterialStatePropertyAll(
+                              lightDarKBlue.withOpacity(0.2)),
+                          columns: [
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "S.No")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "Distributor ID")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "Distributor Name")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "Date")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "Sponsor Id")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "Team")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "Bussiness\nDevelopment Bonus")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "Percent %")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label:
+                                    TableHeadingWidget(title: "Bonus (D1 \$)")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "Redemption\nPoints(RP)")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "Leadership Bonus\n(D1 \$)")),
+                          ],
+                          source: tSource),
+                    ),
+                    const SpaceHeightWidget(height: 25)
+                  ],
                 ),
-              ),
-            ),
-            // PaginatedDataTable(
-            //     headingRowColor:
-            //         MaterialStatePropertyAll(lightDarKBlue.withOpacity(0.2)),
-            //     columns: const [
-            //       DataColumn(label: TableHeadingWidget(title: "S.No")),
-            //       DataColumn(label: TableHeadingWidget(title: "Date")),
-            //       DataColumn(label: TableHeadingWidget(title: "Credit Amount")),
-            //     ],
-            //     source: tSource),
-            Scrollbar(
-              interactive: true,
-              trackVisibility: true,
-              controller: _scrollController,
-              thumbVisibility: true,
-              thickness: 8,
-              radius: const Radius.circular(10),
-              scrollbarOrientation: ScrollbarOrientation.bottom,
-              child: SingleChildScrollView(
-                controller: _scrollController,
-                scrollDirection: Axis.horizontal,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DataTable(
-                      // dataRowMaxHeight: 50,
-                      horizontalMargin: 0,
-                      columnSpacing: 0,
-                      // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
-                      headingRowColor: MaterialStatePropertyAll(
-                          lightDarKBlue.withOpacity(0.2)),
-                      border: TableBorder.all(
-                        color: middleBlackColor.withOpacity(0.15),
-                      ),
-                      columns: const [
-                        DataColumn(label: TableHeadingWidget(title: "S.No")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Distributor ID")),
-                        DataColumn(
-                            label:
-                                TableHeadingWidget(title: "Distributor Name")),
-                        DataColumn(label: TableHeadingWidget(title: "Date")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Sponsor Id")),
-                        DataColumn(label: TableHeadingWidget(title: "Team")),
-                        DataColumn(
-                            label: TableHeadingWidget(
-                                title: "Bussiness\nDevelopment Bonus")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Percent %")),
-                        DataColumn(
-                            label: TableHeadingWidget(title: "Bonus (D1 \$)")),
-                        DataColumn(
-                            label: TableHeadingWidget(
-                                title: "Redemption\nPoints(RP)")),
-                        DataColumn(
-                            label: TableHeadingWidget(
-                                title: "Leadership Bonus\n(D1 \$)")),
-                      ],
-                      rows: [
-                        for (int i = 1; i < 8; i++)
-                          DataRow(cells: [
-                            DataCell(
-                              TableInfoWidget(info: i.toString()),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "DESTINA1INT"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "DESTINA1"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "14 Sep 2015"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "NAJIEB3080"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "3"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "10.00"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "5"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "0.50"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "0.10"),
-                            ),
-                            const DataCell(
-                              TableInfoWidget(info: "0.40"),
-                            ),
-                          ])
-                      ]),
-                ),
-              ),
-            ),
-            const SpaceHeightWidget(height: 25)
-          ],
-        ),
-      ),
+              );
+      }),
     );
   }
 }
 
 class MyData extends DataTableSource {
-  final List<Map<String, dynamic>> _data = List.generate(
-      25,
-      (index) => {
-            "id": index,
-            "title": "Item $index",
-            "price": Random().nextInt(7777)
-          });
-
   @override
   DataRow? getRow(int index) {
-    // TODO: implement getRow
     return DataRow(cells: [
-      DataCell(Text(_data[index]['id'].toString())),
-      DataCell(Text(_data[index]['title'].toString())),
-      DataCell(Text(_data[index]['price'].toString())),
+      DataCell(
+        TableInfoWidget(info: "${index + 1}"),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.teamBuilderBonusList[index].distbutorId),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.teamBuilderBonusList[index].distbutorName),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(info: _dataController.teamBuilderBonusList[index].date),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.teamBuilderBonusList[index].sponId),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(info: _dataController.teamBuilderBonusList[index].team),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.teamBuilderBonusList[index].bussDevBonus),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.teamBuilderBonusList[index].percentage),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.teamBuilderBonusList[index].bonus),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.teamBuilderBonusList[index].redmption),
+      ),
+      DataCell(_verticalDivider),
+      DataCell(
+        TableInfoWidget(
+            info: _dataController.teamBuilderBonusList[index].netBonus),
+      ),
     ]);
   }
 
   @override
-  // TODO: implement isRowCountApproximate
   bool get isRowCountApproximate => false;
 
   @override
-  // TODO: implement rowCount
-  int get rowCount => _data.length;
+  int get rowCount => _dataController.teamBuilderBonusList.length;
 
   @override
-  // TODO: implement selectedRowCount
   int get selectedRowCount => 0;
 }
+
+Widget _verticalDivider = VerticalDivider(
+  color: lightBlackColor,
+  thickness: 1,
+);
