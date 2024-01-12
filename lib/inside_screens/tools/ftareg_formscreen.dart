@@ -1,8 +1,11 @@
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../commons/colors.dart';
+import '../../commons/constants.dart';
+import '../../controllers/main_controller.dart';
 
 class FTARegistrationFormScreen extends StatefulWidget {
   const FTARegistrationFormScreen({super.key});
@@ -27,6 +30,16 @@ class _FTARegistrationFormScreenState extends State<FTARegistrationFormScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController nametoDateController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final MainController _dataController = Get.put(MainController());
+
+  @override
+  void initState() {
+    super.initState();
+    var date = DateTime.now();
+    dateTController.text = "${date.day}-${date.month}-${date.year}";
+    nametoDateController.text = "${date.day}-${date.month}-${date.year}";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,9 +163,9 @@ class _FTARegistrationFormScreenState extends State<FTARegistrationFormScreen> {
                       AccountTextField(
                         onchangeFun: (val) {},
                         outsideFun: (val) async {},
-                        textInputType: TextInputType.name,
+                        textInputType: TextInputType.number,
                         hintText: "",
-                        controller: ftaPassportNoController,
+                        controller: ftaMobileNoController,
                         validation: (val) {
                           if (val!.isEmpty) {
                             return "FTA Mobile";
@@ -165,7 +178,7 @@ class _FTARegistrationFormScreenState extends State<FTARegistrationFormScreen> {
                       AccountTextField(
                         onchangeFun: (val) {},
                         outsideFun: (val) async {},
-                        textInputType: TextInputType.name,
+                        textInputType: TextInputType.emailAddress,
                         hintText: "",
                         controller: ftaEmailController,
                         validation: (val) {
@@ -216,7 +229,7 @@ class _FTARegistrationFormScreenState extends State<FTARegistrationFormScreen> {
                       AccountTextField(
                         onchangeFun: (val) {},
                         outsideFun: (val) async {},
-                        textInputType: TextInputType.name,
+                        textInputType: TextInputType.number,
                         hintText: "",
                         controller: inviterMobileNoController,
                         validation: (val) {
@@ -231,7 +244,7 @@ class _FTARegistrationFormScreenState extends State<FTARegistrationFormScreen> {
                       AccountTextField(
                         onchangeFun: (val) {},
                         outsideFun: (val) async {},
-                        textInputType: TextInputType.name,
+                        textInputType: TextInputType.emailAddress,
                         hintText: "",
                         controller: inviterEmailController,
                         validation: (val) {
@@ -270,7 +283,7 @@ class _FTARegistrationFormScreenState extends State<FTARegistrationFormScreen> {
                         outsideFun: (val) async {},
                         textInputType: TextInputType.name,
                         hintText: "",
-                        controller: inviterEmailController,
+                        controller: nameController,
                         validation: (val) {
                           if (val!.isEmpty) {
                             return "Name";
@@ -354,11 +367,37 @@ class _FTARegistrationFormScreenState extends State<FTARegistrationFormScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomAutoWidthButton(
-                        onTapFun: () {
-                          if (_formKey.currentState!.validate()) {}
-                        },
-                        title: "Submit"),
+                    Obx(() {
+                      return _dataController.loading.value
+                          ? loader
+                          : CustomAutoWidthButton(
+                              onTapFun: () {
+                                if (_formKey.currentState!.validate()) {
+                                  Map bdata = {
+                                    "Action": "Insert",
+                                    "UserId":
+                                        Constants.prefs.getString("user_id"),
+                                    "Pwd":
+                                        Constants.prefs.getString("password"),
+                                    "FTAName": ftaNameController.text,
+                                    "FTAProofNo": ftaPassportNoController.text,
+                                    "FtaContact": ftaMobileNoController.text,
+                                    "FtaEmail": ftaEmailController.text,
+                                    "InvName": inviterNameController.text,
+                                    "InvProofNo":
+                                        inviterPassportNoController.text,
+                                    "InvContact":
+                                        inviterMobileNoController.text,
+                                    "InvEmail": inviterEmailController.text,
+                                    "Dated": dateTController.text,
+                                    "Name": nameController.text,
+                                    "IDated": nametoDateController.text,
+                                  };
+                                  _dataController.getFTARegistration(bdata);
+                                }
+                              },
+                              title: "Submit");
+                    }),
                   ],
                 ),
                 const SpaceHeightWidget(height: 15),

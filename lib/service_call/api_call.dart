@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/service_call/encryption.dart';
-import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 import '../commons/common_widgets.dart';
@@ -65,31 +64,20 @@ class ApiCall {
     required imageFile,
     required endUrl,
   }) async {
-    // FormData formData = FormData.fromMap({
-    //   "UserId": Constants.prefs.getString("user_id"),
-    //   "Pwd": Constants.prefs.getString("password"),
-    //   "Name": Constants.prefs.getString("user_name"),
-    //   "Country": Constants.prefs.getString("county"),
-    //   'Filename':
-    //       await MultipartFile.fromFile(imageFile.path, filename: 'image.png'),
-    // });
+   
+
     Map bData = {
       "UserId": Constants.prefs.getString("user_id"),
       "Pwd": Constants.prefs.getString("password"),
       "Name": Constants.prefs.getString("user_name"),
       "Country": Constants.prefs.getString("country_name"),
-      "Filename":
-          // imageFile
-          await MultipartFile.fromFile(imageFile, filename: 'image.png'),
+      "Filename": imageFile
     };
     print("image bdata...$bData");
-//encryption
-    dynamic encryptedText =
-        Encrypt.encryptJsonObjectResponse(json.encode(bData));
-    print("Encrypted text....$encryptedText");
-    http.Response response = await http.post(
-        Uri.parse(ApiData().baseUrl + endUrl),
-        body: {"Info": encryptedText.toString()});
+
+    http.Response response =
+        await http.post(Uri.parse(ApiData().baseUrl + endUrl), body: bData
+            );
 
     print("cherry.....");
     dynamic convertedData = convert.jsonDecode(response.body);

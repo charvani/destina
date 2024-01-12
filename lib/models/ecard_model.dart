@@ -75,28 +75,32 @@ class Emoneyrpt {
   String remarks;
   String description;
   String billNo;
+  String imageEndPath;
+  String imageText;
 
-  Emoneyrpt({
-    required this.sno,
-    required this.date,
-    required this.creditAmount,
-    required this.debitAmount,
-    required this.balanceAmount,
-    required this.remarks,
-    required this.description,
-    required this.billNo,
-  });
+  Emoneyrpt(
+      {required this.sno,
+      required this.date,
+      required this.creditAmount,
+      required this.debitAmount,
+      required this.balanceAmount,
+      required this.remarks,
+      required this.description,
+      required this.billNo,
+      required this.imageText,
+      required this.imageEndPath});
 
   factory Emoneyrpt.fromJson(Map<String, dynamic> json) => Emoneyrpt(
-        sno: json["Sno"],
-        date: json["Date"],
-        creditAmount: json["CreditAmount"],
-        debitAmount: json["DebitAmount"],
-        balanceAmount: json["BalanceAmount"],
-        remarks: json["Remarks"],
-        description: json["Description"],
-        billNo: json["BillNo"],
-      );
+      sno: json["Sno"],
+      date: json["Date"],
+      creditAmount: json["CreditAmount"],
+      debitAmount: json["DebitAmount"],
+      balanceAmount: json["BalanceAmount"],
+      remarks: json["Remarks"],
+      description: json["Description"],
+      billNo: json["BillNo"],
+      imageEndPath: json['IMagePath'] ?? "",
+      imageText: json['ImageText'] ?? "");
 
   Map<String, dynamic> toJson() => {
         "Sno": sno,
@@ -107,5 +111,7 @@ class Emoneyrpt {
         "Remarks": remarks,
         "Description": description,
         "BillNo": billNo,
+        "IMagePath": imageEndPath,
+        "ImageText": imageText
       };
 }

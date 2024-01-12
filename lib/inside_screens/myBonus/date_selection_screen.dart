@@ -289,8 +289,14 @@ class _BonusDateSelectionScreenState extends State<BonusDateSelectionScreen> {
                                         distributorIDTController.text,
                                   ));
                             } else if (widget.from == "Direct Distributor") {
-                              Get.to(
-                                  () => const DirectDistributorBonusScreen());
+                              Get.to(() => DirectDistributorBonusScreen(
+                                    fromDate: fromDateTController.text != ""
+                                        ? fromDateTController.text
+                                        : "01/01/1900",
+                                    toDate: toDateTController.text != ""
+                                        ? toDateTController.text
+                                        : "01/01/2100",
+                                  ));
                             } else if (widget.from == "Personal Sales") {
                               Get.to(() => PersonalSalesScreen(
                                     fromDate: fromDateTController.text != ""

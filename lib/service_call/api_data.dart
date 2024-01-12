@@ -78,4 +78,12 @@ class ApiData {
   String specialLeadrBonus = "SpecialLeadrBonus";
   String personalSaleBonus = "PersonalSaleBonus";
   String activationBonus = "ActivationBonus";
+  String directDistSaleBonus = "DirectDistSaleBonus";
+  String flushCVRpt = "FlushCVRpt";
+  String fAQs = "FAQs";
+  String packageReview = "PackageReview";
+  String writeReview = "WriteReview";
+  String fTARegistration = "FTARegistration";
+  String fTARegRpt = "FTARegRpt";
+  String discountVoucherReport = "DiscountVoucherReport";
 }

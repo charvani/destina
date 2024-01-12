@@ -6,6 +6,7 @@ import '../../commons/colors.dart';
 import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
 import '../../models/mylist_reportmodel.dart';
+import 'idlistview_screen.dart';
 
 class MyListViewGetReportScreen extends StatefulWidget {
   final String? all, onDate, fromDate, toDate;
@@ -230,9 +231,10 @@ class _MyListViewGetReportScreenState extends State<MyListViewGetReportScreen> {
                                                       infoTextStyle("${j + 1}"),
                                                     ),
                                                     DataCell(
-                                                      infoTextStyle(dataList[i]
-                                                          .data[j]
-                                                          .userId),
+                                                      userIdTextStyle(
+                                                          dataList[i]
+                                                              .data[j]
+                                                              .userId),
                                                     ),
                                                     DataCell(
                                                       infoTextStyle(dataList[i]
@@ -287,6 +289,26 @@ class _MyListViewGetReportScreenState extends State<MyListViewGetReportScreen> {
       id,
       style: TextStyle(
           fontFamily: "OnestRegular", fontSize: 12, color: blackColor),
+    );
+  }
+
+  userIdTextStyle(String id) {
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        Get.to(() => IdListViewGetReportScreen(
+              fromDate: widget.fromDate,
+              toDate: widget.toDate,
+              all: widget.all,
+              onDate: widget.onDate,
+              id: id,
+            ));
+      },
+      child: Text(
+        id,
+        style: TextStyle(
+            fontFamily: "OnestRegular", fontSize: 12, color: darkBlue),
+      ),
     );
   }
 }

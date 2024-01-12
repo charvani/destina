@@ -1,3 +1,4 @@
+import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/inside_screens/profile/listofreq_approvedprofile_model.dart';
 import 'package:destina_1_international/models/activationbonus_model.dart';
 import 'package:destina_1_international/models/businessbonus_model.dart';
@@ -6,6 +7,7 @@ import 'package:destina_1_international/models/checkcountry_model.dart';
 import 'package:destina_1_international/models/customerbonus_model.dart';
 import 'package:destina_1_international/models/dashboard_model.dart';
 import 'package:destina_1_international/models/ecard_model.dart';
+import 'package:destina_1_international/models/faq_model.dart';
 import 'package:destina_1_international/models/genelogyview_model.dart';
 import 'package:destina_1_international/models/groupsales_model.dart';
 import 'package:destina_1_international/models/listofreq_model.dart';
@@ -13,6 +15,7 @@ import 'package:destina_1_international/models/loadcountry_model.dart';
 import 'package:destina_1_international/models/order_acknowledgemodel.dart';
 import 'package:destina_1_international/models/order_reportmodel.dart';
 import 'package:destina_1_international/models/packagedetails_model.dart';
+import 'package:destina_1_international/models/packreview_model.dart';
 import 'package:destina_1_international/models/personalbonus_model.dart';
 import 'package:destina_1_international/models/retailbonus_model.dart';
 import 'package:destina_1_international/models/selpackage_model.dart';
@@ -23,15 +26,17 @@ import 'package:destina_1_international/models/withdraw_statusmodel.dart';
 import 'package:destina_1_international/models/withdrawal_infomodel.dart';
 import 'package:destina_1_international/service_call/api_call.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../commons/constants.dart';
+import '../inside_screens/tools/ftaafterreg_screen.dart';
 import '../models/awardreport_model.dart';
 import '../models/bank_model.dart';
 import '../models/checkupdation_model.dart';
 import '../models/d1cashbackpoints_model.dart';
 import '../models/ecard_reqreport_model.dart';
 import '../models/enrolldata_model.dart';
+import '../models/ftaregistration_model.dart';
+import '../models/ftareport_modle.dart';
 import '../models/geneology_popupmodel.dart';
 import '../models/groupsales_cvmodel.dart';
 import '../models/maintenancelist_model.dart';
@@ -573,6 +578,7 @@ class MainController extends GetxController {
   Rx<GroupSalesCvModel> groupsalesCvData =
       GroupSalesCvModel(groupSalSummaryRpt: [], msg: "", message: "").obs;
   RxList<MyTeamViewModel> myteamviewList = <MyTeamViewModel>[].obs;
+  RxList<MyTeamViewModel> idteamviewList = <MyTeamViewModel>[].obs;
   RxList<OrderMallTypeModel> mallData = <OrderMallTypeModel>[].obs;
   RxList<OrderReportModel> orderReportData = <OrderReportModel>[].obs;
   RxList<ShippingOrderModel> shippingOrderData = <ShippingOrderModel>[].obs;
@@ -647,7 +653,37 @@ class MainController extends GetxController {
   RxList<ActivationBonusModel> activationBonusList =
       <ActivationBonusModel>[].obs;
   RxDouble activationBonusTotal = 0.0.obs;
+  RxList<FaqModel> bonusfaqList = <FaqModel>[].obs;
+  RxList<FaqModel> d1pendantfaqList = <FaqModel>[].obs;
+  RxList<FaqModel> waterfaqList = <FaqModel>[].obs;
+  RxList<PackageReviewModel> packReviewList = <PackageReviewModel>[].obs;
+  RxList<FtaReportModel> ftaReportList = <FtaReportModel>[].obs;
 
+  Rx<FtaRegistrationModel> ftaRegData = FtaRegistrationModel(
+          result: "",
+          ftaName: "",
+          ftaProofNo: "",
+          ftaContact: 0,
+          ftaEmail: "",
+          invName: "",
+          invProofNo: "",
+          invContact: 0,
+          invEmail: "",
+          fdated: "",
+          logName: "",
+          ldated: "",
+          add1: "",
+          add2: "",
+          city: "",
+          stateName: "",
+          name: "",
+          email: "",
+          faxno: "",
+          companyName: "",
+          mobile: "",
+          website: "",
+          vatno: "")
+      .obs;
 // *********************** *********************************************************************
   getCountryCode() async {
     dynamic res = await ApiCall().getMethodFun(url: ApiData().countryUrl);
@@ -895,6 +931,7 @@ class MainController extends GetxController {
         }
         Constants.prefs.setString("country_name", res['Country']);
         Constants.prefs.setString("country_id", res['CountryID']);
+        Constants.prefs.setString("reg_id", res['RegId']);
         Constants.prefs.setString("city", res['City']);
         Constants.prefs.setString("user_name", res['Name']);
       }
@@ -956,11 +993,11 @@ class MainController extends GetxController {
     return res;
   }
 
-  getUploadPhoto(XFile imageFile) async {
+  getUploadPhoto(String image64) async {
     loading.value = true;
 
     dynamic res = await ApiCall().uploadImage(
-      imageFile: imageFile.path,
+      imageFile: image64,
       endUrl: ApiData().uploadPhoto,
     );
     print("ressss....$res");
@@ -1039,6 +1076,14 @@ class MainController extends GetxController {
     return res;
   }
 
+  getD1Voucher(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().discountVoucherReport, params: parameters);
+    loading.value = false;
+    return res;
+  }
+
   getSalesTools(Map parameters) async {
     loading.value = true;
     servicesListData.clear();
@@ -1101,6 +1146,27 @@ class MainController extends GetxController {
       } else {
         for (int i = 0; i < res['MyRVrpt'].length; i++) {
           myteamviewList.add(MyTeamViewModel.fromJson(res['MyRVrpt'][i]));
+        }
+      }
+    }
+    loading.value = false;
+
+    return res;
+  }
+
+  getIdTeamView(Map parameters, String from) async {
+    loading.value = true;
+    idteamviewList.clear();
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().myTeamView, params: parameters);
+    if (res != null) {
+      if (from == "left") {
+        for (int i = 0; i < res['MyLVrpt'].length; i++) {
+          idteamviewList.add(MyTeamViewModel.fromJson(res['MyLVrpt'][i]));
+        }
+      } else {
+        for (int i = 0; i < res['MyRVrpt'].length; i++) {
+          idteamviewList.add(MyTeamViewModel.fromJson(res['MyRVrpt'][i]));
         }
       }
     }
@@ -1628,6 +1694,137 @@ class MainController extends GetxController {
             activationBonusTotal.value = activationBonusTotal.value +
                 double.parse(activationBonusList[i].netProfit);
           }
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getDistributorBonus(Map parameters) async {
+    loading.value = true;
+    // teamBuilderBonusTotal.value = 0.0;
+    // teamBuilderBonusList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().directDistSaleBonus, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        // for (int i = 0; i < res.length; i++) {
+        //   teamBuilderBonusList.add(TeamBuilderBonusModel.fromJson(res[i]));
+        //   if (teamBuilderBonusList[i].netBonus != "") {
+        //     teamBuilderBonusTotal.value = teamBuilderBonusTotal.value +
+        //         double.parse(teamBuilderBonusList[i].netBonus);
+        //   }
+        // }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getFlushCvBonus(Map parameters) async {
+    loading.value = true;
+    // teamBuilderBonusTotal.value = 0.0;
+    // teamBuilderBonusList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().flushCVRpt, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        // for (int i = 0; i < res.length; i++) {
+        //   teamBuilderBonusList.add(TeamBuilderBonusModel.fromJson(res[i]));
+        //   if (teamBuilderBonusList[i].netBonus != "") {
+        //     teamBuilderBonusTotal.value = teamBuilderBonusTotal.value +
+        //         double.parse(teamBuilderBonusList[i].netBonus);
+        //   }
+        // }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getFaqs(Map parameters) async {
+    loading.value = true;
+    bonusfaqList.clear();
+    d1pendantfaqList.clear();
+    waterfaqList.clear();
+    dynamic res = await ApiCall()
+        .listPostMethodFun(methodName: ApiData().fAQs, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          if (res[i]['Title'] == "Bonus") {
+            bonusfaqList.add(FaqModel.fromJson(res[i]));
+          }
+          if (res[i]['Title'] == "D1 Pendant") {
+            d1pendantfaqList.add(FaqModel.fromJson(res[i]));
+          }
+          if (res[i]['Title'] == "Energizing Water") {
+            waterfaqList.add(FaqModel.fromJson(res[i]));
+          }
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getPackageReviews(Map parameters) async {
+    loading.value = true;
+
+    packReviewList.clear();
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().packageReview, params: parameters);
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS") {
+        for (int i = 0; i < res['PackageRevRpt'].length; i++) {
+          packReviewList
+              .add(PackageReviewModel.fromJson(res['PackageRevRpt'][i]));
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getPackageReviewUpload(Map parameters) async {
+    loading.value = true;
+
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().writeReview, params: parameters);
+
+    loading.value = false;
+    return res;
+  }
+
+  getFTARegistration(Map parameters) async {
+    loading.value = true;
+
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().fTARegistration, params: parameters);
+    print("getFTARegistration...res...$res");
+    if (res != null) {
+      if (res.length > 0) {
+        ftaRegData.value = FtaRegistrationModel.fromJson(res[0]);
+        Get.to(() => const FTAAfterRegScreen());
+      } else {
+        CommonToast("Record existed, take new registration");
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getFTAReport(Map parameters) async {
+    loading.value = true;
+
+    ftaReportList.clear();
+    dynamic res = await ApiCall()
+        .listPostMethodFun(methodName: ApiData().fTARegRpt, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          ftaReportList.add(FtaReportModel.fromJson(res[i]));
         }
       }
     }

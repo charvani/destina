@@ -1,0 +1,298 @@
+import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../commons/colors.dart';
+import '../../commons/constants.dart';
+import '../../controllers/main_controller.dart';
+import '../../models/mylist_reportmodel.dart';
+
+class IdListViewGetReportScreen extends StatefulWidget {
+  final String? all, onDate, fromDate, toDate;
+  final String id;
+  const IdListViewGetReportScreen(
+      {super.key,
+      this.all,
+      this.fromDate,
+      this.onDate,
+      this.toDate,
+      required this.id});
+
+  @override
+  State<IdListViewGetReportScreen> createState() =>
+      _IdListViewGetReportScreenState();
+}
+
+class _IdListViewGetReportScreenState extends State<IdListViewGetReportScreen> {
+  final MainController _datacontroller = Get.put(MainController());
+  List<MyListReportModel> dataList = [];
+  List<ScrollController> scrollContollerList = [];
+  bool screenLoading = true;
+  dynamic userid, pass, username;
+  @override
+  void initState() {
+    super.initState();
+    userid = Constants.prefs.getString("user_id");
+    pass = Constants.prefs.getString("password");
+    username = Constants.prefs.getString("user_name");
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      listCountFun();
+    });
+  }
+
+  listCountFun() async {
+    Map bdata = {};
+    if (widget.all != null) {
+      bdata = {
+        "UserId": userid,
+        "Pwd": pass,
+        "Action": "All",
+        "FromDate": "",
+        "ToDate": "",
+        "ListViewID": widget.id
+      };
+    } else if (widget.onDate != null) {
+      bdata = {
+        "UserId": userid,
+        "Pwd": pass,
+        "Action": "OnDate",
+        "FromDate": widget.onDate,
+        "ToDate": widget.onDate,
+        "ListViewID": widget.id
+      };
+    } else {
+      bdata = {
+        "UserId": userid,
+        "Pwd": pass,
+        "Action": "FromToDate",
+        "FromDate": widget.fromDate,
+        "ToDate": widget.toDate,
+        "ListViewID": widget.id
+      };
+    }
+
+    dynamic res = await _datacontroller.getMyListViewLevels(bdata);
+    print("getting res...$res");
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          dataList.add(MyListReportModel.fromJson(res[i]));
+          scrollContollerList.add(ScrollController());
+        }
+        for (int i = 0; i < dataList.length; i++) {
+          dataFun(dataList[i].level, i);
+        }
+        print("dddd...${dataList.length}");
+        setState(() {
+          screenLoading = false;
+        });
+      }
+    } else {
+      setState(() {
+        screenLoading = false;
+      });
+    }
+  }
+
+  dataFun(String teamNo, int index) async {
+    Map bdata = {};
+    if (widget.all != null) {
+      bdata = {
+        "UserId": userid,
+        "Pwd": pass,
+        "Action": "All",
+        "FromDate": "",
+        "ToDate": "",
+        "LevelNo": teamNo,
+        "LevelID": widget.id,
+      };
+    } else if (widget.onDate != null) {
+      bdata = {
+        "UserId": userid,
+        "Pwd": pass,
+        "Action": "OnDate",
+        "FromDate": widget.onDate,
+        "ToDate": widget.onDate,
+        "LevelNo": teamNo,
+        "LevelID": widget.id,
+      };
+    } else {
+      bdata = {
+        "UserId": userid,
+        "Pwd": pass,
+        "Action": "FromToDate",
+        "FromDate": widget.fromDate,
+        "ToDate": widget.toDate,
+        "LevelNo": teamNo,
+        "LevelID": widget.id,
+      };
+    }
+
+    dynamic res = await _datacontroller.getMyListViewReport(bdata);
+    if (res.length > 0) {
+      for (int i = 0; i < res.length; i++) {
+        dataList[index].data.add(MyListReportDataModel.fromJson(res[i]));
+      }
+    }
+
+    print("finn....${dataList[index].data.length}");
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: commonAppBar(title: widget.id, backNavigation: true),
+      body: screenLoading
+          ? loader
+          : dataList.isEmpty
+              ? const NotAvailableText(text: "No data found")
+              : Container(
+                  color: whiteColor,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SpaceHeightWidget(height: 15),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: ViewProfileWidget(
+                              title: "User Id:", info: userid),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child:
+                              ViewProfileWidget(title: "Name:", info: username),
+                        ),
+                        const SpaceHeightWidget(height: 10),
+                        for (int i = 0; i < dataList.length; i++)
+                          Column(
+                            children: [
+                              CommonTitle(
+                                titleName: "Level - ${dataList[i].level}",
+                                size: 16,
+                                fontColor: darkBlue,
+                              ),
+                              Scrollbar(
+                                controller: scrollContollerList[i],
+                                thumbVisibility: true,
+                                trackVisibility: true,
+                                thickness: 5,
+                                interactive: true,
+                                radius: const Radius.circular(10),
+                                child: SingleChildScrollView(
+                                  controller: scrollContollerList[i],
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          child: DataTable(
+                                              // dataRowMaxHeight: 50,
+                                              horizontalMargin: 10,
+                                              columnSpacing: 20,
+                                              border: TableBorder.all(
+                                                  color: middleBlackColor
+                                                      .withOpacity(0.15),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              headingRowColor:
+                                                  MaterialStatePropertyAll(
+                                                      blackColor
+                                                          .withOpacity(0.8)),
+                                              dataRowColor:
+                                                  MaterialStatePropertyAll(
+                                                      lightDarKBlue
+                                                          .withOpacity(0.1)
+                                                      // whiteColor
+                                                      ),
+                                              columns: [
+                                                DataColumn(
+                                                    label: idTextStyle("S.No")),
+                                                DataColumn(
+                                                    label:
+                                                        idTextStyle("User ID")),
+                                                DataColumn(
+                                                    label: idTextStyle("Name")),
+                                                DataColumn(
+                                                    label:
+                                                        idTextStyle("Country")),
+                                                DataColumn(
+                                                    label:
+                                                        idTextStyle("Sponsor")),
+                                                DataColumn(
+                                                    label: idTextStyle(
+                                                        "	Date of Join")),
+                                              ],
+                                              rows: [
+                                                for (int j = 0;
+                                                    j < dataList[i].data.length;
+                                                    j++)
+                                                  DataRow(cells: [
+                                                    DataCell(
+                                                      infoTextStyle("${j + 1}"),
+                                                    ),
+                                                    DataCell(
+                                                      infoTextStyle(dataList[i]
+                                                          .data[j]
+                                                          .userId),
+                                                    ),
+                                                    DataCell(
+                                                      infoTextStyle(dataList[i]
+                                                          .data[j]
+                                                          .name),
+                                                    ),
+                                                    DataCell(
+                                                      infoTextStyle(dataList[i]
+                                                          .data[j]
+                                                          .country),
+                                                    ),
+                                                    DataCell(
+                                                      infoTextStyle(dataList[i]
+                                                          .data[j]
+                                                          .sponsor),
+                                                    ),
+                                                    DataCell(
+                                                      infoTextStyle(dataList[i]
+                                                          .data[j]
+                                                          .doj),
+                                                    ),
+                                                  ])
+                                              ]),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const SpaceHeightWidget(
+                                height: 18,
+                              )
+                            ],
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+    );
+  }
+
+  idTextStyle(String id) {
+    return Text(
+      id,
+      style: TextStyle(
+          fontFamily: "OnestSemiBold", fontSize: 12, color: whiteColor),
+    );
+  }
+
+  infoTextStyle(String id) {
+    return Text(
+      id,
+      style: TextStyle(
+          fontFamily: "OnestRegular", fontSize: 12, color: blackColor),
+    );
+  }
+}

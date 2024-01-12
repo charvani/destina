@@ -214,8 +214,12 @@ class MyData extends DataTableSource {
             info: _dataController.ecardData.value.emoneyrpt[index].description),
       ),
       DataCell(_verticalDivider),
-      const DataCell(
-        TableInfoWidget(info: ""),
+      DataCell(
+        _dataController.ecardData.value.emoneyrpt[index].imageText != ""
+            ? viewSlipWidget(
+                _dataController.ecardData.value.emoneyrpt[index].imageText,
+                _dataController.ecardData.value.emoneyrpt[index].imageEndPath)
+            : const TableInfoWidget(info: ""),
       ),
     ]);
   }
@@ -247,6 +251,50 @@ remarkTextWidget(String title, int i) {
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Text(
         title,
+        style: TextStyle(
+            fontFamily: "OnestRegular", fontSize: 12, color: darkBlue),
+      ),
+    ),
+  );
+}
+
+viewSlipWidget(String imageText, imagePath) {
+  return GestureDetector(
+    behavior: HitTestBehavior.translucent,
+    onTap: () {
+      // Get.to(() => HeroAnimationScreen(
+      //       tagData: imagePath,
+      //     ));
+      Get.dialog(Dialog(
+        backgroundColor: whiteColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: const Icon(Icons.close)),
+                ],
+              ),
+              CommonCachedNetworkImage(
+                  imagePath:
+                      "https://members.destina1.com/Ecardimages/$imagePath"),
+            ],
+          ),
+        ),
+      ));
+    },
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: Text(
+        imageText,
         style: TextStyle(
             fontFamily: "OnestRegular", fontSize: 12, color: darkBlue),
       ),

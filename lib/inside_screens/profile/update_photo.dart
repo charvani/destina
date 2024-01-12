@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:destina_1_international/commons/colors.dart';
@@ -95,8 +96,14 @@ class _UpdatePhotoScreenState extends State<UpdatePhotoScreen> {
                             onTapFun: () async {
                               if (image != null) {
                                 print("image fun");
+                                
+                                final bytes =
+                                    File(image!.path).readAsBytesSync();
+
+                                String img64 = base64Encode(bytes);
+
                                 dynamic res = await _upoladController
-                                    .getUploadPhoto(XFile(image!.path));
+                                    .getUploadPhoto(img64);
                                 if (res != null) {
                                   if (res['Msg'] == "SUCCESS") {
                                     CommonToastTrue(res['Message']);

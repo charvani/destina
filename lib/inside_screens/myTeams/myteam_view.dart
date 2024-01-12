@@ -1,4 +1,5 @@
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/inside_screens/myTeams/idteamview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -228,10 +229,20 @@ class _MyTeamViewScreenState extends State<MyTeamViewScreen> {
 }
 
 infoTextStyle(String id, Color textColor) {
-  return Text(
-    id,
-    style:
-        TextStyle(fontFamily: "OnestRegular", fontSize: 12, color: textColor),
+  return GestureDetector(
+    behavior: HitTestBehavior.translucent,
+    onTap: () {
+      if (textColor == darkBlue) {
+        Get.to(() => IdTeamViewScreen(
+          id: id,
+        ));
+      }
+    },
+    child: Text(
+      id,
+      style:
+          TextStyle(fontFamily: "OnestRegular", fontSize: 12, color: textColor),
+    ),
   );
 }
 

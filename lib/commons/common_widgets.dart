@@ -4599,10 +4599,14 @@ class PackageReviewWidget extends StatelessWidget {
               child: Column(
                 children: [
                   const SpaceHeightWidget(height: 8),
-                  Image.asset(
-                    imgPath,
+                  CommonCachedNetworkImage(
                     height: 90,
-                  ),
+                    
+                    imagePath: imgPath),
+                  // Image.asset(
+                  //   imgPath,
+                  //   height: 90,
+                  // ),
                   const SpaceHeightWidget(height: 5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
