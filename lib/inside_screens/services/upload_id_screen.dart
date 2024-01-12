@@ -1,9 +1,15 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../commons/constants.dart';
+import '../../controllers/main_controller.dart';
+import '../../service_call/api_data.dart';
 
 class UploadIDScreen extends StatefulWidget {
   const UploadIDScreen({super.key});
@@ -22,6 +28,16 @@ class _UploadIDScreenState extends State<UploadIDScreen> {
       border: Border.all(
         color: lightBlackColor.withOpacity(0.5),
       ));
+  final MainController _dataController = Get.put(MainController());
+  dynamic userId, password;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userId = Constants.prefs.getString("user_id");
+    password = Constants.prefs.getString("password");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,13 +138,11 @@ class _UploadIDScreenState extends State<UploadIDScreen> {
                   height: 30,
                   child: CommonOulineTextButton(
                       onTapFun: () async {
-                        FilePickerResult? result = await FilePicker.platform
-                            .pickFiles(allowedExtensions: [
-                          'jpg',
-                          'pdf',
-                          'doc',
-                          'png'
-                        ]);
+                        FilePickerResult? result =
+                            await FilePicker.platform.pickFiles(
+                          allowedExtensions: ['jpg', 'pdf', 'png'],
+                          type: FileType.custom,
+                        );
 
                         if (result != null) {
                           File file = File(result.files.single.path!);
@@ -149,9 +163,28 @@ class _UploadIDScreenState extends State<UploadIDScreen> {
                   horizontal: 25,
                 ),
                 child: CustomElevatedButton(
-                    onTapFun: () {
+                    onTapFun: () async {
                       if (_formKey.currentState!.validate()) {
                         print("submit fun");
+                        if (selectedFile == null) {
+                          CommonToast("please select image");
+                        } else {
+                          final bytes =
+                              File(selectedFile!.path).readAsBytesSync();
+                          String img64 = base64Encode(bytes);
+                          Map bdata = {
+                            "UserId": userId,
+                            "LPassword": password,
+                            "FileName": img64,
+                            "IDType": proofType
+                          };
+                          print("my b ...$bdata");
+                          dynamic res = await _dataController.getUploadFile(
+                              bdata, ApiData().uploadID);
+                          if (res != null) {
+                            print("lllll...$res");
+                          }
+                        }
                       }
                     },
                     title: "Submit"),

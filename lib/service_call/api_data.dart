@@ -30,7 +30,10 @@ class ApiData {
   String viewProfile = "ViewProfile";
   String updateProfile = "ProfileUpdate";
   String uploadPhoto = "UploadPhoto";
+  String uploadID = "UploadID";
+  String uploadKYC = "UploadKYC";
   String bankName = "BankName";
+  String loadKYCReport = "LoadKYCReport";
   String changePassword = "ChangePwd";
   String changeTransPassword = "ChangeTransPwd";
   String listOfRequest = "ListOfRequest";

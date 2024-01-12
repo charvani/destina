@@ -22,11 +22,11 @@ class _EcardTopupRequestScreenState extends State<EcardTopupRequestScreen> {
   TextEditingController totalAmountTController = TextEditingController();
   List<String> paymentMode = [
     "Cash Deposit",
-    "ZellePay",
     "Check Deposit",
+    "ZellePay",
     "Phone-In Order",
-    "Credit Card",
-    "Telegraphic Transfer"
+    "Telegraphic Transfer",
+    "Credit Card"
   ];
   dynamic paymentType;
   File? selectedFile;
@@ -307,7 +307,6 @@ class _EcardTopupRequestScreenState extends State<EcardTopupRequestScreen> {
                                               allowedExtensions: [
                                             'jpg',
                                             'pdf',
-                                            'doc',
                                             'png'
                                           ]);
 
@@ -405,7 +404,7 @@ class _EcardTopupRequestScreenState extends State<EcardTopupRequestScreen> {
                         bottomGap: 0,
                         onchangeFun: (val) {},
                         outsideFun: (val) async {},
-                        textInputType: TextInputType.name,
+                        textInputType: TextInputType.number,
                         hintText: "",
                         controller: totalAmountTController,
                         validation: (val) {
@@ -430,7 +429,15 @@ class _EcardTopupRequestScreenState extends State<EcardTopupRequestScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: CustomElevatedButton(
                       onTapFun: () {
-                        if (_formKey.currentState!.validate()) {}
+                        if (_formKey.currentState!.validate()) {
+                          if (paymentType == null) {
+                            CommonToast("Please select payment mode");
+                          } else {
+                            if (selectedFile == null) {
+                              CommonToast("Please select file");
+                            }
+                          }
+                        }
                       },
                       title: "Submit"),
                 ),

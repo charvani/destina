@@ -64,8 +64,6 @@ class ApiCall {
     required imageFile,
     required endUrl,
   }) async {
-   
-
     Map bData = {
       "UserId": Constants.prefs.getString("user_id"),
       "Pwd": Constants.prefs.getString("password"),
@@ -76,8 +74,7 @@ class ApiCall {
     print("image bdata...$bData");
 
     http.Response response =
-        await http.post(Uri.parse(ApiData().baseUrl + endUrl), body: bData
-            );
+        await http.post(Uri.parse(ApiData().baseUrl + endUrl), body: bData);
 
     print("cherry.....");
     dynamic convertedData = convert.jsonDecode(response.body);
@@ -103,6 +100,21 @@ class ApiCall {
       return convertedData;
     } else {
       CommonToast("data not available");
+    }
+  }
+
+  uploadFile({
+    required bodyData,
+    required endUrl,
+  }) async {
+    http.Response response =
+        await http.post(Uri.parse(ApiData().baseUrl + endUrl), body: bodyData);
+    print("cherry.....");
+    dynamic convertedData = convert.jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      return convertedData;
+    } else {
+      CommonToast(convertedData['Message']);
     }
   }
 }

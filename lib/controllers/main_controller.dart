@@ -982,6 +982,8 @@ class MainController extends GetxController {
     return res;
   }
 
+
+
   getBankInfo(Map parameters) async {
     bankIdData.clear();
     dynamic res = await ApiCall()
@@ -1003,6 +1005,26 @@ class MainController extends GetxController {
     print("ressss....$res");
     loading.value = false;
 
+    return res;
+  }
+
+  getUploadFile(Map bodyData, String endUrl) async {
+    loading.value = true;
+    dynamic res = await ApiCall().uploadFile(
+      bodyData: bodyData,
+      endUrl: endUrl,
+    );
+    print("ressss....$res");
+    loading.value = false;
+
+    return res;
+  }
+
+  getKycReport(
+    Map bodyData,
+  ) async {
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().loadKYCReport, params: bodyData);
     return res;
   }
 
