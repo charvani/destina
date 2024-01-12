@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -22,6 +23,7 @@ class _UploadIDScreenState extends State<UploadIDScreen> {
   final _formKey = GlobalKey<FormState>();
   dynamic proofType;
   File? selectedFile;
+  bool submitLoading = false;
 
   BoxDecoration decr = BoxDecoration(
       borderRadius: BorderRadius.circular(15),
@@ -162,32 +164,49 @@ class _UploadIDScreenState extends State<UploadIDScreen> {
                 padding: const EdgeInsets.symmetric(
                   horizontal: 25,
                 ),
-                child: CustomElevatedButton(
-                    onTapFun: () async {
-                      if (_formKey.currentState!.validate()) {
-                        print("submit fun");
-                        if (selectedFile == null) {
-                          CommonToast("please select image");
-                        } else {
-                          final bytes =
-                              File(selectedFile!.path).readAsBytesSync();
-                          String img64 = base64Encode(bytes);
-                          Map bdata = {
-                            "UserId": userId,
-                            "LPassword": password,
-                            "FileName": img64,
-                            "IDType": proofType
-                          };
-                          print("my b ...$bdata");
-                          dynamic res = await _dataController.getUploadFile(
-                              bdata, ApiData().uploadID);
-                          if (res != null) {
-                            print("lllll...$res");
+                child: submitLoading
+                    ? loader
+                    : CustomElevatedButton(
+                        onTapFun: () async {
+                          if (_formKey.currentState!.validate()) {
+                            print("submit fun");
+                            if (selectedFile == null) {
+                              CommonToast("please select image");
+                            } else {
+                              setState(() {
+                                submitLoading = true;
+                              });
+                              final bytes =
+                                  File(selectedFile!.path).readAsBytesSync();
+                              String img64 = base64Encode(bytes);
+                              Map bdata = {
+                                "UserId": userId,
+                                "Pwd": password,
+                                "FileName": img64,
+                                "IDType": proofType
+                              };
+                              print("my b ...$bdata");
+                              dynamic res = await _dataController.getUploadFile(
+                                  bdata, ApiData().uploadID);
+                              if (res != null) {
+                                print("lllll...$res");
+                                if (res['Msg'] == "SUCCESS") {
+                                  CommonToastTrue(res['Message']);
+
+                                  Timer(const Duration(seconds: 1), () {
+                                    Get.back();
+                                  });
+                                } else {
+                                  CommonToast(res['Message']);
+                                }
+                              }
+                              setState(() {
+                                submitLoading = false;
+                              });
+                            }
                           }
-                        }
-                      }
-                    },
-                    title: "Submit"),
+                        },
+                        title: "Submit"),
               ),
             ],
           ),
