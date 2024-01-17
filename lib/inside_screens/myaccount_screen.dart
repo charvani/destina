@@ -531,7 +531,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         MyAccountItemWidget(
           onTapFun: () {
             Get.to(() => const SalesMallScreen(
-                  from: "Sales",
+                // from: "Sales",
                 ));
           },
           title: "Sales Mall",
@@ -539,7 +539,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         MyAccountItemWidget(
           onTapFun: () {
             Get.to(() => const SalesMallScreen(
-                  from: "Redemption",
+                // from: "Redemption",
                 ));
           },
           title: "Redemption Mall",
@@ -554,7 +554,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         MyAccountItemWidget(
           onTapFun: () {
             Get.to(() => const SalesMallScreen(
-                  from: "Dp",
+                // from: "Dp",
                 ));
           },
           title: "Dp Mall",

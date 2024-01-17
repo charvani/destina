@@ -4,7 +4,6 @@ import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
-import 'package:destina_1_international/inside_screens/shopping/salesmall_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -123,8 +122,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               height: 30,
                               child: CustomAutoWidthButton(
                                   onTapFun: () {
-                                    Get.to(() =>
-                                        const SalesMallScreen(from: "Upgrade"));
+                                    print("upgrade");
+                                    // Get.to(() =>
+                                    // const SalesMallScreen(from: "Upgrade"));
                                   },
                                   title: "Click to Upgrade"),
                             )

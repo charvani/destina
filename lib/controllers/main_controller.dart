@@ -46,6 +46,9 @@ import '../models/packageitems_model.dart';
 import '../models/product_categoryitem_model.dart';
 import '../models/productdetails_model.dart';
 import '../models/registercart_item_model.dart';
+import '../models/salesmall_cartitem_model.dart';
+import '../models/salesmall_model.dart';
+import '../models/salesproductDet_model.dart';
 import '../models/serviceslist_model.dart';
 import '../models/signupLoad_model.dart';
 import '../models/teambuilder_model.dart';
@@ -684,6 +687,32 @@ class MainController extends GetxController {
           website: "",
           vatno: "")
       .obs;
+  RxList<SalesOrderModel> salesOrdersList = <SalesOrderModel>[].obs;
+  Rx<SalesProductModel> saleProductDetails = SalesProductModel(
+          overviewRpt: [],
+          reviewRpt: [],
+          endorsements: [],
+          categoryRpt: [],
+          productRpt: [],
+          msg: "",
+          message: "",
+          pkid: 0,
+          pkcode: "",
+          pkname: "",
+          mrp: "",
+          pimage: "",
+          codeNo: "",
+          cv: "",
+          img: "",
+          img1: "",
+          img2: "",
+          img3: '',
+          url: "",
+          pdfPath: "")
+      .obs;
+  RxList<SalesMallCartItemModel> salesMallCartItems =
+      <SalesMallCartItemModel>[].obs;
+  RxDouble salesMallTAmount = 0.0.obs;
 // *********************** *********************************************************************
   getCountryCode() async {
     dynamic res = await ApiCall().getMethodFun(url: ApiData().countryUrl);
@@ -981,8 +1010,6 @@ class MainController extends GetxController {
         .postMethodFun(methodName: ApiData().updateProfile, params: parameters);
     return res;
   }
-
-
 
   getBankInfo(Map parameters) async {
     bankIdData.clear();
@@ -1851,6 +1878,74 @@ class MainController extends GetxController {
       }
     }
     loading.value = false;
+    return res;
+  }
+
+  getSalesMall(Map parameters) async {
+    loading.value = true;
+
+    salesOrdersList.clear();
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().loadSalesMall, params: parameters);
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS") {
+        for (int i = 0; i < res['DistSelPackageRpt'].length; i++) {
+          salesOrdersList
+              .add(SalesOrderModel.fromJson(res['DistSelPackageRpt'][i]));
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getSalesProductDetails(Map parameters) async {
+    loading.value = true;
+
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().getSalesSingleProduct, params: parameters);
+    if (res != null) {
+      saleProductDetails.value = SalesProductModel.fromJson(res);
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getSalesMallProductItems(Map parameters) async {
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().packageItemsMethod, params: parameters);
+    packageDetails.value = PackageItemsModel.fromJson(res);
+    return res;
+  }
+
+  getSalesMallAddToCart(Map parameters) async {
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().pAddtoCartOpenSales, params: parameters);
+    return res;
+  }
+
+  getSalesMCartItems(String from, Map parameters) async {
+    if (from == "init") {
+      loading.value = true;
+    }
+    salesMallCartItems.clear();
+    salesMallTAmount.value = 0.0;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().checkOutSalesCartItems, params: parameters);
+
+    print("cart_itmes...${salesMallCartItems.length}");
+    if (res['AddCartSalesProductsRpt'].length > 0) {
+      for (int i = 0; i < res['AddCartSalesProductsRpt'].length; i++) {
+        salesMallCartItems.add(
+            SalesMallCartItemModel.fromJson(res['AddCartSalesProductsRpt'][i]));
+        salesMallTAmount.value = salesMallTAmount.value +
+            (double.parse(res['AddCartSalesProductsRpt'][i]['mrp']) *
+                double.parse(res['AddCartSalesProductsRpt'][i]['qty']));
+      }
+    }
+    if (from == "init") {
+      loading.value = false;
+    }
     return res;
   }
 }

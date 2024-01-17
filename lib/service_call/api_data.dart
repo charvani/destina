@@ -89,4 +89,8 @@ class ApiData {
   String fTARegistration = "FTARegistration";
   String fTARegRpt = "FTARegRpt";
   String discountVoucherReport = "DiscountVoucherReport";
+  String loadSalesMall = "LoadSalesMall";
+  String getSalesSingleProduct = "GetSalesSingleProduct";
+  String pAddtoCartOpenSales = "PAddtoCartOpenSales";
+  String checkOutSalesCartItems = "CheckOutSalesCartItems";
 }

@@ -179,11 +179,12 @@ class _UploadIDScreenState extends State<UploadIDScreen> {
                               final bytes =
                                   File(selectedFile!.path).readAsBytesSync();
                               String img64 = base64Encode(bytes);
+                              print("img64....$img64");
                               Map bdata = {
                                 "UserId": userId,
                                 "Pwd": password,
+                                "IDType": proofType,
                                 "FileName": img64,
-                                "IDType": proofType
                               };
                               print("my b ...$bdata");
                               dynamic res = await _dataController.getUploadFile(

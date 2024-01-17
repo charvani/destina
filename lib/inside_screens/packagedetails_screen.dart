@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:destina_1_international/authentication_screens/register_screen.dart';
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/commons/constants.dart';
@@ -271,8 +270,6 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                           ),
                         const SpaceHeightWidget(height: 30),
                         ProductAmountDetailsWidget(
-                          // retialPrice: "1500",
-                          // memberPrice: "1450",
                           price: packDetailsController
                               .packageDetailsData.value.mrp,
                           cv: packDetailsController.packageDetailsData.value.cv,
@@ -710,7 +707,7 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                                         "Packages added successfully"),
                                                   ).show(context);
                                                   Map params = {
-                                                    "rpt": "  EnrollDetails",
+                                                    "rpt": "EnrollDetails",
                                                     "Cid": widget.countryid,
                                                     "mid": "0"
                                                   };
@@ -740,13 +737,13 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                                               widget.countryid!,
                                                         ));
                                                   } else {
-                                                    Get.off(
-                                                        () => SponsorCheckScreen(
-                                                              packageCode: widget
-                                                                  .packageCode,
-                                                              countryId: widget
-                                                                  .countryid!,
-                                                            ));
+                                                    Get.off(() =>
+                                                        SponsorCheckScreen(
+                                                          packageCode: widget
+                                                              .packageCode,
+                                                          countryId:
+                                                              widget.countryid!,
+                                                        ));
                                                   }
                                                 } else {
                                                   Timer(
