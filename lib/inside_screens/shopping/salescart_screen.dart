@@ -53,16 +53,25 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
       });
     }
 
+    // cartParams = {
+    //   "Pkid": "",
+    //   "pid": "",
+    //   "Uniqid": uniqId,
+    //   "sessid": sessionId,
+    //   "ipaddress": Constants.prefs.get("ip"),
+    //   "sprno": Constants.prefs.get("reg_id"),
+    //   "prdtype": "Package",
+    //   "qty": "1",
+    //   "country": Constants.prefs.get("country_id"),
+    // };
     cartParams = {
-      "Pkid": "",
-      "pid": "",
       "Uniqid": uniqId,
       "sessid": sessionId,
-      "ipaddress": Constants.prefs.get("ip"),
+      "ipaddress": "GetCartData",
       "sprno": Constants.prefs.get("reg_id"),
-      "prdtype": "Package",
-      "qty": "1",
-      "country": Constants.prefs.get("country_id"),
+      "pcode": "",
+      "amt": "0",
+      "amttype": "",
     };
     print("cart params...$cartParams");
     dynamic res = await cartController.getSalesMCartItems(from, cartParams);
@@ -147,10 +156,45 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                     Column(
                                       children: [
                                         CartItemWidget(
-                                          removeCartOption: true,
+                                          // removeCartOption: true,
                                           imagePath: cartController
                                               .salesMallCartItems[i].pimage,
-                                          removeFun: () {},
+                                          removeFun: () {
+                                            Get.dialog(
+                                                barrierDismissible: false,
+                                                ConfrimationDialog(
+                                                    onTapFun: () async {
+                                                      Get.back();
+                                                      Map params = {
+                                                        "Regid": cartController
+                                                            .salesMallCartItems[
+                                                                i]
+                                                            .sno,
+                                                      };
+                                                      dynamic res =
+                                                          await cartController
+                                                              .getSalesMallItemRemove(
+                                                                  params,
+                                                                  cartParams);
+                                                      if (res != null) {
+                                                        print(
+                                                            "remove res..$res");
+                                                      }
+
+                                                      // ignore: use_build_context_synchronously
+
+                                                      //           Timer(
+                                                      //               const Duration(seconds: 1),
+                                                      //               () {
+                                                      //             Get.offAll(() =>
+                                                      //                 const BottomBarScreen(
+                                                      // index: 1,
+
+                                                      //                 ));
+                                                      //           });
+                                                    },
+                                                    title: "Are you sure?"));
+                                          },
                                           itemsPrice: cartController
                                               .salesMallCartItems[i].mrp,
                                           itemname: cartController
@@ -334,25 +378,6 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                           ],
                                         ),
                                         const SpaceHeightWidget(height: 20),
-                                        SizedBox(
-                                          width: 200,
-                                          height: 35,
-                                          child: IconElevatedButton(
-                                            onTapFun: () async {
-                                              print(
-                                                  "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
-
-                                              // Get.off(() => CheckOutScreen(
-                                              //     redirectUrl:
-                                              //         "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&sessid=$sessionId&uniqId=$uniqId"));
-                                            },
-                                            imagePath:
-                                                'assets/images/shopping_cart_img.jpg',
-                                            labelColor: whiteColor,
-                                            buttonColor: lightDarKBlue,
-                                            titile: "Submit",
-                                          ),
-                                        ),
                                       ],
                                     ),
                                   ),
@@ -439,6 +464,45 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                         //     itemCount: 4,
                         //   ),
                         // ),
+                        SizedBox(
+                          width: 200,
+                          height: 35,
+                          child: IconElevatedButton(
+                            onTapFun: () async {
+                              print(
+                                  "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
+
+                              // Get.off(() => CheckOutScreen(
+                              //     redirectUrl:
+                              //         "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&sessid=$sessionId&uniqId=$uniqId"));
+                            },
+                            imagePath: 'assets/images/shopping_cart_img.jpg',
+                            labelColor: whiteColor,
+                            buttonColor: lightDarKBlue,
+                            titile: "Checkout",
+                          ),
+                        ),
+                        const SpaceHeightWidget(height: 10),
+
+                        Container(
+                          padding: const EdgeInsets.all(8.0),
+                          alignment: Alignment.center,
+                          width: double.infinity,
+                          child: SizedBox(
+                            width: 200,
+                            height: 35,
+                            child: IconElevatedButton(
+                              onTapFun: () {
+                                Get.back();
+                                Get.back(result: [true]);
+                              },
+                              imagePath: 'assets/images/arrow_right.png',
+                              labelColor: whiteColor,
+                              titile: "Continue Shopping",
+                              buttonColor: blackColor,
+                            ),
+                          ),
+                        ),
                         const SpaceHeightWidget(height: 40)
                       ],
                     );
@@ -862,13 +926,6 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                                       .toString()
                                                       .toLowerCase() ==
                                                   "success") {
-                                                // ignore: use_build_context_synchronously
-                                                // MotionToast.success(
-                                                //   title: const Text(
-                                                //       "Congartulations!"),
-                                                //   description: const Text(
-                                                //       "Products added successfully to your cart."),
-                                                // ).show(context);
                                                 CommonToastTrue(
                                                     "Successfully added to your cart.");
 
@@ -892,10 +949,6 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                                 showQtyErrorText = true;
                                               });
                                             }
-
-                                            // await Constants.prefs.setInt("cart_count", 1);
-                                            // Get.back();
-                                            // Get.to(() => const EnrollPackageScreen());
                                           },
                                           title: "Add To Cart")),
                                   const SpaceWidthWidget(width: 10),

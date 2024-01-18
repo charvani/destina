@@ -29,8 +29,8 @@ class _SpecialSponsorBonusScreenState extends State<SpecialSponsorBonusScreen> {
     super.initState();
     userid = Constants.prefs.getString("user_id");
     password = Constants.prefs.getString("password");
-
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _dataController.customerBonusList.clear();
       dataFun();
     });
   }

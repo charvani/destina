@@ -294,6 +294,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           ),
                         ),
                         if (downlistSelectedInd == 0)
+                          if (_dashboardController
+                              .dashboardData.value.myDownlineLRpt.isEmpty)
+                            const Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: NotAvailableText(
+                                  text: "No Left Downlines are found"),
+                            ),
+                        if (downlistSelectedInd == 0)
                           for (int i = 0;
                               i <
                                   _dashboardController.dashboardData.value
@@ -306,6 +314,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                   .dashboardData.value.myDownlineLRpt[i].idno,
                               subtitle: _dashboardController
                                   .dashboardData.value.myDownlineLRpt[i].name,
+                            ),
+                        if (downlistSelectedInd == 1)
+                          if (_dashboardController
+                              .dashboardData.value.myDownlineRRpt.isEmpty)
+                            const Padding(
+                              padding: EdgeInsets.only(bottom: 10),
+                              child: NotAvailableText(
+                                  text: "No Right Downlines are found"),
                             ),
                         if (downlistSelectedInd == 1)
                           for (int i = 0;

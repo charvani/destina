@@ -33,6 +33,8 @@ class _DirectDistributorBonusScreenState
     password = Constants.prefs.getString("password");
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _dataController.customerBonusList.clear();
+
       dataFun();
     });
   }
@@ -67,71 +69,76 @@ class _DirectDistributorBonusScreenState
         return _dataController.loading.value
             ? loader
             : SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ViewProfileWidget(
-                    infoColor: redColor,
-                    title: "Grand Total",
-                    info: _dataController.customerBonusTotal.value
-                        .toStringAsFixed(2)),
-              ),
-              Scrollbar(
-                interactive: true,
-                trackVisibility: true,
-                controller: _scrollController,
-                thumbVisibility: true,
-                thickness: 8,
-                radius: const Radius.circular(10),
-                scrollbarOrientation: ScrollbarOrientation.bottom,
-                child: PaginatedDataTable(
-                    controller: _scrollController,
-                    columnSpacing: 0,
-                    horizontalMargin: 0,
-                    headingRowColor: MaterialStatePropertyAll(
-                        lightDarKBlue.withOpacity(0.2)),
-                    columns: [
-                      const DataColumn(
-                          label: TableHeadingWidget(title: "S.No")),
-                      DataColumn(label: _verticalDivider),
-                      const DataColumn(
-                          label: TableHeadingWidget(title: "Distributor ID")),
-                      DataColumn(label: _verticalDivider),
-                      const DataColumn(
-                          label: TableHeadingWidget(title: "Distributor Name")),
-                      DataColumn(label: _verticalDivider),
-                      const DataColumn(
-                          label: TableHeadingWidget(title: "From Distributor")),
-                      DataColumn(label: _verticalDivider),
-                      const DataColumn(
-                          label: TableHeadingWidget(title: "Order No")),
-                      DataColumn(label: _verticalDivider),
-                      const DataColumn(
-                          label: TableHeadingWidget(title: "Date")),
-                      DataColumn(label: _verticalDivider),
-                      const DataColumn(label: TableHeadingWidget(title: "CV")),
-                      DataColumn(label: _verticalDivider),
-                      const DataColumn(
-                          label: TableHeadingWidget(title: "Percent %")),
-                      DataColumn(label: _verticalDivider),
-                      const DataColumn(
-                          label: TableHeadingWidget(title: "Bonus (D1 \$)")),
-                      DataColumn(label: _verticalDivider),
-                      const DataColumn(
-                          label: TableHeadingWidget(
-                              title: "Redemption Points(RP)")),
-                      DataColumn(label: _verticalDivider),
-                      const DataColumn(
-                          label:
-                              TableHeadingWidget(title: "Net Bonus (D1 \$)")),
-                    ],
-                    source: tSource),
-              ),
-              const SpaceHeightWidget(height: 25)
-            ],
-          ),
-        );
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ViewProfileWidget(
+                          infoColor: redColor,
+                          title: "Grand Total",
+                          info: _dataController.customerBonusTotal.value
+                              .toStringAsFixed(2)),
+                    ),
+                    Scrollbar(
+                      interactive: true,
+                      trackVisibility: true,
+                      controller: _scrollController,
+                      thumbVisibility: true,
+                      thickness: 8,
+                      radius: const Radius.circular(10),
+                      scrollbarOrientation: ScrollbarOrientation.bottom,
+                      child: PaginatedDataTable(
+                          controller: _scrollController,
+                          columnSpacing: 0,
+                          horizontalMargin: 0,
+                          headingRowColor: MaterialStatePropertyAll(
+                              lightDarKBlue.withOpacity(0.2)),
+                          columns: [
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "S.No")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "Distributor ID")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "Distributor Name")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "From Distributor")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "Order No")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "Date")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "CV")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(title: "Percent %")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label:
+                                    TableHeadingWidget(title: "Bonus (D1 \$)")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "Redemption Points(RP)")),
+                            DataColumn(label: _verticalDivider),
+                            const DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "Net Bonus (D1 \$)")),
+                          ],
+                          source: tSource),
+                    ),
+                    const SpaceHeightWidget(height: 25)
+                  ],
+                ),
+              );
       }),
     );
   }

@@ -36,6 +36,9 @@ import 'profileDashBoard/profile_dashboard_screen.dart';
 import 'services/forms_agreements_screen.dart';
 import 'services/salesstools_screen.dart';
 import 'services/upload_id_screen.dart';
+import 'shopping/dpmall_screen.dart';
+import 'shopping/membermall_screen.dart';
+import 'shopping/redemptionmall_screen.dart.dart';
 import 'shopping/salesmall_screen.dart';
 import 'tools/faqs_screen.dart';
 import 'tools/ftaform_reportscreen.dart';
@@ -98,15 +101,16 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           ),
                         ),
                         const SpaceWidthWidget(width: 15),
-                        const Column(
+                        Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              "Destina1int",
-                              style: TextStyle(
+                              // "Destina1int",
+                              Constants.prefs.getString("user_id").toString(),
+                              style: const TextStyle(
                                   fontFamily: "OnestSemiBold", fontSize: 18),
                             ),
-                            Text(
+                            const Text(
                               "Member",
                               style: TextStyle(
                                   fontFamily: "OnestRegular", fontSize: 15),
@@ -528,37 +532,42 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   shoppingItems() {
     return Column(
       children: [
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const SalesMallScreen(
-                // from: "Sales",
-                ));
-          },
-          title: "Sales Mall",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const SalesMallScreen(
-                // from: "Redemption",
-                ));
-          },
-          title: "Redemption Mall",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () async {
-            Get.to(() => MemberScreen(
-                countryId: Constants.prefs.getString("country_id")!));
-          },
-          title: "Signup Mall",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const SalesMallScreen(
-                // from: "Dp",
-                ));
-          },
-          title: "Dp Mall",
-        ),
+        (Constants.prefs.getString("user_type") == "MEMBERSHIP")
+            ? MyAccountItemWidget(
+                onTapFun: () {
+                  Get.to(() => const MembershipMallScreen());
+                },
+                title: "Membership Mall",
+              )
+            : Column(
+                children: [
+                  MyAccountItemWidget(
+                    onTapFun: () {
+                      Get.to(() => const SalesMallScreen());
+                    },
+                    title: "Sales Mall",
+                  ),
+                  MyAccountItemWidget(
+                    onTapFun: () {
+                      Get.to(() => const RedemptionMallScreen());
+                    },
+                    title: "Redemption Mall",
+                  ),
+                  MyAccountItemWidget(
+                    onTapFun: () async {
+                      Get.to(() => MemberScreen(
+                          countryId: Constants.prefs.getString("country_id")!));
+                    },
+                    title: "Signup Mall",
+                  ),
+                  MyAccountItemWidget(
+                    onTapFun: () {
+                      Get.to(() => const DPMallScreen());
+                    },
+                    title: "Dp Mall",
+                  ),
+                ],
+              ),
         const SpaceHeightWidget(height: 13)
       ],
     );

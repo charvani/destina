@@ -30,6 +30,8 @@ class _SpecialBonusScreenState extends State<SpecialBonusScreen> {
     password = Constants.prefs.getString("password");
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _dataController.customerBonusList.clear();
+
       dataFun();
     });
   }

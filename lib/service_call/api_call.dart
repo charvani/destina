@@ -41,6 +41,20 @@ class ApiCall {
     }
   }
 
+  saleMallPostMethodFun({required String methodName, required Map params}) async {
+    print("method...$methodName");
+    print("params...$params");
+//encryption
+    dynamic encryptedText = Encrypt.encryptStringResponse(json.encode(params));
+    print("Encrypted text....$encryptedText");
+    http.Response response = await http.post(
+        Uri.parse(ApiData().baseUrl + methodName),
+        body: {"Info": encryptedText.toString()});
+    dynamic convertedData = convert.jsonDecode(response.body);
+
+    return convertedData;
+  }
+
   sponsorPostMethodFun(
       {required String methodName, required Map params}) async {
     print("method...$methodName");

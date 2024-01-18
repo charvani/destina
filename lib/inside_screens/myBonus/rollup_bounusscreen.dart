@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
-import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 
 class RollupBonusScreen extends StatefulWidget {
@@ -36,21 +35,7 @@ class _RollupBonusScreenState extends State<RollupBonusScreen> {
             //       DataColumn(label: TableHeadingWidget(title: "Credit Amount")),
             //     ],
             //     source: tSource),
-            Container(
-              height: 60,
-              padding: const EdgeInsets.all(8.0),
-              child: CommonFormFieldwidget(
-                hintText: "Search",
-                onChangeFun: (val) {
-                  print("vall...$val");
-                },
-                prefixIcon: Icon(
-                  FeatherIcons.search,
-                  size: 18,
-                  color: blackColor.withOpacity(0.3),
-                ),
-              ),
-            ),
+
             Scrollbar(
               interactive: true,
               trackVisibility: true,

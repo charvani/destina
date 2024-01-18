@@ -1,9 +1,16 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/service_call/api_data.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../commons/constants.dart';
+import '../../controllers/main_controller.dart';
 
 class EcardTopupRequestScreen extends StatefulWidget {
   const EcardTopupRequestScreen({super.key});
@@ -18,8 +25,11 @@ class _EcardTopupRequestScreenState extends State<EcardTopupRequestScreen> {
   TextEditingController fullNameTController = TextEditingController();
   TextEditingController userIdTController = TextEditingController();
   TextEditingController phoneNumTController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController ecardUserIdTController = TextEditingController();
   TextEditingController totalAmountTController = TextEditingController();
+  final MainController _dataController = Get.put(MainController());
+
   List<String> paymentMode = [
     "Cash Deposit",
     "Check Deposit",
@@ -29,15 +39,34 @@ class _EcardTopupRequestScreenState extends State<EcardTopupRequestScreen> {
     "Credit Card"
   ];
   dynamic paymentType;
+  dynamic paymentIndex;
   File? selectedFile;
+  dynamic upgradeVal = "0";
   final _formKey = GlobalKey<FormState>();
+  String areaCode = "";
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    fullNameTController.text = "DESTINA1";
-    userIdTController.text = "DESTINA1INT";
-    phoneNumTController.text = "162635294";
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      dataFun();
+    });
+  }
+
+  dataFun() async {
+    Map bdata = {
+      "UserId": Constants.prefs.getString("user_id"),
+      "Pwd": Constants.prefs.getString("password"),
+    };
+    dynamic res = await _dataController.getViewProfile(bdata);
+    if (res != null) {
+      fullNameTController.text = _dataController.viewProfileData.value.fullName;
+      userIdTController.text = Constants.prefs.getString("user_id").toString();
+      phoneNumTController.text = _dataController.viewProfileData.value.mobile;
+      emailController.text = _dataController.viewProfileData.value.email;
+      areaCode = _dataController.viewProfileData.value.zipCode;
+    }
   }
 
   @override
@@ -92,6 +121,7 @@ class _EcardTopupRequestScreenState extends State<EcardTopupRequestScreen> {
                               onChanged: (val) {
                                 setState(() {
                                   radioData = val;
+                                  upgradeVal = "1";
                                 });
                               }),
                           const SideTitle(title: "Yes"),
@@ -102,6 +132,7 @@ class _EcardTopupRequestScreenState extends State<EcardTopupRequestScreen> {
                               onChanged: (val) {
                                 setState(() {
                                   radioData = val;
+                                  upgradeVal = "2";
                                 });
                               }),
                           const SideTitle(title: "No")
@@ -160,7 +191,7 @@ class _EcardTopupRequestScreenState extends State<EcardTopupRequestScreen> {
                           outsideFun: (val) async {},
                           textInputType: TextInputType.name,
                           hintText: "ex: johnLee@gmail.com",
-                          controller: phoneNumTController,
+                          controller: emailController,
                           validation: (val) {
                             return null;
                           },
@@ -192,6 +223,7 @@ class _EcardTopupRequestScreenState extends State<EcardTopupRequestScreen> {
                                 onChanged: (val) {
                                   setState(() {
                                     paymentType = val;
+                                    paymentIndex = i + 1;
                                   });
                                 }),
                             const SpaceWidthWidget(width: 10),
@@ -427,19 +459,61 @@ class _EcardTopupRequestScreenState extends State<EcardTopupRequestScreen> {
                 const SpaceHeightWidget(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: CustomElevatedButton(
-                      onTapFun: () {
-                        if (_formKey.currentState!.validate()) {
-                          if (paymentType == null) {
-                            CommonToast("Please select payment mode");
-                          } else {
-                            if (selectedFile == null) {
-                              CommonToast("Please select file");
-                            }
-                          }
-                        }
-                      },
-                      title: "Submit"),
+                  child: Obx(() {
+                    return _dataController.loading.value
+                        ? loader
+                        : CustomElevatedButton(
+                            onTapFun: () async {
+                              if (_formKey.currentState!.validate()) {
+                                if (paymentType == null) {
+                                  CommonToast("Please select payment mode");
+                                } else {
+                                  if (selectedFile == null) {
+                                    CommonToast("Please select file");
+                                  } else {
+                                    final bytes = File(selectedFile!.path)
+                                        .readAsBytesSync();
+
+                                    String img64 = base64Encode(bytes);
+                                    Map bData = {
+                                      "UserId":
+                                          Constants.prefs.getString("user_id"),
+                                      "Pwd":
+                                          Constants.prefs.getString("password"),
+                                      "EID": "0",
+                                      "TypeofOrder": "1",
+                                      "UpPeriod": upgradeVal,
+                                      "fname": fullNameTController.text,
+                                      "areaCode": areaCode,
+                                      "PhoneNumber": phoneNumTController.text,
+                                      "EmailID": emailController.text,
+                                      "ModeofPayment": paymentIndex.toString(),
+                                      "Filename": img64,
+                                      "buyerId": userIdTController.text,
+                                      "TotAmount": totalAmountTController.text,
+                                      "StatusId": "0",
+                                      "type": "Insert",
+                                      "Remarks": "",
+                                    };
+                                    dynamic res =
+                                        await _dataController.getUploadFile(
+                                            bData, ApiData().ecardTopupRequest);
+                                    if (res != null) {
+                                      if (res['Msg'] == "SUCCESS") {
+                                        CommonToastTrue(res['Message']);
+                                        Timer(const Duration(seconds: 1), () {
+                                          Get.back();
+                                        });
+                                      } else {
+                                        CommonToast(res['Message']);
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            title: "Submit");
+                  }),
                 ),
                 const SpaceHeightWidget(height: 20),
               ],

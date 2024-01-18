@@ -33,6 +33,7 @@ import '../models/awardreport_model.dart';
 import '../models/bank_model.dart';
 import '../models/checkupdation_model.dart';
 import '../models/d1cashbackpoints_model.dart';
+import '../models/dpproduct_model.dart';
 import '../models/ecard_reqreport_model.dart';
 import '../models/enrolldata_model.dart';
 import '../models/ftaregistration_model.dart';
@@ -40,6 +41,7 @@ import '../models/ftareport_modle.dart';
 import '../models/geneology_popupmodel.dart';
 import '../models/groupsales_cvmodel.dart';
 import '../models/maintenancelist_model.dart';
+import '../models/member_productdetail_model.dart';
 import '../models/myteam_viewmodel.dart';
 import '../models/ordermall_model.dart';
 import '../models/packageitems_model.dart';
@@ -713,6 +715,56 @@ class MainController extends GetxController {
   RxList<SalesMallCartItemModel> salesMallCartItems =
       <SalesMallCartItemModel>[].obs;
   RxDouble salesMallTAmount = 0.0.obs;
+
+  Rx<DpProdccutModel> dpProductdata = DpProdccutModel(
+          msg: "",
+          message: "",
+          pkid: 0,
+          pkcode: "",
+          pkname: "",
+          mrp: "",
+          dpPrice: "",
+          pimage: "",
+          codeNo: "",
+          cv: "",
+          img: "",
+          img1: "",
+          img2: "",
+          img3: "",
+          url: "",
+          pdfPath: "")
+      .obs;
+
+  Rx<MemberProductModel> memberProductData = MemberProductModel(
+          overviewRpt: [],
+          reviewRpt: [],
+          endorsements: [],
+          categoryRpt: [],
+          productRpt: [],
+          distSelPackageRpt: [],
+          msg: "",
+          message: "",
+          pkid: 0,
+          pkcode: "",
+          pkname: "",
+          mrp: "",
+          pimage: "",
+          codeNo: "",
+          cv: "",
+          category: "",
+          img: "",
+          img1: "",
+          img2: "",
+          img3: "",
+          url: "",
+          pdfPath: "",
+          overview: "",
+          descrip: "",
+          info: "",
+          howtoUse: "",
+          videoUrl: "",
+          dpPrice: "")
+      .obs;
 // *********************** *********************************************************************
   getCountryCode() async {
     dynamic res = await ApiCall().getMethodFun(url: ApiData().countryUrl);
@@ -963,6 +1015,7 @@ class MainController extends GetxController {
         Constants.prefs.setString("reg_id", res['RegId']);
         Constants.prefs.setString("city", res['City']);
         Constants.prefs.setString("user_name", res['Name']);
+        Constants.prefs.setString("user_type", res['PkType']);
       }
       print("bbbb....${bannerPopUp.length}");
     }
@@ -1883,16 +1936,13 @@ class MainController extends GetxController {
 
   getSalesMall(Map parameters) async {
     loading.value = true;
-
     salesOrdersList.clear();
-    dynamic res = await ApiCall()
-        .postMethodFun(methodName: ApiData().loadSalesMall, params: parameters);
+    dynamic res = await ApiCall().saleMallPostMethodFun(
+        methodName: ApiData().loadSalesMall, params: parameters);
     if (res != null) {
-      if (res['Msg'] == "SUCCESS") {
-        for (int i = 0; i < res['DistSelPackageRpt'].length; i++) {
-          salesOrdersList
-              .add(SalesOrderModel.fromJson(res['DistSelPackageRpt'][i]));
-        }
+      for (int i = 0; i < res['DistSelPackageRpt'].length; i++) {
+        salesOrdersList
+            .add(SalesOrderModel.fromJson(res['DistSelPackageRpt'][i]));
       }
     }
     loading.value = false;
@@ -1934,18 +1984,143 @@ class MainController extends GetxController {
         methodName: ApiData().checkOutSalesCartItems, params: parameters);
 
     print("cart_itmes...${salesMallCartItems.length}");
-    if (res['AddCartSalesProductsRpt'].length > 0) {
-      for (int i = 0; i < res['AddCartSalesProductsRpt'].length; i++) {
-        salesMallCartItems.add(
-            SalesMallCartItemModel.fromJson(res['AddCartSalesProductsRpt'][i]));
-        salesMallTAmount.value = salesMallTAmount.value +
-            (double.parse(res['AddCartSalesProductsRpt'][i]['mrp']) *
-                double.parse(res['AddCartSalesProductsRpt'][i]['qty']));
+    if (res != null) {
+      if (res['SalesPackgeRpt'].length > 0 &&
+          res['SalesPackgeRpt'].toString() != "[]") {
+        for (int i = 0; i < res['SalesPackgeRpt'].length; i++) {
+          salesMallCartItems
+              .add(SalesMallCartItemModel.fromJson(res['SalesPackgeRpt'][i]));
+          salesMallTAmount.value = salesMallTAmount.value +
+              (double.parse(res['SalesPackgeRpt'][i]['mrp']) *
+                  double.parse(res['SalesPackgeRpt'][i]['qty']));
+        }
       }
+    } else {
+      Get.back();
+      Get.back();
     }
     if (from == "init") {
       loading.value = false;
     }
+    return res;
+  }
+
+  getSalesMallItemRemove(Map parameters, cartParameters) async {
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().removeSalesProduct, params: parameters);
+    getSalesMCartItems("init", cartParameters);
+    return res;
+  }
+
+  getRedemptionMall(Map parameters) async {
+    loading.value = true;
+    salesOrdersList.clear();
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().loadRedemMall, params: parameters);
+    if (res != null) {
+      for (int i = 0; i < res['DistSelPackageRpt'].length; i++) {
+        salesOrdersList
+            .add(SalesOrderModel.fromJson(res['DistSelPackageRpt'][i]));
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getDPMall(Map parameters) async {
+    loading.value = true;
+    salesOrdersList.clear();
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().loadDPMall, params: parameters);
+    if (res != null) {
+      for (int i = 0; i < res['DistSelPackageRpt'].length; i++) {
+        salesOrdersList
+            .add(SalesOrderModel.fromJson(res['DistSelPackageRpt'][i]));
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getDPProductDetails(Map parameters) async {
+    loading.value = true;
+
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().getDPSingleProduct, params: parameters);
+    if (res != null) {
+      dpProductdata.value = DpProdccutModel.fromJson(res);
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getDPMallAddToCart(Map parameters) async {
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().addtoCartDP, params: parameters);
+    return res;
+  }
+
+  getDPMCartItems(String from, Map parameters) async {
+    if (from == "init") {
+      loading.value = true;
+    }
+    salesMallCartItems.clear();
+    salesMallTAmount.value = 0.0;
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().getdppackages, params: parameters);
+
+    print("cart_itmes...${salesMallCartItems.length}");
+    if (res != null) {
+      if (res['DPPackageRpt'].length > 0 &&
+          res['DPPackageRpt'].toString() != "[]") {
+        for (int i = 0; i < res['DPPackageRpt'].length; i++) {
+          salesMallCartItems
+              .add(SalesMallCartItemModel.fromJson(res['DPPackageRpt'][i]));
+          salesMallTAmount.value = salesMallTAmount.value +
+              (double.parse(res['DPPackageRpt'][i]['mrp']) *
+                  double.parse(res['DPPackageRpt'][i]['qty']));
+        }
+      }
+    } else {
+      Get.back();
+      Get.back();
+    }
+    if (from == "init") {
+      loading.value = false;
+    }
+    return res;
+  }
+
+  getDPMallItemRemove(Map parameters, cartParameters) async {
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().removeDPProduct, params: parameters);
+    getDPMCartItems("init", cartParameters);
+    return res;
+  }
+
+  getMembershipMall(Map parameters) async {
+    loading.value = true;
+    salesOrdersList.clear();
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().loadMembershipMall, params: parameters);
+    if (res != null) {
+      for (int i = 0; i < res['DistSelPackageRpt'].length; i++) {
+        salesOrdersList
+            .add(SalesOrderModel.fromJson(res['DistSelPackageRpt'][i]));
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getMemberProductDetails(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().getMemberSingleProduct, params: parameters);
+    if (res != null) {
+      memberProductData.value = MemberProductModel.fromJson(res);
+    }
+    loading.value = false;
     return res;
   }
 }
