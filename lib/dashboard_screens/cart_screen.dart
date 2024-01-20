@@ -58,7 +58,6 @@ class _CartScreenState extends State<CartScreen> {
   dynamic uniqId;
   dynamic sessionId;
   MainController cartController = Get.put(MainController());
-  final _focusNode = FocusNode();
 
   @override
   void initState() {
@@ -100,7 +99,6 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () => _focusNode.unfocus(),
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -341,7 +339,6 @@ class _CartScreenState extends State<CartScreen> {
                                             // height: 35,
                                             child: TextFormField(
                                               readOnly: readOnly,
-                                              focusNode: _focusNode,
                                               autovalidateMode: AutovalidateMode
                                                   .onUserInteraction,
                                               controller: sponsorController,

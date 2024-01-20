@@ -37,7 +37,6 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
   bool showQtyErrorText = false;
   bool loading = false;
   List<String> pidList = [];
-  final _focusNode1 = FocusNode();
   bool packageLoading = false;
 
   @override
@@ -87,7 +86,6 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
     }
   }
 
-  final _focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

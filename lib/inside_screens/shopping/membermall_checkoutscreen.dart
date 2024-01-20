@@ -25,7 +25,6 @@ class _MembermallCheckoutScreenState extends State<MembermallCheckoutScreen> {
   dynamic uniqId;
   dynamic sessionId;
   MainController cartController = Get.put(MainController());
-  final _focusNode = FocusNode();
   bool packageLoading = false;
   @override
   void initState() {

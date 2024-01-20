@@ -41,7 +41,6 @@ class _UpgradeProductDetailsScreenState
   bool showQtyErrorText = false;
   bool loading = false;
   List<String> pidList = [];
-  final _focusNode1 = FocusNode();
   bool packageLoading = false;
 
   @override

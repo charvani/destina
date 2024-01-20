@@ -40,7 +40,6 @@ class _MemberProductDetailsScreenState
   bool showQtyErrorText = false;
   bool loading = false;
   List<String> pidList = [];
-  final _focusNode1 = FocusNode();
   bool packageLoading = false;
 
   @override
@@ -106,14 +105,12 @@ class _MemberProductDetailsScreenState
     print("packages data...$res");
   }
 
-  final _focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        _focusNode1.unfocus();
-        _focusNode.unfocus();
+
       },
       child: Scaffold(
         appBar: commonAppBar(
@@ -150,7 +147,6 @@ class _MemberProductDetailsScreenState
                         width: 50,
                         // height: 35,
                         child: RegisterTextField(
-                          focusNode: _focusNode1,
                           controller: firstQtyController,
                           hintText: '',
                           textInputType: TextInputType.number,
@@ -352,393 +348,394 @@ class _MemberProductDetailsScreenState
       insetPadding: const EdgeInsets.symmetric(horizontal: 6),
       backgroundColor: blackColor.withOpacity(0.8),
       child: StatefulBuilder(builder: (context, myState) {
-        return Form(
-          key: _fomkey,
-          child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: blackColor.withOpacity(0.8)),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Customize Packages",
-                        style: TextStyle(
-                            fontFamily: "OnestBold",
-                            fontSize: 16,
-                            color: whiteColor),
-                      ),
-                      IconButton(
-                          onPressed: () {
-                            if (loading != true) {
-                              Get.back();
-                            }
-                          },
-                          icon: Icon(
-                            Icons.close,
-                            size: 16,
-                            color: whiteColor,
-                          ))
-                    ],
+        return SingleChildScrollView(
+          child: Form(
+            key: _fomkey,
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: blackColor.withOpacity(0.8)),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Customize Packages",
+                          style: TextStyle(
+                              fontFamily: "OnestBold",
+                              fontSize: 16,
+                              color: whiteColor),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              if (loading != true) {
+                                Get.back();
+                              }
+                            },
+                            icon: Icon(
+                              Icons.close,
+                              size: 16,
+                              color: whiteColor,
+                            ))
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10)),
-                    color: whiteColor,
-                  ),
-                  padding: const EdgeInsets.all(7),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SpaceHeightWidget(height: 5),
-                      Text(
-                        // "Products In The Package MYSH01",
-                        _dataController.packageDetails.value.head,
-                        style: TextStyle(
-                            fontFamily: "OnestSemiBold",
-                            fontSize: 12,
-                            color: blackColor),
-                      ),
-                      const SpaceHeightWidget(height: 5),
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                          text:
-                              "Products Selected Should Be Of Total Quantity : ",
+                  Container(
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10)),
+                      color: whiteColor,
+                    ),
+                    padding: const EdgeInsets.all(7),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SpaceHeightWidget(height: 5),
+                        Text(
+                          // "Products In The Package MYSH01",
+                          _dataController.packageDetails.value.head,
                           style: TextStyle(
                               fontFamily: "OnestSemiBold",
                               fontSize: 12,
                               color: blackColor),
                         ),
-                        TextSpan(
-                          text: _dataController.packageDetails.value.maxQty,
-                          style: TextStyle(
-                              fontFamily: "OnestSemiBold",
-                              fontSize: 14,
-                              color: redColor),
-                        )
-                      ])),
-                      const SpaceHeightWidget(height: 20),
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: DataTable(
-                            // dataRowMinHeight: ,
-                            dataRowMaxHeight: 60,
-                            horizontalMargin: 0,
-                            // dataRowMaxHeight: 100,
-                            columnSpacing: 0,
-                            border: TableBorder.all(
-                                color: middleBlackColor.withOpacity(0.15)),
-                            columns: [
-                              DataColumn(
-                                  label: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  "S.No",
-                                  style: TextStyle(
-                                      fontFamily: "OnestSemiBold",
-                                      fontSize: 12,
-                                      color: blackColor),
-                                ),
-                              )),
-                              DataColumn(
-                                  label: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  "Product\nCode",
-                                  style: TextStyle(
-                                      fontFamily: "OnestSemiBold",
-                                      fontSize: 12,
-                                      color: blackColor),
-                                ),
-                              )),
-                              DataColumn(
-                                  label: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  "Name",
-                                  style: TextStyle(
-                                      fontFamily: "OnestSemiBold",
-                                      fontSize: 12,
-                                      color: blackColor),
-                                ),
-                              )),
-                              DataColumn(
-                                  label: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  "Maximum\nQuantity",
-                                  style: TextStyle(
-                                      fontFamily: "OnestSemiBold",
-                                      fontSize: 12,
-                                      color: blackColor),
-                                ),
-                              )),
-                              DataColumn(
-                                  label: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  "Quantity",
-                                  style: TextStyle(
-                                      fontFamily: "OnestSemiBold",
-                                      fontSize: 12,
-                                      color: blackColor),
-                                ),
-                              )),
-                            ],
-                            rows: [
-                              for (int i = 0;
-                                  i <
-                                      _dataController.packageDetails.value
-                                          .getPkgItemsRpt.length;
-                                  i++)
-                                DataRow(cells: [
-                                  DataCell(Container(
-                                    width: 10,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.2),
-                                    child: Text(
-                                      (i + 1).toString(),
-                                      style: TextStyle(
-                                          fontFamily: "OnestRegular",
-                                          fontSize: 12,
-                                          color: middleBlackColor),
-                                    ),
-                                  )),
-                                  DataCell(Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.2),
-                                    child: Text(
-                                      _dataController.packageDetails.value
-                                          .getPkgItemsRpt[i].pcode,
-                                      style: TextStyle(
-                                          fontFamily: "OnestRegular",
-                                          fontSize: 12,
-                                          color: middleBlackColor),
-                                    ),
-                                  )),
-                                  DataCell(Container(
-                                    width: 160,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.2, vertical: 2),
-                                    child: Text(
-                                      _dataController.packageDetails.value
-                                          .getPkgItemsRpt[i].name,
-                                      style: TextStyle(
-                                          fontFamily: "OnestRegular",
-                                          fontSize: 12,
-                                          color: middleBlackColor),
-                                    ),
-                                  )),
-                                  DataCell(Container(
-                                    width: 100,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.2),
-                                    child: Text(
-                                      _dataController.packageDetails.value
-                                          .getPkgItemsRpt[i].maxquan,
-                                      style: TextStyle(
-                                          fontFamily: "OnestRegular",
-                                          fontSize: 12,
-                                          color: middleBlackColor),
-                                    ),
-                                  )),
-                                  DataCell(Container(
+                        const SpaceHeightWidget(height: 5),
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                            text:
+                                "Products Selected Should Be Of Total Quantity : ",
+                            style: TextStyle(
+                                fontFamily: "OnestSemiBold",
+                                fontSize: 12,
+                                color: blackColor),
+                          ),
+                          TextSpan(
+                            text: _dataController.packageDetails.value.maxQty,
+                            style: TextStyle(
+                                fontFamily: "OnestSemiBold",
+                                fontSize: 14,
+                                color: redColor),
+                          )
+                        ])),
+                        const SpaceHeightWidget(height: 20),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: DataTable(
+                              // dataRowMinHeight: ,
+                              dataRowMaxHeight: 70,
+                              horizontalMargin: 0,
+                              // dataRowMaxHeight: 100,
+                              columnSpacing: 0,
+                              border: TableBorder.all(
+                                  color: middleBlackColor.withOpacity(0.15)),
+                              columns: [
+                                DataColumn(
+                                    label: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  child: Text(
+                                    "S.No",
+                                    style: TextStyle(
+                                        fontFamily: "OnestSemiBold",
+                                        fontSize: 12,
+                                        color: blackColor),
+                                  ),
+                                )),
+                                DataColumn(
+                                    label: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  child: Text(
+                                    "Product\nCode",
+                                    style: TextStyle(
+                                        fontFamily: "OnestSemiBold",
+                                        fontSize: 12,
+                                        color: blackColor),
+                                  ),
+                                )),
+                                DataColumn(
+                                    label: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  child: Text(
+                                    "Name",
+                                    style: TextStyle(
+                                        fontFamily: "OnestSemiBold",
+                                        fontSize: 12,
+                                        color: blackColor),
+                                  ),
+                                )),
+                                DataColumn(
+                                    label: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  child: Text(
+                                    "Maximum\nQuantity",
+                                    style: TextStyle(
+                                        fontFamily: "OnestSemiBold",
+                                        fontSize: 12,
+                                        color: blackColor),
+                                  ),
+                                )),
+                                DataColumn(
+                                    label: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  child: Text(
+                                    "Quantity",
+                                    style: TextStyle(
+                                        fontFamily: "OnestSemiBold",
+                                        fontSize: 12,
+                                        color: blackColor),
+                                  ),
+                                )),
+                              ],
+                              rows: [
+                                for (int i = 0;
+                                    i <
+                                        _dataController.packageDetails.value
+                                            .getPkgItemsRpt.length;
+                                    i++)
+                                  DataRow(cells: [
+                                    DataCell(Container(
+                                      width: 10,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5.2),
+                                      child: Text(
+                                        (i + 1).toString(),
+                                        style: TextStyle(
+                                            fontFamily: "OnestRegular",
+                                            fontSize: 12,
+                                            color: middleBlackColor),
+                                      ),
+                                    )),
+                                    DataCell(Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5.2),
+                                      child: Text(
+                                        _dataController.packageDetails.value
+                                            .getPkgItemsRpt[i].pcode,
+                                        style: TextStyle(
+                                            fontFamily: "OnestRegular",
+                                            fontSize: 12,
+                                            color: middleBlackColor),
+                                      ),
+                                    )),
+                                    DataCell(Container(
+                                      width: 160,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 5.2, vertical: 2),
+                                      child: Text(
+                                        _dataController.packageDetails.value
+                                            .getPkgItemsRpt[i].name,
+                                        style: TextStyle(
+                                            fontFamily: "OnestRegular",
+                                            fontSize: 12,
+                                            color: middleBlackColor),
+                                      ),
+                                    )),
+                                    DataCell(Container(
                                       width: 100,
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 5.2),
-                                      child: RegisterTextField(
-                                          readOnly: _dataController
+                                      child: Text(
+                                        _dataController.packageDetails.value
+                                            .getPkgItemsRpt[i].maxquan,
+                                        style: TextStyle(
+                                            fontFamily: "OnestRegular",
+                                            fontSize: 12,
+                                            color: middleBlackColor),
+                                      ),
+                                    )),
+                                    DataCell(Container(
+                                        width: 100,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5.2),
+                                        child: RegisterTextField(
+                                            readOnly: _dataController
+                                                        .packageDetails
+                                                        .value
+                                                        .getPkgItemsRpt[i]
+                                                        .compulsory ==
+                                                    "True"
+                                                ? true
+                                                : false,
+                                            inputFormatter: [
+                                              FilteringTextInputFormatter
+                                                  .digitsOnly,
+                                              LengthLimitingTextInputFormatter(2),
+                                              // FilteringTextInputFormatter.allow(
+                                              //     RegExp("[1-28]"))
+                                            ],
+                                            padding: 8,
+                                            textAlignVertical:
+                                                TextAlignVertical.bottom,
+                                            controller: textEControllerList[i],
+                                            hintText: "0",
+                                            textInputType: TextInputType.number,
+                                            validation: (val) {
+                                              if (val!.isEmpty) {
+                                                return "Enter Quantity";
+                                              } else if (int.parse(val) >
+                                                  int.parse(_dataController
                                                       .packageDetails
                                                       .value
-                                                      .getPkgItemsRpt[i]
-                                                      .compulsory ==
-                                                  "True"
-                                              ? true
-                                              : false,
-                                          focusNode: _focusNode,
-                                          inputFormatter: [
-                                            FilteringTextInputFormatter
-                                                .digitsOnly,
-                                            LengthLimitingTextInputFormatter(2),
-                                            // FilteringTextInputFormatter.allow(
-                                            //     RegExp("[1-28]"))
-                                          ],
-                                          padding: 8,
-                                          textAlignVertical:
-                                              TextAlignVertical.bottom,
-                                          controller: textEControllerList[i],
-                                          hintText: "0",
-                                          textInputType: TextInputType.number,
-                                          validation: (val) {
-                                            if (val!.isEmpty) {
-                                              return "Enter Quantity";
-                                            } else if (int.parse(val) >
-                                                int.parse(_dataController
-                                                    .packageDetails
-                                                    .value
-                                                    .maxQty)) {
-                                              return "Not allowed";
-                                            } else {
-                                              return null;
-                                            }
-                                          },
-                                          labelText: ""))),
-                                ])
-                            ]),
-                      ),
-                      if (showQtyErrorText)
-                        Column(
-                          children: [
-                            const SpaceHeightWidget(height: 8),
-                            Text(
-                              "Your selected quantity total should be ${_dataController.packageDetails.value.maxQty}",
-                              style: TextStyle(
-                                  fontFamily: "OnestSemiBold",
-                                  fontSize: 14,
-                                  color: redColor),
-                            )
-                          ],
-                        ),
-                      const SpaceHeightWidget(height: 20),
-                      loading
-                          ? loader
-                          : Container(
-                              padding: const EdgeInsets.all(10),
-                              alignment: Alignment.bottomCenter,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  SizedBox(
-                                      height: 30,
-                                      width: 130,
-                                      child: CustomElevatedButton(
-                                          onTapFun: () async {
-                                            pidList.clear();
-                                            int countQty = 0;
-                                            for (int i = 0;
-                                                i < textEControllerList.length;
-                                                i++) {
-                                              if (textEControllerList[i].text !=
-                                                  "") {
-                                                countQty = countQty +
-                                                    int.parse(
-                                                        textEControllerList[i]
-                                                            .text);
-                                                pidList.add(
-                                                    "${_dataController.packageDetails.value.getPkgItemsRpt[i].pcode}*${textEControllerList[i].text}");
-                                              }
-                                            }
-
-                                            if (countQty ==
-                                                int.parse(_dataController
-                                                    .packageDetails
-                                                    .value
-                                                    .maxQty)) {
-                                              myState(() {
-                                                showQtyErrorText = false;
-                                                loading = true;
-                                              });
-
-                                              print("add to car fun");
-                                              Map parameters = {
-                                                "Pkid": widget.packageCode,
-                                                "pid": pidList.join(":"),
-                                                "uniqid": uniqId,
-                                                "sessid": sessionId,
-                                                // "uniqid": widget.hidUid,
-                                                // "sessid": widget.hidUid,
-                                                "ipaddress": Constants.prefs
-                                                    .getString("ip"),
-                                                "sprno": Constants.prefs
-                                                    .getString("user_id"),
-                                                "prdtype": "Package",
-                                                "qty": firstQtyController.text,
-                                                "country": Constants.prefs
-                                                    .getString("country_id"),
-                                              };
-                                              print(
-                                                  "add to cart params...$parameters");
-                                              dynamic res =
-                                                  await MainController()
-                                                      .getMemberMallAddToCart(
-                                                          parameters);
-                                              if (res['Msg']
-                                                      .toString()
-                                                      .toLowerCase() ==
-                                                  "success") {
-                                                Timer(
-                                                    const Duration(seconds: 1),
-                                                    () {
-                                                  if (mounted) {
-                                                    myState(() {
-                                                      loading = false;
-                                                    });
-                                                  }
-                                                  Get.back();
-                                                  Get.back(result: [
-                                                    true,
-                                                    res['Cnt']
-                                                  ]);
-                                                  // Get.to(() =>
-                                                  //     const MembermallCartScreen());
-                                                });
+                                                      .maxQty)) {
+                                                return "Not allowed";
                                               } else {
-                                                Timer(
-                                                    const Duration(seconds: 1),
-                                                    () {
-                                                  if (mounted) {
-                                                    myState(() {
-                                                      loading = false;
-                                                    });
-                                                    CommonToast(res['Message']);
+                                                return null;
+                                              }
+                                            },
+                                            labelText: ""))),
+                                  ])
+                              ]),
+                        ),
+                        if (showQtyErrorText)
+                          Column(
+                            children: [
+                              const SpaceHeightWidget(height: 8),
+                              Text(
+                                "Your selected quantity total should be ${_dataController.packageDetails.value.maxQty}",
+                                style: TextStyle(
+                                    fontFamily: "OnestSemiBold",
+                                    fontSize: 14,
+                                    color: redColor),
+                              )
+                            ],
+                          ),
+                        const SpaceHeightWidget(height: 20),
+                        loading
+                            ? loader
+                            : Container(
+                                padding: const EdgeInsets.all(10),
+                                alignment: Alignment.bottomCenter,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(
+                                        height: 30,
+                                        width: 130,
+                                        child: CustomElevatedButton(
+                                            onTapFun: () async {
+                                              pidList.clear();
+                                              int countQty = 0;
+                                              for (int i = 0;
+                                                  i < textEControllerList.length;
+                                                  i++) {
+                                                if (textEControllerList[i].text !=
+                                                    "") {
+                                                  countQty = countQty +
+                                                      int.parse(
+                                                          textEControllerList[i]
+                                                              .text);
+                                                  pidList.add(
+                                                      "${_dataController.packageDetails.value.getPkgItemsRpt[i].pcode}*${textEControllerList[i].text}");
+                                                }
+                                              }
+          
+                                              if (countQty ==
+                                                  int.parse(_dataController
+                                                      .packageDetails
+                                                      .value
+                                                      .maxQty)) {
+                                                myState(() {
+                                                  showQtyErrorText = false;
+                                                  loading = true;
+                                                });
+          
+                                                print("add to car fun");
+                                                Map parameters = {
+                                                  "Pkid": widget.packageCode,
+                                                  "pid": pidList.join(":"),
+                                                  "uniqid": uniqId,
+                                                  "sessid": sessionId,
+                                                  // "uniqid": widget.hidUid,
+                                                  // "sessid": widget.hidUid,
+                                                  "ipaddress": Constants.prefs
+                                                      .getString("ip"),
+                                                  "sprno": Constants.prefs
+                                                      .getString("user_id"),
+                                                  "prdtype": "Package",
+                                                  "qty": firstQtyController.text,
+                                                  "country": Constants.prefs
+                                                      .getString("country_id"),
+                                                };
+                                                print(
+                                                    "add to cart params...$parameters");
+                                                dynamic res =
+                                                    await MainController()
+                                                        .getMemberMallAddToCart(
+                                                            parameters);
+                                                if (res['Msg']
+                                                        .toString()
+                                                        .toLowerCase() ==
+                                                    "success") {
+                                                  Timer(
+                                                      const Duration(seconds: 1),
+                                                      () {
+                                                    if (mounted) {
+                                                      myState(() {
+                                                        loading = false;
+                                                      });
+                                                    }
                                                     Get.back();
-                                                  }
+                                                    Get.back(result: [
+                                                      true,
+                                                      res['Cnt']
+                                                    ]);
+                                                    // Get.to(() =>
+                                                    //     const MembermallCartScreen());
+                                                  });
+                                                } else {
+                                                  Timer(
+                                                      const Duration(seconds: 1),
+                                                      () {
+                                                    if (mounted) {
+                                                      myState(() {
+                                                        loading = false;
+                                                      });
+                                                      CommonToast(res['Message']);
+                                                      Get.back();
+                                                    }
+                                                  });
+                                                }
+                                              } else {
+                                                myState(() {
+                                                  showQtyErrorText = true;
                                                 });
                                               }
-                                            } else {
-                                              myState(() {
-                                                showQtyErrorText = true;
-                                              });
-                                            }
-
-                                            // await Constants.prefs.setInt("cart_count", 1);
-                                            // Get.back();
-                                            // Get.to(() => const EnrollPackageScreen());
+          
+                                              // await Constants.prefs.setInt("cart_count", 1);
+                                              // Get.back();
+                                              // Get.to(() => const EnrollPackageScreen());
+                                            },
+                                            title: "Add To Cart")),
+                                    const SpaceWidthWidget(width: 10),
+                                    SizedBox(
+                                      width: 100,
+                                      height: 30,
+                                      child: CustomElevatedButton(
+                                          onTapFun: () {
+                                            Get.back();
                                           },
-                                          title: "Add To Cart")),
-                                  const SpaceWidthWidget(width: 10),
-                                  SizedBox(
-                                    width: 100,
-                                    height: 30,
-                                    child: CustomElevatedButton(
-                                        onTapFun: () {
-                                          Get.back();
-                                        },
-                                        title: "Cancel"),
-                                  ),
-                                ],
-                              ),
-                            )
-                    ],
+                                          title: "Cancel"),
+                                    ),
+                                  ],
+                                ),
+                              )
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
