@@ -9,14 +9,16 @@ import 'package:get/get.dart';
 import '../../controllers/main_controller.dart';
 
 class EcardTransferScreen extends StatefulWidget {
-  final String from, transPass, bal, symbol;
+  final String from, transPass, bal, symbol, etype;
 
-  const EcardTransferScreen(
-      {super.key,
-      required this.from,
-      required this.transPass,
-      required this.bal,
-      required this.symbol});
+  const EcardTransferScreen({
+    super.key,
+    required this.from,
+    required this.transPass,
+    required this.bal,
+    required this.symbol,
+    required this.etype,
+  });
 
   @override
   State<EcardTransferScreen> createState() => _EcardTransferScreenState();
@@ -40,9 +42,7 @@ class _EcardTransferScreenState extends State<EcardTransferScreen> {
     userId = Constants.prefs.getString("user_id");
     passwordTController.text = widget.transPass;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (widget.from == "E-Card") {
-        moneyTypeFun();
-      }
+      moneyTypeFun();
     });
   }
 
@@ -52,7 +52,7 @@ class _EcardTransferScreenState extends State<EcardTransferScreen> {
       "UserId": userId,
       "Pwd": Constants.prefs.getString("password"),
       "Action": "getemoneytype",
-      "EType": "Ecard",
+      "EType": widget.etype,
       "Mallname": ""
     };
     dynamic res = await _dataController.getEcardMoneyType(bdata);
@@ -67,7 +67,7 @@ class _EcardTransferScreenState extends State<EcardTransferScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(backNavigation: true, title: "ECard Transfer"),
+      appBar: commonAppBar(backNavigation: true, title: ""),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -205,7 +205,7 @@ class _EcardTransferScreenState extends State<EcardTransferScreen> {
                               "Action": "Insert",
                               "Balance": widget.bal,
                               "TranferAmount": transferAmtController.text,
-                              "FromEmontyType": "Ecard",
+                              "FromEmontyType": widget.etype,
                               "ToEmontyType": eMoneyType,
                               "Remarks": remarksController.text,
                               "TransPassword": widget.transPass,

@@ -173,9 +173,9 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
     Map bdata = {
       "UserId": userId,
       "Pwd": Constants.prefs.getString("password"),
-      "From": userId,
+      // "From": userId,
       "Action": "Insert",
-      "regid": userId,
+      "regid": Constants.prefs.getString("reg_id"),
       "amount": withdrawalAmountTController.text,
       "ip": _dataController.withdrawalInfoData.value.symbol,
       "frmdate": "1/1/1990",

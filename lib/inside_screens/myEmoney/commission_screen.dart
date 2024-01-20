@@ -52,11 +52,12 @@ class _ComissionAmountScreenState extends State<ComissionAmountScreen> {
                     child: CustomAutoWidthButton(
                         onTapFun: () {
                           Get.to(() => EcardTransferScreen(
-                                from: "E-Card",
+                                from: "Commission",
                                 transPass: widget.transPass,
                                 bal: _dataController
                                     .ecardData.value.balenceAmount,
                                 symbol: _dataController.ecardData.value.symbol,
+                                etype: "Commission e-Money",
                               ));
                         },
                         title: "EMoney Transfer"),

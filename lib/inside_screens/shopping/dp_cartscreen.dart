@@ -30,6 +30,17 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
   MainController cartController = Get.put(MainController());
   final _focusNode = FocusNode();
   bool packageLoading = false;
+  checkingFun() {
+    String str = "10 DP + RM 1800.00";
+    final endIndex = str.indexOf("DP", 0);
+    print(str.substring(0, endIndex));
+    // final end = str.;
+    // print("enn..$end");
+
+    print(
+        str.substring(str.indexOf("RM"), str.length - 1).replaceAll("RM", ""));
+  }
+
   @override
   void initState() {
     super.initState();
@@ -38,9 +49,7 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
     sessionId = Constants.prefs.getString("ss_id");
     sponsorController.text = "";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // if (uniqId != null && sessionId != null) {
       getData("init");
-      // }
     });
   }
 
@@ -317,19 +326,20 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                               "Subtotal",
                                               style: TextStyle(
                                                 fontFamily: "OnestRegular",
-                                                fontSize: 15,
+                                                fontSize: 14,
                                               ),
                                             ),
                                             Obx(() {
                                               return cartController
                                                       .loading.value
-                                                  ? const Text("RM 0.0")
+                                                  ? const Text(
+                                                      "DP 0.0 + RM 0.0")
                                                   : Text(
-                                                      "RM ${cartController.salesMallTAmount.value}",
+                                                      "DP ${cartController.dpMallDPAmount.value} + RM ${cartController.dpMallRMAmount.value}",
                                                       style: const TextStyle(
                                                         fontFamily:
                                                             "OnestRegular",
-                                                        fontSize: 15,
+                                                        fontSize: 14,
                                                       ),
                                                     );
                                             }),
@@ -346,20 +356,21 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                               "Estimated Total",
                                               style: TextStyle(
                                                 fontFamily: "OnestSemiBold",
-                                                fontSize: 15,
+                                                fontSize: 14,
                                                 color: darkBlue,
                                               ),
                                             ),
                                             Obx(() {
                                               return cartController
                                                       .loading.value
-                                                  ? const Text("RM 0.0")
+                                                  ? const Text(
+                                                      "DP 0.0 + RM 0.0")
                                                   : Text(
-                                                      "RM ${cartController.salesMallTAmount.value}",
+                                                      "DP ${cartController.dpMallDPAmount.value} + RM ${cartController.dpMallRMAmount.value}",
                                                       style: TextStyle(
                                                         fontFamily:
                                                             "OnestSemiBold",
-                                                        fontSize: 15,
+                                                        fontSize: 14,
                                                         color: darkBlue,
                                                       ),
                                                     );
@@ -484,6 +495,7 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                               onTapFun: () {
                                 Get.back();
                                 Get.back(result: [true]);
+                                // checkingFun();
                               },
                               imagePath: 'assets/images/arrow_right.png',
                               labelColor: whiteColor,

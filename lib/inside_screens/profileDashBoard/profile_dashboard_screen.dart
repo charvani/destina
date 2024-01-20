@@ -6,7 +6,10 @@ import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
+import '../shopping/salesmall_screen.dart';
+import '../shopping/upgradeorder.screen.dart';
 import 'redeem_screen.dart';
 
 class DashBoardScreen extends StatefulWidget {
@@ -33,7 +36,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   ];
   int myDataSelectedInd = 0;
   Timer? eligibilityTimer;
-  DateTime givenDate = DateTime(2024, 2, 16);
+  DateTime givenDate = DateTime.now();
   DateTime currentDate = DateTime.now();
   dynamic daysDifference;
   String? todayVal;
@@ -47,23 +50,37 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       dataFun();
     });
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        daysDifference = givenDate.difference(currentDate).inDays;
-        todayVal = DateTime.now().day.toString();
-        hourVal = DateTime.now().hour.toString();
-        minVal = DateTime.now().minute.toString();
-        secVal = DateTime.now().second.toString();
-      });
-    });
   }
 
-  dataFun() {
+  dataFun() async {
     Map bdata = {
       "UserId": Constants.prefs.getString("user_id"),
       "Pwd": Constants.prefs.getString("password"),
     };
-    _dashboardController.getDashboard(bdata);
+    dynamic res = await _dashboardController.getDashboard(bdata);
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS" &&
+          _dashboardController.dashboardData.value.pkgUpgrade == "1") {
+        DateFormat inputFormat = DateFormat("M/d/yyyy h:mm:ss a");
+        DateTime dateTime = inputFormat
+            .parse(_dashboardController.dashboardData.value.nupgdate);
+        givenDate = dateTime;
+
+        print("given date...$givenDate");
+        print("given date...${givenDate.day}");
+        print("given date...${givenDate.month}");
+        print("given date...${givenDate.year}");
+        Timer.periodic(const Duration(seconds: 1), (timer) {
+          setState(() {
+            daysDifference = givenDate.difference(currentDate).inDays;
+            todayVal = DateTime.now().day.toString();
+            hourVal = DateTime.now().hour.toString();
+            minVal = DateTime.now().minute.toString();
+            secVal = DateTime.now().second.toString();
+          });
+        });
+      }
+    }
   }
 
   @override
@@ -76,8 +93,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             : SingleChildScrollView(
                 child: Column(children: [
                   const SpaceHeightWidget(height: 20),
-                  if (_dashboardController.dashboardData.value.showRes !=
-                      "hide")
+                  if (_dashboardController.dashboardData.value.pkgUpgrade ==
+                      "1")
                     Column(
                       children: [
                         const CommonTitle(
@@ -123,8 +140,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               child: CustomAutoWidthButton(
                                   onTapFun: () {
                                     print("upgrade");
-                                    // Get.to(() =>
-                                    // const SalesMallScreen(from: "Upgrade"));
+                                    Get.to(() => const UpgradeOrderScreen());
                                   },
                                   title: "Click to Upgrade"),
                             )

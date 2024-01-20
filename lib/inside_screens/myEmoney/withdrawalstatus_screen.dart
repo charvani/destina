@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/main_controller.dart';
-import 'ecard_transfer_screen.dart';
 
 class WithdrawalStatusScreen extends StatefulWidget {
   final String transPass;
@@ -33,24 +32,24 @@ class _WithdrawalStatusScreenState extends State<WithdrawalStatusScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SpaceHeightWidget(height: 10),
-            Row(
+            const Row(
               children: [
-                const SpaceWidthWidget(width: 10),
-                if (_dataController.withdrawStatusData.value.ecardButton)
-                  SizedBox(
-                    height: 30,
-                    child: CustomAutoWidthButton(
-                        onTapFun: () {
-                          Get.to(() => EcardTransferScreen(
-                                from: "Withdrawal",
-                                transPass: widget.transPass,
-                                bal: _dataController
-                                    .ecardData.value.balenceAmount,
-                                symbol: _dataController.ecardData.value.symbol,
-                              ));
-                        },
-                        title: "EMoney Transfer"),
-                  ),
+                SpaceWidthWidget(width: 10),
+                // if (_dataController.withdrawStatusData.value.ecardButton)
+                //   SizedBox(
+                //     height: 30,
+                //     child: CustomAutoWidthButton(
+                //         onTapFun: () {
+                //           Get.to(() => EcardTransferScreen(
+                //                 from: "Withdrawal",
+                //                 transPass: widget.transPass,
+                //                 bal: _dataController
+                //                     .ecardData.value.balenceAmount,
+                //                 symbol: _dataController.ecardData.value.symbol,
+                //               ));
+                //         },
+                //         title: "EMoney Transfer"),
+                //   ),
               ],
             ),
             Scrollbar(

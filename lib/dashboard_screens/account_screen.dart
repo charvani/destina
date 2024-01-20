@@ -267,11 +267,11 @@ class _AccountScreenState extends State<AccountScreen>
                 onTapFun: () {},
                 title: "Settings",
               ),
-              AboutUsScreenWidget(
-                leadingIcon: Icons.file_copy_outlined,
-                onTapFun: () {},
-                title: "FAQ",
-              ),
+              // AboutUsScreenWidget(
+              //   leadingIcon: Icons.file_copy_outlined,
+              //   onTapFun: () {},
+              //   title: "FAQ",
+              // ),
               AboutUsScreenWidget(
                 leadingIcon: FeatherIcons.fileText,
                 onTapFun: () {},

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
-import 'sales_productdetailsscreen.dart';
+import 'redemption_productdetailscreen.dart';
 
 class RedemptionMallScreen extends StatefulWidget {
   const RedemptionMallScreen({
@@ -39,7 +39,7 @@ class _RedemptionMallScreenState extends State<RedemptionMallScreen> {
 
   dataFun() async {
     Map bData = {
-      "Action": "GetRedPackages_MA",
+      "Action": "GetRedPackages",
       "CountryID": countryId,
       "MallName": ""
       // uniqId
@@ -146,8 +146,8 @@ class _RedemptionMallScreenState extends State<RedemptionMallScreen> {
                       itemBuilder: (context, i) {
                         return CategroyItemWidget(
                           onTapFun: () async {
-                            dynamic res =
-                                await Get.to(() => SalesProductDetailsScreen(
+                            dynamic res = await Get.to(
+                                () => RedemptionProductDetailsScreen(
                                       packageCode: _dataController
                                           .salesOrdersList[i].pkcode,
                                     ));
@@ -159,7 +159,8 @@ class _RedemptionMallScreenState extends State<RedemptionMallScreen> {
                           },
                           imagePath: _dataController.salesOrdersList[i].pImage,
                           titile: _dataController.salesOrdersList[i].pkname,
-                          amount: _dataController.salesOrdersList[i].mrp,
+                          amount:
+                              "RP ${_dataController.salesOrdersList[i].mrp}",
                         );
                       },
                       itemCount: _dataController.salesOrdersList.length,

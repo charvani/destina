@@ -16,9 +16,9 @@ class SalesOrderModel {
   String pkname;
   String mrp;
   String pImage;
-  String codeNo;
+  dynamic codeNo;
   String cv;
-  String img;
+  dynamic img;
 
   SalesOrderModel({
     required this.pkid,

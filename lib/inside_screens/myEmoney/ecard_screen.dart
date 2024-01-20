@@ -39,6 +39,7 @@ class _EcardScreenState extends State<EcardScreen> {
                                 bal: _dataController
                                     .ecardData.value.balenceAmount,
                                 symbol: _dataController.ecardData.value.symbol,
+                                etype: "Ecard",
                               ));
                         },
                         title: "Ecard Transfer"))

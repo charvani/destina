@@ -55,6 +55,7 @@ import '../models/serviceslist_model.dart';
 import '../models/signupLoad_model.dart';
 import '../models/teambuilder_model.dart';
 import '../models/upgradeList_model.dart';
+import '../models/upgrade_cartItem_model.dart';
 import '../service_call/api_data.dart';
 
 class MainController extends GetxController {
@@ -228,7 +229,9 @@ class MainController extends GetxController {
           upgsteps: "",
           upgpack: "",
           catUpg: false,
-          catSteps: false)
+          catSteps: false,
+          pkgUpgrade: "",
+          nupgdate: "")
       .obs;
 
   Rx<ViewProfileModel> viewProfileData = ViewProfileModel(
@@ -734,6 +737,8 @@ class MainController extends GetxController {
           url: "",
           pdfPath: "")
       .obs;
+  RxDouble dpMallDPAmount = 0.0.obs;
+  RxDouble dpMallRMAmount = 0.0.obs;
 
   Rx<MemberProductModel> memberProductData = MemberProductModel(
           overviewRpt: [],
@@ -764,6 +769,18 @@ class MainController extends GetxController {
           howtoUse: "",
           videoUrl: "",
           dpPrice: "")
+      .obs;
+
+  Rx<UpgradeCartItemModel> upgradeCartData = UpgradeCartItemModel(
+          msg: "",
+          message: "",
+          pkid: "",
+          pkcode: "",
+          pkname: "",
+          mrp: "",
+          pImage: "",
+          adMsg: "",
+          promorpt: false)
       .obs;
 // *********************** *********************************************************************
   getCountryCode() async {
@@ -1043,6 +1060,8 @@ class MainController extends GetxController {
       }
     }
     loading.value = false;
+
+    return res;
   }
 
   getViewProfile(Map parameters) async {
@@ -1406,6 +1425,7 @@ class MainController extends GetxController {
   getEcardMoneyType(Map parameters) async {
     dynamic res = await ApiCall().listPostMethodFun(
         methodName: ApiData().emoneyType, params: parameters);
+    print("res...$res");
     return res;
   }
 
@@ -1937,8 +1957,8 @@ class MainController extends GetxController {
   getSalesMall(Map parameters) async {
     loading.value = true;
     salesOrdersList.clear();
-    dynamic res = await ApiCall().saleMallPostMethodFun(
-        methodName: ApiData().loadSalesMall, params: parameters);
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().loadSalesMall, params: parameters);
     if (res != null) {
       for (int i = 0; i < res['DistSelPackageRpt'].length; i++) {
         salesOrdersList
@@ -2027,6 +2047,68 @@ class MainController extends GetxController {
     return res;
   }
 
+  getRedemptionProductDetails(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().getRedemptionSingleProduct, params: parameters);
+    if (res != null) {
+      saleProductDetails.value = SalesProductModel.fromJson(res);
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getRedemptionMallPackageItems(Map parameters) async {
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().getPkgItemsRedem, params: parameters);
+    packageDetails.value = PackageItemsModel.fromJson(res);
+    return res;
+  }
+
+  getRedemptionMallAddToCart(Map parameters) async {
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().pAddtoCartOpenRedem, params: parameters);
+    return res;
+  }
+
+  getRedemptionMCartItems(String from, Map parameters) async {
+    if (from == "init") {
+      loading.value = true;
+    }
+    salesMallCartItems.clear();
+    salesMallTAmount.value = 0.0;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().getRedemPackages, params: parameters);
+
+    print("cart_itmes...${salesMallCartItems.length}");
+    if (res != null) {
+      if (res['SalesPackgeRpt'].length > 0 &&
+          res['SalesPackgeRpt'].toString() != "[]") {
+        for (int i = 0; i < res['SalesPackgeRpt'].length; i++) {
+          salesMallCartItems
+              .add(SalesMallCartItemModel.fromJson(res['SalesPackgeRpt'][i]));
+          salesMallTAmount.value = salesMallTAmount.value +
+              (double.parse(res['SalesPackgeRpt'][i]['mrp']) *
+                  double.parse(res['SalesPackgeRpt'][i]['qty']));
+        }
+      }
+    } else {
+      Get.back();
+      Get.back();
+    }
+    if (from == "init") {
+      loading.value = false;
+    }
+    return res;
+  }
+
+  getRedemptionMallItemRemove(Map parameters, cartParameters) async {
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().removeRedemProduct, params: parameters);
+    getRedemptionMCartItems("init", cartParameters);
+    return res;
+  }
+
   getDPMall(Map parameters) async {
     loading.value = true;
     salesOrdersList.clear();
@@ -2065,7 +2147,8 @@ class MainController extends GetxController {
       loading.value = true;
     }
     salesMallCartItems.clear();
-    salesMallTAmount.value = 0.0;
+    dpMallDPAmount.value = 0.0;
+    dpMallRMAmount.value = 0.0;
     dynamic res = await ApiCall()
         .postMethodFun(methodName: ApiData().getdppackages, params: parameters);
 
@@ -2076,8 +2159,24 @@ class MainController extends GetxController {
         for (int i = 0; i < res['DPPackageRpt'].length; i++) {
           salesMallCartItems
               .add(SalesMallCartItemModel.fromJson(res['DPPackageRpt'][i]));
-          salesMallTAmount.value = salesMallTAmount.value +
-              (double.parse(res['DPPackageRpt'][i]['mrp']) *
+
+          final endIndex = res['DPPackageRpt'][i]['mrp'].indexOf("DP", 0);
+          print(
+              "dp val..${res['DPPackageRpt'][i]['mrp'].substring(0, endIndex)}");
+          String dpval = res['DPPackageRpt'][i]['mrp'].substring(0, endIndex);
+
+          print(
+              "rm val ...${res['DPPackageRpt'][i]['mrp'].substring(res['DPPackageRpt'][i]['mrp'].indexOf("RM"), res['DPPackageRpt'][i]['mrp'].length - 1).replaceAll("RM", "")}");
+          String rmval = res['DPPackageRpt'][i]['mrp']
+              .substring(res['DPPackageRpt'][i]['mrp'].indexOf("RM"),
+                  res['DPPackageRpt'][i]['mrp'].length - 1)
+              .replaceAll("RM", "");
+          dpMallDPAmount.value = dpMallDPAmount.value +
+              (double.parse(dpval) *
+                  double.parse(res['DPPackageRpt'][i]['qty']));
+
+          dpMallRMAmount.value = dpMallRMAmount.value +
+              (double.parse(rmval) *
                   double.parse(res['DPPackageRpt'][i]['qty']));
         }
       }
@@ -2121,6 +2220,99 @@ class MainController extends GetxController {
       memberProductData.value = MemberProductModel.fromJson(res);
     }
     loading.value = false;
+    return res;
+  }
+
+  getMemberMallAddToCart(Map parameters) async {
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().pAddtoCartMembership, params: parameters);
+    return res;
+  }
+
+  getMemberMCartItems(String from, Map parameters) async {
+    if (from == "init") {
+      loading.value = true;
+    }
+    salesMallCartItems.clear();
+    salesMallTAmount.value = 0.0;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().getMemberPackages, params: parameters);
+
+    print("cart_itmes...${salesMallCartItems.length}");
+    if (res != null) {
+      if (res['SalesPackgeRpt'].length > 0 &&
+          res['SalesPackgeRpt'].toString() != "[]") {
+        for (int i = 0; i < res['SalesPackgeRpt'].length; i++) {
+          salesMallCartItems
+              .add(SalesMallCartItemModel.fromJson(res['SalesPackgeRpt'][i]));
+          salesMallTAmount.value = salesMallTAmount.value +
+              (double.parse(res['SalesPackgeRpt'][i]['mrp']) *
+                  double.parse(res['SalesPackgeRpt'][i]['qty']));
+        }
+      }
+    } else {
+      Get.back();
+      Get.back();
+    }
+    if (from == "init") {
+      loading.value = false;
+    }
+    return res;
+  }
+
+  getMemberMCheckOut(Map parameters) async {
+    genealogyLoading.value = true;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().checkOutMemberCartItems, params: parameters);
+    genealogyLoading.value = false;
+
+    return res;
+  }
+
+  getMemberMallItemRemove(Map parameters, cartParameters) async {
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().removeMemberProduct, params: parameters);
+    getMemberMCartItems("init", cartParameters);
+    return res;
+  }
+
+  getUpgradeMall(Map parameters) async {
+    loading.value = true;
+    salesOrdersList.clear();
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().loadUpgradeMall, params: parameters);
+    if (res != null) {
+      for (int i = 0; i < res['DistSelPackageRpt'].length; i++) {
+        salesOrdersList
+            .add(SalesOrderModel.fromJson(res['DistSelPackageRpt'][i]));
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getUpgradeMallAddToCart(Map parameters) async {
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().productsAddtoCartOpenUpg, params: parameters);
+    return res;
+  }
+
+  getUpgradeMCartItems(String from, Map parameters) async {
+    if (from == "init") {
+      loading.value = true;
+    }
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().cartItemsUpg, params: parameters);
+    print("cart_itmes...${salesMallCartItems.length}");
+    if (res != null) {
+      upgradeCartData.value = UpgradeCartItemModel.fromJson(res);
+    } else {
+      Get.back();
+      Get.back();
+    }
+    if (from == "init") {
+      loading.value = false;
+    }
     return res;
   }
 }

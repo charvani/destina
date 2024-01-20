@@ -71,6 +71,8 @@ class DashboardModel {
   String upgpack;
   bool catUpg;
   bool catSteps;
+     String nupgdate;
+  String pkgUpgrade;
 
   DashboardModel({
     required this.myIncome,
@@ -134,6 +136,8 @@ class DashboardModel {
     required this.upgpack,
     required this.catUpg,
     required this.catSteps,
+    required this.nupgdate,
+    required this.pkgUpgrade,
   });
 
   factory DashboardModel.fromJson(Map<String, dynamic> json) => DashboardModel(
@@ -201,6 +205,8 @@ class DashboardModel {
         upgpack: json["upgpack"],
         catUpg: json["CatUpg"],
         catSteps: json["CatSteps"],
+         nupgdate: json["Nupgdate"],
+        pkgUpgrade: json["PkgUpgrade"],
       );
 
   Map<String, dynamic> toJson() => {

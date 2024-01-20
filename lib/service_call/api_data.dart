@@ -105,4 +105,16 @@ class ApiData {
   String loadMembershipMall = "LoadMembershipMall";
   String getMemberSingleProduct = "GetMemberSingleProduct";
   String ecardTopupRequest = "EcardTopupRequest";
+  String pAddtoCartMembership = "PAddtoCartMembership";
+  String getMemberPackages = "GetMemberPackages";
+  String removeMemberProduct = "RemoveMemberProduct";
+  String getRedemptionSingleProduct = "GetRedemptionSingleProduct";
+  String getPkgItemsRedem = "GetPkgItems_Redem";
+  String pAddtoCartOpenRedem = "PAddtoCartOpenRedem";
+  String getRedemPackages = "GetRedemPackages";
+  String removeRedemProduct = "RemoveRedemProduct";
+  String checkOutMemberCartItems = "CheckOutMemberCartItems";
+  String loadUpgradeMall = "LoadSalesMall";
+  String productsAddtoCartOpenUpg = "Products_AddtoCartOpen_Upg";
+  String cartItemsUpg = "CartItems_Upg";
 }

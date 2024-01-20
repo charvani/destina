@@ -58,12 +58,13 @@ class _StockistScreenState extends State<StockistScreen> {
                             child: CustomAutoWidthButton(
                                 onTapFun: () {
                                   Get.to(() => EcardTransferScreen(
-                                        from: "Redemption",
+                                        from: "Stockist e-Money”",
                                         transPass: widget.transPass,
                                         bal: _dataController
                                             .ecardData.value.balenceAmount,
                                         symbol: _dataController
                                             .ecardData.value.symbol,
+                                        etype: "Stockist e-Money”",
                                       ));
                                 },
                                 title: "EMoney Transfer"),

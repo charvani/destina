@@ -53,21 +53,21 @@ class _D1CashBackPointsScreenState extends State<D1CashBackPointsScreen> {
                           },
                           title: "Withdrawal")),
                 const SpaceWidthWidget(width: 10),
-                if (_dataController.d1cashbackpointsData.value.ecardButton)
-                  SizedBox(
-                    height: 30,
-                    child: CustomAutoWidthButton(
-                        onTapFun: () {
-                          Get.to(() => EcardTransferScreen(
-                                from: "D1 Cashback Points",
-                                transPass: widget.transPass,
-                                bal: _dataController
-                                    .d1cashbackpointsData.value.d1BalenceAmount,
-                                symbol: "RM",
-                              ));
-                        },
-                        title: "D1 Cashback Points"),
-                  ),
+                // if (_dataController.d1cashbackpointsData.value.ecardButton)
+                //   SizedBox(
+                //     height: 30,
+                //     child: CustomAutoWidthButton(
+                //         onTapFun: () {
+                //           Get.to(() => EcardTransferScreen(
+                //                 from: "D1 Cashback Points",
+                //                 transPass: widget.transPass,
+                //                 bal: _dataController
+                //                     .d1cashbackpointsData.value.d1BalenceAmount,
+                //                 symbol: "RM",
+                //               ));
+                //         },
+                //         title: "D1 Cashback Points"),
+                //   ),
               ],
             ),
             Scrollbar(

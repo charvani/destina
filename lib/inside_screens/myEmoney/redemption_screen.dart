@@ -63,6 +63,7 @@ class _RedemptionScreenState extends State<RedemptionScreen> {
                                             .ecardData.value.balenceAmount,
                                         symbol: _dataController
                                             .ecardData.value.symbol,
+                                        etype: "Redemption e-Money”",
                                       ));
                                 },
                                 title: "EMoney Transfer"),

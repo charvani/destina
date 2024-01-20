@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../heroanimation_screen.dart';
-import 'salescart_screen.dart';
 
 class MemberProductDetailsScreen extends StatefulWidget {
   final String packageCode;
@@ -667,7 +666,7 @@ class _MemberProductDetailsScreenState
                                                 "ipaddress": Constants.prefs
                                                     .getString("ip"),
                                                 "sprno": Constants.prefs
-                                                    .getString("reg_id"),
+                                                    .getString("user_id"),
                                                 "prdtype": "Package",
                                                 "qty": firstQtyController.text,
                                                 "country": Constants.prefs
@@ -677,20 +676,12 @@ class _MemberProductDetailsScreenState
                                                   "add to cart params...$parameters");
                                               dynamic res =
                                                   await MainController()
-                                                      .getSalesMallAddToCart(
+                                                      .getMemberMallAddToCart(
                                                           parameters);
                                               if (res['Msg']
                                                       .toString()
                                                       .toLowerCase() ==
                                                   "success") {
-                                                // ignore: use_build_context_synchronously
-                                                // MotionToast.success(
-                                                //   title: const Text(
-                                                //       "Congartulations!"),
-                                                //   description: const Text(
-                                                //       "Products added successfully to your cart."),
-                                                // ).show(context);
-
                                                 Timer(
                                                     const Duration(seconds: 1),
                                                     () {
@@ -699,10 +690,13 @@ class _MemberProductDetailsScreenState
                                                       loading = false;
                                                     });
                                                   }
-
                                                   Get.back();
-                                                  Get.to(() =>
-                                                      const SalesmallCartScreen());
+                                                  Get.back(result: [
+                                                    true,
+                                                    res['Cnt']
+                                                  ]);
+                                                  // Get.to(() =>
+                                                  //     const MembermallCartScreen());
                                                 });
                                               } else {
                                                 Timer(
@@ -712,6 +706,7 @@ class _MemberProductDetailsScreenState
                                                     myState(() {
                                                       loading = false;
                                                     });
+                                                    CommonToast(res['Message']);
                                                     Get.back();
                                                   }
                                                 });

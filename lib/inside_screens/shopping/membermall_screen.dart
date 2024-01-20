@@ -2,9 +2,12 @@ import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../commons/colors.dart';
 import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
 import 'member_productdetail_screen.dart';
+import 'membermall_cartscreen.dart';
+import 'membermall_checkoutscreen.dart';
 
 class MembershipMallScreen extends StatefulWidget {
   const MembershipMallScreen({
@@ -17,7 +20,7 @@ class MembershipMallScreen extends StatefulWidget {
 
 class _MembershipMallScreenState extends State<MembershipMallScreen> {
   final MainController _dataController = Get.put(MainController());
-  dynamic userId, password, countryId, hidUid, countOfCart, uniqId;
+  dynamic userId, password, countryId, hidUid, countOfCart, uniqId, sessionId;
   @override
   void initState() {
     super.initState();
@@ -33,23 +36,50 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
       } else {
         uniqId = Constants.prefs.getString("uniq_id");
       }
+      if (Constants.prefs.getString("ss_id") == null) {
+        sessionId = generateTimeStamp();
+        await Constants.prefs.setString("ss_id", sessionId);
+      } else {
+        sessionId = Constants.prefs.getString("ss_id");
+      }
       dataFun();
     });
   }
 
-  dataFun() async {
+  dataFun() {
     Map bData = {
       "Action": "GetDMemberPackages",
       "CountryID": countryId,
-      "MallName": Constants.prefs.getString("reg_id")
+      "MallName":
+          // uniqId
+          Constants.prefs.getString("reg_id")
     };
 
-    dynamic res = await _dataController.getMembershipMall(bData);
+    _dataController.getMembershipMall(bData);
+  }
+
+  actionFun() async {
+    Map bParams = {
+      "Pkid": "",
+      "pid": "",
+      "Uniqid": uniqId,
+      "sessid": sessionId,
+      "ipaddress": Constants.prefs.get("ip"),
+      "sprno": Constants.prefs.get("user_id"),
+      "prdtype": "Package",
+      "qty": "1",
+      "country": Constants.prefs.get("country_id"),
+    };
+    dynamic res = await _dataController.getMemberMCheckOut(bParams);
     if (res != null) {
       if (res['Msg'] == "SUCCESS") {
-        setState(() {
-          countOfCart = res['Cnt'] ?? "0";
-        });
+        if (res['result'] == "Upgrade") {
+          Get.to(() => MembermallCheckoutScreen(
+                res: res,
+              ));
+        } else {
+          Get.to(() => const MembermallCartScreen());
+        }
       }
     }
   }
@@ -59,15 +89,19 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
     return Scaffold(
       appBar: AppBar(
           scrolledUnderElevation: 8,
-          title: const Text(
-            "Membership Order",
-            style: TextStyle(
-              fontSize: 18,
-              fontFamily: "OnestSemiBold",
+          centerTitle: false,
+          title: Transform.translate(
+            offset: const Offset(-30, 0),
+            child: const Text(
+              "Membership Order",
+              style: TextStyle(
+                fontSize: 14,
+                fontFamily: "OnestSemiBold",
+              ),
             ),
           ),
           leading: Padding(
-            padding: const EdgeInsets.only(left: 8),
+            padding: const EdgeInsets.only(left: 0),
             child: InkWell(
                 // behavior: HitTestBehavior.translucent,
                 onTap: () {
@@ -76,57 +110,66 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
                 },
                 child: const Icon(Icons.keyboard_arrow_left_rounded)),
           ),
-          actions: const [
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.end,
-            //   children: [
-            //     int.parse(countOfCart) > 0
-            //         ? Badge.count(
-            //             count: int.parse(countOfCart),
-            //             child: InkWell(
-            //               onTap: () {
-            //                 if (countOfCart != "0" && countOfCart != "") {
-            //                   Get.to(() => const SalesmallCartScreen());
-            //                 } else {}
-            //               },
-            //               child: Icon(
-            //                 Icons.shopping_cart,
-            //                 color: appthemeColor,
-            //               ),
-            //             ),
-            //           )
-            //         : InkWell(
-            //             onTap: () {
-            //               if (countOfCart != "0" && countOfCart != "") {
-            //                 Get.to(() => const SalesmallCartScreen());
-            //               } else {}
-            //             },
-            //             child: Icon(
-            //               Icons.shopping_cart,
-            //               color: appthemeColor,
-            //             ),
-            //           ),
-            //     const SpaceWidthWidget(width: 5),
-            //     Container(
-            //         height: 30,
-            //         width: 118,
-            //         padding: const EdgeInsets.only(right: 5),
-            //         child: CustomAutoWidthButton(
-            //             onTapFun: () async {
-            //               if (countOfCart != "0" && countOfCart != "") {
-            //                 dynamic res =
-            //                     await Get.to(() => const SalesmallCartScreen());
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                int.parse(countOfCart) > 0
+                    ? Badge.count(
+                        count: int.parse(countOfCart),
+                        child: InkWell(
+                          onTap: () {
+                            if (countOfCart != "0" && countOfCart != "") {
+                              // Get.to(() => const MembermallCartScreen());
+                              actionFun();
+                            } else {}
+                          },
+                          child: Icon(
+                            Icons.shopping_cart,
+                            color: appthemeColor,
+                          ),
+                        ),
+                      )
+                    : InkWell(
+                        onTap: () {
+                          if (countOfCart != "0" && countOfCart != "") {
+                            // Get.to(() => const MembermallCartScreen());
+                            actionFun();
+                          } else {}
+                        },
+                        child: Icon(
+                          Icons.shopping_cart,
+                          color: appthemeColor,
+                        ),
+                      ),
+                const SpaceWidthWidget(width: 5),
+                Obx(() {
+                  return _dataController.genealogyLoading.value
+                      ? SizedBox(width: 50, child: loader)
+                      : Container(
+                          height: 30,
+                          width: 118,
+                          padding: const EdgeInsets.only(right: 5),
+                          child: CustomAutoWidthButton(
+                              onTapFun: () async {
+                                if (countOfCart != "0" && countOfCart != "") {
+                                  actionFun();
 
-            //                 if (res != null) {
-            //                   if (res[0] == true) {
-            //                     dataFun();
-            //                   }
-            //                 }
-            //               } else {}
-            //             },
-            //             title: "Checkout"))
-            //   ],
-            // )
+                                  // dynamic res = await Get.to(
+                                  //     () => const MembermallCheckoutScreen());
+                                  // //  MembermallCartScreen());
+
+                                  // if (res != null) {
+                                  //   if (res[0] == true) {
+                                  //     dataFun();
+                                  //   }
+                                }
+                                // } else {}
+                              },
+                              title: "Checkout"));
+                })
+              ],
+            )
           ]),
       body: Obx(() {
         return _dataController.loading.value
@@ -137,7 +180,6 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: GridView.builder(
                       padding: const EdgeInsets.all(0),
-                      // physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -150,9 +192,12 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
                                       packageCode: _dataController
                                           .salesOrdersList[i].pkcode,
                                     ));
+
                             if (res != null) {
                               if (res[0] == true) {
-                                dataFun();
+                                setState(() {
+                                  countOfCart = res[1] ?? "0";
+                                });
                               }
                             }
                           },
