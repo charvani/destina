@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../shopping/salesmall_screen.dart';
 import '../shopping/upgradeorder.screen.dart';
+import 'promo_screen.dart';
 import 'redeem_screen.dart';
 
 class DashBoardScreen extends StatefulWidget {
@@ -43,7 +43,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   String? hourVal;
   String? minVal;
   String? secVal;
-
+  DateTime promgivenDate = DateTime.now();
+  DateTime promcurrentDate = DateTime.now();
+  dynamic promdaysDifference;
+  String? promtodayVal;
+  String? promhourVal;
+  String? promminVal;
+  String? promsecVal;
   @override
   void initState() {
     super.initState();
@@ -80,6 +86,28 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
           });
         });
       }
+      if (res['Msg'] == "SUCCESS" &&
+          _dashboardController.dashboardData.value.showRes == "show") {
+        DateFormat inputFormat = DateFormat("M/d/yyyy h:mm:ss a");
+        DateTime dateTime =
+            inputFormat.parse(_dashboardController.dashboardData.value.endDate);
+        promgivenDate = dateTime;
+
+        print("given date...$promgivenDate");
+        print("given date...${promgivenDate.day}");
+        print("given date...${promgivenDate.month}");
+        print("given date...${promgivenDate.year}");
+        Timer.periodic(const Duration(seconds: 1), (timer) {
+          setState(() {
+            promdaysDifference =
+                promgivenDate.difference(promcurrentDate).inDays;
+            promtodayVal = DateTime.now().day.toString();
+            promhourVal = DateTime.now().hour.toString();
+            promminVal = DateTime.now().minute.toString();
+            promsecVal = DateTime.now().second.toString();
+          });
+        });
+      }
     }
   }
 
@@ -107,7 +135,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
-                                  TimerWidget(
+                                  DaysTimerWidget(
                                     timeValue: todayVal!,
                                     markedRangeVal: daysDifference.toString(),
                                     type: "Days",
@@ -143,6 +171,67 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     Get.to(() => const UpgradeOrderScreen());
                                   },
                                   title: "Click to Upgrade"),
+                            )
+                          ],
+                        ),
+                        const SpaceHeightWidget(height: 20),
+                      ],
+                    ),
+                  if (_dashboardController.dashboardData.value.showRes ==
+                      "show")
+                    Column(
+                      children: [
+                        const SpaceHeightWidget(height: 20),
+                        const CommonTitle(
+                          titleName: "Your Promotion Purchase Will Expire In",
+                          size: 16,
+                        ),
+                        if (promdaysDifference != null)
+                          SingleChildScrollView(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  DaysTimerWidget(
+                                    timeValue: promtodayVal!,
+                                    markedRangeVal:
+                                        promdaysDifference.toString(),
+                                    type: "Days",
+                                  ),
+                                  TimerWidget(
+                                    timeValue: promhourVal!,
+                                    type: "Hours",
+                                    markedRangeVal: "24",
+                                  ),
+                                  TimerWidget(
+                                    timeValue: promminVal!,
+                                    type: "Minutes",
+                                    markedRangeVal: "60",
+                                  ),
+                                  TimerWidget(
+                                    timeValue: promsecVal!,
+                                    type: "Seconds",
+                                    markedRangeVal: "60",
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.only(right: 10),
+                              height: 30,
+                              child: CustomAutoWidthButton(
+                                  onTapFun: () {
+                                    Get.to(() => const PromoDashboardScreen());
+                                  },
+                                  title: _dashboardController
+                                              .dashboardData.value.pkmall ==
+                                          "3"
+                                      ? "Click for Promo Products"
+                                      : "Click for Upgrade Promo Products"),
                             )
                           ],
                         ),

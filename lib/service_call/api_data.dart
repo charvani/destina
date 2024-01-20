@@ -25,6 +25,7 @@ class ApiData {
   String registerCart = "SGCartItems";
   String login = "MemberLogin";
   String logout = "AppLogout";
+  String forgotPwd = "ForgotPwd";
 
   String dashboard = "Dashboard";
   String viewProfile = "ViewProfile";
@@ -72,6 +73,7 @@ class ApiData {
   String accMaintenceDetails = "AccMaintenceDetails";
   String retailBonus = "RetailBonus";
   String custAcqBonus = "CustAcqBonus";
+  String passUpBonus = "PassUpBonus";
   String upgAcqBonus = "UpgAcqBonus";
   String bussDevBonus = "BussDevBonus";
   String teamBuildBonus = "TeamBuildBonus";
@@ -117,4 +119,10 @@ class ApiData {
   String loadUpgradeMall = "LoadSalesMall";
   String productsAddtoCartOpenUpg = "Products_AddtoCartOpen_Upg";
   String cartItemsUpg = "CartItems_Upg";
+  String loadUpgPromoMall = "LoadUpgPromoMall";
+  String getPkgItemsPro = "GetPkgItems_Pro";
+  String pAddtoCartOpen = "PAddtoCartOpen";
+  String selPackageDetailsPro = "SelPackageDetails_Pro";
+
+
 }

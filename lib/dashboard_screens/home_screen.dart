@@ -16,7 +16,9 @@ import '../models/productitem_model.dart';
 
 class HomeScreen extends StatefulWidget {
   List<String> bannerPopUpImages = [];
-  HomeScreen({super.key, required this.bannerPopUpImages});
+  dynamic data;
+
+  HomeScreen({super.key, required this.bannerPopUpImages, required this.data});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -107,10 +109,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.bannerPopUpImages.isNotEmpty) {
-      print(widget.bannerPopUpImages.length);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      print("da....${widget.data}");
+      if (widget.bannerPopUpImages.isNotEmpty) {
+        print(widget.bannerPopUpImages.length);
 
-      Timer(const Duration(microseconds: 500), () {
         Get.dialog(AlertDialog(
             insetPadding: const EdgeInsets.symmetric(horizontal: 10),
             titlePadding: EdgeInsets.zero,
@@ -138,8 +141,79 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             )));
+      }
+
+      Timer(const Duration(microseconds: 500), () {
+        if (widget.data['result1'] == "No Id") {
+          Get.dialog(AlertDialog(
+              insetPadding: const EdgeInsets.symmetric(horizontal: 10),
+              titlePadding: EdgeInsets.zero,
+              title: Container(
+                width: double.maxFinite,
+                alignment: Alignment.topRight,
+                child: IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: Icon(
+                      Icons.cancel_outlined,
+                      color: redColor,
+                    )),
+              ),
+              contentPadding:
+                  const EdgeInsets.only(top: 0, left: 3, right: 3, bottom: 18),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CommonTitle(
+                      titleName: "Destina 1 International alerts!!!!",
+                      fontColor: darkRedColor,
+                    ),
+                    const SpaceHeightWidget(height: 15),
+                    SideTitle(title: widget.data['UploadIdMsg'])
+                  ],
+                ),
+              )));
+        }
       });
-    }
+      Timer(const Duration(microseconds: 700), () {
+        if (widget.data['RenewaAlert'] != "No") {
+          Get.dialog(
+              barrierDismissible: false,
+              AlertDialog(
+                  insetPadding: const EdgeInsets.symmetric(horizontal: 10),
+                  titlePadding: EdgeInsets.zero,
+                  title: Container(
+                    width: double.maxFinite,
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        icon: Icon(
+                          Icons.cancel_outlined,
+                          color: redColor,
+                        )),
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                      top: 0, left: 3, right: 3, bottom: 18),
+                  content: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CommonTitle(
+                          titleName: "Destina 1 International alerts!!!!",
+                          fontColor: darkRedColor,
+                        ),
+                        const SpaceHeightWidget(height: 15),
+                        SideTitle(title: widget.data['RenNotifyMsg'])
+                      ],
+                    ),
+                  )));
+        }
+      });
+    });
   }
 
   @override

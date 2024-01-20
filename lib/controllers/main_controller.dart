@@ -47,7 +47,9 @@ import '../models/ordermall_model.dart';
 import '../models/packageitems_model.dart';
 import '../models/product_categoryitem_model.dart';
 import '../models/productdetails_model.dart';
+import '../models/promo_cartitem_model.dart';
 import '../models/registercart_item_model.dart';
+import '../models/rollupbonus_model.dart';
 import '../models/salesmall_cartitem_model.dart';
 import '../models/salesmall_model.dart';
 import '../models/salesproductDet_model.dart';
@@ -231,7 +233,8 @@ class MainController extends GetxController {
           catUpg: false,
           catSteps: false,
           pkgUpgrade: "",
-          nupgdate: "")
+          nupgdate: "",
+          endDate: "")
       .obs;
 
   Rx<ViewProfileModel> viewProfileData = ViewProfileModel(
@@ -648,6 +651,8 @@ class MainController extends GetxController {
   RxDouble retailTotal = 0.0.obs;
   RxList<CustomerBonusModel> customerBonusList = <CustomerBonusModel>[].obs;
   RxDouble customerBonusTotal = 0.0.obs;
+  RxList<RollupBonusModel> rollupBonusList = <RollupBonusModel>[].obs;
+  RxDouble rollupBonusTotal = 0.0.obs;
   RxList<BusinessBonusModel> businessBonusList = <BusinessBonusModel>[].obs;
   RxDouble businessBonusTotal = 0.0.obs;
   RxList<TeamBuilderBonusModel> teamBuilderBonusList =
@@ -781,6 +786,22 @@ class MainController extends GetxController {
           pImage: "",
           adMsg: "",
           promorpt: false)
+      .obs;
+
+  Rx<PromoCartItemModel> promoCartItemData = PromoCartItemModel(
+          pid: "",
+          pkcode: "",
+          name: "",
+          qty: "",
+          shipPrice: "",
+          rpShipPrice: "",
+          rp: "",
+          dp: "",
+          cv: "",
+          totMrp: "",
+          discAmt: "",
+          emoney: "",
+          totRp: "")
       .obs;
 // *********************** *********************************************************************
   getCountryCode() async {
@@ -982,6 +1003,15 @@ class MainController extends GetxController {
   getUserCheckDb(Map parameters) async {
     dynamic res = await ApiCall().sponsorPostMethodFun(
         methodName: ApiData().userChkLoginID, params: parameters);
+    return res;
+  }
+
+  getForgotPass(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().forgotPwd, params: parameters);
+    loading.value = false;
+
     return res;
   }
 
@@ -1625,6 +1655,27 @@ class MainController extends GetxController {
           if (customerBonusList[i].netBonus != "") {
             customerBonusTotal.value = customerBonusTotal.value +
                 double.parse(customerBonusList[i].netBonus);
+          }
+        }
+      }
+    }
+    loading.value = false;
+    return res;
+  }
+
+  getRollupBonus(Map parameters) async {
+    loading.value = true;
+    rollupBonusTotal.value = 0.0;
+    rollupBonusList.clear();
+    dynamic res = await ApiCall().listPostMethodFun(
+        methodName: ApiData().passUpBonus, params: parameters);
+    if (res != null) {
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          rollupBonusList.add(RollupBonusModel.fromJson(res[i]));
+          if (rollupBonusList[i].netBonus != "") {
+            rollupBonusTotal.value = rollupBonusTotal.value +
+                double.parse(rollupBonusList[i].netBonus);
           }
         }
       }
@@ -2308,6 +2359,42 @@ class MainController extends GetxController {
       upgradeCartData.value = UpgradeCartItemModel.fromJson(res);
     } else {
       Get.back();
+      Get.back();
+    }
+    if (from == "init") {
+      loading.value = false;
+    }
+    return res;
+  }
+
+  getPromoPacks(Map parameters) async {
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().getPkgItemsPro, params: parameters);
+    packageDetails.value = PackageItemsModel.fromJson(res);
+    return res;
+  }
+
+  getPromoPackAddToCart(Map parameters) async {
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().pAddtoCartOpen, params: parameters);
+    return res;
+  }
+
+  getPromoCartItems(String from, Map parameters) async {
+    if (from == "init") {
+      loading.value = true;
+    }
+
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().selPackageDetailsPro, params: parameters);
+
+    if (res != null) {
+      if (res['GetCouStMalRpt'].length > 0 &&
+          res['GetCouStMalRpt'].toString() != "[]") {
+        promoCartItemData.value =
+            PromoCartItemModel.fromJson(res['GetCouStMalRpt'][0]);
+      }
+    } else {
       Get.back();
     }
     if (from == "init") {

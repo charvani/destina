@@ -69,7 +69,7 @@ class _GroupSalesSelectionScreenState extends State<GroupSalesSelectionScreen> {
                             if (picked != null) {
                               print(picked);
                               final DateFormat formatter =
-                                  DateFormat('dd-MM-yyyy');
+                                  DateFormat('MM/dd/yyyy');
                               setState(() {
                                 fromDateTController.text =
                                     formatter.format(picked);
@@ -81,7 +81,7 @@ class _GroupSalesSelectionScreenState extends State<GroupSalesSelectionScreen> {
                             color: middleBlackColor.withOpacity(0.5),
                           ),
                           controller: fromDateTController,
-                          hintText: "dd-mm-yyyy",
+                          hintText: "mm-dd-yyyy",
                           textInputType: TextInputType.datetime,
                           validation: (val) {
                             if (val!.isEmpty) {
@@ -124,7 +124,7 @@ class _GroupSalesSelectionScreenState extends State<GroupSalesSelectionScreen> {
                             if (picked != null) {
                               print(picked);
                               final DateFormat formatter =
-                                  DateFormat('dd-MM-yyyy');
+                                  DateFormat('MM/dd/yyyy');
                               setState(() {
                                 toDateTController.text =
                                     formatter.format(picked);
@@ -136,7 +136,7 @@ class _GroupSalesSelectionScreenState extends State<GroupSalesSelectionScreen> {
                             color: middleBlackColor.withOpacity(0.5),
                           ),
                           controller: toDateTController,
-                          hintText: "dd-mm-yyyy",
+                          hintText: "mm-dd-yyyy",
                           textInputType: TextInputType.datetime,
                           validation: (val) {
                             if (val!.isEmpty) {

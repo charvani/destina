@@ -13,9 +13,10 @@ class BottomBarScreen extends StatefulWidget {
   final int? productIndex;
   final int? index;
   final List<String>? bannerPopup;
+  final dynamic data;
 
   const BottomBarScreen(
-      {Key? key, this.index, this.productIndex, this.bannerPopup})
+      {Key? key, this.index, this.productIndex, this.bannerPopup, this.data})
       : super(
           key: key,
         );
@@ -31,6 +32,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   List<Widget> bottomBarPages = [
     HomeScreen(
       bannerPopUpImages: const [],
+      data: "",
     ),
     const ProductsScreen(
       from: "bottombar",
@@ -50,6 +52,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
       bottomBarPages = [
         HomeScreen(
           bannerPopUpImages: widget.bannerPopup ?? [],
+          data: widget.data ?? "",
         ),
         ProductsScreen(
           from: "bottombar",

@@ -337,7 +337,16 @@ class _BonusDateSelectionScreenState extends State<BonusDateSelectionScreen> {
                                         distributorIDTController.text,
                                   ));
                             } else if (widget.from == "Rollup Bonus") {
-                              Get.to(() => const RollupBonusScreen());
+                              Get.to(() => RollupBonusScreen(
+                                    fromDate: fromDateTController.text != ""
+                                        ? fromDateTController.text
+                                        : "01/01/1900",
+                                    toDate: toDateTController.text != ""
+                                        ? toDateTController.text
+                                        : "01/01/2100",
+                                    distributorId:
+                                        distributorIDTController.text,
+                                  ));
                             }
                             // }
                           },

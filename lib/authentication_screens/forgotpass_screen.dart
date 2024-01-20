@@ -1,6 +1,12 @@
+import 'dart:async';
+
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/commons/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../controllers/main_controller.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -12,6 +18,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   TextEditingController idTController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final MainController _dataController = Get.put(MainController());
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +29,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             key: _formKey,
             child: Column(
               children: [
-                const SpaceHeightWidget(height: 15),
+                const SpaceHeightWidget(height: 25),
                 Image.asset(
-                  "assets/images/forgot-password.png",
-                  height: 150,
+                  "assets/images/logo_voucher.png",
+                  height: 80,
                 ),
+                const SpaceHeightWidget(height: 15),
                 Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 35),
@@ -80,18 +88,38 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               },
                             ),
                             const SpaceHeightWidget(height: 15),
-                            SizedBox(
-                              child: CustomElevatedButton(
-                                  onTapFun: () {
-                                    if (_formKey.currentState!.validate()) {}
-                                    // Get.to(() => const PackageDetailsScreen(
-                                    //       from: "register",
-                                    //       countryid: "1",
-                                    //       packageCode: "MYJD01",
-                                    //     ));
-                                  },
-                                  title: "Submit"),
-                            ),
+                            Obx(() {
+                              return _dataController.loading.value
+                                  ? loader
+                                  : SizedBox(
+                                      child: CustomElevatedButton(
+                                          onTapFun: () async {
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              Map bdata = {
+                                                "Action": "mempwd",
+                                                "CountryID": "",
+                                                "MallName": idTController.text,
+                                              };
+                                              dynamic res =
+                                                  await _dataController
+                                                      .getForgotPass(bdata);
+                                              if (res != null) {
+                                                if (res['Msg'] == "SUCCESS") {
+                                                  CommonToastTrue(
+                                                      res['Message']);
+                                                  Timer(
+                                                      const Duration(
+                                                          seconds: 1), () {
+                                                    Get.back();
+                                                  });
+                                                }
+                                              }
+                                            }
+                                          },
+                                          title: "Get Password"),
+                                    );
+                            }),
                           ],
                         ),
                       ),

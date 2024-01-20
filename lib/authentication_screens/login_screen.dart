@@ -237,6 +237,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 index: 0,
                                                 bannerPopup: _loginController
                                                     .bannerPopUp,
+                                                data: res,
                                               ));
                                         }
                                       }
