@@ -30,10 +30,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
 
   /// widget list
   List<Widget> bottomBarPages = [
-    HomeScreen(
-      bannerPopUpImages: const [],
-      data: "",
-    ),
+    HomeScreen(),
     const ProductsScreen(
       from: "bottombar",
     ),
@@ -41,7 +38,10 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
       from: "bottombar",
     ),
     const PromotionsScreen(),
-    const AccountScreen()
+    AccountScreen(
+      bannerPopUpImages: const [],
+      data: "",
+    )
   ];
   int badgeCount = 0;
   @override
@@ -50,10 +50,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
     selectedIndex = widget.index ?? 0;
     if (widget.index != null) {
       bottomBarPages = [
-        HomeScreen(
-          bannerPopUpImages: widget.bannerPopup ?? [],
-          data: widget.data ?? "",
-        ),
+        HomeScreen(),
         ProductsScreen(
           from: "bottombar",
           index: widget.productIndex,
@@ -62,7 +59,10 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           from: "bottombar",
         ),
         const PromotionsScreen(),
-        const AccountScreen()
+        AccountScreen(
+          bannerPopUpImages: widget.bannerPopup ?? [],
+          data: widget.data ?? "",
+        )
       ];
     }
     badgeCount = Constants.prefs.getInt("cart_count") ?? 0;

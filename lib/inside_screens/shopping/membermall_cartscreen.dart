@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../commons/colors.dart';
+import 'membership_checkoutscreen.dart';
 
 class MembermallCartScreen extends StatefulWidget {
   final String? from;
@@ -25,16 +26,22 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
   int cartCount = 0;
   int cartItemCount = 0;
   dynamic uniqId;
-  dynamic sessionId;
+  dynamic sessionId, regId, upgradeMemVal;
   MainController cartController = Get.put(MainController());
   bool packageLoading = false;
 
   @override
   void initState() {
     super.initState();
-
+    if (widget.from == "Continue to Upgrade") {
+      upgradeMemVal = "Yes";
+    } else {
+      upgradeMemVal = "No";
+    }
     uniqId = Constants.prefs.getString("uniq_id");
     sessionId = Constants.prefs.getString("ss_id");
+    regId = Constants.prefs.getString("reg_id");
+
     sponsorController.text = "";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // if (uniqId != null && sessionId != null) {
@@ -75,15 +82,15 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
     print("cart params...$cartParams");
     dynamic res = await cartController.getMemberMCartItems(from, cartParams);
     print("cart res...$res");
-    if (res['result'] == "Promotion") {
-      setState(() {
-        showProductsSelection = true;
-      });
-    } else {
-      setState(() {
-        showProductsSelection = false;
-      });
-    }
+    // if (res['result'] == "Promotion") {
+    //   setState(() {
+    //     showProductsSelection = true;
+    //   });
+    // } else {
+    //   setState(() {
+    //     showProductsSelection = false;
+    //   });
+    // }
     if (from != "init") {
       setState(() {
         screenLoad = false;
@@ -383,11 +390,12 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                           child: IconElevatedButton(
                                             onTapFun: () async {
                                               print(
-                                                  "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
+                                                  "https://showcase.worldunityfoundation.org/MobileAppCheckout/MembershipCheckoutParam.html?RegId=$regId&UpgMember=$upgradeMemVal&sessid=$sessionId&uniqId=$uniqId");
 
-                                              // Get.off(() => CheckOutScreen(
-                                              //     redirectUrl:
-                                              //         "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&sessid=$sessionId&uniqId=$uniqId"));
+                                              Get.off(() =>
+                                                  MemberShipCheckOutScreen(
+                                                      redirectUrl:
+                                                          "https://showcase.worldunityfoundation.org/MobileAppCheckout/MembershipCheckoutParam.html?RegId=$regId&UpgMember=$upgradeMemVal&sessid=$sessionId&uniqId=$uniqId"));
                                             },
                                             imagePath:
                                                 'assets/images/shopping_cart_img.jpg',
@@ -673,7 +681,8 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                 color: blackColor),
                           ),
                           TextSpan(
-                            text: cartController.packPackageDetails.value.maxQty,
+                            text:
+                                cartController.packPackageDetails.value.maxQty,
                             style: TextStyle(
                                 fontFamily: "OnestSemiBold",
                                 fontSize: 14,
@@ -694,8 +703,8 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                               columns: [
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "S.No",
                                     style: TextStyle(
@@ -706,8 +715,8 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Product\nCode",
                                     style: TextStyle(
@@ -718,8 +727,8 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Name",
                                     style: TextStyle(
@@ -730,8 +739,8 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Maximum\nQuantity",
                                     style: TextStyle(
@@ -742,8 +751,8 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Quantity",
                                     style: TextStyle(
@@ -826,7 +835,8 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                             inputFormatter: [
                                               FilteringTextInputFormatter
                                                   .digitsOnly,
-                                              LengthLimitingTextInputFormatter(2),
+                                              LengthLimitingTextInputFormatter(
+                                                  2),
                                               // FilteringTextInputFormatter.allow(
                                               //     RegExp("[1-28]"))
                                             ],
@@ -883,9 +893,12 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                               pidList.clear();
                                               int countQty = 0;
                                               for (int i = 0;
-                                                  i < textEControllerList.length;
+                                                  i <
+                                                      textEControllerList
+                                                          .length;
                                                   i++) {
-                                                if (textEControllerList[i].text !=
+                                                if (textEControllerList[i]
+                                                        .text !=
                                                     "") {
                                                   countQty = countQty +
                                                       int.parse(
@@ -895,7 +908,7 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                                       "${cartController.packPackageDetails.value.getPkgItemsRpt[i].pcode}@${textEControllerList[i].text}");
                                                 }
                                               }
-          
+
                                               if (countQty ==
                                                   int.parse(cartController
                                                       .packPackageDetails
@@ -905,7 +918,7 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                                   showQtyErrorText = false;
                                                   loading = true;
                                                 });
-          
+
                                                 print("add to car fun");
                                                 Map parameters = {
                                                   "Pkid": "",
@@ -921,15 +934,17 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                                 };
                                                 print(
                                                     "add to cart params...$parameters");
-                                                dynamic res = await cartController
-                                                    .getPackAddToCart(parameters);
+                                                dynamic res =
+                                                    await cartController
+                                                        .getPackAddToCart(
+                                                            parameters);
                                                 if (res['Msg']
                                                         .toString()
                                                         .toLowerCase() ==
                                                     "success") {
                                                   CommonToastTrue(
                                                       "Successfully added to your cart.");
-          
+
                                                   myState(() {
                                                     loading = false;
                                                   });
@@ -937,7 +952,8 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                                   getData("add to cart");
                                                 } else {
                                                   Timer(
-                                                      const Duration(seconds: 1),
+                                                      const Duration(
+                                                          seconds: 1),
                                                       () async {
                                                     myState(() {
                                                       loading = false;

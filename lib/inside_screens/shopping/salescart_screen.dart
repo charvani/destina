@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../commons/colors.dart';
+import '../checkout_screen.dart';
 
 class SalesmallCartScreen extends StatefulWidget {
   const SalesmallCartScreen({
@@ -26,7 +27,7 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
   int cartCount = 0;
   int cartItemCount = 0;
   dynamic uniqId;
-  dynamic sessionId;
+  dynamic sessionId, regId;
   MainController cartController = Get.put(MainController());
   bool packageLoading = false;
   @override
@@ -35,6 +36,7 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
 
     uniqId = Constants.prefs.getString("uniq_id");
     sessionId = Constants.prefs.getString("ss_id");
+    regId = Constants.prefs.getString("reg_id");
     sponsorController.text = "";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // if (uniqId != null && sessionId != null) {
@@ -401,6 +403,50 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                   //     ),
                                   //   ),
                                   // )
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: double.infinity,
+                                    height: 35,
+                                    child: SizedBox(
+                                      width: 200,
+                                      child: IconElevatedButton(
+                                        onTapFun: () async {
+                                          print(
+                                              "https://showcase.worldunityfoundation.org/MobileAppCheckout/SalesCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId");
+                                          Get.off(() => CheckOutScreen(
+                                              redirectUrl:
+                                                  "https://showcase.worldunityfoundation.org/MobileAppCheckout/SalesCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId"));
+                                        },
+                                        imagePath:
+                                            'assets/images/shopping_cart_img.jpg',
+                                        labelColor: whiteColor,
+                                        buttonColor: lightDarKBlue,
+                                        titile: "Checkout",
+                                      ),
+                                    ),
+                                  ),
+                                  const SpaceHeightWidget(height: 10),
+
+                                  Container(
+                                    padding: const EdgeInsets.all(8.0),
+                                    alignment: Alignment.center,
+                                    width: double.infinity,
+                                    child: SizedBox(
+                                      width: 200,
+                                      height: 35,
+                                      child: IconElevatedButton(
+                                        onTapFun: () {
+                                          Get.back();
+                                          Get.back(result: [true]);
+                                        },
+                                        imagePath:
+                                            'assets/images/arrow_right.png',
+                                        labelColor: whiteColor,
+                                        titile: "Continue Shopping",
+                                        buttonColor: blackColor,
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
                         // Container(
@@ -463,45 +509,7 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                         //     itemCount: 4,
                         //   ),
                         // ),
-                        SizedBox(
-                          width: 200,
-                          height: 35,
-                          child: IconElevatedButton(
-                            onTapFun: () async {
-                              print(
-                                  "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
 
-                              // Get.off(() => CheckOutScreen(
-                              //     redirectUrl:
-                              //         "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&sessid=$sessionId&uniqId=$uniqId"));
-                            },
-                            imagePath: 'assets/images/shopping_cart_img.jpg',
-                            labelColor: whiteColor,
-                            buttonColor: lightDarKBlue,
-                            titile: "Checkout",
-                          ),
-                        ),
-                        const SpaceHeightWidget(height: 10),
-
-                        Container(
-                          padding: const EdgeInsets.all(8.0),
-                          alignment: Alignment.center,
-                          width: double.infinity,
-                          child: SizedBox(
-                            width: 200,
-                            height: 35,
-                            child: IconElevatedButton(
-                              onTapFun: () {
-                                Get.back();
-                                Get.back(result: [true]);
-                              },
-                              imagePath: 'assets/images/arrow_right.png',
-                              labelColor: whiteColor,
-                              titile: "Continue Shopping",
-                              buttonColor: blackColor,
-                            ),
-                          ),
-                        ),
                         const SpaceHeightWidget(height: 40)
                       ],
                     );

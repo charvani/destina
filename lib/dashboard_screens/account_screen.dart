@@ -14,7 +14,9 @@ import '../controllers/main_controller.dart';
 import '../inside_screens/myaccount_screen.dart';
 
 class AccountScreen extends StatefulWidget {
-  const AccountScreen({super.key});
+  List<String>? bannerPopUpImages = [];
+  dynamic data;
+  AccountScreen({super.key, this.bannerPopUpImages, this.data});
 
   @override
   State<AccountScreen> createState() => _AccountScreenState();
@@ -48,9 +50,17 @@ class _AccountScreenState extends State<AccountScreen>
     // Run the animation
     _controller.repeat(reverse: true);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // Timer(const Duration(milliseconds: 500), () {
-      //   Get.to(() => const PersonalDetailsScreen());
-      // });
+      if (widget.bannerPopUpImages!.isNotEmpty) {
+        Get.to(
+          () => MyAccountScreen(
+            data: widget.data,
+            bannerPopUpImages: widget.bannerPopUpImages,
+          ),
+        );
+      }
+    });
+    Timer(const Duration(seconds: 1), () {
+      widget.bannerPopUpImages!.clear();
     });
   }
 
@@ -59,8 +69,11 @@ class _AccountScreenState extends State<AccountScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        drawer: const Drawer(
-          child: MyAccountScreen(),
+        drawer: Drawer(
+          child: MyAccountScreen(
+            data: widget.data,
+            bannerPopUpImages: widget.bannerPopUpImages,
+          ),
         ),
         body: SingleChildScrollView(
           child: Column(

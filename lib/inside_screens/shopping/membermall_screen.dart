@@ -7,7 +7,7 @@ import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
 import 'member_productdetail_screen.dart';
 import 'membermall_cartscreen.dart';
-import 'membermall_checkoutscreen.dart';
+import 'membermall_upgradescreen.dart';
 
 class MembershipMallScreen extends StatefulWidget {
   const MembershipMallScreen({
@@ -20,11 +20,11 @@ class MembershipMallScreen extends StatefulWidget {
 
 class _MembershipMallScreenState extends State<MembershipMallScreen> {
   final MainController _dataController = Get.put(MainController());
-  dynamic userId, password, countryId, hidUid, countOfCart, uniqId, sessionId;
+  dynamic userId, password, countryId, hidUid, uniqId, sessionId;
   @override
   void initState() {
     super.initState();
-    countOfCart = "0";
+    // countOfCart = "0";
     userId = Constants.prefs.getString("user_id");
     password = Constants.prefs.getString("password");
     countryId = Constants.prefs.getString("country_id");
@@ -74,7 +74,7 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
     if (res != null) {
       if (res['Msg'] == "SUCCESS") {
         if (res['result'] == "Upgrade") {
-          Get.to(() => MembermallCheckoutScreen(
+          Get.to(() => MembermallUpgradeScreen(
                 res: res,
               ));
         } else {
@@ -111,65 +111,85 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
                 child: const Icon(Icons.keyboard_arrow_left_rounded)),
           ),
           actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                int.parse(countOfCart) > 0
-                    ? Badge.count(
-                        count: int.parse(countOfCart),
-                        child: InkWell(
-                          onTap: () {
-                            if (countOfCart != "0" && countOfCart != "") {
-                              // Get.to(() => const MembermallCartScreen());
-                              actionFun();
-                            } else {}
-                          },
-                          child: Icon(
-                            Icons.shopping_cart,
-                            color: appthemeColor,
-                          ),
-                        ),
-                      )
-                    : InkWell(
-                        onTap: () {
-                          if (countOfCart != "0" && countOfCart != "") {
-                            // Get.to(() => const MembermallCartScreen());
-                            actionFun();
-                          } else {}
-                        },
-                        child: Icon(
-                          Icons.shopping_cart,
-                          color: appthemeColor,
-                        ),
-                      ),
-                const SpaceWidthWidget(width: 5),
-                Obx(() {
-                  return _dataController.genealogyLoading.value
-                      ? SizedBox(width: 50, child: loader)
-                      : Container(
-                          height: 30,
-                          width: 118,
-                          padding: const EdgeInsets.only(right: 5),
-                          child: CustomAutoWidthButton(
-                              onTapFun: () async {
-                                if (countOfCart != "0" && countOfCart != "") {
-                                  actionFun();
+            Obx(() {
+              return _dataController.loading.value
+                  ? SizedBox(height: 20, width: 20, child: loader)
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        int.parse(_dataController.memberMallCartCount.value) > 0
+                            ? Badge.count(
+                                count: int.parse(
+                                    _dataController.memberMallCartCount.value),
+                                child: InkWell(
+                                  onTap: () {
+                                    if (_dataController
+                                                .memberMallCartCount.value !=
+                                            "0" &&
+                                        _dataController
+                                                .memberMallCartCount.value !=
+                                            "") {
+                                      // Get.to(() => const MembermallCartScreen());
+                                      actionFun();
+                                    } else {}
+                                  },
+                                  child: Icon(
+                                    Icons.shopping_cart,
+                                    color: appthemeColor,
+                                  ),
+                                ),
+                              )
+                            : InkWell(
+                                onTap: () {
+                                  if (_dataController
+                                              .memberMallCartCount.value !=
+                                          "0" &&
+                                      _dataController
+                                              .memberMallCartCount.value !=
+                                          "") {
+                                    // Get.to(() => const MembermallCartScreen());
+                                    actionFun();
+                                  } else {}
+                                },
+                                child: Icon(
+                                  Icons.shopping_cart,
+                                  color: appthemeColor,
+                                ),
+                              ),
+                        const SpaceWidthWidget(width: 5),
+                        Obx(() {
+                          return _dataController.genealogyLoading.value
+                              ? SizedBox(width: 50, child: loader)
+                              : Container(
+                                  height: 30,
+                                  width: 118,
+                                  padding: const EdgeInsets.only(right: 5),
+                                  child: CustomAutoWidthButton(
+                                      onTapFun: () async {
+                                        if (_dataController.memberMallCartCount
+                                                    .value !=
+                                                "0" &&
+                                            _dataController.memberMallCartCount
+                                                    .value !=
+                                                "") {
+                                          actionFun();
 
-                                  // dynamic res = await Get.to(
-                                  //     () => const MembermallCheckoutScreen());
-                                  // //  MembermallCartScreen());
+                                          // dynamic res = await Get.to(
+                                          //     () => const MembermallCheckoutScreen());
+                                          // //  MembermallCartScreen());
 
-                                  // if (res != null) {
-                                  //   if (res[0] == true) {
-                                  //     dataFun();
-                                  //   }
-                                }
-                                // } else {}
-                              },
-                              title: "Checkout"));
-                })
-              ],
-            )
+                                          // if (res != null) {
+                                          //   if (res[0] == true) {
+                                          //     dataFun();
+                                          //   }
+                                        }
+                                        // } else {}
+                                      },
+                                      title: "Checkout"));
+                        })
+                      ],
+                    );
+            })
           ]),
       body: Obx(() {
         return _dataController.loading.value
@@ -195,9 +215,9 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
 
                             if (res != null) {
                               if (res[0] == true) {
-                                setState(() {
-                                  countOfCart = res[1] ?? "0";
-                                });
+                                _dataController.memberMallCartCount.value =
+                                    res[1] ?? "0";
+                                setState(() {});
                               }
                             }
                           },

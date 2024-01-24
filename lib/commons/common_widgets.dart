@@ -2565,23 +2565,23 @@ class CartItemWidget extends StatelessWidget {
                           color: blackColor.withOpacity(0.5)))
                 ])),
                 const SpaceHeightWidget(height: 5),
-                if(dp != null && dp != "")
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                    text: "DP: ",
-                    style: TextStyle(
-                        fontFamily: "OnestRegular",
-                        fontSize: 12,
-                        color: blackColor.withOpacity(0.7)),
-                  ),
-                  TextSpan(
-                      text: dp,
+                if (dp != null && dp != "")
+                  RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                      text: "DP: ",
                       style: TextStyle(
                           fontFamily: "OnestRegular",
                           fontSize: 12,
-                          color: blackColor.withOpacity(0.5)))
-                ])),
+                          color: blackColor.withOpacity(0.7)),
+                    ),
+                    TextSpan(
+                        text: dp,
+                        style: TextStyle(
+                            fontFamily: "OnestRegular",
+                            fontSize: 12,
+                            color: blackColor.withOpacity(0.5)))
+                  ])),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/inside_screens/profile/listofreq_approvedprofile_model.dart';
 import 'package:destina_1_international/models/activationbonus_model.dart';
@@ -58,12 +60,16 @@ import '../models/signupLoad_model.dart';
 import '../models/teambuilder_model.dart';
 import '../models/upgradeList_model.dart';
 import '../models/upgrade_cartItem_model.dart';
+import '../models/upgrade_promotion_model.dart';
 import '../service_call/api_data.dart';
 
 class MainController extends GetxController {
   RxBool loading = false.obs;
   RxBool listOfMemberLoading = false.obs;
   RxBool genealogyLoading = false.obs;
+  Rx<dynamic> imeiNum = "".obs;
+  Rx<dynamic> mobileInfo = "".obs;
+  Rx<dynamic> memberMallCartCount = "0".obs;
 
   RxList<ProductCategoryItem> productItemList = <ProductCategoryItem>[].obs;
   Rx<ProductDetails> productDetails = ProductDetails(
@@ -802,6 +808,16 @@ class MainController extends GetxController {
           discAmt: "",
           emoney: "",
           totRp: "")
+      .obs;
+  Rx<UpgradePromotionModel> upgradePromoCartItemData = UpgradePromotionModel(
+          pid: "",
+          pcode: "",
+          name: "",
+          qty: "",
+          shipPrice: "",
+          mrp: "",
+          cv: "",
+          totMrp: "")
       .obs;
 // *********************** *********************************************************************
   getCountryCode() async {
@@ -2302,8 +2318,10 @@ class MainController extends GetxController {
         }
       }
     } else {
-      Get.back();
-      Get.back();
+      Timer(const Duration(seconds: 1), () {
+        Get.back();
+        memberMallCartCount.value = "0";
+      });
     }
     if (from == "init") {
       loading.value = false;
@@ -2367,32 +2385,38 @@ class MainController extends GetxController {
     return res;
   }
 
-  getPromoPacks(Map parameters) async {
-    dynamic res = await ApiCall().postMethodFun(
-        methodName: ApiData().getPkgItemsPro, params: parameters);
+  getPromoPacks(Map parameters, String endUrl) async {
+    dynamic res =
+        await ApiCall().postMethodFun(methodName: endUrl, params: parameters);
     packageDetails.value = PackageItemsModel.fromJson(res);
     return res;
   }
 
-  getPromoPackAddToCart(Map parameters) async {
-    dynamic res = await ApiCall().postMethodFun(
-        methodName: ApiData().pAddtoCartOpen, params: parameters);
+  getPromoPackAddToCart(Map parameters, String endUrl) async {
+    dynamic res =
+        await ApiCall().postMethodFun(methodName: endUrl, params: parameters);
     return res;
   }
 
-  getPromoCartItems(String from, Map parameters) async {
+  getPromoCartItems(String from, Map parameters, String endUrl) async {
     if (from == "init") {
       loading.value = true;
     }
 
     dynamic res = await ApiCall().postMethodFun(
-        methodName: ApiData().selPackageDetailsPro, params: parameters);
+      methodName: endUrl,
+      params: parameters,
+    );
 
     if (res != null) {
       if (res['GetCouStMalRpt'].length > 0 &&
           res['GetCouStMalRpt'].toString() != "[]") {
         promoCartItemData.value =
             PromoCartItemModel.fromJson(res['GetCouStMalRpt'][0]);
+      } else if (res['GetsubCouStMalRpt'].length > 0 &&
+          res['GetsubCouStMalRpt'].toString() != "[]") {
+        upgradePromoCartItemData.value =
+            UpgradePromotionModel.fromJson(res['GetsubCouStMalRpt'][0]);
       }
     } else {
       Get.back();

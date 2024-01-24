@@ -7,16 +7,16 @@ import 'package:get/get.dart';
 import '../../commons/colors.dart';
 import 'membermall_cartscreen.dart';
 
-class MembermallCheckoutScreen extends StatefulWidget {
+class MembermallUpgradeScreen extends StatefulWidget {
   final dynamic res;
-  const MembermallCheckoutScreen({super.key, required this.res});
+  const MembermallUpgradeScreen({super.key, required this.res});
 
   @override
-  State<MembermallCheckoutScreen> createState() =>
-      _MembermallCheckoutScreenState();
+  State<MembermallUpgradeScreen> createState() =>
+      _MembermallUpgradeScreenState();
 }
 
-class _MembermallCheckoutScreenState extends State<MembermallCheckoutScreen> {
+class _MembermallUpgradeScreenState extends State<MembermallUpgradeScreen> {
   TextEditingController sponsorController = TextEditingController();
 
   int itemCount = 4;

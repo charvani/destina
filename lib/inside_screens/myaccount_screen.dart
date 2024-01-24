@@ -46,7 +46,9 @@ import 'tools/ftareg_formscreen.dart';
 import 'tools/package_reviewscreen.dart';
 
 class MyAccountScreen extends StatefulWidget {
-  const MyAccountScreen({super.key});
+  List<String>? bannerPopUpImages = [];
+  dynamic data;
+  MyAccountScreen({super.key, this.bannerPopUpImages, this.data});
 
   @override
   State<MyAccountScreen> createState() => _MyAccountScreenState();
@@ -54,6 +56,22 @@ class MyAccountScreen extends StatefulWidget {
 
 class _MyAccountScreenState extends State<MyAccountScreen> {
   dynamic selectedString;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.bannerPopUpImages!.isNotEmpty) {
+        Get.to(
+          () => DashBoardScreen(
+            data: widget.data,
+            bannerPopUpImages: widget.bannerPopUpImages,
+          ),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,8 +90,25 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 fit: BoxFit.fill,
               ),
             ),
+            InkWell(
+              onTap: () {
+                print("dflkskdlf");
+                Get.back();
+              },
+              child: Container(
+                alignment: Alignment.topLeft,
+                width: double.infinity,
+                margin: const EdgeInsets.only(bottom: 50),
+                padding: const EdgeInsets.only(left: 5, bottom: 0),
+                height: 15,
+                child: Icon(
+                  Icons.keyboard_arrow_left_rounded,
+                  color: blackColor,
+                ),
+              ),
+            ),
             Padding(
-              padding: const EdgeInsets.only(left: 15, top: 40),
+              padding: const EdgeInsets.only(left: 15, top: 30),
               child: Row(
                 children: [
                   Expanded(
@@ -134,7 +169,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
             traillingFun: () {},
             leadingIcon: Icons.home,
             onTapFun: () {
-              Get.to(() => const DashBoardScreen());
+              Get.to(() => DashBoardScreen(
+                    data: widget.data,
+                    bannerPopUpImages: widget.bannerPopUpImages,
+                  ));
             },
             title: "Dashboard",
           ),
@@ -198,16 +236,17 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
             trailing: (selectedString == "My eMoney") ? true : false,
           ),
           if (selectedString == "My eMoney") eMoneyItems(),
-          MyAccountWidget(
-            traillingFun: () {
-              Get.to(() => const MyDateListSelectionScreen(from: "Upgrade"));
-            },
-            leadingIcon: Icons.credit_card,
-            onTapFun: () {
-              Get.to(() => const MyDateListSelectionScreen(from: "Upgrade"));
-            },
-            title: "Upgrade List",
-          ),
+          if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
+            MyAccountWidget(
+              traillingFun: () {
+                Get.to(() => const MyDateListSelectionScreen(from: "Upgrade"));
+              },
+              leadingIcon: Icons.credit_card,
+              onTapFun: () {
+                Get.to(() => const MyDateListSelectionScreen(from: "Upgrade"));
+              },
+              title: "Upgrade List",
+            ),
           MyAccountWidget(
             traillingFun: () {
               commonOnTapFun("Shopping");
@@ -230,17 +269,18 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
             },
             title: "Maintenance",
           ),
-          MyAccountWidget(
-            traillingFun: () {
-              commonOnTapFun("My Bonus");
-            },
-            imagePath: "assets/images/bonus.png",
-            onTapFun: () {
-              commonOnTapFun("My Bonus");
-            },
-            title: "My Bonus",
-            trailing: (selectedString == "My Bonus") ? true : false,
-          ),
+          if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
+            MyAccountWidget(
+              traillingFun: () {
+                commonOnTapFun("My Bonus");
+              },
+              imagePath: "assets/images/bonus.png",
+              onTapFun: () {
+                commonOnTapFun("My Bonus");
+              },
+              title: "My Bonus",
+              trailing: (selectedString == "My Bonus") ? true : false,
+            ),
           if (selectedString == "My Bonus") bonusItems(),
           MyAccountWidget(
             traillingFun: () {
@@ -316,18 +356,20 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           },
           title: "Forgot Trans Password",
         ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const AwardQualifiersScreen());
-          },
-          title: "Scheme Awards Qualifiers",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const D1VoucherScreen());
-          },
-          title: "D1 Voucher",
-        ),
+        if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
+          MyAccountItemWidget(
+            onTapFun: () {
+              Get.to(() => const AwardQualifiersScreen());
+            },
+            title: "Scheme Awards Qualifiers",
+          ),
+        if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
+          MyAccountItemWidget(
+            onTapFun: () {
+              Get.to(() => const D1VoucherScreen());
+            },
+            title: "D1 Voucher",
+          ),
         const SpaceHeightWidget(height: 13)
       ],
     );
@@ -446,46 +488,51 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           },
           title: "E-Card",
         ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const TransactionPasswordScreen(
-                  from: "Commission",
-                ));
-          },
-          title: "Commission eMoney",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const TransactionPasswordScreen(
-                  from: "Redemption",
-                ));
-          },
-          title: "Redemption eMoney",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const TransactionPasswordScreen(
-                  from: "Prepaid",
-                ));
-          },
-          title: "Prepaid eMoney",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const TransactionPasswordScreen(
-                  from: "Stockist",
-                ));
-          },
-          title: "Stockist eMoney",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const TransactionPasswordScreen(
-                  from: "Withdrawal",
-                ));
-          },
-          title: "Withdrawal Status",
-        ),
+        if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
+          MyAccountItemWidget(
+            onTapFun: () {
+              Get.to(() => const TransactionPasswordScreen(
+                    from: "Commission",
+                  ));
+            },
+            title: "Commission eMoney",
+          ),
+        if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
+          MyAccountItemWidget(
+            onTapFun: () {
+              Get.to(() => const TransactionPasswordScreen(
+                    from: "Redemption",
+                  ));
+            },
+            title: "Redemption eMoney",
+          ),
+        if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
+          MyAccountItemWidget(
+            onTapFun: () {
+              Get.to(() => const TransactionPasswordScreen(
+                    from: "Prepaid",
+                  ));
+            },
+            title: "Prepaid eMoney",
+          ),
+        if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
+          MyAccountItemWidget(
+            onTapFun: () {
+              Get.to(() => const TransactionPasswordScreen(
+                    from: "Stockist",
+                  ));
+            },
+            title: "Stockist eMoney",
+          ),
+        if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
+          MyAccountItemWidget(
+            onTapFun: () {
+              Get.to(() => const TransactionPasswordScreen(
+                    from: "Withdrawal",
+                  ));
+            },
+            title: "Withdrawal Status",
+          ),
         MyAccountItemWidget(
           onTapFun: () {
             Get.to(() => const EcardTopupRequestScreen());
@@ -500,30 +547,33 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           },
           title: "Ecard Request Report",
         ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const TransactionPasswordScreen(
-                  from: "D1 Cash Back",
-                ));
-          },
-          title: "D1 Cash Back Points",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const TransactionPasswordScreen(
-                  from: "D1 Credit Rebate",
-                ));
-          },
-          title: "D1 Credit Rebate Point",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const TransactionPasswordScreen(
-                  from: "DP Wallet",
-                ));
-          },
-          title: "DP Wallet",
-        ),
+        if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
+          MyAccountItemWidget(
+            onTapFun: () {
+              Get.to(() => const TransactionPasswordScreen(
+                    from: "D1 Cash Back",
+                  ));
+            },
+            title: "D1 Cash Back Points",
+          ),
+        if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
+          MyAccountItemWidget(
+            onTapFun: () {
+              Get.to(() => const TransactionPasswordScreen(
+                    from: "D1 Credit Rebate",
+                  ));
+            },
+            title: "D1 Credit Rebate Point",
+          ),
+        if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
+          MyAccountItemWidget(
+            onTapFun: () {
+              Get.to(() => const TransactionPasswordScreen(
+                    from: "DP Wallet",
+                  ));
+            },
+            title: "DP Wallet",
+          ),
         const SpaceHeightWidget(height: 13)
       ],
     );
@@ -579,10 +629,34 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         MyAccountItemWidget(
           onTapFun: () {
             Get.to(() => const BonusDateSelectionScreen(
-                  from: "Retail",
+                  from: "Retail Bonus",
                 ));
           },
           title: "Retail Bonus",
+        ),
+        MyAccountItemWidget(
+          onTapFun: () {
+            Get.to(() => const BonusDateSelectionScreen(
+                  from: "Personal Consumption Bonus",
+                ));
+          },
+          title: "Personal Consumption Bonus",
+        ),
+        MyAccountItemWidget(
+          onTapFun: () {
+            Get.to(() => const BonusDateSelectionScreen(
+                  from: "Level Consumption Bonus",
+                ));
+          },
+          title: "Level Consumption Bonus",
+        ),
+        MyAccountItemWidget(
+          onTapFun: () {
+            Get.to(() => const BonusDateSelectionScreen(
+                  from: "Group Consumption Bonus",
+                ));
+          },
+          title: "Group Consumption Bonus",
         ),
         MyAccountItemWidget(
           onTapFun: () {

@@ -7,10 +7,14 @@ import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
 
 class RetailBonusSCreen extends StatefulWidget {
-  final String fromDate, toDate;
+  final String fromDate, toDate, from, bonusType;
 
   const RetailBonusSCreen(
-      {super.key, required this.fromDate, required this.toDate});
+      {super.key,
+      required this.fromDate,
+      required this.toDate,
+      required this.from,
+      required this.bonusType});
 
   @override
   State<RetailBonusSCreen> createState() => _RetailBonusSCreenState();
@@ -49,7 +53,7 @@ class _RetailBonusSCreenState extends State<RetailBonusSCreen> {
       "StpsSym": null,
       "SalesMnth": null,
       "SalesYr": null,
-      "BonusType": "RB",
+      "BonusType": widget.bonusType,
     };
     _dataController.getRetailBonus(bData);
   }
@@ -58,7 +62,7 @@ class _RetailBonusSCreenState extends State<RetailBonusSCreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar(
-        title: "Retail Bonus",
+        title: widget.from,
         backNavigation: true,
       ),
       body: Obx(() {

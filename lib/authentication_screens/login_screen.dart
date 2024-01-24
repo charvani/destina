@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController idTController = TextEditingController();
   TextEditingController passwordTController = TextEditingController();
-  bool visible = false;
+  bool visible = true;
   dynamic mobileInfo;
   final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
   String? imei, macAddress;
@@ -37,12 +37,13 @@ class _LoginScreenState extends State<LoginScreen> {
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
     macAddress = await GetMac.macAddress;
     imei = await DeviceInformation.deviceIMEINumber;
-
+    _loginController.imeiNum.value = imei;
     mobileInfo = "MOBILENO:"
         ";SIMSERIAL:"
         ";IMEI:$imei;SUBID:"
         ";WLANMAC:$macAddress;ANDROIDID:${androidInfo.id};VERSION:${Constants.appversion}";
     print("mobile infor....$mobileInfo");
+    _loginController.mobileInfo.value = mobileInfo;
   }
 
   void checkPermission() async {
@@ -214,8 +215,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     if (_formKey.currentState!.validate()) {
                                       print("charvani");
                                       Map bodyData = {
-                                        "idno": idTController.text,
-                                        "Pwd": passwordTController.text,
+                                        "idno": idTController.text.trim(),
+                                        "Pwd": passwordTController.text.trim(),
                                         "FcmId": "1233455",
                                         "IMEI": imei,
                                         "MOBINFO": mobileInfo,
@@ -234,7 +235,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           Constants.prefs.setString("password",
                                               passwordTController.text);
                                           Get.offAll(() => BottomBarScreen(
-                                                index: 0,
+                                                index: 4,
                                                 bannerPopup: _loginController
                                                     .bannerPopUp,
                                                 data: res,

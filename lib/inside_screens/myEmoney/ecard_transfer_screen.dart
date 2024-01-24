@@ -40,7 +40,7 @@ class _EcardTransferScreenState extends State<EcardTransferScreen> {
   void initState() {
     super.initState();
     userId = Constants.prefs.getString("user_id");
-    passwordTController.text = widget.transPass;
+    // passwordTController.text = widget.transPass;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       moneyTypeFun();
     });
@@ -208,7 +208,7 @@ class _EcardTransferScreenState extends State<EcardTransferScreen> {
                               "FromEmontyType": widget.etype,
                               "ToEmontyType": eMoneyType,
                               "Remarks": remarksController.text,
-                              "TransPassword": widget.transPass,
+                              "TransPassword": passwordTController.text,
                             };
                             print("checking bdata...$bdata");
                             dynamic res = await _dataController

@@ -53,16 +53,22 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             backNavigation: true,
             title: "Checkout",
             onTapFun: () async {
-              Get.dialog(ConfrimationDialog(
-                onTapFun: () async {
-                  Get.back();
-                  Get.back();
-                  Get.back();
-                  await Constants.prefs.remove("uniq_id");
-                  await Constants.prefs.remove("ss_id");
-                },
-                title: "Do you want to clear these items from your cart?",
-              ));
+              Get.back();
+              Get.back();
+              await Constants.prefs.remove("uniq_id");
+              await Constants.prefs.remove("ss_id");
+              // Get.dialog(
+              //   ConfrimationDialog(
+              //   onTapFun: () async {
+              //     Get.back();
+              //     Get.back();
+              //     Get.back();
+              //     await Constants.prefs.remove("uniq_id");
+              //     await Constants.prefs.remove("ss_id");
+              //   },
+              //   title: "Do you want to clear these items from your cart?",
+              // )
+              // );
             }),
         body: WillPopScope(
           onWillPop: () async {

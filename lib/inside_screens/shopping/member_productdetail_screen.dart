@@ -109,9 +109,7 @@ class _MemberProductDetailsScreenState
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () {
-
-      },
+      onTap: () {},
       child: Scaffold(
         appBar: commonAppBar(
           backNavigation: true,
@@ -439,8 +437,8 @@ class _MemberProductDetailsScreenState
                               columns: [
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "S.No",
                                     style: TextStyle(
@@ -451,8 +449,8 @@ class _MemberProductDetailsScreenState
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Product\nCode",
                                     style: TextStyle(
@@ -463,8 +461,8 @@ class _MemberProductDetailsScreenState
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Name",
                                     style: TextStyle(
@@ -475,8 +473,8 @@ class _MemberProductDetailsScreenState
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Maximum\nQuantity",
                                     style: TextStyle(
@@ -487,8 +485,8 @@ class _MemberProductDetailsScreenState
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Quantity",
                                     style: TextStyle(
@@ -571,7 +569,8 @@ class _MemberProductDetailsScreenState
                                             inputFormatter: [
                                               FilteringTextInputFormatter
                                                   .digitsOnly,
-                                              LengthLimitingTextInputFormatter(2),
+                                              LengthLimitingTextInputFormatter(
+                                                  2),
                                               // FilteringTextInputFormatter.allow(
                                               //     RegExp("[1-28]"))
                                             ],
@@ -628,9 +627,12 @@ class _MemberProductDetailsScreenState
                                               pidList.clear();
                                               int countQty = 0;
                                               for (int i = 0;
-                                                  i < textEControllerList.length;
+                                                  i <
+                                                      textEControllerList
+                                                          .length;
                                                   i++) {
-                                                if (textEControllerList[i].text !=
+                                                if (textEControllerList[i]
+                                                        .text !=
                                                     "") {
                                                   countQty = countQty +
                                                       int.parse(
@@ -640,7 +642,7 @@ class _MemberProductDetailsScreenState
                                                       "${_dataController.packageDetails.value.getPkgItemsRpt[i].pcode}*${textEControllerList[i].text}");
                                                 }
                                               }
-          
+
                                               if (countQty ==
                                                   int.parse(_dataController
                                                       .packageDetails
@@ -650,7 +652,7 @@ class _MemberProductDetailsScreenState
                                                   showQtyErrorText = false;
                                                   loading = true;
                                                 });
-          
+
                                                 print("add to car fun");
                                                 Map parameters = {
                                                   "Pkid": widget.packageCode,
@@ -664,7 +666,8 @@ class _MemberProductDetailsScreenState
                                                   "sprno": Constants.prefs
                                                       .getString("user_id"),
                                                   "prdtype": "Package",
-                                                  "qty": firstQtyController.text,
+                                                  "qty":
+                                                      firstQtyController.text,
                                                   "country": Constants.prefs
                                                       .getString("country_id"),
                                                 };
@@ -679,14 +682,15 @@ class _MemberProductDetailsScreenState
                                                         .toLowerCase() ==
                                                     "success") {
                                                   Timer(
-                                                      const Duration(seconds: 1),
-                                                      () {
+                                                      const Duration(
+                                                          seconds: 1), () {
                                                     if (mounted) {
                                                       myState(() {
                                                         loading = false;
                                                       });
                                                     }
                                                     Get.back();
+
                                                     Get.back(result: [
                                                       true,
                                                       res['Cnt']
@@ -696,13 +700,14 @@ class _MemberProductDetailsScreenState
                                                   });
                                                 } else {
                                                   Timer(
-                                                      const Duration(seconds: 1),
-                                                      () {
+                                                      const Duration(
+                                                          seconds: 1), () {
                                                     if (mounted) {
                                                       myState(() {
                                                         loading = false;
                                                       });
-                                                      CommonToast(res['Message']);
+                                                      CommonToast(
+                                                          res['Message']);
                                                       Get.back();
                                                     }
                                                   });
@@ -712,7 +717,7 @@ class _MemberProductDetailsScreenState
                                                   showQtyErrorText = true;
                                                 });
                                               }
-          
+
                                               // await Constants.prefs.setInt("cart_count", 1);
                                               // Get.back();
                                               // Get.to(() => const EnrollPackageScreen());

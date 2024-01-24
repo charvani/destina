@@ -209,7 +209,7 @@ class DashboardModel {
         catSteps: json["CatSteps"],
         nupgdate: json["Nupgdate"],
         pkgUpgrade: json["PkgUpgrade"],
-        endDate: json["EndDate"],
+        endDate: json["EndDate"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {

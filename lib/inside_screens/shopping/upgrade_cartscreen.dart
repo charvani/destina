@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../commons/colors.dart';
+import '../checkout_screen.dart';
 
 class UpgradeCartScreen extends StatefulWidget {
   final String packCode;
@@ -25,7 +26,7 @@ class _UpgradeCartScreenState extends State<UpgradeCartScreen> {
   int cartCount = 0;
   int cartItemCount = 0;
   dynamic uniqId;
-  dynamic sessionId;
+  dynamic sessionId, regId;
   MainController cartController = Get.put(MainController());
   bool packageLoading = false;
   @override
@@ -34,6 +35,7 @@ class _UpgradeCartScreenState extends State<UpgradeCartScreen> {
 
     uniqId = Constants.prefs.getString("uniq_id");
     sessionId = Constants.prefs.getString("ss_id");
+    regId = Constants.prefs.getString("reg_id");
     sponsorController.text = "";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // if (uniqId != null && sessionId != null) {
@@ -341,11 +343,11 @@ class _UpgradeCartScreenState extends State<UpgradeCartScreen> {
                                           child: IconElevatedButton(
                                             onTapFun: () async {
                                               print(
-                                                  "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
+                                                  "https://showcase.worldunityfoundation.org/MobileAppCheckout/UpgradeCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId");
 
-                                              // Get.off(() => CheckOutScreen(
-                                              //     redirectUrl:
-                                              //         "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&sessid=$sessionId&uniqId=$uniqId"));
+                                              Get.off(() => CheckOutScreen(
+                                                  redirectUrl:
+                                                      "https://showcase.worldunityfoundation.org/MobileAppCheckout/UpgradeCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId"));
                                             },
                                             imagePath:
                                                 'assets/images/shopping_cart_img.jpg',

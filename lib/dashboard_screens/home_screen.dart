@@ -11,14 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../commons/constants.dart';
+import '../inside_screens/services/upload_id_screen.dart';
 import '../models/onboarding_model.dart';
 import '../models/productitem_model.dart';
 
 class HomeScreen extends StatefulWidget {
-  List<String> bannerPopUpImages = [];
-  dynamic data;
+  
 
-  HomeScreen({super.key, required this.bannerPopUpImages, required this.data});
+  HomeScreen({super.key,});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -106,115 +106,7 @@ List<ProductItemModel> personalProductItems = [
 
 class _HomeScreenState extends State<HomeScreen> {
   final MainController _homeController = Get.put(MainController());
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      print("da....${widget.data}");
-      if (widget.bannerPopUpImages.isNotEmpty) {
-        print(widget.bannerPopUpImages.length);
-
-        Get.dialog(AlertDialog(
-            insetPadding: const EdgeInsets.symmetric(horizontal: 10),
-            titlePadding: EdgeInsets.zero,
-            title: Container(
-              width: double.maxFinite,
-              alignment: Alignment.topRight,
-              child: IconButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  icon: Icon(
-                    Icons.cancel_outlined,
-                    color: redColor,
-                  )),
-            ),
-            contentPadding:
-                const EdgeInsets.only(top: 0, left: 3, right: 3, bottom: 18),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  for (int i = 0; i < widget.bannerPopUpImages.length; i++)
-                    CommonCachedNetworkImage(
-                        imagePath: widget.bannerPopUpImages[i])
-                ],
-              ),
-            )));
-      }
-
-      Timer(const Duration(microseconds: 500), () {
-        if (widget.data['result1'] == "No Id") {
-          Get.dialog(AlertDialog(
-              insetPadding: const EdgeInsets.symmetric(horizontal: 10),
-              titlePadding: EdgeInsets.zero,
-              title: Container(
-                width: double.maxFinite,
-                alignment: Alignment.topRight,
-                child: IconButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: Icon(
-                      Icons.cancel_outlined,
-                      color: redColor,
-                    )),
-              ),
-              contentPadding:
-                  const EdgeInsets.only(top: 0, left: 3, right: 3, bottom: 18),
-              content: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CommonTitle(
-                      titleName: "Destina 1 International alerts!!!!",
-                      fontColor: darkRedColor,
-                    ),
-                    const SpaceHeightWidget(height: 15),
-                    SideTitle(title: widget.data['UploadIdMsg'])
-                  ],
-                ),
-              )));
-        }
-      });
-      Timer(const Duration(microseconds: 700), () {
-        if (widget.data['RenewaAlert'] != "No") {
-          Get.dialog(
-              barrierDismissible: false,
-              AlertDialog(
-                  insetPadding: const EdgeInsets.symmetric(horizontal: 10),
-                  titlePadding: EdgeInsets.zero,
-                  title: Container(
-                    width: double.maxFinite,
-                    alignment: Alignment.topRight,
-                    child: IconButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        icon: Icon(
-                          Icons.cancel_outlined,
-                          color: redColor,
-                        )),
-                  ),
-                  contentPadding: const EdgeInsets.only(
-                      top: 0, left: 3, right: 3, bottom: 18),
-                  content: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        CommonTitle(
-                          titleName: "Destina 1 International alerts!!!!",
-                          fontColor: darkRedColor,
-                        ),
-                        const SpaceHeightWidget(height: 15),
-                        SideTitle(title: widget.data['RenNotifyMsg'])
-                      ],
-                    ),
-                  )));
-        }
-      });
-    });
-  }
+ 
 
   @override
   Widget build(BuildContext context) {

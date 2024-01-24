@@ -462,7 +462,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                                 'assets/images/shopping_cart_img.jpg',
                                             labelColor: whiteColor,
                                             buttonColor: lightDarKBlue,
-                                            titile: "Submit",
+                                            titile: "Checkout",
                                           ),
                                         ),
                                       ],
@@ -720,7 +720,8 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                 color: blackColor),
                           ),
                           TextSpan(
-                            text: cartController.packPackageDetails.value.maxQty,
+                            text:
+                                cartController.packPackageDetails.value.maxQty,
                             style: TextStyle(
                                 fontFamily: "OnestSemiBold",
                                 fontSize: 14,
@@ -741,8 +742,8 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                               columns: [
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "S.No",
                                     style: TextStyle(
@@ -753,8 +754,8 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Product\nCode",
                                     style: TextStyle(
@@ -765,8 +766,8 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Name",
                                     style: TextStyle(
@@ -777,8 +778,8 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Maximum\nQuantity",
                                     style: TextStyle(
@@ -789,8 +790,8 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Quantity",
                                     style: TextStyle(
@@ -873,7 +874,8 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                             inputFormatter: [
                                               FilteringTextInputFormatter
                                                   .digitsOnly,
-                                              LengthLimitingTextInputFormatter(2),
+                                              LengthLimitingTextInputFormatter(
+                                                  2),
                                               // FilteringTextInputFormatter.allow(
                                               //     RegExp("[1-28]"))
                                             ],
@@ -930,9 +932,12 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                               pidList.clear();
                                               int countQty = 0;
                                               for (int i = 0;
-                                                  i < textEControllerList.length;
+                                                  i <
+                                                      textEControllerList
+                                                          .length;
                                                   i++) {
-                                                if (textEControllerList[i].text !=
+                                                if (textEControllerList[i]
+                                                        .text !=
                                                     "") {
                                                   countQty = countQty +
                                                       int.parse(
@@ -942,7 +947,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                                       "${cartController.packPackageDetails.value.getPkgItemsRpt[i].pcode}@${textEControllerList[i].text}");
                                                 }
                                               }
-          
+
                                               if (countQty ==
                                                   int.parse(cartController
                                                       .packPackageDetails
@@ -952,7 +957,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                                   showQtyErrorText = false;
                                                   loading = true;
                                                 });
-          
+
                                                 print("add to car fun");
                                                 Map parameters = {
                                                   "Pkid": widget.packageCode,
@@ -968,8 +973,10 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                                 };
                                                 print(
                                                     "add to cart params...$parameters");
-                                                dynamic res = await cartController
-                                                    .getPackAddToCart(parameters);
+                                                dynamic res =
+                                                    await cartController
+                                                        .getPackAddToCart(
+                                                            parameters);
                                                 if (res['Msg']
                                                         .toString()
                                                         .toLowerCase() ==
@@ -983,7 +990,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                                   // ).show(context);
                                                   CommonToastTrue(
                                                       "Successfully added to your cart.");
-          
+
                                                   myState(() {
                                                     loading = false;
                                                   });
@@ -991,7 +998,8 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                                   getData("add to cart");
                                                 } else {
                                                   Timer(
-                                                      const Duration(seconds: 1),
+                                                      const Duration(
+                                                          seconds: 1),
                                                       () async {
                                                     myState(() {
                                                       loading = false;
@@ -1004,7 +1012,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                                   showQtyErrorText = true;
                                                 });
                                               }
-          
+
                                               // await Constants.prefs.setInt("cart_count", 1);
                                               // Get.back();
                                               // Get.to(() => const EnrollPackageScreen());

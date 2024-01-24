@@ -8,12 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../services/upload_id_screen.dart';
 import '../shopping/upgradeorder.screen.dart';
 import 'promo_screen.dart';
 import 'redeem_screen.dart';
 
 class DashBoardScreen extends StatefulWidget {
-  const DashBoardScreen({super.key});
+  List<String>? bannerPopUpImages = [];
+  dynamic data;
+  DashBoardScreen({super.key, this.bannerPopUpImages, this.data});
 
   @override
   State<DashBoardScreen> createState() => _DashBoardScreenState();
@@ -55,6 +58,157 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       dataFun();
+
+      print("da....${widget.data}");
+      if (widget.bannerPopUpImages!.isNotEmpty) {
+        print(widget.bannerPopUpImages!.length);
+
+        Get.dialog(AlertDialog(
+            insetPadding: const EdgeInsets.symmetric(horizontal: 10),
+            titlePadding: EdgeInsets.zero,
+            title: Container(
+              width: double.maxFinite,
+              alignment: Alignment.topRight,
+              child: IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: Icon(
+                    Icons.cancel_outlined,
+                    color: redColor,
+                  )),
+            ),
+            contentPadding:
+                const EdgeInsets.only(top: 0, left: 3, right: 3, bottom: 18),
+            content: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (int i = 0; i < widget.bannerPopUpImages!.length; i++)
+                    CommonCachedNetworkImage(
+                        imagePath: widget.bannerPopUpImages![i])
+                ],
+              ),
+            )));
+      }
+
+      Timer(const Duration(microseconds: 500), () {
+        if (widget.data['result1'].toString().toLowerCase() == "pending") {
+          Get.dialog(AlertDialog(
+              insetPadding: const EdgeInsets.symmetric(horizontal: 10),
+              titlePadding: EdgeInsets.zero,
+              title: Container(
+                width: double.maxFinite,
+                alignment: Alignment.topRight,
+                child: IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: Icon(
+                      Icons.cancel_outlined,
+                      color: redColor,
+                    )),
+              ),
+              contentPadding:
+                  const EdgeInsets.only(top: 0, left: 3, right: 3, bottom: 18),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CommonTitle(
+                      titleName: "Destina 1 International alerts!!!!",
+                      fontColor: darkRedColor,
+                    ),
+                    const SpaceHeightWidget(height: 15),
+                    SideTitle(title: widget.data['UploadIdMsg'])
+                  ],
+                ),
+              )));
+        } else if (widget.data['result1'] == "No Id") {
+          Get.dialog(
+              barrierDismissible: false,
+              AlertDialog(
+                  insetPadding: const EdgeInsets.symmetric(horizontal: 10),
+                  titlePadding: EdgeInsets.zero,
+                  contentPadding: const EdgeInsets.only(
+                      top: 0, left: 3, right: 3, bottom: 18),
+                  content: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SpaceHeightWidget(height: 20),
+                        CommonTitle(
+                          titleName: "Account Locked!!!!",
+                          fontColor: darkRedColor,
+                        ),
+                        const SpaceHeightWidget(height: 15),
+                        const SideTitle(
+                            title:
+                                "Account Locked - Upload Your Valid government Issued ID."),
+                        const SpaceHeightWidget(height: 10),
+                        const SideTitle(
+                            title:
+                                "click the below button to unlock your account!!!"),
+                        const SpaceHeightWidget(height: 15),
+                        CustomAutoWidthButton(
+                            bcolor: greenColor,
+                            onTapFun: () {
+                              Get.back();
+                              Get.off(() => const UploadIDScreen());
+                            },
+                            title: "Click Here To Unlock Your Account")
+                      ],
+                    ),
+                  )));
+        }
+      });
+      Timer(const Duration(microseconds: 700), () {
+        if (widget.data['RenewaAlert'] != "No") {
+          Get.dialog(
+              barrierDismissible: false,
+              AlertDialog(
+                  insetPadding: const EdgeInsets.symmetric(horizontal: 10),
+                  titlePadding: EdgeInsets.zero,
+                  title: Container(
+                    width: double.maxFinite,
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        icon: Icon(
+                          Icons.cancel_outlined,
+                          color: redColor,
+                        )),
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                      top: 0, left: 3, right: 3, bottom: 18),
+                  content: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CommonTitle(
+                          titleName: "Destina 1 International alerts!!!!",
+                          fontColor: darkRedColor,
+                        ),
+                        const SpaceHeightWidget(height: 15),
+                        SideTitle(title: widget.data['RenNotifyMsg'])
+                      ],
+                    ),
+                  )));
+        }
+      });
+
+      if (Constants.prefs.getString("user_type") == "MEMBERSHIP") {
+        setState(() {
+          myData = [
+            "Business Details",
+            "Package Details",
+            "Maintenance Information",
+            "Personal Details"
+          ];
+        });
+      }
     });
   }
 
@@ -225,7 +379,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               height: 30,
                               child: CustomAutoWidthButton(
                                   onTapFun: () {
-                                    Get.to(() => const PromoDashboardScreen());
+                                    Get.to(() =>  PromoDashboardScreen(
+                                      pkMallNum:
+_dashboardController
+                                            .dashboardData.value.pkmall
+                                    ));
                                   },
                                   title: _dashboardController
                                               .dashboardData.value.pkmall ==
@@ -249,24 +407,28 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        CommissionWidget(
-                          title: "COMMISSION\nEMONEY",
-                          amount: _dashboardController
-                              .dashboardData.value.commissonEMny,
-                          amountType: "D1 \$",
-                        ),
+                        if (Constants.prefs.getString("user_type") !=
+                            "MEMBERSHIP")
+                          CommissionWidget(
+                            title: "COMMISSION\nEMONEY",
+                            amount: _dashboardController
+                                .dashboardData.value.commissonEMny,
+                            amountType: "D1 \$",
+                          ),
                         CommissionWidget(
                           title: "PREPAID\nEMONEY",
                           amount: _dashboardController
                               .dashboardData.value.prepaidEMny,
                           amountType: "RM",
                         ),
-                        CommissionWidget(
-                          title: "Country License\nEmoney",
-                          amount: _dashboardController
-                              .dashboardData.value.stockLicEMny,
-                          amountType: "D1 \$",
-                        ),
+                        if (Constants.prefs.getString("user_type") !=
+                            "MEMBERSHIP")
+                          CommissionWidget(
+                            title: "Country License\nEmoney",
+                            amount: _dashboardController
+                                .dashboardData.value.stockLicEMny,
+                            amountType: "D1 \$",
+                          ),
                       ],
                     ),
                   ),
@@ -284,74 +446,84 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           backgroundColor: whiteColor,
                         ),
                       ),
-                      const CommonVerticalDivider(),
-                      Expanded(
-                        child: CommissionWidget(
-                          title: "REDEMPTION\nEMONEY",
-                          amount: _dashboardController
-                              .dashboardData.value.redmptionEMny,
-                          amountType: "RP",
-                          textColor: blackColor,
-                          backgroundColor: whiteColor,
+                      if (Constants.prefs.getString("user_type") !=
+                          "MEMBERSHIP")
+                        const CommonVerticalDivider(),
+                      if (Constants.prefs.getString("user_type") !=
+                          "MEMBERSHIP")
+                        Expanded(
+                          child: CommissionWidget(
+                            title: "REDEMPTION\nEMONEY",
+                            amount: _dashboardController
+                                .dashboardData.value.redmptionEMny,
+                            amountType: "RP",
+                            textColor: blackColor,
+                            backgroundColor: whiteColor,
+                          ),
                         ),
-                      ),
-                      const CommonVerticalDivider(),
-                      Expanded(
-                        child: CommissionWidget(
-                          title: "DP POINTS",
-                          amount:
-                              _dashboardController.dashboardData.value.dpPts,
-                          amountType: "",
-                          textColor: blackColor,
-                          backgroundColor: whiteColor,
+                      if (Constants.prefs.getString("user_type") !=
+                          "MEMBERSHIP")
+                        const CommonVerticalDivider(),
+                      if (Constants.prefs.getString("user_type") !=
+                          "MEMBERSHIP")
+                        Expanded(
+                          child: CommissionWidget(
+                            title: "DP POINTS",
+                            amount:
+                                _dashboardController.dashboardData.value.dpPts,
+                            amountType: "",
+                            textColor: blackColor,
+                            backgroundColor: whiteColor,
+                          ),
                         ),
-                      ),
                     ],
                   ),
                   const CommonDivider(),
-                  Container(
-                    padding: const EdgeInsets.all(15),
-                    color: lightDarKBlue.withOpacity(0.08),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: RedeemWidget(
-                            onTapFun: () {
-                              Get.to(() => const DashboardRedeemScreen(
-                                    title: "D1 CASH BACK POINTS REDEEM",
-                                    rmval: " RM 6",
-                                    points: "0",
-                                  ));
-                            },
-                            title: "D1 CASH BACK POINTS",
-                            points: _dashboardController
-                                .dashboardData.value.cashBack,
+                  if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
+                    Container(
+                      padding: const EdgeInsets.all(15),
+                      color: lightDarKBlue.withOpacity(0.08),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: RedeemWidget(
+                              onTapFun: () {
+                                Get.to(() => const DashboardRedeemScreen(
+                                      title: "D1 CASH BACK POINTS REDEEM",
+                                      rmval: " RM 6",
+                                      points: "0",
+                                    ));
+                              },
+                              title: "D1 CASH BACK POINTS",
+                              points: _dashboardController
+                                  .dashboardData.value.cashBack,
+                            ),
                           ),
-                        ),
-                        const CommonVerticalDivider(
-                          height: 100,
-                        ),
-                        Expanded(
-                          child: RedeemWidget(
-                            onTapFun: () {
-                              Get.to(() => const DashboardRedeemScreen(
-                                    title: "D1 CREDIT REBATE POINTS REDEEM",
-                                    rmval: "RM 7",
-                                    points: "100",
-                                  ));
-                            },
-                            title: "D1 CREDIT REBATE POINTS",
-                            points: _dashboardController
-                                .dashboardData.value.creRebate,
+                          const CommonVerticalDivider(
+                            height: 100,
                           ),
-                        )
-                      ],
+                          Expanded(
+                            child: RedeemWidget(
+                              onTapFun: () {
+                                Get.to(() => const DashboardRedeemScreen(
+                                      title: "D1 CREDIT REBATE POINTS REDEEM",
+                                      rmval: "RM 7",
+                                      points: "100",
+                                    ));
+                              },
+                              title: "D1 CREDIT REBATE POINTS",
+                              points: _dashboardController
+                                  .dashboardData.value.creRebate,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
                   const SpaceHeightWidget(height: 15),
-                  RankWidget(
-                    title: _dashboardController.dashboardData.value.rankname,
-                  ),
+                  if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
+                    RankWidget(
+                      title: _dashboardController.dashboardData.value.rankname,
+                    ),
                   const SpaceHeightWidget(height: 15),
                   Text(
                     "My Immediate Downline",
@@ -455,9 +627,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           for (int i = 0; i < myData.length; i++)
                             i == myDataSelectedInd
                                 ? SizedBox(
-                                    width: i == 4 ? 220 : 160,
                                     height: 35,
-                                    child: CustomElevatedButton(
+                                    child: CustomAutoWidthButton(
                                         onTapFun: () {}, title: myData[i]),
                                   )
                                 : InkWell(
@@ -484,19 +655,25 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ),
                   Container(
                       margin: const EdgeInsets.symmetric(horizontal: 5),
-                      child: myDataSelectedInd == 0
+                      child: myData[myDataSelectedInd] == "My Incomes"
                           ? myIncomeWidget()
-                          : myDataSelectedInd == 1
+                          : myData[myDataSelectedInd] == "Business Details"
                               ? businessWidget()
-                              : myDataSelectedInd == 2
+                              : myData[myDataSelectedInd] == "CV Statistics"
                                   ? cvStatisticsWidget()
-                                  : myDataSelectedInd == 3
+                                  : myData[myDataSelectedInd] ==
+                                          "Package Details"
                                       ? packageWidget()
-                                      : myDataSelectedInd == 4
+                                      : myData[myDataSelectedInd] ==
+                                              "Maintenance Information"
                                           ? maintenanceWidget()
-                                          : myDataSelectedInd == 5
+                                          : myData[myDataSelectedInd] ==
+                                                  "Licensee Details"
                                               ? licenseWidget()
-                                              : personalWidget()),
+                                              : myData[myDataSelectedInd] ==
+                                                      "Personal Details"
+                                                  ? personalWidget()
+                                                  : const SizedBox.shrink()),
                   const SpaceHeightWidget(height: 150)
                 ]),
               );

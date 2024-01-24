@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../commons/colors.dart';
+import '../checkout_screen.dart';
 
 class RedemptionCartScreen extends StatefulWidget {
   const RedemptionCartScreen({
@@ -26,7 +27,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
   int cartCount = 0;
   int cartItemCount = 0;
   dynamic uniqId;
-  dynamic sessionId;
+  dynamic sessionId, regId;
   MainController cartController = Get.put(MainController());
   bool packageLoading = false;
   @override
@@ -35,6 +36,8 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
 
     uniqId = Constants.prefs.getString("uniq_id");
     sessionId = Constants.prefs.getString("ss_id");
+    regId = Constants.prefs.getString("reg_id");
+
     sponsorController.text = "";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // if (uniqId != null && sessionId != null) {
@@ -382,6 +385,50 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                     ),
                                   ),
                                   const SpaceHeightWidget(height: 20),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: double.infinity,
+                                    child: SizedBox(
+                                      width: 200,
+                                      height: 35,
+                                      child: IconElevatedButton(
+                                        onTapFun: () async {
+                                          print(
+                                              "https://showcase.worldunityfoundation.org/MobileAppCheckout/RedemptionCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId");
+
+                                          Get.off(() => CheckOutScreen(
+                                              redirectUrl:
+                                                  "https://showcase.worldunityfoundation.org/MobileAppCheckout/RedemptionCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId"));
+                                        },
+                                        imagePath:
+                                            'assets/images/shopping_cart_img.jpg',
+                                        labelColor: whiteColor,
+                                        buttonColor: lightDarKBlue,
+                                        titile: "Checkout",
+                                      ),
+                                    ),
+                                  ),
+                                  const SpaceHeightWidget(height: 10),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: double.infinity,
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: SizedBox(
+                                      width: 200,
+                                      height: 35,
+                                      child: IconElevatedButton(
+                                        onTapFun: () {
+                                          Get.back();
+                                          Get.back(result: [true]);
+                                        },
+                                        imagePath:
+                                            'assets/images/arrow_right.png',
+                                        labelColor: whiteColor,
+                                        titile: "Continue Shopping",
+                                        buttonColor: blackColor,
+                                      ),
+                                    ),
+                                  ),
                                   // Container(
                                   //   padding: const EdgeInsets.all(8.0),
                                   //   alignment: Alignment.center,
@@ -464,45 +511,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                         //     itemCount: 4,
                         //   ),
                         // ),
-                        SizedBox(
-                          width: 200,
-                          height: 35,
-                          child: IconElevatedButton(
-                            onTapFun: () async {
-                              print(
-                                  "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
 
-                              // Get.off(() => CheckOutScreen(
-                              //     redirectUrl:
-                              //         "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&sessid=$sessionId&uniqId=$uniqId"));
-                            },
-                            imagePath: 'assets/images/shopping_cart_img.jpg',
-                            labelColor: whiteColor,
-                            buttonColor: lightDarKBlue,
-                            titile: "Checkout",
-                          ),
-                        ),
-                        const SpaceHeightWidget(height: 10),
-
-                        Container(
-                          padding: const EdgeInsets.all(8.0),
-                          alignment: Alignment.center,
-                          width: double.infinity,
-                          child: SizedBox(
-                            width: 200,
-                            height: 35,
-                            child: IconElevatedButton(
-                              onTapFun: () {
-                                Get.back();
-                                Get.back(result: [true]);
-                              },
-                              imagePath: 'assets/images/arrow_right.png',
-                              labelColor: whiteColor,
-                              titile: "Continue Shopping",
-                              buttonColor: blackColor,
-                            ),
-                          ),
-                        ),
                         const SpaceHeightWidget(height: 40)
                       ],
                     );
@@ -672,7 +681,8 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                 color: blackColor),
                           ),
                           TextSpan(
-                            text: cartController.packPackageDetails.value.maxQty,
+                            text:
+                                cartController.packPackageDetails.value.maxQty,
                             style: TextStyle(
                                 fontFamily: "OnestSemiBold",
                                 fontSize: 14,
@@ -693,8 +703,8 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                               columns: [
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "S.No",
                                     style: TextStyle(
@@ -705,8 +715,8 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Product\nCode",
                                     style: TextStyle(
@@ -717,8 +727,8 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Name",
                                     style: TextStyle(
@@ -729,8 +739,8 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Maximum\nQuantity",
                                     style: TextStyle(
@@ -741,8 +751,8 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Quantity",
                                     style: TextStyle(
@@ -825,7 +835,8 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                             inputFormatter: [
                                               FilteringTextInputFormatter
                                                   .digitsOnly,
-                                              LengthLimitingTextInputFormatter(2),
+                                              LengthLimitingTextInputFormatter(
+                                                  2),
                                               // FilteringTextInputFormatter.allow(
                                               //     RegExp("[1-28]"))
                                             ],
@@ -882,9 +893,12 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                               pidList.clear();
                                               int countQty = 0;
                                               for (int i = 0;
-                                                  i < textEControllerList.length;
+                                                  i <
+                                                      textEControllerList
+                                                          .length;
                                                   i++) {
-                                                if (textEControllerList[i].text !=
+                                                if (textEControllerList[i]
+                                                        .text !=
                                                     "") {
                                                   countQty = countQty +
                                                       int.parse(
@@ -894,7 +908,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                       "${cartController.packPackageDetails.value.getPkgItemsRpt[i].pcode}@${textEControllerList[i].text}");
                                                 }
                                               }
-          
+
                                               if (countQty ==
                                                   int.parse(cartController
                                                       .packPackageDetails
@@ -904,7 +918,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                   showQtyErrorText = false;
                                                   loading = true;
                                                 });
-          
+
                                                 print("add to car fun");
                                                 Map parameters = {
                                                   "Pkid": "",
@@ -920,15 +934,17 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                 };
                                                 print(
                                                     "add to cart params...$parameters");
-                                                dynamic res = await cartController
-                                                    .getPackAddToCart(parameters);
+                                                dynamic res =
+                                                    await cartController
+                                                        .getPackAddToCart(
+                                                            parameters);
                                                 if (res['Msg']
                                                         .toString()
                                                         .toLowerCase() ==
                                                     "success") {
                                                   CommonToastTrue(
                                                       "Successfully added to your cart.");
-          
+
                                                   myState(() {
                                                     loading = false;
                                                   });
@@ -936,7 +952,8 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                   getData("add to cart");
                                                 } else {
                                                   Timer(
-                                                      const Duration(seconds: 1),
+                                                      const Duration(
+                                                          seconds: 1),
                                                       () async {
                                                     myState(() {
                                                       loading = false;

@@ -8,10 +8,16 @@ import 'package:get/get.dart';
 import '../../commons/colors.dart';
 import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
+import '../../service_call/api_data.dart';
 import 'promo_cartscreen.dart';
 
 class PromoDashboardScreen extends StatefulWidget {
-  const PromoDashboardScreen({super.key});
+  final String pkMallNum;
+
+  const PromoDashboardScreen({
+    super.key,
+    required this.pkMallNum,
+  });
 
   @override
   State<PromoDashboardScreen> createState() => _PromoDashboardScreenState();
@@ -21,10 +27,15 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
   final MainController _dataController = Get.put(MainController());
   bool packageLoading = false;
   dynamic uniqId;
-  dynamic sessionId;
+  dynamic sessionId, packCode;
   @override
   void initState() {
     super.initState();
+    if (widget.pkMallNum == "3") {
+      packCode = "MYJD02";
+    } else {
+      packCode = "MYPLU01";
+    }
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       if (Constants.prefs.getString("uniq_id") == null) {
         uniqId = generateRandomString(10);
@@ -55,14 +66,18 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
     //   "amttype": ""
     // };
     Map parameters = {
-      "pkgcode": "MYJD02",
+      "pkgcode": packCode,
       "dtype": "RePromotion",
       "qty": Constants.prefs.getString("reg_id"),
       "uniqid": uniqId,
       "sessid": sessionId,
-      "Jointype": "Signup",
+      "Jointype": widget.pkMallNum == "3" ? "Signup" : "Upgrade",
     };
-    dynamic res = await _dataController.getPromoPacks(parameters);
+    dynamic res = await _dataController.getPromoPacks(
+        parameters,
+        widget.pkMallNum == "3"
+            ? ApiData().getPkgItemsPro
+            : ApiData().getPkgItemsUpgPro);
     print("packages data...$res");
   }
 
@@ -129,7 +144,7 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
                               Size(double.infinity, 40)),
                         ),
                         child: Text(
-                          "Select Promotion Products For Package MYJD02",
+                          "Select Promotion Products For Package $packCode",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: whiteColor, fontFamily: "OnestSemiBold"),
@@ -323,7 +338,7 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
                                     i++)
                                   DataRow(cells: [
                                     DataCell(Container(
-                                      width: 10,
+                                      width: 30,
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 5.2),
                                       child: Text(
@@ -457,6 +472,8 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
                                         width: 130,
                                         child: CustomElevatedButton(
                                             onTapFun: () async {
+                                              FocusManager.instance.primaryFocus
+                                                  ?.unfocus();
                                               pidList.clear();
                                               int countQty = 0;
                                               for (int i = 0;
@@ -488,7 +505,7 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
 
                                                 print("add to car fun");
                                                 Map parameters = {
-                                                  "Pkid": "MYJD02",
+                                                  "Pkid": packCode,
                                                   "pid": pidList.join(":"),
                                                   "uniqid": uniqId,
                                                   "sessid": sessionId,
@@ -500,10 +517,14 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
                                                 };
                                                 print(
                                                     "add to cart params...$parameters");
-                                                dynamic res =
-                                                    await MainController()
-                                                        .getPromoPackAddToCart(
-                                                            parameters);
+                                                dynamic res = await MainController()
+                                                    .getPromoPackAddToCart(
+                                                        parameters,
+                                                        widget.pkMallNum == "3"
+                                                            ? ApiData()
+                                                                .pAddtoCartOpen
+                                                            : ApiData()
+                                                                .productsAddtoCartOpenUpgPro);
                                                 if (res['Msg']
                                                         .toString()
                                                         .toLowerCase() ==
@@ -518,9 +539,12 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
                                                     }
 
                                                     Get.back();
-                                                    Get.back();
                                                     Get.to(() =>
-                                                        const PromoCartScreen());
+                                                        PromoCartScreen(
+                                                          pkMallNum:
+                                                              widget.pkMallNum,
+                                                          packCode: packCode,
+                                                        ));
                                                   });
                                                 } else {
                                                   Timer(

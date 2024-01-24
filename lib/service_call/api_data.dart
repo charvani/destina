@@ -123,6 +123,7 @@ class ApiData {
   String getPkgItemsPro = "GetPkgItems_Pro";
   String pAddtoCartOpen = "PAddtoCartOpen";
   String selPackageDetailsPro = "SelPackageDetails_Pro";
-
-
+  String getPkgItemsUpgPro = "GetPkgItems_UpgPro";
+  String productsAddtoCartOpenUpgPro = "Products_AddtoCartOpen_UpgPro";
+  String selPackageDetailsUpgPro = "SelPackageDetails_UpgPro";
 }

@@ -237,7 +237,10 @@ class _BonusDateSelectionScreenState extends State<BonusDateSelectionScreen> {
                       child: CustomElevatedButton(
                           onTapFun: () {
                             // if (_formKey.currentState!.validate()) {
-                            if (widget.from == "Retail") {
+                            if (widget.from == "Retail Bonus" ||
+                                widget.from == "Personal Consumption Bonus" ||
+                                widget.from == "Level Consumption Bonus" ||
+                                widget.from == "Group Consumption Bonus") {
                               Get.to(() => RetailBonusSCreen(
                                     fromDate: fromDateTController.text != ""
                                         ? fromDateTController.text
@@ -245,6 +248,16 @@ class _BonusDateSelectionScreenState extends State<BonusDateSelectionScreen> {
                                     toDate: toDateTController.text != ""
                                         ? toDateTController.text
                                         : "01/01/2100",
+                                    from: widget.from,
+                                    bonusType: (widget.from == "Retail Bonus")
+                                        ? "RB"
+                                        : (widget.from ==
+                                                "Personal Consumption Bonus")
+                                            ? "PCB"
+                                            : (widget.from ==
+                                                    "Level Consumption Bonus")
+                                                ? "LCB "
+                                                : "GCB",
                                   ));
                             } else if (widget.from == "Customer Acquisition") {
                               Get.to(() => CustomerAcquisitionScreen(

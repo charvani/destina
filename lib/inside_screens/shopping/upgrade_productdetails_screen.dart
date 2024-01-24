@@ -691,7 +691,6 @@ class _UpgradeProductDetailsScreenState
                                                     }
 
                                                     Get.back();
-                                                    Get.back();
                                                     Get.to(
                                                         () => UpgradeCartScreen(
                                                               packCode: widget
