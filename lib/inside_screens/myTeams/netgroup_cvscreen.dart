@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../commons/colors.dart';
 import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
+import '../myorder/invoice_screen.dart';
 
 class NetGroupCvScreen extends StatefulWidget {
   final String from, fromdate, todate;
@@ -110,7 +111,13 @@ infoTextStyle(String id, Color textColor) {
     behavior: HitTestBehavior.translucent,
     onTap: () {
       if (textColor == darkBlue) {
-        print("funtion cll");
+        // print("funtion cll");
+
+        Get.to(() => InvoiceScreen(
+            redirectUrl:
+                "https://showcase.worldunityfoundation.org/MobileAppCheckout/invoiceparam.html?BillNo=$id"
+            // 'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderRpt"&OrderNo=${_dataController.orderReportData[i].orderNo}',
+            ));
       }
     },
     child: Text(

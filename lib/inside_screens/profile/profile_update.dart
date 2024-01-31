@@ -426,7 +426,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                 children: [
                                   itemTitleWidget("Bank Name"),
                                   ProfileDropDown(
-                                      value: bankName,
+                                      // value: bankName,
                                       onChangedFun: (val) {
                                         setState(() {
                                           bankName = val;

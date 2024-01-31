@@ -12,6 +12,8 @@ import '../authentication_screens/login_screen.dart';
 import '../commons/constants.dart';
 import '../controllers/main_controller.dart';
 import '../inside_screens/myaccount_screen.dart';
+import '../inside_screens/privacy_policyscreen.dart';
+import '../inside_screens/profileDashBoard/profile_dashboard_screen.dart';
 
 class AccountScreen extends StatefulWidget {
   List<String>? bannerPopUpImages = [];
@@ -31,7 +33,6 @@ class _AccountScreenState extends State<AccountScreen>
   late Animation<double> _animation;
   int carouselIndex = 3;
   final MainController _logoutController = Get.put(MainController());
-
   @override
   void initState() {
     super.initState();
@@ -51,17 +52,27 @@ class _AccountScreenState extends State<AccountScreen>
     _controller.repeat(reverse: true);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (widget.bannerPopUpImages!.isNotEmpty) {
+        _scaffoldKey.currentState!.openDrawer();
         Get.to(
-          () => MyAccountScreen(
+          () => DashBoardScreen(
             data: widget.data,
             bannerPopUpImages: widget.bannerPopUpImages,
           ),
         );
+       
       }
     });
+
     Timer(const Duration(seconds: 1), () {
       widget.bannerPopUpImages!.clear();
     });
+  }
+
+  @override
+  void dispose() {
+    // Dispose your TickerControllers here
+    _controller.dispose();
+    super.dispose();
   }
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -287,7 +298,9 @@ class _AccountScreenState extends State<AccountScreen>
               // ),
               AboutUsScreenWidget(
                 leadingIcon: FeatherIcons.fileText,
-                onTapFun: () {},
+                onTapFun: () {
+                  Get.to(() => const PrivacyPolicyScreen());
+                },
                 title: "Privacy Policy",
               ),
               if (Constants.prefs.getString("user_id") != null &&

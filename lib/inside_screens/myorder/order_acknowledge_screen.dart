@@ -136,8 +136,10 @@ orderNumTextWidget(String from, title, int index) {
     onTap: () {
       if (from == "ordernum") {
         Get.to(() => InvoiceScreen(
-              redirectUrl:
-                  'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderAknowledge"&OrderNo=${_dataController.orderAcknowledgeData[index].orderNo}',
+            redirectUrl:
+                "https://showcase.worldunityfoundation.org/MobileAppCheckout/invoiceparam.html?BillNo=${_dataController.orderAcknowledgeData[index].orderNo}"
+
+            // 'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderAknowledge"&OrderNo=${_dataController.orderAcknowledgeData[index].orderNo}',
             ));
       } else if (from == "details") {
         Get.to(() => OrderDetailsScreen(

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
+import '../myorder/invoice_screen.dart';
 
 class UpgradeListScreen extends StatefulWidget {
   final String? fromDate;
@@ -187,9 +188,9 @@ orderNumTextWidget(String title) {
   return GestureDetector(
     behavior: HitTestBehavior.translucent,
     onTap: () {
-      // Get.to(() => const InvoiceScreen(
-      //       redirectUrl: "",
-      //     ));
+      Get.to(() => InvoiceScreen(
+          redirectUrl:
+              "https://showcase.worldunityfoundation.org/MobileAppCheckout/invoiceparam.html?BillNo=$title"));
     },
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),

@@ -56,19 +56,21 @@ class MyAccountScreen extends StatefulWidget {
 
 class _MyAccountScreenState extends State<MyAccountScreen> {
   dynamic selectedString;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (widget.bannerPopUpImages!.isNotEmpty) {
-        Get.to(
-          () => DashBoardScreen(
-            data: widget.data,
-            bannerPopUpImages: widget.bannerPopUpImages,
-          ),
-        );
-      }
+      // if (widget.bannerPopUpImages!.isNotEmpty) {
+        
+      //   Get.to(
+      //     () => DashBoardScreen(
+      //       data: widget.data,
+      //       bannerPopUpImages: widget.bannerPopUpImages,
+      //     ),
+      //   );
+      // }
     });
   }
 
@@ -162,140 +164,143 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         ),
       ),
       body: SingleChildScrollView(
+          controller: _scrollController,
           child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          MyAccountWidget(
-            traillingFun: () {},
-            leadingIcon: Icons.home,
-            onTapFun: () {
-              Get.to(() => DashBoardScreen(
-                    data: widget.data,
-                    bannerPopUpImages: widget.bannerPopUpImages,
-                  ));
-            },
-            title: "Dashboard",
-          ),
-          MyAccountWidget(
-            traillingFun: () {
-              commonOnTapFun("Profile");
-            },
-            leadingIcon: Icons.person,
-            onTapFun: () {
-              commonOnTapFun("Profile");
-            },
-            title: "Profile",
-            trailing: (selectedString == "Profile") ? true : false,
-          ),
-          if (selectedString == "Profile") profileItems(),
-          MyAccountWidget(
-            traillingFun: () {
-              commonOnTapFun("Services");
-            },
-            leadingIcon: Icons.handyman_rounded,
-            onTapFun: () {
-              commonOnTapFun("Services");
-            },
-            title: "Services",
-            trailing: (selectedString == "Services") ? true : false,
-          ),
-          if (selectedString == "Services") servicesItems(),
-          MyAccountWidget(
-            traillingFun: () {
-              commonOnTapFun("My Teams");
-            },
-            imagePath: "assets/images/organize.png",
-            onTapFun: () {
-              commonOnTapFun("My Teams");
-            },
-            title: "My Teams",
-            trailing: (selectedString == "My Teams") ? true : false,
-          ),
-          if (selectedString == "My Teams") teamItems(),
-          MyAccountWidget(
-            traillingFun: () {
-              commonOnTapFun("My Order");
-            },
-            leadingIcon: Icons.fire_truck_rounded,
-            onTapFun: () {
-              commonOnTapFun("My Order");
-            },
-            title: "My Order",
-            trailing: (selectedString == "My Order") ? true : false,
-          ),
-          if (selectedString == "My Order") orderItems(),
-          MyAccountWidget(
-            traillingFun: () {
-              commonOnTapFun("My eMoney");
-            },
-            leadingIcon: Icons.account_balance_wallet,
-            onTapFun: () {
-              commonOnTapFun("My eMoney");
-            },
-            title: "My eMoney",
-            trailing: (selectedString == "My eMoney") ? true : false,
-          ),
-          if (selectedString == "My eMoney") eMoneyItems(),
-          if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
-            MyAccountWidget(
-              traillingFun: () {
-                Get.to(() => const MyDateListSelectionScreen(from: "Upgrade"));
-              },
-              leadingIcon: Icons.credit_card,
-              onTapFun: () {
-                Get.to(() => const MyDateListSelectionScreen(from: "Upgrade"));
-              },
-              title: "Upgrade List",
-            ),
-          MyAccountWidget(
-            traillingFun: () {
-              commonOnTapFun("Shopping");
-            },
-            leadingIcon: Icons.shopping_cart_rounded,
-            onTapFun: () {
-              commonOnTapFun("Shopping");
-            },
-            title: "Shopping",
-            trailing: (selectedString == "Shopping") ? true : false,
-          ),
-          if (selectedString == "Shopping") shoppingItems(),
-          MyAccountWidget(
-            traillingFun: () {
-              Get.to(() => const AccountMaintenanceScreen());
-            },
-            imagePath: "assets/images/view-module.png",
-            onTapFun: () {
-              Get.to(() => const AccountMaintenanceScreen());
-            },
-            title: "Maintenance",
-          ),
-          if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
-            MyAccountWidget(
-              traillingFun: () {
-                commonOnTapFun("My Bonus");
-              },
-              imagePath: "assets/images/bonus.png",
-              onTapFun: () {
-                commonOnTapFun("My Bonus");
-              },
-              title: "My Bonus",
-              trailing: (selectedString == "My Bonus") ? true : false,
-            ),
-          if (selectedString == "My Bonus") bonusItems(),
-          MyAccountWidget(
-            traillingFun: () {
-              commonOnTapFun("Tools");
-            },
-            leadingIcon: Icons.explore_rounded,
-            onTapFun: () {
-              commonOnTapFun("Tools");
-            },
-            title: "Tools",
-            trailing: (selectedString == "Tools") ? true : false,
-          ),
-          if (selectedString == "Tools") toolsItems(),
-        ],
-      )),
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              MyAccountWidget(
+                traillingFun: () {},
+                leadingIcon: Icons.home,
+                onTapFun: () {
+                  Get.to(() => DashBoardScreen(
+                        data: widget.data,
+                        bannerPopUpImages: widget.bannerPopUpImages,
+                      ));
+                },
+                title: "Dashboard",
+              ),
+              MyAccountWidget(
+                traillingFun: () {
+                  commonOnTapFun("Profile");
+                },
+                leadingIcon: Icons.person,
+                onTapFun: () {
+                  commonOnTapFun("Profile");
+                },
+                title: "Profile",
+                trailing: (selectedString == "Profile") ? true : false,
+              ),
+              if (selectedString == "Profile") profileItems(),
+              MyAccountWidget(
+                traillingFun: () {
+                  commonOnTapFun("Services");
+                },
+                leadingIcon: Icons.handyman_rounded,
+                onTapFun: () {
+                  commonOnTapFun("Services");
+                },
+                title: "Services",
+                trailing: (selectedString == "Services") ? true : false,
+              ),
+              if (selectedString == "Services") servicesItems(),
+              MyAccountWidget(
+                traillingFun: () {
+                  commonOnTapFun("My Teams");
+                },
+                imagePath: "assets/images/organize.png",
+                onTapFun: () {
+                  commonOnTapFun("My Teams");
+                },
+                title: "My Teams",
+                trailing: (selectedString == "My Teams") ? true : false,
+              ),
+              if (selectedString == "My Teams") teamItems(),
+              MyAccountWidget(
+                traillingFun: () {
+                  commonOnTapFun("My Order");
+                },
+                leadingIcon: Icons.fire_truck_rounded,
+                onTapFun: () {
+                  commonOnTapFun("My Order");
+                },
+                title: "My Order",
+                trailing: (selectedString == "My Order") ? true : false,
+              ),
+              if (selectedString == "My Order") orderItems(),
+              MyAccountWidget(
+                traillingFun: () {
+                  commonOnTapFun("My eMoney");
+                },
+                leadingIcon: Icons.account_balance_wallet,
+                onTapFun: () {
+                  commonOnTapFun("My eMoney");
+                },
+                title: "My eMoney",
+                trailing: (selectedString == "My eMoney") ? true : false,
+              ),
+              if (selectedString == "My eMoney") eMoneyItems(),
+              if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
+                MyAccountWidget(
+                  traillingFun: () {
+                    Get.to(
+                        () => const MyDateListSelectionScreen(from: "Upgrade"));
+                  },
+                  leadingIcon: Icons.credit_card,
+                  onTapFun: () {
+                    Get.to(
+                        () => const MyDateListSelectionScreen(from: "Upgrade"));
+                  },
+                  title: "Upgrade List",
+                ),
+              MyAccountWidget(
+                traillingFun: () {
+                  commonOnTapFun("Shopping");
+                },
+                leadingIcon: Icons.shopping_cart_rounded,
+                onTapFun: () {
+                  commonOnTapFun("Shopping");
+                },
+                title: "Shopping",
+                trailing: (selectedString == "Shopping") ? true : false,
+              ),
+              if (selectedString == "Shopping") shoppingItems(),
+              MyAccountWidget(
+                traillingFun: () {
+                  Get.to(() => const AccountMaintenanceScreen());
+                },
+                imagePath: "assets/images/view-module.png",
+                onTapFun: () {
+                  Get.to(() => const AccountMaintenanceScreen());
+                },
+                title: "Maintenance",
+              ),
+              if (Constants.prefs.getString("user_type") != "MEMBERSHIP")
+                MyAccountWidget(
+                  traillingFun: () {
+                    commonOnTapFun("My Bonus");
+                  },
+                  imagePath: "assets/images/bonus.png",
+                  onTapFun: () {
+                    commonOnTapFun("My Bonus");
+                  },
+                  title: "My Bonus",
+                  trailing: (selectedString == "My Bonus") ? true : false,
+                ),
+              if (selectedString == "My Bonus") bonusItems(),
+              MyAccountWidget(
+                traillingFun: () {
+                  commonOnTapFun("Tools");
+                },
+                leadingIcon: Icons.explore_rounded,
+                onTapFun: () {
+                  commonOnTapFun("Tools");
+                },
+                title: "Tools",
+                trailing: (selectedString == "Tools") ? true : false,
+              ),
+              if (selectedString == "Tools") toolsItems(),
+            ],
+          )),
     );
   }
 
@@ -308,6 +313,13 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
       setState(() {
         selectedString = from;
       });
+      if (from == "Tools") {
+        _scrollController.animateTo(
+          150,
+          curve: Curves.ease,
+          duration: const Duration(seconds: 1),
+        );
+      }
     }
   }
 

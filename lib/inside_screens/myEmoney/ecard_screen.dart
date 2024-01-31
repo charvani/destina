@@ -244,8 +244,10 @@ remarkTextWidget(String title, int i) {
     behavior: HitTestBehavior.translucent,
     onTap: () {
       Get.to(() => InvoiceScreen(
-            redirectUrl:
-                "https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?BillNo=${_dataController.ecardData.value.emoneyrpt[i].billNo}",
+          redirectUrl:
+              "https://showcase.worldunityfoundation.org/MobileAppCheckout/invoiceparam.html?BillNo=${_dataController.ecardData.value.emoneyrpt[i].billNo}"
+
+          // "https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?BillNo=${_dataController.ecardData.value.emoneyrpt[i].billNo}",
           ));
     },
     child: Padding(

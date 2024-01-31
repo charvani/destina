@@ -95,7 +95,8 @@ class _OrdersSectionScreenState extends State<OrdersSectionScreen> {
                               if (picked != null) {
                                 print(picked);
                                 final DateFormat formatter =
-                                    DateFormat('dd-MM-yyyy');
+                                    // DateFormat('dd-MM-yyyy');
+                                    DateFormat('MM/dd/yyyy');
                                 setState(() {
                                   fromDateTController.text =
                                       formatter.format(picked);
@@ -107,7 +108,7 @@ class _OrdersSectionScreenState extends State<OrdersSectionScreen> {
                               color: middleBlackColor.withOpacity(0.5),
                             ),
                             controller: fromDateTController,
-                            hintText: "dd-mm-yyyy",
+                            hintText: "mm-dd-yyyy",
                             textInputType: TextInputType.datetime,
                             validation: (val) {
                               if (val!.isEmpty) {
@@ -150,7 +151,8 @@ class _OrdersSectionScreenState extends State<OrdersSectionScreen> {
                               if (picked != null) {
                                 print(picked);
                                 final DateFormat formatter =
-                                    DateFormat('dd-MM-yyyy');
+                                    // DateFormat('dd-MM-yyyy');
+                                    DateFormat('MM/dd/yyyy');
                                 setState(() {
                                   toDateTController.text =
                                       formatter.format(picked);
@@ -162,7 +164,7 @@ class _OrdersSectionScreenState extends State<OrdersSectionScreen> {
                               color: middleBlackColor.withOpacity(0.5),
                             ),
                             controller: toDateTController,
-                            hintText: "dd-mm-yyyy",
+                            hintText: "mm-dd-yyyy",
                             textInputType: TextInputType.datetime,
                             validation: (val) {
                               if (val!.isEmpty) {

@@ -126,4 +126,6 @@ class ApiData {
   String getPkgItemsUpgPro = "GetPkgItems_UpgPro";
   String productsAddtoCartOpenUpgPro = "Products_AddtoCartOpen_UpgPro";
   String selPackageDetailsUpgPro = "SelPackageDetails_UpgPro";
+  String redeemRequest = "RedeemRequest";
+  String getRedeemPoints = "GetRedeemPoints";
 }

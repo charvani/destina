@@ -95,52 +95,26 @@ class _WithdrawalStatusScreenState extends State<WithdrawalStatusScreen> {
       ),
     );
   }
+}
 
-  cardDetailsWidget() {
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: limeColor.withOpacity(0.5),
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-          ),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: ViewProfileWidget(
-              title: "Total Credit",
-              info: "RM  23,382.61",
-            ),
-          ),
-        ),
-        Container(
-          color: lightYellow.withOpacity(0.8),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: ViewProfileWidget(
-              title: "Total Debit",
-              info: "RM  2,924.40",
-            ),
-          ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: limeColor.withOpacity(0.5),
-            borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(10),
-                bottomRight: Radius.circular(10)),
-          ),
-          child: const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: ViewProfileWidget(
-              title: "Balance",
-              info: "RM 20,458.21",
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+infoTextStyle(
+  String id,
+) {
+  return GestureDetector(
+    behavior: HitTestBehavior.translucent,
+    onTap: () {
+      // Get.to(() => InvoiceScreen(
+      //     redirectUrl:
+      //         "https://showcase.worldunityfoundation.org/MobileAppCheckout/invoiceparam.html?BillNo=$id"
+      //     // 'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderRpt"&OrderNo=${_dataController.orderReportData[i].orderNo}',
+      //     ));
+    },
+    child: Text(
+      id,
+      style:
+          TextStyle(fontFamily: "OnestRegular", fontSize: 12, color: darkBlue),
+    ),
+  );
 }
 
 class MyData extends DataTableSource {
@@ -151,11 +125,12 @@ class MyData extends DataTableSource {
         TableInfoWidget(info: "${index + 1}"),
       ),
       DataCell(_verticalDivider),
-      DataCell(
-        TableInfoWidget(
-            info: _dataController
-                .withdrawStatusData.value.tpCheckWithdrawrpt[index].reqCode),
-      ),
+      DataCell(infoTextStyle(_dataController
+              .withdrawStatusData.value.tpCheckWithdrawrpt[index].reqCode)
+          // TableInfoWidget(
+          //     info: _dataController
+          //         .withdrawStatusData.value.tpCheckWithdrawrpt[index].reqCode),
+          ),
       DataCell(_verticalDivider),
       DataCell(
         TableInfoWidget(

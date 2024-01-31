@@ -52,9 +52,7 @@ class _MyGenealogyState extends State<MyGenealogy> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(
-          title: "Genealogy View For ${userid.toString().capitalizeFirst}",
-          backNavigation: true),
+      appBar: commonAppBar(title: "Genealogy View", backNavigation: true),
       body: Obx(() {
         return _datacontroller.loading.value
             ? loader
@@ -148,206 +146,224 @@ class _MyGenealogyState extends State<MyGenealogy> {
                       thickness: 2,
                     ),
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: SizedBox(
-                            height: 320,
-                            child: Scrollbar(
-                              scrollbarOrientation: ScrollbarOrientation.left,
-                              controller: leftScrollController,
-                              interactive: true,
-                              radius: const Radius.circular(15),
-                              trackVisibility: true,
-                              thumbVisibility: true,
-                              thickness: 7,
-                              child: SingleChildScrollView(
-                                controller: leftScrollController,
-                                child: Column(children: [
-                                  for (int i = 0;
-                                      i <
-                                          _datacontroller
-                                              .myGenelogoyListData.length;
-                                      i++)
-                                    if (_datacontroller
-                                            .myGenelogoyListData[i].position ==
-                                        "Left")
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              _datacontroller.genealogyLoading
-                                                          .value &&
-                                                      selectedInt == i
-                                                  ? SizedBox(
-                                                      height: 70, child: loader)
-                                                  : GestureDetector(
-                                                      behavior: HitTestBehavior
-                                                          .translucent,
-                                                      onTap: () async {
-                                                        setState(() {
-                                                          selectedInt = i;
-                                                        });
-                                                        Map bdata = {
-                                                          "UserId": Constants
-                                                              .prefs
-                                                              .getString(
-                                                                  "user_id"),
-                                                          "Pwd": Constants.prefs
-                                                              .getString(
-                                                                  "password"),
-                                                          "TreeViewIDno":
-                                                              _datacontroller
-                                                                  .myGenelogoyListData[
-                                                                      i]
-                                                                  .idno
-                                                        };
-                                                        await _datacontroller
-                                                            .getGenealogyPopupData(
-                                                                bdata);
-                                                        Get.dialog(
-                                                            detialsDilog());
-
-                                                        setState(() {
-                                                          selectedInt = null;
-                                                        });
-                                                      },
-                                                      child: Column(
-                                                        children: [
-                                                          CommonCachedNetworkImage(
+                  (_datacontroller.myGenelogoyListData.isEmpty)
+                      ? const NotAvailableText(text: "No data found")
+                      : Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: SizedBox(
+                                  height: 320,
+                                  child: Scrollbar(
+                                    scrollbarOrientation:
+                                        ScrollbarOrientation.left,
+                                    controller: leftScrollController,
+                                    interactive: true,
+                                    radius: const Radius.circular(15),
+                                    trackVisibility: true,
+                                    thumbVisibility: true,
+                                    thickness: 7,
+                                    child: SingleChildScrollView(
+                                      controller: leftScrollController,
+                                      child: Column(children: [
+                                        for (int i = 0;
+                                            i <
+                                                _datacontroller
+                                                    .myGenelogoyListData.length;
+                                            i++)
+                                          if (_datacontroller
+                                                  .myGenelogoyListData[i]
+                                                  .position ==
+                                              "Left")
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    _datacontroller
+                                                                .genealogyLoading
+                                                                .value &&
+                                                            selectedInt == i
+                                                        ? SizedBox(
                                                             height: 70,
-                                                            imagePath:
-                                                                'https://admin.destina1.com/images/Genealogy/${_datacontroller.myGenelogoyListData[i].mStatus}.png',
+                                                            child: loader)
+                                                        : GestureDetector(
+                                                            behavior:
+                                                                HitTestBehavior
+                                                                    .translucent,
+                                                            onTap: () async {
+                                                              setState(() {
+                                                                selectedInt = i;
+                                                              });
+                                                              Map bdata = {
+                                                                "UserId": Constants
+                                                                    .prefs
+                                                                    .getString(
+                                                                        "user_id"),
+                                                                "Pwd": Constants
+                                                                    .prefs
+                                                                    .getString(
+                                                                        "password"),
+                                                                "TreeViewIDno":
+                                                                    _datacontroller
+                                                                        .myGenelogoyListData[
+                                                                            i]
+                                                                        .idno
+                                                              };
+                                                              await _datacontroller
+                                                                  .getGenealogyPopupData(
+                                                                      bdata);
+                                                              Get.dialog(
+                                                                  detialsDilog());
+
+                                                              setState(() {
+                                                                selectedInt =
+                                                                    null;
+                                                              });
+                                                            },
+                                                            child: Column(
+                                                              children: [
+                                                                CommonCachedNetworkImage(
+                                                                  height: 70,
+                                                                  imagePath:
+                                                                      'https://admin.destina1.com/images/Genealogy/${_datacontroller.myGenelogoyListData[i].mStatus}.png',
+                                                                ),
+                                                                idTextStyle(
+                                                                    _datacontroller
+                                                                        .myGenelogoyListData[
+                                                                            i]
+                                                                        .idno)
+                                                              ],
+                                                            ),
                                                           ),
-                                                          idTextStyle(
-                                                              _datacontroller
-                                                                  .myGenelogoyListData[
-                                                                      i]
-                                                                  .idno)
-                                                        ],
-                                                      ),
-                                                    ),
-                                            ],
-                                          ),
-                                          const SpaceHeightWidget(height: 8)
-                                        ],
-                                      )
-                                ]),
+                                                  ],
+                                                ),
+                                                const SpaceHeightWidget(
+                                                    height: 8)
+                                              ],
+                                            )
+                                      ]),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: SizedBox(
-                            height: 320,
-                            child: Scrollbar(
-                              scrollbarOrientation: ScrollbarOrientation.right,
-                              controller: rightScrollController,
-                              interactive: true,
-                              radius: const Radius.circular(15),
-                              trackVisibility: true,
-                              thumbVisibility: true,
-                              thickness: 7,
-                              child: SingleChildScrollView(
-                                controller: rightScrollController,
-                                child: Column(children: [
-                                  for (int i = 0;
-                                      i <
-                                          _datacontroller
-                                              .myGenelogoyListData.length;
-                                      i++)
-                                    if (_datacontroller
-                                            .myGenelogoyListData[i].position ==
-                                        "Right")
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              _datacontroller.genealogyLoading
-                                                          .value &&
-                                                      selectedInt == i
-                                                  ? SizedBox(
-                                                      height: 70, child: loader)
-                                                  : GestureDetector(
-                                                      behavior: HitTestBehavior
-                                                          .translucent,
-                                                      onTap: () async {
-                                                        setState(() {
-                                                          selectedInt = i;
-                                                        });
-                                                        Map bdata = {
-                                                          "UserId": Constants
-                                                              .prefs
-                                                              .getString(
-                                                                  "user_id"),
-                                                          "Pwd": Constants.prefs
-                                                              .getString(
-                                                                  "password"),
-                                                          "TreeViewIDno":
-                                                              _datacontroller
-                                                                  .myGenelogoyListData[
-                                                                      i]
-                                                                  .idno
-                                                        };
-                                                        await _datacontroller
-                                                            .getGenealogyPopupData(
-                                                                bdata);
-                                                        Get.dialog(
-                                                            detialsDilog());
-
-                                                        setState(() {
-                                                          selectedInt = null;
-                                                        });
-                                                      },
-                                                      child: Column(
-                                                        children: [
-                                                          CommonCachedNetworkImage(
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: SizedBox(
+                                  height: 320,
+                                  child: Scrollbar(
+                                    scrollbarOrientation:
+                                        ScrollbarOrientation.right,
+                                    controller: rightScrollController,
+                                    interactive: true,
+                                    radius: const Radius.circular(15),
+                                    trackVisibility: true,
+                                    thumbVisibility: true,
+                                    thickness: 7,
+                                    child: SingleChildScrollView(
+                                      controller: rightScrollController,
+                                      child: Column(children: [
+                                        for (int i = 0;
+                                            i <
+                                                _datacontroller
+                                                    .myGenelogoyListData.length;
+                                            i++)
+                                          if (_datacontroller
+                                                  .myGenelogoyListData[i]
+                                                  .position ==
+                                              "Right")
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    _datacontroller
+                                                                .genealogyLoading
+                                                                .value &&
+                                                            selectedInt == i
+                                                        ? SizedBox(
                                                             height: 70,
-                                                            imagePath:
-                                                                'https://admin.destina1.com/images/Genealogy/${_datacontroller.myGenelogoyListData[i].mStatus}.png',
+                                                            child: loader)
+                                                        : GestureDetector(
+                                                            behavior:
+                                                                HitTestBehavior
+                                                                    .translucent,
+                                                            onTap: () async {
+                                                              setState(() {
+                                                                selectedInt = i;
+                                                              });
+                                                              Map bdata = {
+                                                                "UserId": Constants
+                                                                    .prefs
+                                                                    .getString(
+                                                                        "user_id"),
+                                                                "Pwd": Constants
+                                                                    .prefs
+                                                                    .getString(
+                                                                        "password"),
+                                                                "TreeViewIDno":
+                                                                    _datacontroller
+                                                                        .myGenelogoyListData[
+                                                                            i]
+                                                                        .idno
+                                                              };
+                                                              await _datacontroller
+                                                                  .getGenealogyPopupData(
+                                                                      bdata);
+                                                              Get.dialog(
+                                                                  detialsDilog());
+
+                                                              setState(() {
+                                                                selectedInt =
+                                                                    null;
+                                                              });
+                                                            },
+                                                            child: Column(
+                                                              children: [
+                                                                CommonCachedNetworkImage(
+                                                                  height: 70,
+                                                                  imagePath:
+                                                                      'https://admin.destina1.com/images/Genealogy/${_datacontroller.myGenelogoyListData[i].mStatus}.png',
+                                                                ),
+                                                                idTextStyle(
+                                                                    _datacontroller
+                                                                        .myGenelogoyListData[
+                                                                            i]
+                                                                        .idno)
+                                                              ],
+                                                            ),
                                                           ),
-                                                          idTextStyle(
-                                                              _datacontroller
-                                                                  .myGenelogoyListData[
-                                                                      i]
-                                                                  .idno)
-                                                        ],
-                                                      ),
-                                                    ),
-                                            ],
-                                          ),
-                                          const SpaceHeightWidget(height: 8)
-                                        ],
-                                      )
-                                ]),
+                                                  ],
+                                                ),
+                                                const SpaceHeightWidget(
+                                                    height: 8)
+                                              ],
+                                            )
+                                      ]),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
                   const SpaceHeightWidget(height: 10),
                   Padding(
                     padding: const EdgeInsets.all(8.0),

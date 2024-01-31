@@ -56,7 +56,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       dataFun();
 
       print("da....${widget.data}");
@@ -91,114 +91,114 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ),
             )));
       }
-
-      Timer(const Duration(microseconds: 500), () {
-        if (widget.data['result1'].toString().toLowerCase() == "pending") {
-          Get.dialog(AlertDialog(
-              insetPadding: const EdgeInsets.symmetric(horizontal: 10),
-              titlePadding: EdgeInsets.zero,
-              title: Container(
-                width: double.maxFinite,
-                alignment: Alignment.topRight,
-                child: IconButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: Icon(
-                      Icons.cancel_outlined,
-                      color: redColor,
-                    )),
-              ),
-              contentPadding:
-                  const EdgeInsets.only(top: 0, left: 3, right: 3, bottom: 18),
-              content: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CommonTitle(
-                      titleName: "Destina 1 International alerts!!!!",
-                      fontColor: darkRedColor,
-                    ),
-                    const SpaceHeightWidget(height: 15),
-                    SideTitle(title: widget.data['UploadIdMsg'])
-                  ],
+      if (widget.data != null) {
+        Timer(const Duration(microseconds: 500), () {
+          if (widget.data['result1'].toString().toLowerCase() == "pending") {
+            Get.dialog(AlertDialog(
+                insetPadding: const EdgeInsets.symmetric(horizontal: 10),
+                titlePadding: EdgeInsets.zero,
+                title: Container(
+                  width: double.maxFinite,
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: Icon(
+                        Icons.cancel_outlined,
+                        color: redColor,
+                      )),
                 ),
-              )));
-        } else if (widget.data['result1'] == "No Id") {
-          Get.dialog(
-              barrierDismissible: false,
-              AlertDialog(
-                  insetPadding: const EdgeInsets.symmetric(horizontal: 10),
-                  titlePadding: EdgeInsets.zero,
-                  contentPadding: const EdgeInsets.only(
-                      top: 0, left: 3, right: 3, bottom: 18),
-                  content: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const SpaceHeightWidget(height: 20),
-                        CommonTitle(
-                          titleName: "Account Locked!!!!",
-                          fontColor: darkRedColor,
-                        ),
-                        const SpaceHeightWidget(height: 15),
-                        const SideTitle(
-                            title:
-                                "Account Locked - Upload Your Valid government Issued ID."),
-                        const SpaceHeightWidget(height: 10),
-                        const SideTitle(
-                            title:
-                                "click the below button to unlock your account!!!"),
-                        const SpaceHeightWidget(height: 15),
-                        CustomAutoWidthButton(
-                            bcolor: greenColor,
-                            onTapFun: () {
-                              Get.back();
-                              Get.off(() => const UploadIDScreen());
-                            },
-                            title: "Click Here To Unlock Your Account")
-                      ],
-                    ),
-                  )));
-        }
-      });
-      Timer(const Duration(microseconds: 700), () {
-        if (widget.data['RenewaAlert'] != "No") {
-          Get.dialog(
-              barrierDismissible: false,
-              AlertDialog(
-                  insetPadding: const EdgeInsets.symmetric(horizontal: 10),
-                  titlePadding: EdgeInsets.zero,
-                  title: Container(
-                    width: double.maxFinite,
-                    alignment: Alignment.topRight,
-                    child: IconButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        icon: Icon(
-                          Icons.cancel_outlined,
-                          color: redColor,
-                        )),
+                contentPadding: const EdgeInsets.only(
+                    top: 0, left: 3, right: 3, bottom: 18),
+                content: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CommonTitle(
+                        titleName: "Destina 1 International alerts!!!!",
+                        fontColor: darkRedColor,
+                      ),
+                      const SpaceHeightWidget(height: 15),
+                      SideTitle(title: widget.data['UploadIdMsg'])
+                    ],
                   ),
-                  contentPadding: const EdgeInsets.only(
-                      top: 0, left: 3, right: 3, bottom: 18),
-                  content: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        CommonTitle(
-                          titleName: "Destina 1 International alerts!!!!",
-                          fontColor: darkRedColor,
-                        ),
-                        const SpaceHeightWidget(height: 15),
-                        SideTitle(title: widget.data['RenNotifyMsg'])
-                      ],
+                )));
+          } else if (widget.data['result1'] == "No Id") {
+            Get.dialog(
+                barrierDismissible: false,
+                AlertDialog(
+                    insetPadding: const EdgeInsets.symmetric(horizontal: 10),
+                    titlePadding: EdgeInsets.zero,
+                    contentPadding: const EdgeInsets.only(
+                        top: 0, left: 3, right: 3, bottom: 18),
+                    content: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SpaceHeightWidget(height: 20),
+                          CommonTitle(
+                            titleName: "Account Locked!!!!",
+                            fontColor: darkRedColor,
+                          ),
+                          const SpaceHeightWidget(height: 15),
+                          const SideTitle(
+                              title:
+                                  "Account Locked - Upload Your Valid government Issued ID."),
+                          const SpaceHeightWidget(height: 10),
+                          const SideTitle(
+                              title:
+                                  "click the below button to unlock your account!!!"),
+                          const SpaceHeightWidget(height: 15),
+                          CustomAutoWidthButton(
+                              bcolor: greenColor,
+                              onTapFun: () {
+                                Get.back();
+                                Get.off(() => const UploadIDScreen());
+                              },
+                              title: "Click Here To Unlock Your Account")
+                        ],
+                      ),
+                    )));
+          }
+        });
+        Timer(const Duration(microseconds: 700), () {
+          if (widget.data['RenewaAlert'] != "No") {
+            Get.dialog(
+                barrierDismissible: false,
+                AlertDialog(
+                    insetPadding: const EdgeInsets.symmetric(horizontal: 10),
+                    titlePadding: EdgeInsets.zero,
+                    title: Container(
+                      width: double.maxFinite,
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+                          icon: Icon(
+                            Icons.cancel_outlined,
+                            color: redColor,
+                          )),
                     ),
-                  )));
-        }
-      });
-
+                    contentPadding: const EdgeInsets.only(
+                        top: 0, left: 3, right: 3, bottom: 18),
+                    content: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CommonTitle(
+                            titleName: "Destina 1 International alerts!!!!",
+                            fontColor: darkRedColor,
+                          ),
+                          const SpaceHeightWidget(height: 15),
+                          SideTitle(title: widget.data['RenNotifyMsg'])
+                        ],
+                      ),
+                    )));
+          }
+        });
+      }
       if (Constants.prefs.getString("user_type") == "MEMBERSHIP") {
         setState(() {
           myData = [
@@ -231,13 +231,15 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         print("given date...${givenDate.month}");
         print("given date...${givenDate.year}");
         Timer.periodic(const Duration(seconds: 1), (timer) {
-          setState(() {
-            daysDifference = givenDate.difference(currentDate).inDays;
-            todayVal = DateTime.now().day.toString();
-            hourVal = DateTime.now().hour.toString();
-            minVal = DateTime.now().minute.toString();
-            secVal = DateTime.now().second.toString();
-          });
+          if (mounted) {
+            setState(() {
+              daysDifference = givenDate.difference(currentDate).inDays;
+              todayVal = DateTime.now().day.toString();
+              hourVal = DateTime.now().hour.toString();
+              minVal = DateTime.now().minute.toString();
+              secVal = DateTime.now().second.toString();
+            });
+          }
         });
       }
       if (res['Msg'] == "SUCCESS" &&
@@ -252,14 +254,16 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         print("given date...${promgivenDate.month}");
         print("given date...${promgivenDate.year}");
         Timer.periodic(const Duration(seconds: 1), (timer) {
-          setState(() {
-            promdaysDifference =
-                promgivenDate.difference(promcurrentDate).inDays;
-            promtodayVal = DateTime.now().day.toString();
-            promhourVal = DateTime.now().hour.toString();
-            promminVal = DateTime.now().minute.toString();
-            promsecVal = DateTime.now().second.toString();
-          });
+          if (mounted) {
+            setState(() {
+              promdaysDifference =
+                  promgivenDate.difference(promcurrentDate).inDays;
+              promtodayVal = DateTime.now().day.toString();
+              promhourVal = DateTime.now().hour.toString();
+              promminVal = DateTime.now().minute.toString();
+              promsecVal = DateTime.now().second.toString();
+            });
+          }
         });
       }
     }
@@ -289,6 +293,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
+                                  // UpgradeDayWidget(
                                   DaysTimerWidget(
                                     timeValue: todayVal!,
                                     markedRangeVal: daysDifference.toString(),
@@ -340,6 +345,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           titleName: "Your Promotion Purchase Will Expire In",
                           size: 16,
                         ),
+                        Text(
+                            "markedrang...$promtodayVal ,,,$promdaysDifference"),
                         if (promdaysDifference != null)
                           SingleChildScrollView(
                             child: Padding(
@@ -379,11 +386,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               height: 30,
                               child: CustomAutoWidthButton(
                                   onTapFun: () {
-                                    Get.to(() =>  PromoDashboardScreen(
-                                      pkMallNum:
-_dashboardController
-                                            .dashboardData.value.pkmall
-                                    ));
+                                    Get.to(() => PromoDashboardScreen(
+                                        pkMallNum: _dashboardController
+                                            .dashboardData.value.pkmall));
                                   },
                                   title: _dashboardController
                                               .dashboardData.value.pkmall ==
@@ -490,8 +495,6 @@ _dashboardController
                               onTapFun: () {
                                 Get.to(() => const DashboardRedeemScreen(
                                       title: "D1 CASH BACK POINTS REDEEM",
-                                      rmval: " RM 6",
-                                      points: "0",
                                     ));
                               },
                               title: "D1 CASH BACK POINTS",
@@ -507,8 +510,6 @@ _dashboardController
                               onTapFun: () {
                                 Get.to(() => const DashboardRedeemScreen(
                                       title: "D1 CREDIT REBATE POINTS REDEEM",
-                                      rmval: "RM 7",
-                                      points: "100",
                                     ));
                               },
                               title: "D1 CREDIT REBATE POINTS",

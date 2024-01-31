@@ -4703,8 +4703,12 @@ class DaysTimerWidget extends StatelessWidget {
               : CircularProgressIndicator(
                   color: whiteColor.withOpacity(0.8),
                   backgroundColor: darkNaviBlueColor,
+                  // color: darkNaviBlueColor,
+                  // backgroundColor: darkNaviBlueColor.withOpacity(0.2),
                   strokeWidth: 5,
-                  value: double.parse(markedRangeVal) / double.parse(timeValue),
+                  value: int.parse(timeValue) > int.parse(markedRangeVal)
+                      ? double.parse(markedRangeVal) / double.parse(timeValue)
+                      : double.parse(timeValue) / double.parse(markedRangeVal),
                 ),
         ),
         Column(

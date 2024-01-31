@@ -1268,9 +1268,14 @@ class MainController extends GetxController {
     myGenelogoyListData.clear();
     dynamic res = await ApiCall().listPostMethodFun(
         methodName: ApiData().myGenealogy, params: parameters);
-    for (int i = 0; i < res.length; i++) {
-      myGenelogoyListData.add(GeneologyViewModel.fromJson(res[i]));
+    if (res != null) {
+      if (res.length > 0 && res.toString() != "[]") {
+        for (int i = 0; i < res.length; i++) {
+          myGenelogoyListData.add(GeneologyViewModel.fromJson(res[i]));
+        }
+      }
     }
+
     loading.value = false;
     return res;
   }
@@ -2424,6 +2429,28 @@ class MainController extends GetxController {
     if (from == "init") {
       loading.value = false;
     }
+    return res;
+  }
+
+  getDashboardRedemPoints(
+    Map parameters,
+  ) async {
+    listOfMemberLoading.value = true;
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().getRedeemPoints, params: parameters);
+    listOfMemberLoading.value = false;
+
+    return res;
+  }
+
+  getDashboardRedemReq(
+    Map parameters,
+  ) async {
+    loading.value = true;
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().redeemRequest, params: parameters);
+    loading.value = false;
+
     return res;
   }
 }

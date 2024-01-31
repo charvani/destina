@@ -36,13 +36,15 @@ class _TeamBuilderViewScreenState extends State<TeamBuilderViewScreen> {
       "Pwd": Constants.prefs.getString("password"),
     };
     dynamic res = await _datacontroller.getTeamBuilderView(bdata);
-    for (int i = 0; i < res.length; i++) {
-      dataList.add(TeamBuilderViewModel.fromJson(res[i]));
-      scrollContollerList.add(ScrollController());
-    }
+    if (res != null) {
+      for (int i = 0; i < res.length; i++) {
+        dataList.add(TeamBuilderViewModel.fromJson(res[i]));
+        scrollContollerList.add(ScrollController());
+      }
 
-    for (int i = 0; i < dataList.length; i++) {
-      dataFun(dataList[i].level, i);
+      for (int i = 0; i < dataList.length; i++) {
+        dataFun(dataList[i].level, i);
+      }
     }
     print("dddd...${dataList.length}");
   }
@@ -70,105 +72,126 @@ class _TeamBuilderViewScreenState extends State<TeamBuilderViewScreen> {
           : Container(
               color: whiteColor,
               child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SpaceHeightWidget(height: 15),
-                    for (int i = 0; i < dataList.length; i++)
-                      Column(
+                child: dataList.isEmpty
+                    ? const SizedBox(
+                        height: 400,
+                        child: NotAvailableText(text: "No data found"))
+                    : Column(
                         children: [
-                          CommonTitle(
-                            titleName: dataList[i].team,
-                            size: 16,
-                            fontColor: darkBlue,
-                          ),
-                          Scrollbar(
-                            controller: scrollContollerList[i],
-                            thumbVisibility: true,
-                            trackVisibility: true,
-                            thickness: 5,
-                            interactive: true,
-                            radius: const Radius.circular(10),
-                            child: SingleChildScrollView(
-                              controller: scrollContollerList[i],
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: DataTable(
-                                          // dataRowMaxHeight: 50,
-                                          horizontalMargin: 10,
-                                          columnSpacing: 20,
-                                          border: TableBorder.all(
-                                              color: middleBlackColor
-                                                  .withOpacity(0.15),
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          headingRowColor:
-                                              MaterialStatePropertyAll(
-                                                  blackColor.withOpacity(0.8)),
-                                          dataRowColor:
-                                              MaterialStatePropertyAll(
-                                                  lightDarKBlue.withOpacity(0.1)
-                                                  // whiteColor
-                                                  ),
-                                          columns: [
-                                            DataColumn(
-                                                label: idTextStyle("S.No")),
-                                            DataColumn(
-                                                label: idTextStyle("User ID")),
-                                            DataColumn(
-                                                label: idTextStyle("Name")),
-                                            DataColumn(
-                                                label: idTextStyle("Country")),
-                                            DataColumn(
-                                                label: idTextStyle(
-                                                    "	Date of Join")),
-                                          ],
-                                          rows: [
-                                            for (int j = 0;
-                                                j < dataList[i].data.length;
-                                                j++)
-                                              DataRow(cells: [
-                                                DataCell(
-                                                  infoTextStyle("${j + 1}"),
-                                                ),
-                                                DataCell(
-                                                  infoTextStyle(dataList[i]
-                                                      .data[j]
-                                                      .userId),
-                                                ),
-                                                DataCell(
-                                                  infoTextStyle(
-                                                      dataList[i].data[j].name),
-                                                ),
-                                                DataCell(
-                                                  infoTextStyle(dataList[i]
-                                                      .data[j]
-                                                      .country),
-                                                ),
-                                                DataCell(
-                                                  infoTextStyle(dataList[i]
-                                                      .data[j]
-                                                      .dateOfJoin),
-                                                ),
-                                              ])
-                                          ]),
+                          const SpaceHeightWidget(height: 15),
+                          for (int i = 0; i < dataList.length; i++)
+                            Column(
+                              children: [
+                                CommonTitle(
+                                  titleName: dataList[i].team,
+                                  size: 16,
+                                  fontColor: darkBlue,
+                                ),
+                                Scrollbar(
+                                  controller: scrollContollerList[i],
+                                  thumbVisibility: true,
+                                  trackVisibility: true,
+                                  thickness: 5,
+                                  interactive: true,
+                                  radius: const Radius.circular(10),
+                                  child: SingleChildScrollView(
+                                    controller: scrollContollerList[i],
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: DataTable(
+                                                // dataRowMaxHeight: 50,
+                                                horizontalMargin: 10,
+                                                columnSpacing: 20,
+                                                border: TableBorder.all(
+                                                    color: middleBlackColor
+                                                        .withOpacity(0.15),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                headingRowColor:
+                                                    MaterialStatePropertyAll(
+                                                        blackColor
+                                                            .withOpacity(0.8)),
+                                                dataRowColor:
+                                                    MaterialStatePropertyAll(
+                                                        lightDarKBlue
+                                                            .withOpacity(0.1)
+                                                        // whiteColor
+                                                        ),
+                                                columns: [
+                                                  DataColumn(
+                                                      label:
+                                                          idTextStyle("S.No")),
+                                                  DataColumn(
+                                                      label: idTextStyle(
+                                                          "User ID")),
+                                                  DataColumn(
+                                                      label:
+                                                          idTextStyle("Name")),
+                                                  DataColumn(
+                                                      label: idTextStyle(
+                                                          "Country")),
+                                                  DataColumn(
+                                                      label: idTextStyle(
+                                                          "	Date of Join")),
+                                                ],
+                                                rows: [
+                                                  for (int j = 0;
+                                                      j <
+                                                          dataList[i]
+                                                              .data
+                                                              .length;
+                                                      j++)
+                                                    DataRow(cells: [
+                                                      DataCell(
+                                                        infoTextStyle(
+                                                            "${j + 1}"),
+                                                      ),
+                                                      DataCell(
+                                                        infoTextStyle(
+                                                            dataList[i]
+                                                                .data[j]
+                                                                .userId),
+                                                      ),
+                                                      DataCell(
+                                                        infoTextStyle(
+                                                            dataList[i]
+                                                                .data[j]
+                                                                .name),
+                                                      ),
+                                                      DataCell(
+                                                        infoTextStyle(
+                                                            dataList[i]
+                                                                .data[j]
+                                                                .country),
+                                                      ),
+                                                      DataCell(
+                                                        infoTextStyle(
+                                                            dataList[i]
+                                                                .data[j]
+                                                                .dateOfJoin),
+                                                      ),
+                                                    ])
+                                                ]),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                                const SpaceHeightWidget(
+                                  height: 18,
+                                )
+                              ],
                             ),
-                          ),
-                          const SpaceHeightWidget(
-                            height: 18,
-                          )
                         ],
                       ),
-                  ],
-                ),
               ),
             ),
     );

@@ -39,7 +39,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
 
   dataFun() {
     Map bdata = {
-      "UserId": userid,
+      "UserId": userid.toString().trim(),
       "Pwd": pass,
       "Action": "FromToDate",
       "FromDate": widget.fromDate,
@@ -90,8 +90,9 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                           },
                           invoiceFun: () {
                             Get.to(() => InvoiceScreen(
-                                  redirectUrl:
-                                      'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderRpt"&OrderNo=${_dataController.orderReportData[i].orderNo}',
+                                redirectUrl:
+                                    "https://showcase.worldunityfoundation.org/MobileAppCheckout/invoiceparam.html?BillNo=${_dataController.orderReportData[i].orderNo}"
+                                // 'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderRpt"&OrderNo=${_dataController.orderReportData[i].orderNo}',
                                 ));
                           },
                         )
