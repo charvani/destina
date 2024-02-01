@@ -7,6 +7,8 @@ import 'package:destina_1_international/commons/colors.dart';
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart'
+    as datahtml;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -1129,12 +1131,12 @@ class PromotionItemWidget extends StatelessWidget {
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // const SpaceHeightWidget(height: 5),
                   Stack(
@@ -1153,7 +1155,10 @@ class PromotionItemWidget extends StatelessWidget {
                                 // fit: BoxFit.fill,
                               ),
                             )
-                          : CommonCachedNetworkImage(imagePath: imagePath),
+                          : CommonCachedNetworkImage(
+                              imagePath: imagePath,
+                              height: 100,
+                            ),
                       if (exclusiveProduct)
                         Container(
                           height: 25,
@@ -1194,37 +1199,22 @@ class PromotionItemWidget extends StatelessWidget {
                       maxLines: 4,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                          fontFamily: "OnestSemiBold", fontSize: 12),
+                          fontFamily: "OnestSemiBold", fontSize: 14),
                     ),
                   ),
+                  if (amount != "")
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        amount,
+                        style: TextStyle(
+                            fontFamily: "OnestSemiBold",
+                            fontSize: 14,
+                            color: amountColor ?? blackColor),
+                      ),
+                    ),
                 ],
               ),
-              if (amount != "")
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text("RM ",
-                              style: TextStyle(
-                                  fontFamily: "OnestSemiBold",
-                                  fontSize: 14,
-                                  color: amountColor ?? blackColor)),
-                          Text(
-                            amount,
-                            style: TextStyle(
-                                fontFamily: "OnestSemiBold",
-                                fontSize: 20,
-                                color: amountColor ?? blackColor),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
               const SpaceHeightWidget(height: 5)
             ],
           ),
@@ -1348,12 +1338,13 @@ class HomeScreenNewArrivalItemWidget extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(8),
-                child: Image.asset(
-                  imagePath,
-                  height: 90,
-                  width: 90,
-                  // fit: BoxFit.fill,
-                ),
+                child: CommonCachedNetworkImage(imagePath: imagePath),
+                // Image.asset(
+                //   imagePath,
+                //   height: 90,
+                //   width: 90,
+                //   // fit: BoxFit.fill,
+                // ),
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -1369,16 +1360,16 @@ class HomeScreenNewArrivalItemWidget extends StatelessWidget {
                       const SpaceHeightWidget(height: 8),
                       Row(
                         children: [
-                          Text("RM ",
-                              style: TextStyle(
-                                  fontFamily: "OnestSemiBold",
-                                  fontSize: 14,
-                                  color: blackColor)),
+                          // Text("RM ",
+                          //     style: TextStyle(
+                          //         fontFamily: "OnestSemiBold",
+                          //         fontSize: 14,
+                          //         color: blackColor)),
                           Text(
                             amount,
                             style: TextStyle(
                                 fontFamily: "OnestSemiBold",
-                                fontSize: 18,
+                                fontSize: 14,
                                 color: blackColor),
                           )
                         ],
@@ -4900,6 +4891,56 @@ class BiomatrixImageWidget extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class InfoDescOviewWidget extends StatelessWidget {
+  final String title;
+  final String data;
+  const InfoDescOviewWidget(
+      {super.key, required this.title, required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ExpansionTile(
+          textColor: lightDarKBlue,
+          // collapsedBackgroundColor: redColor,
+          title: Text(
+            title,
+            // i == 0
+            //     ? "What It Is"
+            //     : i == 1
+            //         ? "Overview"
+            //         : "Description",
+            style: const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+          ),
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Container(
+                  margin: const EdgeInsets.only(right: 10, left: 10),
+                  decoration: BoxDecoration(
+                      color: lightDarKBlue.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(5)),
+                  padding: const EdgeInsets.all(10),
+                  width: double.infinity,
+                  child: datahtml.HtmlWidget(data)
+                  // i == 0
+                  //   ? packDetailsController.packageDetailsData.value.info
+                  //   : i == 1
+                  //       ? packDetailsController
+                  //           .packageDetailsData.value.overview
+                  //       : packDetailsController
+                  //           .packageDetailsData.value.desc
+                  ),
+            )
+          ],
+        ),
+        const CommonDivider()
+      ],
     );
   }
 }

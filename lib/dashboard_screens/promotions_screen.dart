@@ -74,11 +74,17 @@ class _PromotionsScreenState extends State<PromotionsScreen> {
               Wrap(
                 children: [
                   for (int i = 0; i < promotions.length; i++)
-                    PromotionScreenWidget(
-                        imagePath: promotions[i].image,
-                        titile: promotions[i].title,
-                        date: promotions[i].date,
-                        isBigPromotion: promotions[i].isBigPromotion)
+                    GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () {
+                        CommonToast("Coming soon");
+                      },
+                      child: PromotionScreenWidget(
+                          imagePath: promotions[i].image,
+                          titile: promotions[i].title,
+                          date: promotions[i].date,
+                          isBigPromotion: promotions[i].isBigPromotion),
+                    )
                 ],
               ),
               const SpaceHeightWidget(height: 40)

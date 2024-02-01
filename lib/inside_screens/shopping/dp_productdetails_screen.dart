@@ -219,60 +219,6 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                       const SpaceHeightWidget(height: 10),
                       const CommonDivider(),
                       const SpaceHeightWidget(height: 15),
-                      // for (int i = 0; i < 3; i++)
-                      //   Column(
-                      //     children: [
-                      //       ExpansionTile(
-                      //         textColor: lightDarKBlue,
-                      //         // collapsedBackgroundColor: redColor,
-                      //         title: Text(
-                      //           i == 0
-                      //               ? "What It Is"
-                      //               : i == 1
-                      //                   ? "Overview"
-                      //                   : "Description",
-                      //           style: const TextStyle(
-                      //               fontFamily: "OnestSemiBold", fontSize: 14),
-                      //         ),
-                      //         children: [
-                      //           // if (_dataController.dpProductdata.value
-                      //           //     .overviewRpt.isNotEmpty)
-                      //           Padding(
-                      //               padding: const EdgeInsets.only(bottom: 10),
-                      //               child: Container(
-                      //                 margin: const EdgeInsets.only(
-                      //                     right: 10, left: 10),
-                      //                 decoration: BoxDecoration(
-                      //                     color: lightDarKBlue.withOpacity(0.1),
-                      //                     borderRadius:
-                      //                         BorderRadius.circular(5)),
-                      //                 padding: const EdgeInsets.all(10),
-                      //                 width: double.infinity,
-                      //                 child: const HtmlWidget(""
-                      //                     // i == 0
-                      //                     //   ? _dataController
-                      //                     //       .dpProductdata
-                      //                     //       .value
-                      //                     //       .overviewRpt[0]
-                      //                     //       .info
-                      //                     //   : i == 1
-                      //                     //       ? _dataController
-                      //                     //           .dpProductdata
-                      //                     //           .value
-                      //                     //           .overviewRpt[0]
-                      //                     //           .overview
-                      //                     //       : _dataController
-                      //                     //           .dpProductdata
-                      //                     //           .value
-                      //                     //           .overviewRpt[0]
-                      //                     //           .descrip
-                      //                     ),
-                      //               ))
-                      //         ],
-                      //       ),
-                      //       const CommonDivider()
-                      //     ],
-                      //   ),
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 4),

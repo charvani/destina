@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:destina_1_international/authentication_screens/login_screen.dart';
 import 'package:destina_1_international/commons/colors.dart';
@@ -11,14 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../commons/constants.dart';
-import '../inside_screens/services/upload_id_screen.dart';
 import '../models/onboarding_model.dart';
 import '../models/productitem_model.dart';
 
 class HomeScreen extends StatefulWidget {
-  
-
-  HomeScreen({super.key,});
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -106,7 +103,20 @@ List<ProductItemModel> personalProductItems = [
 
 class _HomeScreenState extends State<HomeScreen> {
   final MainController _homeController = Get.put(MainController());
- 
+
+  MainController productController = Get.put(MainController());
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      dataFun("Health Care");
+    });
+  }
+
+  dataFun(String category) async {
+    dynamic data = await productController.getProducts(category);
+    print("product screen data...$data");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -241,7 +251,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 28,
                           width: 55,
                           child: CommonOulineTextButton(
-                            onTapFun: () {},
+                            onTapFun: () {
+                              print("cldkkkl");
+                              Get.offAll(() => const BottomBarScreen(
+                                    index: 3,
+                                  ));
+                              // Get.to(() => const BottomBarScreen(
+                              //       index: 3,
+                              //     ));
+                              // Get.to(() => const PromotionsScreen());
+                            },
                             title: "See all",
                           ),
                         )
@@ -254,7 +273,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         return promotionWidget(i + 1);
                       },
                       options: CarouselOptions(
-                          aspectRatio: 2.9 / 4.2,
+                          // aspectRatio: 2.9 / 4.2,
+                          // aspectRatio: 2.5 / 4,
                           viewportFraction: 0.95,
                           enlargeCenterPage: true,
                           // autoPlay: true,
@@ -329,55 +349,55 @@ class _HomeScreenState extends State<HomeScreen> {
                             image:
                                 AssetImage("assets/images/newtag_banner.png"),
                             fit: BoxFit.cover)),
-                    child: CarouselSlider.builder(
-                        itemCount: 5,
-                        itemBuilder: (context, i, rindex) {
-                          return HomeScreenNewArrivalItemWidget(
-                            onTapFun: () {
-                              Get.to(() => const ProductDetailsScreen(
-                                    from: "newarrival",
-                                    packageCode: "",
-                                  ));
-                            },
-                            imagePath: i == 0
-                                ? promotionItems[0].image
-                                : i == 1
-                                    ? promotionItems[1].image
-                                    : i == 2
-                                        ? promotionItems[2].image
-                                        : i == 3
-                                            ? promotionItems[3].image
-                                            : i == 4
-                                                ? promotionItems[4].image
-                                                : promotionItems[5].image,
-                            itemName: i == 0
-                                ? promotionItems[0].title
-                                : i == 1
-                                    ? promotionItems[1].title
-                                    : i == 2
-                                        ? promotionItems[2].title
-                                        : i == 3
-                                            ? promotionItems[3].title
-                                            : i == 4
-                                                ? promotionItems[4].title
-                                                : promotionItems[5]
-                                                    .title
-                                                    .capitalizeFirst
-                                                    .toString(),
-                            amount: "2${i}3",
-                          );
-                        },
-                        options: CarouselOptions(
-                          aspectRatio: 23 / 8.5,
-                          viewportFraction: 0.8,
-                          autoPlay: false,
-                          enlargeCenterPage: true,
-                          enlargeFactor: 0.2,
-                          autoPlayInterval: const Duration(seconds: 2),
-                        )),
+                    child: productController.loading.value
+                        ? loader
+                        : productController.productItemList.isEmpty
+                            ? const SizedBox(
+                                height: 100,
+                                child: NotAvailableText(
+                                  text: "New arrival not available",
+                                ))
+                            : CarouselSlider.builder(
+                                itemCount:
+                                    productController.productItemList.length,
+                                itemBuilder: (context, i, rindex) {
+                                  return HomeScreenNewArrivalItemWidget(
+                                    onTapFun: () {
+                                      Get.to(() => ProductDetailsScreen(
+                                            from: "newarrival",
+                                            packageCode: productController
+                                                .productItemList[i].packagecode,
+                                          ));
+                                    },
+                                    imagePath: productController
+                                        .productItemList[i].image,
+                                    itemName: productController
+                                        .productItemList[i]
+                                        .packageName
+                                        .capitalizeFirst
+                                        .toString(),
+                                    amount: productController
+                                                .productItemList[i].dp !=
+                                            0.0
+                                        ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
+                                        : "",
+                                  );
+                                },
+                                options: CarouselOptions(
+                                  aspectRatio: 23 / 8.5,
+                                  viewportFraction: 0.8,
+                                  autoPlay: false,
+                                  enlargeCenterPage: true,
+                                  enlargeFactor: 0.2,
+                                  autoPlayInterval: const Duration(seconds: 2),
+                                )),
                   ),
                   SeeNewAllProductsBanner(
-                    onTapFun: () {},
+                    onTapFun: () {
+                      Get.offAll(() => const BottomBarScreen(
+                            index: 1,
+                          ));
+                    },
                   ),
                   const SpaceHeightWidget(height: 13),
                   Stack(
@@ -470,53 +490,77 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  Container(
-                    alignment: Alignment.center,
-                    // height: (4 / 2) * 325,
-                    child: GridView.builder(
-                      padding: const EdgeInsets.all(0),
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2, childAspectRatio: 1 / 1.3),
-                      itemBuilder: (context, i) {
-                        return PromotionItemWidget(
-                          onTapFun: () {
-                            Get.to(() => const ProductDetailsScreen(
-                                  from: "recommended_for_you",
-                                  packageCode: "",
-                                ));
-                          },
-                          amountColor: darkBlue,
-                          imagePath: i == 0
-                              ? promotionItems[0].image
-                              : i == 1
-                                  ? promotionItems[1].image
-                                  : i == 2
-                                      ? promotionItems[2].image
-                                      : i == 3
-                                          ? promotionItems[3].image
-                                          : promotionItems[4].image,
-                          itemName: i == 0
-                              ? promotionItems[0].title
-                              : i == 1
-                                  ? promotionItems[1].title
-                                  : i == 2
-                                      ? promotionItems[2].title
-                                      : i == 3
-                                          ? promotionItems[3].title
-                                          : promotionItems[4]
-                                              .title
-                                              .capitalize
-                                              .toString(),
-                          amount: "23$i",
-                          exclusiveProduct: false,
-                        );
-                      },
-                      itemCount: 4,
-                    ),
-                  ),
+                  productController.loading.value
+                      ? loader
+                      : productController.productItemList.isEmpty
+                          ? const SizedBox(
+                              height: 100,
+                              child: NotAvailableText(
+                                text: "Recommended products not available",
+                              ))
+                          : Container(
+                              alignment: Alignment.center,
+                              // height: (4 / 2) * 325,
+                              child: GridView.builder(
+                                padding: const EdgeInsets.all(0),
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 1 / 1.1),
+                                itemBuilder: (context, i) {
+                                  return PromotionItemWidget(
+                                    onTapFun: () {
+                                      Get.to(() => ProductDetailsScreen(
+                                            from: "recommended_for_you",
+                                            packageCode: productController
+                                                .productItemList[i].packagecode,
+                                          ));
+                                    },
+                                    amountColor: darkBlue,
+                                    // imagePath: i == 0
+                                    //     ? promotionItems[0].image
+                                    //     : i == 1
+                                    //         ? promotionItems[1].image
+                                    //         : i == 2
+                                    //             ? promotionItems[2].image
+                                    //             : i == 3
+                                    //                 ? promotionItems[3].image
+                                    //                 : promotionItems[4].image,
+                                    // itemName: i == 0
+                                    //     ? promotionItems[0].title
+                                    //     : i == 1
+                                    //         ? promotionItems[1].title
+                                    //         : i == 2
+                                    //             ? promotionItems[2].title
+                                    //             : i == 3
+                                    //                 ? promotionItems[3].title
+                                    //                 : promotionItems[4]
+                                    //                     .title
+                                    //                     .capitalize
+                                    //                     .toString(),
+                                    // amount: "23$i",
+                                    imagePath: productController
+                                        .productItemList[i].image,
+                                    itemName: productController
+                                        .productItemList[i]
+                                        .packageName
+                                        .capitalizeFirst
+                                        .toString(),
+                                    amount: productController
+                                                .productItemList[i].dp !=
+                                            0.0
+                                        ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
+                                        : "",
+
+                                    exclusiveProduct: false,
+                                  );
+                                },
+                                itemCount:
+                                    productController.productItemList.length,
+                              ),
+                            ),
                   const SpaceHeightWidget(height: 40)
                 ],
               ),
@@ -546,101 +590,101 @@ class _HomeScreenState extends State<HomeScreen> {
                 image: AssetImage(
                   "assets/images/promotion$i.png",
                 ),
-                fit: BoxFit.cover),
+                fit: BoxFit.fill),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: SizedBox(
-                  width: 95,
-                  height: 33,
-                  child: CustomFixedElevatedButton(
-                    onTapFun: () {
-                      Get.to(() => const LoginScreen());
-                    },
-                    title: "See details",
-                  ),
-                ),
-              ),
-              const SpaceHeightWidget(height: 10),
-              Container(
-                alignment: Alignment.center,
-                // height: 290,
-                child: GridView.builder(
-                  padding: const EdgeInsets.all(0),
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      // crossAxisCount: i == 2 ? 1 : 2,
-                      // childAspectRatio: i == 2 ? 1.3 : 1 / 1.55
-                      crossAxisCount: 2,
-                      childAspectRatio: 1 / 1.35),
-                  itemBuilder: (context, index) {
-                    return PromotionItemWidget(
-                      onTapFun: () {
-                        Get.to(() => const ProductDetailsScreen(
-                              from: "promotion",
-                              packageCode: "",
-                            ));
-                      },
-                      imagePath: (i == 1 && index == 0)
-                          ? promotionItems[0].image
-                          : (i == 1 && index == 1)
-                              ? promotionItems[1].image
-                              : (i == 2 && index == 0)
-                                  ? promotionItems[2].image
-                                  : (i == 3 && index == 0)
-                                      ? promotionItems[3].image
-                                      : (i == 3 && index == 1)
-                                          ? promotionItems[4].image
-                                          : (i == 4 && index == 0)
-                                              ? promotionItems[5].image
-                                              : (i == 4 && index == 1)
-                                                  ? promotionItems[6].image
-                                                  : (i == 5 && index == 0)
-                                                      ? promotionItems[7].image
-                                                      : (i == 5 && index == 1)
-                                                          ? promotionItems[8]
-                                                              .image
-                                                          : promotionItems[9]
-                                                              .image,
-                      itemName: (i == 1 && index == 0)
-                          ? promotionItems[0].title
-                          : (i == 1 && index == 1)
-                              ? promotionItems[1].title
-                              : (i == 2 && index == 0)
-                                  ? promotionItems[2].title
-                                  : (i == 3 && index == 0)
-                                      ? promotionItems[3].title
-                                      : (i == 3 && index == 1)
-                                          ? promotionItems[4].title
-                                          : (i == 4 && index == 0)
-                                              ? promotionItems[5].title
-                                              : (i == 4 && index == 1)
-                                                  ? promotionItems[6].title
-                                                  : (i == 5 && index == 0)
-                                                      ? promotionItems[7].title
-                                                      : (i == 5 && index == 1)
-                                                          ? promotionItems[8]
-                                                              .title
-                                                          : promotionItems[9]
-                                                              .title,
-                      amount: "3${i}5",
-                      exclusiveProduct: true,
-                    );
-                  },
-                  itemCount: i == 2 ? 1 : 2,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10, bottom: 10),
-                child: Text("$i products"),
-              ),
-            ],
-          ),
+          // child: Column(
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   mainAxisAlignment: MainAxisAlignment.end,
+          //   children: [
+          //     Padding(
+          //       padding: const EdgeInsets.only(left: 10),
+          //       child: SizedBox(
+          //         width: 95,
+          //         height: 33,
+          //         child: CustomFixedElevatedButton(
+          //           onTapFun: () {
+          //             Get.to(() => const LoginScreen());
+          //           },
+          //           title: "See details",
+          //         ),
+          //       ),
+          //     ),
+          //     const SpaceHeightWidget(height: 10),
+          //     Container(
+          //       alignment: Alignment.center,
+          //       // height: 290,
+          //       child: GridView.builder(
+          //         padding: const EdgeInsets.all(0),
+          //         physics: const NeverScrollableScrollPhysics(),
+          //         shrinkWrap: true,
+          //         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          //             // crossAxisCount: i == 2 ? 1 : 2,
+          //             // childAspectRatio: i == 2 ? 1.3 : 1 / 1.55
+          //             crossAxisCount: 2,
+          //             childAspectRatio: 1 / 1.35),
+          //         itemBuilder: (context, index) {
+          //           return PromotionItemWidget(
+          //             onTapFun: () {
+          //               Get.to(() => const ProductDetailsScreen(
+          //                     from: "promotion",
+          //                     packageCode: "",
+          //                   ));
+          //             },
+          //             imagePath: (i == 1 && index == 0)
+          //                 ? promotionItems[0].image
+          //                 : (i == 1 && index == 1)
+          //                     ? promotionItems[1].image
+          //                     : (i == 2 && index == 0)
+          //                         ? promotionItems[2].image
+          //                         : (i == 3 && index == 0)
+          //                             ? promotionItems[3].image
+          //                             : (i == 3 && index == 1)
+          //                                 ? promotionItems[4].image
+          //                                 : (i == 4 && index == 0)
+          //                                     ? promotionItems[5].image
+          //                                     : (i == 4 && index == 1)
+          //                                         ? promotionItems[6].image
+          //                                         : (i == 5 && index == 0)
+          //                                             ? promotionItems[7].image
+          //                                             : (i == 5 && index == 1)
+          //                                                 ? promotionItems[8]
+          //                                                     .image
+          //                                                 : promotionItems[9]
+          //                                                     .image,
+          //             itemName: (i == 1 && index == 0)
+          //                 ? promotionItems[0].title
+          //                 : (i == 1 && index == 1)
+          //                     ? promotionItems[1].title
+          //                     : (i == 2 && index == 0)
+          //                         ? promotionItems[2].title
+          //                         : (i == 3 && index == 0)
+          //                             ? promotionItems[3].title
+          //                             : (i == 3 && index == 1)
+          //                                 ? promotionItems[4].title
+          //                                 : (i == 4 && index == 0)
+          //                                     ? promotionItems[5].title
+          //                                     : (i == 4 && index == 1)
+          //                                         ? promotionItems[6].title
+          //                                         : (i == 5 && index == 0)
+          //                                             ? promotionItems[7].title
+          //                                             : (i == 5 && index == 1)
+          //                                                 ? promotionItems[8]
+          //                                                     .title
+          //                                                 : promotionItems[9]
+          //                                                     .title,
+          //             amount: "3${i}5",
+          //             exclusiveProduct: true,
+          //           );
+          //         },
+          //         itemCount: i == 2 ? 1 : 2,
+          //       ),
+          //     ),
+          //     Padding(
+          //       padding: const EdgeInsets.only(left: 10, bottom: 10),
+          //       child: Text("$i products"),
+          //     ),
+          //   ],
+          // ),
         ));
   }
 }

@@ -27,7 +27,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   List<String> downlineList = ["Left", "Right"];
   int downlistSelectedInd = 0;
-
+  final ScrollController _scrollController = ScrollController();
   List<String> myData = [
     "My Incomes",
     "Business Details",
@@ -63,33 +63,64 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       if (widget.bannerPopUpImages!.isNotEmpty) {
         print(widget.bannerPopUpImages!.length);
 
-        Get.dialog(AlertDialog(
-            insetPadding: const EdgeInsets.symmetric(horizontal: 10),
-            titlePadding: EdgeInsets.zero,
-            title: Container(
-              width: double.maxFinite,
-              alignment: Alignment.topRight,
-              child: IconButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  icon: Icon(
-                    Icons.cancel_outlined,
-                    color: redColor,
-                  )),
-            ),
-            contentPadding:
-                const EdgeInsets.only(top: 0, left: 3, right: 3, bottom: 18),
-            content: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  for (int i = 0; i < widget.bannerPopUpImages!.length; i++)
-                    CommonCachedNetworkImage(
-                        imagePath: widget.bannerPopUpImages![i])
-                ],
-              ),
-            )));
+        Get.dialog(
+            barrierDismissible: false,
+            AlertDialog(
+                insetPadding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 53),
+                titlePadding: EdgeInsets.zero,
+                title: Container(
+                    width: double.maxFinite,
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                      child: SizedBox(
+                        height: 25,
+                        child: CustomAutoWidthButton(
+                          onTapFun: () {
+                            Get.back();
+                          },
+                          title: "Close Ads",
+                          bcolor: darkRedColor,
+                        ),
+                      ),
+                    )
+                    // IconButton(
+                    //     onPressed: () {
+                    //       Get.back();
+                    //     },
+                    //     icon: Icon(
+                    //       Icons.cancel_outlined,
+                    //       color: redColor,
+                    //     )),
+                    ),
+                contentPadding: const EdgeInsets.only(
+                    top: 0, left: 3, right: 3, bottom: 18),
+                content: Scrollbar(
+                  thickness: 8,
+                  thumbVisibility: true,
+                  trackVisibility: true,
+                  interactive: true,
+                  radius: const Radius.circular(10),
+                  controller: _scrollController,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: SingleChildScrollView(
+                      controller: _scrollController,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          for (int i = 0;
+                              i < widget.bannerPopUpImages!.length;
+                              i++)
+                            CommonCachedNetworkImage(
+                                imagePath: widget.bannerPopUpImages![i])
+                        ],
+                      ),
+                    ),
+                  ),
+                )));
       }
       if (widget.data != null) {
         Timer(const Duration(microseconds: 500), () {
@@ -282,16 +313,21 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   if (_dashboardController.dashboardData.value.pkgUpgrade ==
                       "1")
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const CommonTitle(
-                          titleName: "Your Upgrade Eligibility Will Expire In",
-                          size: 16,
+                          titleName:
+                              "Your eligibility for an upgrade will expire on",
+
+                          // "Your Upgrade Eligibility Will Expire In",
+                          size: 15,
                         ),
                         if (daysDifference != null)
                           SingleChildScrollView(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   // UpgradeDayWidget(
                                   DaysTimerWidget(
@@ -318,22 +354,18 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               ),
                             ),
                           ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.only(right: 10),
-                              height: 30,
-                              child: CustomAutoWidthButton(
-                                  onTapFun: () {
-                                    print("upgrade");
-                                    Get.to(() => const UpgradeOrderScreen());
-                                  },
-                                  title: "Click to Upgrade"),
-                            )
-                          ],
+                        Container(
+                          padding: const EdgeInsets.only(right: 10),
+                          height: 30,
+                          child: CustomAutoWidthButton(
+                              bcolor: darkRedColor,
+                              onTapFun: () {
+                                print("upgrade");
+                                Get.to(() => const UpgradeOrderScreen());
+                              },
+                              title: "Click to Upgrade"),
                         ),
-                        const SpaceHeightWidget(height: 20),
+                        const SpaceHeightWidget(height: 10),
                       ],
                     ),
                   if (_dashboardController.dashboardData.value.showRes ==
@@ -342,16 +374,15 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       children: [
                         const SpaceHeightWidget(height: 20),
                         const CommonTitle(
-                          titleName: "Your Promotion Purchase Will Expire In",
-                          size: 16,
+                          titleName: "Your Promotion Purchase Will Expire On",
+                          size: 15,
                         ),
-                        Text(
-                            "markedrang...$promtodayVal ,,,$promdaysDifference"),
                         if (promdaysDifference != null)
                           SingleChildScrollView(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   DaysTimerWidget(
                                     timeValue: promtodayVal!,
@@ -379,7 +410,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             ),
                           ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
                               padding: const EdgeInsets.only(right: 10),

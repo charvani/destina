@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/main_controller.dart';
+import '../myorder/invoice_screen.dart';
 
 class WithdrawalStatusScreen extends StatefulWidget {
   final String transPass;
@@ -97,17 +98,15 @@ class _WithdrawalStatusScreenState extends State<WithdrawalStatusScreen> {
   }
 }
 
-infoTextStyle(
-  String id,
-) {
+infoTextStyle(String id, sNo) {
   return GestureDetector(
     behavior: HitTestBehavior.translucent,
     onTap: () {
-      // Get.to(() => InvoiceScreen(
-      //     redirectUrl:
-      //         "https://showcase.worldunityfoundation.org/MobileAppCheckout/invoiceparam.html?BillNo=$id"
-      //     // 'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderRpt"&OrderNo=${_dataController.orderReportData[i].orderNo}',
-      //     ));
+      Get.to(() => InvoiceScreen(
+          redirectUrl:
+              "https://showcase.worldunityfoundation.org/MobileAppCheckout/PayoutParam.html?DistId=$sNo"
+          // 'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderRpt"&OrderNo=${_dataController.orderReportData[i].orderNo}',
+          ));
     },
     child: Text(
       id,
@@ -125,8 +124,11 @@ class MyData extends DataTableSource {
         TableInfoWidget(info: "${index + 1}"),
       ),
       DataCell(_verticalDivider),
-      DataCell(infoTextStyle(_dataController
-              .withdrawStatusData.value.tpCheckWithdrawrpt[index].reqCode)
+      DataCell(infoTextStyle(
+        _dataController
+            .withdrawStatusData.value.tpCheckWithdrawrpt[index].reqCode,
+        _dataController.withdrawStatusData.value.tpCheckWithdrawrpt[index].sno,
+      )
           // TableInfoWidget(
           //     info: _dataController
           //         .withdrawStatusData.value.tpCheckWithdrawrpt[index].reqCode),

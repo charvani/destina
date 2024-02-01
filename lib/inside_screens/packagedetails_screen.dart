@@ -6,9 +6,7 @@ import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:get/get.dart';
-import 'package:motion_toast/motion_toast.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../authentication_screens/enrollpackage_screen.dart';
@@ -279,75 +277,52 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                         const SpaceHeightWidget(height: 10),
                         const CommonDivider(),
                         const SpaceHeightWidget(height: 15),
-                        for (int i = 0; i < 3; i++)
-                          Column(
-                            children: [
-                              ExpansionTile(
-                                textColor: lightDarKBlue,
-                                // collapsedBackgroundColor: redColor,
-                                title: Text(
-                                  i == 0
-                                      ? "What It Is"
-                                      : i == 1
-                                          ? "Overview"
-                                          : "Description",
-                                  style: const TextStyle(
-                                      fontFamily: "OnestSemiBold",
-                                      fontSize: 14),
-                                ),
-                                children: [
-                                  Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Container(
-                                        margin: const EdgeInsets.only(
-                                            right: 10, left: 10),
-                                        decoration: BoxDecoration(
-                                            color:
-                                                lightDarKBlue.withOpacity(0.1),
-                                            borderRadius:
-                                                BorderRadius.circular(5)),
-                                        padding: const EdgeInsets.all(10),
-                                        width: double.infinity,
-                                        child: HtmlWidget(i == 0
-                                            ? packDetailsController
-                                                .packageDetailsData.value.info
-                                            : i == 1
-                                                ? packDetailsController
-                                                    .packageDetailsData
-                                                    .value
-                                                    .overview
-                                                : packDetailsController
-                                                    .packageDetailsData
-                                                    .value
-                                                    .desc),
-                                      ))
-                                ],
-                              ),
-                              const CommonDivider()
-                            ],
+                        if (packDetailsController
+                                .packageDetailsData.value.info !=
+                            "")
+                          InfoDescOviewWidget(
+                            title: "What It Is",
+                            data: packDetailsController
+                                .packageDetailsData.value.info,
                           ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 4),
-                          width: double.infinity,
-                          height: 50,
-                          color: blueColor.withOpacity(0.2),
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                "assets/images/award.png",
-                              ),
-                              const SpaceWidthWidget(width: 10),
-                              const Flexible(
-                                  child: Text(
-                                "Destina 1 packages are satisfied with the guarantee",
-                                style: TextStyle(
-                                    fontFamily: "OnestSemiBold", fontSize: 13),
-                              ))
-                            ],
+                        if (packDetailsController
+                                .packageDetailsData.value.overview !=
+                            "")
+                          InfoDescOviewWidget(
+                            title: "Overview",
+                            data: packDetailsController
+                                .packageDetailsData.value.overview,
                           ),
-                        ),
+                        if (packDetailsController
+                                .packageDetailsData.value.desc !=
+                            "")
+                          InfoDescOviewWidget(
+                            title: "Description",
+                            data: packDetailsController
+                                .packageDetailsData.value.desc,
+                          ),
+
+                        // Container(
+                        //   padding: const EdgeInsets.symmetric(
+                        //       horizontal: 8, vertical: 4),
+                        //   width: double.infinity,
+                        //   height: 50,
+                        //   color: blueColor.withOpacity(0.2),
+                        //   child: Row(
+                        //     children: [
+                        //       Image.asset(
+                        //         "assets/images/award.png",
+                        //       ),
+                        //       const SpaceWidthWidget(width: 10),
+                        //       const Flexible(
+                        //           child: Text(
+                        //         "Destina 1 packages are satisfied with the guarantee",
+                        //         style: TextStyle(
+                        //             fontFamily: "OnestSemiBold", fontSize: 13),
+                        //       ))
+                        //     ],
+                        //   ),
+                        // ),
                         const SpaceHeightWidget(height: 65),
                       ]),
                 );
@@ -516,8 +491,11 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                 rows: [
                                   for (int i = 0;
                                       i <
-                                          packDetailsController.packPackageDetails
-                                              .value.getPkgItemsRpt.length;
+                                          packDetailsController
+                                              .packPackageDetails
+                                              .value
+                                              .getPkgItemsRpt
+                                              .length;
                                       i++)
                                     DataRow(cells: [
                                       DataCell(Container(
@@ -536,8 +514,11 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 5.2),
                                         child: Text(
-                                          packDetailsController.packPackageDetails
-                                              .value.getPkgItemsRpt[i].pcode,
+                                          packDetailsController
+                                              .packPackageDetails
+                                              .value
+                                              .getPkgItemsRpt[i]
+                                              .pcode,
                                           style: TextStyle(
                                               fontFamily: "OnestRegular",
                                               fontSize: 12,
@@ -549,8 +530,11 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 5.2, vertical: 2),
                                         child: Text(
-                                          packDetailsController.packPackageDetails
-                                              .value.getPkgItemsRpt[i].name,
+                                          packDetailsController
+                                              .packPackageDetails
+                                              .value
+                                              .getPkgItemsRpt[i]
+                                              .name,
                                           style: TextStyle(
                                               fontFamily: "OnestRegular",
                                               fontSize: 12,
@@ -562,8 +546,11 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 5.2),
                                         child: Text(
-                                          packDetailsController.packPackageDetails
-                                              .value.getPkgItemsRpt[i].maxquan,
+                                          packDetailsController
+                                              .packPackageDetails
+                                              .value
+                                              .getPkgItemsRpt[i]
+                                              .maxquan,
                                           style: TextStyle(
                                               fontFamily: "OnestRegular",
                                               fontSize: 12,
@@ -594,9 +581,11 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                               padding: 8,
                                               textAlignVertical:
                                                   TextAlignVertical.bottom,
-                                              controller: textEControllerList[i],
+                                              controller:
+                                                  textEControllerList[i],
                                               hintText: "0",
-                                              textInputType: TextInputType.number,
+                                              textInputType:
+                                                  TextInputType.number,
                                               validation: (val) {
                                                 if (val!.isEmpty) {
                                                   return "Enter Quantity";
@@ -654,13 +643,14 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                                       "") {
                                                     countQty = countQty +
                                                         int.parse(
-                                                            textEControllerList[i]
+                                                            textEControllerList[
+                                                                    i]
                                                                 .text);
                                                     pidList.add(
                                                         "${packDetailsController.packPackageDetails.value.getPkgItemsRpt[i].pcode}@${textEControllerList[i].text}");
                                                   }
                                                 }
-          
+
                                                 if (countQty ==
                                                     int.parse(
                                                         packDetailsController
@@ -673,7 +663,7 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                                       loading = true;
                                                     });
                                                   }
-          
+
                                                   print("add to packcart fun");
                                                   Map parameters = {
                                                     "Pkid": widget.packageCode,
@@ -698,18 +688,18 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                                           .toLowerCase() ==
                                                       "success") {
                                                     // ignore: use_build_context_synchronously
-                                                    MotionToast.success(
-                                                      title: const Text(
-                                                          "Congartulations!"),
-                                                      description: const Text(
-                                                          "Packages added successfully"),
-                                                    ).show(context);
+                                                    // MotionToast.success(
+                                                    //   title: const Text(
+                                                    //       "Congartulations!"),
+                                                    //   description: const Text(
+                                                    //       "Packages added successfully"),
+                                                    // ).show(context);
                                                     Map params = {
                                                       "rpt": "EnrollDetails",
                                                       "Cid": widget.countryid,
                                                       "mid": "0"
                                                     };
-          
+
                                                     dynamic res =
                                                         await packDetailsController
                                                             .getEnrollPack(
@@ -731,16 +721,16 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                                           EnrollPackageScreen(
                                                             packageCoded: widget
                                                                 .packageCode,
-                                                            countyId:
-                                                                widget.countryid!,
+                                                            countyId: widget
+                                                                .countryid!,
                                                           ));
                                                     } else {
                                                       Get.off(() =>
                                                           SponsorCheckScreen(
                                                             packageCode: widget
                                                                 .packageCode,
-                                                            countryId:
-                                                                widget.countryid!,
+                                                            countryId: widget
+                                                                .countryid!,
                                                           ));
                                                     }
                                                   } else {

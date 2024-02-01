@@ -6,7 +6,6 @@ import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -109,9 +108,7 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () {
- 
-      },
+      onTap: () {},
       child: Scaffold(
         appBar: commonAppBar(
           backNavigation: true,
@@ -239,60 +236,29 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                         const SpaceHeightWidget(height: 10),
                         const CommonDivider(),
                         const SpaceHeightWidget(height: 15),
-                        for (int i = 0; i < 3; i++)
-                          Column(
-                            children: [
-                              ExpansionTile(
-                                textColor: lightDarKBlue,
-                                // collapsedBackgroundColor: redColor,
-                                title: Text(
-                                  i == 0
-                                      ? "What It Is"
-                                      : i == 1
-                                          ? "Overview"
-                                          : "Description",
-                                  style: const TextStyle(
-                                      fontFamily: "OnestSemiBold",
-                                      fontSize: 14),
-                                ),
-                                children: [
-                                  if (_dataController.saleProductDetails.value
-                                      .overviewRpt.isNotEmpty)
-                                    Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 10),
-                                        child: Container(
-                                          margin: const EdgeInsets.only(
-                                              right: 10, left: 10),
-                                          decoration: BoxDecoration(
-                                              color: lightDarKBlue
-                                                  .withOpacity(0.1),
-                                              borderRadius:
-                                                  BorderRadius.circular(5)),
-                                          padding: const EdgeInsets.all(10),
-                                          width: double.infinity,
-                                          child: HtmlWidget(i == 0
-                                              ? _dataController
-                                                  .saleProductDetails
-                                                  .value
-                                                  .overviewRpt[0]
-                                                  .info
-                                              : i == 1
-                                                  ? _dataController
-                                                      .saleProductDetails
-                                                      .value
-                                                      .overviewRpt[0]
-                                                      .overview
-                                                  : _dataController
-                                                      .saleProductDetails
-                                                      .value
-                                                      .overviewRpt[0]
-                                                      .descrip),
-                                        ))
-                                ],
-                              ),
-                              const CommonDivider()
-                            ],
+                        if (_dataController
+                                .saleProductDetails.value.overviewRpt[0].info !=
+                            "")
+                          InfoDescOviewWidget(
+                            title: "What It Is",
+                            data: _dataController
+                                .saleProductDetails.value.overviewRpt[0].info,
+                          ),
+                        if (_dataController.saleProductDetails.value
+                                .overviewRpt[0].overview !=
+                            "")
+                          InfoDescOviewWidget(
+                            title: "Overview",
+                            data: _dataController.saleProductDetails.value
+                                .overviewRpt[0].overview,
+                          ),
+                        if (_dataController.saleProductDetails.value
+                                .overviewRpt[0].descrip !=
+                            "")
+                          InfoDescOviewWidget(
+                            title: "Description",
+                            data: _dataController.saleProductDetails.value
+                                .overviewRpt[0].descrip,
                           ),
                         Container(
                           padding: const EdgeInsets.symmetric(
@@ -447,8 +413,8 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                               columns: [
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "S.No",
                                     style: TextStyle(
@@ -459,8 +425,8 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Product\nCode",
                                     style: TextStyle(
@@ -471,8 +437,8 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Name",
                                     style: TextStyle(
@@ -483,8 +449,8 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Maximum\nQuantity",
                                     style: TextStyle(
@@ -495,8 +461,8 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                 )),
                                 DataColumn(
                                     label: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
                                   child: Text(
                                     "Quantity",
                                     style: TextStyle(
@@ -579,7 +545,8 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                             inputFormatter: [
                                               FilteringTextInputFormatter
                                                   .digitsOnly,
-                                              LengthLimitingTextInputFormatter(2),
+                                              LengthLimitingTextInputFormatter(
+                                                  2),
                                               // FilteringTextInputFormatter.allow(
                                               //     RegExp("[1-28]"))
                                             ],
@@ -636,9 +603,12 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                               pidList.clear();
                                               int countQty = 0;
                                               for (int i = 0;
-                                                  i < textEControllerList.length;
+                                                  i <
+                                                      textEControllerList
+                                                          .length;
                                                   i++) {
-                                                if (textEControllerList[i].text !=
+                                                if (textEControllerList[i]
+                                                        .text !=
                                                     "") {
                                                   countQty = countQty +
                                                       int.parse(
@@ -648,7 +618,7 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                                       "${_dataController.packageDetails.value.getPkgItemsRpt[i].pcode}*${textEControllerList[i].text}");
                                                 }
                                               }
-          
+
                                               if (countQty ==
                                                   int.parse(_dataController
                                                       .packageDetails
@@ -658,7 +628,7 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                                   showQtyErrorText = false;
                                                   loading = true;
                                                 });
-          
+
                                                 print("add to car fun");
                                                 Map parameters = {
                                                   "Pkid": widget.packageCode,
@@ -672,7 +642,8 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                                   "sprno": Constants.prefs
                                                       .getString("reg_id"),
                                                   "prdtype": "Package",
-                                                  "qty": firstQtyController.text,
+                                                  "qty":
+                                                      firstQtyController.text,
                                                   "country": Constants.prefs
                                                       .getString("country_id"),
                                                 };
@@ -693,24 +664,24 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                                   //   description: const Text(
                                                   //       "Products added successfully to your cart."),
                                                   // ).show(context);
-          
+
                                                   Timer(
-                                                      const Duration(seconds: 1),
-                                                      () {
+                                                      const Duration(
+                                                          seconds: 1), () {
                                                     if (mounted) {
                                                       myState(() {
                                                         loading = false;
                                                       });
                                                     }
-          
+
                                                     Get.back();
                                                     Get.to(() =>
                                                         const SalesmallCartScreen());
                                                   });
                                                 } else {
                                                   Timer(
-                                                      const Duration(seconds: 1),
-                                                      () {
+                                                      const Duration(
+                                                          seconds: 1), () {
                                                     if (mounted) {
                                                       myState(() {
                                                         loading = false;
@@ -724,7 +695,7 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                                   showQtyErrorText = true;
                                                 });
                                               }
-          
+
                                               // await Constants.prefs.setInt("cart_count", 1);
                                               // Get.back();
                                               // Get.to(() => const EnrollPackageScreen());

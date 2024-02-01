@@ -81,7 +81,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           initialVideoId: videoId!,
           flags: const YoutubePlayerFlags(
             autoPlay: false,
-            mute: true,
+            mute: false,
           ));
     }
 
@@ -402,8 +402,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         //   ),
                         // ),
                         if (productDetailsController
-                                .productDetails.value.name ==
-                            "UNIWAVE PENDENT")
+                                    .productDetails.value.name ==
+                                "UNIWAVE PENDENT" &&
+                            productDetailsController
+                                    .productDetails.value.name ==
+                                "UNIWAVE PENDANT")
                           pendentWidget(),
                         if (productDetailsController.productDetails.value.name == "UNIWAVE FLASK" ||
                             productDetailsController
@@ -476,9 +479,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   width: 150,
                                   child: PromotionItemWidget(
                                     onTapFun: () {
-                                      Get.to(() => const ProductDetailsScreen(
+                                      Get.back();
+                                      Get.to(() => ProductDetailsScreen(
                                             from: "similarProducts",
-                                            packageCode: "",
+                                            packageCode:
+                                                productDetailsController
+                                                    .productDetails
+                                                    .value
+                                                    .similarProducts[i]
+                                                    .packagecode,
                                           ));
                                     },
                                     amountColor: darkBlue,
