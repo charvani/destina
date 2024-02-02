@@ -52,18 +52,20 @@ class _PromotionsScreenState extends State<PromotionsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: darkBlue,
           centerTitle: true,
           leading: const SizedBox.shrink(),
-          title: const Text(
+          title: Text(
             "Promotion",
-            style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 20),
+            style: TextStyle(
+                fontFamily: "OnestSemiBold", fontSize: 20, color: whiteColor),
           ),
           bottom: PreferredSize(
               preferredSize: const Size(double.infinity, 40),
               child: CommonOulineTextButton(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
-                  backgroundColor: darkBlue.withOpacity(0.15),
-                  borderColor: darkBlue.withOpacity(0.1),
+                  backgroundColor: whiteColor,
+                  borderColor: whiteColor.withOpacity(0.1),
                   textColor: darkBlue,
                   onTapFun: () {},
                   title: "Destina 1 International Promotion")),

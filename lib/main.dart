@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:destina_1_international/authentication_screens/splash_screen.dart';
+import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,8 +42,11 @@ class MyApp extends StatelessWidget {
         title: 'Destina1 International',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 7, 45, 62)),
+          iconTheme: IconThemeData(color: darkBlue),
+          focusColor: darkBlue,
+          primaryColor: darkBlue,
+          colorScheme:
+              ColorScheme.fromSeed(primary: darkBlue, seedColor: darkBlue),
           useMaterial3: true,
         ),
         // home:

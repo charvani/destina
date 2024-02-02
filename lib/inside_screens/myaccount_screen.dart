@@ -46,9 +46,12 @@ import 'tools/ftareg_formscreen.dart';
 import 'tools/package_reviewscreen.dart';
 
 class MyAccountScreen extends StatefulWidget {
-  List<String>? bannerPopUpImages = [];
-  dynamic data;
-  MyAccountScreen({super.key, this.bannerPopUpImages, this.data});
+  // List<String>? bannerPopUpImages = [];
+  // dynamic data;
+  const MyAccountScreen({
+    super.key,
+    //  this.bannerPopUpImages, this.data
+  });
 
   @override
   State<MyAccountScreen> createState() => _MyAccountScreenState();
@@ -63,7 +66,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       // if (widget.bannerPopUpImages!.isNotEmpty) {
-        
+
       //   Get.to(
       //     () => DashBoardScreen(
       //       data: widget.data,
@@ -92,23 +95,23 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 fit: BoxFit.fill,
               ),
             ),
-            InkWell(
-              onTap: () {
-                print("dflkskdlf");
-                Get.back();
-              },
-              child: Container(
-                alignment: Alignment.topLeft,
-                width: double.infinity,
-                margin: const EdgeInsets.only(bottom: 50),
-                padding: const EdgeInsets.only(left: 5, bottom: 0),
-                height: 15,
-                child: Icon(
-                  Icons.keyboard_arrow_left_rounded,
-                  color: blackColor,
-                ),
-              ),
-            ),
+            // InkWell(
+            //   onTap: () {
+            //     print("dflkskdlf");
+            //     Get.back();
+            //   },
+            //   child: Container(
+            //     alignment: Alignment.topLeft,
+            //     width: double.infinity,
+            //     margin: const EdgeInsets.only(bottom: 50),
+            //     padding: const EdgeInsets.only(left: 5, bottom: 0),
+            //     height: 15,
+            //     child: Icon(
+            //       Icons.keyboard_arrow_left_rounded,
+            //       color: blackColor,
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.only(left: 15, top: 30),
               child: Row(
@@ -173,8 +176,8 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 leadingIcon: Icons.home,
                 onTapFun: () {
                   Get.to(() => DashBoardScreen(
-                        data: widget.data,
-                        bannerPopUpImages: widget.bannerPopUpImages,
+                      // data: widget.data,
+                      // bannerPopUpImages: widget.bannerPopUpImages,
                       ));
                 },
                 title: "Dashboard",

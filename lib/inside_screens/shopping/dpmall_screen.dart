@@ -1,3 +1,4 @@
+import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -60,10 +61,12 @@ class _DPMallScreenState extends State<DPMallScreen> {
     return Scaffold(
       appBar: AppBar(
           scrolledUnderElevation: 8,
-          title: const Text(
+          backgroundColor: darkBlue,
+          title: Text(
             "DP Order",
             style: TextStyle(
               fontSize: 18,
+              color: whiteColor,
               fontFamily: "OnestSemiBold",
             ),
           ),
@@ -72,10 +75,12 @@ class _DPMallScreenState extends State<DPMallScreen> {
             child: InkWell(
                 // behavior: HitTestBehavior.translucent,
                 onTap: () {
-                  print("ooooo");
                   Get.back();
                 },
-                child: const Icon(Icons.keyboard_arrow_left_rounded)),
+                child: Icon(
+                  Icons.keyboard_arrow_left_rounded,
+                  color: whiteColor,
+                )),
           ),
           actions: const [
             // Row(

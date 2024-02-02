@@ -125,14 +125,14 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-            backgroundColor: lightBlackColor,
+            backgroundColor: darkBlue,
             toolbarHeight: 0,
             bottom: PreferredSize(
               preferredSize: const Size(1000, 50),
               child: Card(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(0)),
-                color: whiteColor,
+                color: darkBlue,
                 margin: const EdgeInsets.all(0),
                 borderOnForeground: false,
                 child: SizedBox(
@@ -140,8 +140,9 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                   width: double.infinity,
                   child: ListTile(
                       leading: IconButton(
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.keyboard_arrow_left,
+                          color: whiteColor,
                         ),
                         onPressed: () {
                           Navigator.pop(context);
@@ -149,8 +150,10 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                       ),
                       title: Text(
                         widget.packageCode,
-                        style: const TextStyle(
-                            fontFamily: "OnestSemiBold", fontSize: 19),
+                        style: TextStyle(
+                            fontFamily: "OnestSemiBold",
+                            fontSize: 19,
+                            color: whiteColor),
                       )),
                 ),
               ),
@@ -266,6 +269,8 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                           ),
                         const SpaceHeightWidget(height: 30),
                         ProductAmountDetailsWidget(
+                          units: "1",
+                          qty: "1",
                           price: packDetailsController
                               .packageDetailsData.value.mrp,
                           cv: packDetailsController.packageDetailsData.value.cv,

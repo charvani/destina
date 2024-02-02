@@ -5,6 +5,7 @@ import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -103,85 +104,140 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
           ),
-          margin: const EdgeInsets.only(bottom: 1),
-          height: 60,
+          height: 90,
           alignment: Alignment.center,
           width: double.infinity,
           decoration: BoxDecoration(
+              border: Border.all(width: 1.5, color: darkBlue),
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(30), topRight: Radius.circular(30)),
               color: whiteColor),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const Text("Quantity: "),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Quantity: "),
-                  SizedBox(
-                      width: 50,
-                      // height: 35,
-                      child: RegisterTextField(
-                        controller: firstQtyController,
-                        hintText: '',
-                        textInputType: TextInputType.number,
-                        validation: (val) {
-                          return null;
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            firstQtyController.text =
+                                (int.parse(firstQtyController.text) + 1)
+                                    .toString();
+                          });
                         },
-                        labelText: '',
-                      )),
-                ],
-              ),
-              packageLoading
-                  ? loader
-                  : SizedBox(
-                      // width: 150,
-                      height: 35,
-                      child: IconElevatedButton(
-                        onTapFun: () async {
-                          FocusManager.instance.primaryFocus?.unfocus();
-                          if (int.parse(firstQtyController.text) > 0) {
-                            setState(() {
-                              packageLoading = true;
-                            });
-                            print("add to car fun");
-                            Map parameters = {
-                              "Pkid": widget.packageCode,
-                              "pid": "1",
-                              "uniqid": uniqId,
-                              "sessid": sessionId,
-                              "ipaddress": Constants.prefs.getString("ip"),
-                              "sprno": Constants.prefs.getString("reg_id"),
-                              "prdtype": "Package",
-                              "qty": firstQtyController.text,
-                            };
-                            print("add to cart params...$parameters");
-                            dynamic res = await MainController()
-                                .getDPMallAddToCart(parameters);
+                        child: const CircleAvatar(
+                          radius: 15,
+                          child: Icon(
+                            Icons.add,
+                            size: 18,
+                          ),
+                        ),
+                      ),
+                      const SpaceWidthWidget(width: 3),
+                      SizedBox(
+                          width: 60,
+                          // height: 35,
+                          child: RegisterTextField(
+                            inputFormatter: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                            controller: firstQtyController,
+                            hintText: '',
+                            textInputType: TextInputType.number,
+                            onchangeFun: (val) {
+                              setState(() {});
+                            },
+                            validation: (val) {
+                              return null;
 
+                              // if (val!.isEmpty) {
+                              //   return "Enter Quantity";
+                              // } else {
+                              //   return null;
+                              // }
+                            },
+                            labelText: '',
+                          )),
+                      const SpaceWidthWidget(width: 3),
+                      InkWell(
+                        onTap: () {
+                          // print(
+                          //     "${double.parse(productDetailsController.productDetails.value.price.replaceAll(productDetailsController.productDetails.value.currency, "")) * int.parse(firstQtyController.text)}");
+                          if (int.parse(firstQtyController.text) > 1) {
                             setState(() {
-                              packageLoading = false;
+                              firstQtyController.text =
+                                  (int.parse(firstQtyController.text) - 1)
+                                      .toString();
                             });
-                            if (res != null) {
-                              print("res...$res");
-                              if (res['Msg'] == "SUCCESS") {
-                                Timer(const Duration(seconds: 1), () {
-                                  Get.to(() => const DPmallCartScreen());
-                                });
-                              } else {
-                                CommonToast(res['Message']);
-                              }
-                            }
-                          } else {
-                            CommonToast("Please enter valid quantity");
                           }
                         },
-                        imagePath: 'assets/images/cart_icon.png',
-                        labelColor: whiteColor,
-                        buttonColor: blackColor,
-                        titile: "Add to cart",
+                        child: const CircleAvatar(
+                          radius: 15,
+                          child: Icon(
+                            Icons.remove,
+                            size: 18,
+                          ),
+                        ),
                       ),
-                    )
+                    ],
+                  ),
+                  packageLoading
+                      ? loader
+                      : SizedBox(
+                          // width: 150,
+                          height: 35,
+                          child: IconElevatedButton(
+                            onTapFun: () async {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                              if (int.parse(firstQtyController.text) > 0) {
+                                setState(() {
+                                  packageLoading = true;
+                                });
+                                print("add to car fun");
+                                Map parameters = {
+                                  "Pkid": widget.packageCode,
+                                  "pid": "1",
+                                  "uniqid": uniqId,
+                                  "sessid": sessionId,
+                                  "ipaddress": Constants.prefs.getString("ip"),
+                                  "sprno": Constants.prefs.getString("reg_id"),
+                                  "prdtype": "Package",
+                                  "qty": firstQtyController.text,
+                                };
+                                print("add to cart params...$parameters");
+                                dynamic res = await MainController()
+                                    .getDPMallAddToCart(parameters);
+
+                                setState(() {
+                                  packageLoading = false;
+                                });
+                                if (res != null) {
+                                  print("res...$res");
+                                  if (res['Msg'] == "SUCCESS") {
+                                    Timer(const Duration(seconds: 1), () {
+                                      Get.to(() => const DPmallCartScreen());
+                                    });
+                                  } else {
+                                    CommonToast(res['Message']);
+                                  }
+                                }
+                              } else {
+                                CommonToast("Please enter valid quantity");
+                              }
+                            },
+                            imagePath: 'assets/images/cart_icon.png',
+                            labelColor: whiteColor,
+                            buttonColor: blackColor,
+                            titile: "Add to cart",
+                          ),
+                        )
+                ],
+              ),
             ],
           ),
         ),
@@ -211,6 +267,8 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                         ),
                       const SpaceHeightWidget(height: 30),
                       ProductAmountDetailsWidget(
+                        qty: "1",
+                        units: "1",
                         price: _dataController.dpProductdata.value.dpPrice,
                         cv: _dataController.dpProductdata.value.cv,
                         productCode: _dataController.dpProductdata.value.pkcode,

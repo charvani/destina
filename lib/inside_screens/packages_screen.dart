@@ -176,6 +176,7 @@ class _PackageScreenState extends State<PackageScreen> {
                     child: Column(
                   children: [
                     Container(
+                      margin: const EdgeInsets.only(top: 1),
                       height: 120,
                       decoration: BoxDecoration(
                           image: DecorationImage(

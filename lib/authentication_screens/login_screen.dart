@@ -83,14 +83,27 @@ class _LoginScreenState extends State<LoginScreen> {
               Stack(
                 alignment: Alignment.bottomLeft,
                 children: [
-                  Image.asset(
-                    "assets/images/login_background.png",
+                  Container(
+                    height: 130,
                     width: double.infinity,
-                    fit: BoxFit.fill,
-                    height: 150,
+                    decoration: BoxDecoration(
+                        color: darkBlue,
+                        borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(35),
+                          bottomRight: Radius.circular(35),
+                        )),
                   ),
+                  // Image.asset(
+                  //   "assets/images/login_background.png",
+                  //   width: double.infinity,
+                  //   fit: BoxFit.fill,
+                  //   height: 150,
+                  // ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 20, bottom: 35),
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      bottom: 20,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -99,21 +112,21 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(
                               fontFamily: "OnestBold",
                               fontSize: 20,
-                              color: naviBlue),
+                              color: whiteColor),
                         ),
                         Text(
                           "Hope you enjoy shopping with us",
                           style: TextStyle(
                               fontFamily: "OnestRegular",
                               fontSize: 18,
-                              color: naviBlue),
+                              color: whiteColor),
                         )
                       ],
                     ),
                   )
                 ],
               ),
-              const SpaceHeightWidget(height: 10),
+              const SpaceHeightWidget(height: 15),
               const SizedBox(
                 width: double.infinity,
                 child: Padding(
@@ -235,7 +248,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           Constants.prefs.setString("password",
                                               passwordTController.text);
                                           Get.offAll(() => BottomBarScreen(
-                                                index: 4,
+                                                index: 0,
                                                 bannerPopup: _loginController
                                                     .bannerPopUp,
                                                 data: res,
@@ -248,6 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         }),
                         Center(
                           child: CommonTextButton(
+                            textColor: lightDarKBlue,
                             onTapFun: () {
                               Get.to(() => const ForgotPasswordScreen());
                             },
@@ -259,15 +273,35 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CustomBorderElevatedButton(
-                    bgcolor: whiteColor,
-                    onTapFun: () {
-                      Get.to(() => const CountySelectScreen());
-                    },
-                    title: "Register Member"),
+              Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CommonTitle(
+                      titleName: "Don't have an account?",
+                      fontFamily: "OnestRegular",
+                      size: 14,
+                    ),
+                    // const SpaceWidthWidget(width: 10),
+                    CommonTextButton(
+                      textColor: lightDarKBlue,
+                      onTapFun: () {
+                        Get.to(() => const CountySelectScreen());
+                      },
+                      title: 'Sign Up',
+                    ),
+                  ],
+                ),
               ),
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: CustomBorderElevatedButton(
+              //       bgcolor: whiteColor,
+              //       onTapFun: () {
+              //         Get.to(() => const CountySelectScreen());
+              //       },
+              //       title: "Register Member"),
+              // ),
               const SpaceHeightWidget(height: 20),
               // UnderLineTextButton(
               //     onTapFun: () {
@@ -290,7 +324,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     imagePath: 'assets/images/shopping_cart_img.jpg',
                     labelColor: whiteColor,
-                    buttonColor: lightDarKBlue,
+                    buttonColor: blackColor,
                     titile: "Shopp Now",
                   ),
                 ),

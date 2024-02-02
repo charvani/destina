@@ -46,8 +46,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController address2TController = TextEditingController();
   TextEditingController cityTController = TextEditingController();
   TextEditingController zipcodeTController = TextEditingController();
-  bool passwordVisible = false;
-  bool confirmPassVisible = false;
+  bool passwordVisible = true;
+  bool confirmPassVisible = true;
   dynamic groupVal;
   String namePrefix = "";
   String gender = "Male";
@@ -762,58 +762,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         height: 35,
                         width: double.infinity,
                         alignment: Alignment.center,
-                        child: SizedBox(
-                          width: 100,
-                          child: submitLoad
-                              ? loader
-                              : CommonOulineTextButton(
-                                  titleFontSize: 15,
-                                  onTapFun: () async {
-                                    // _focusNode.unfocus();
-                                    FocusScope.of(context).unfocus();
-                                    if (formKey.currentState!.validate()) {
-                                      setState(() {
-                                        submitLoad = true;
-                                      });
-                                      // if (groupVal != "") {
-                                      // bool sponsor =
-                                      //     await sponsorIdCheckFun();
-                                      // if (sponsor) {
-                                      //   bool placementId =
-                                      //       await placementIdCheckFun();
-                                      //   if (placementId) {
-                                      //     bool placecheck =
-                                      //         await placementPlaceCheckFun();
-                                      //     if (placecheck) {
+                        child: submitLoad
+                            ? loader
+                            : CustomElevatedButton(
+                                onTapFun: () async {
+                                  FocusScope.of(context).unfocus();
+                                  if (formKey.currentState!.validate()) {
+                                    setState(() {
+                                      submitLoad = true;
+                                    });
 
-                                      bool userchek = await userCheckFun();
-                                      if (userchek) {
-                                        signUpFun();
-                                      }
-                                      //  else {
-                                      //   CommonToast("Please check all data");
-                                      // }
-                                      // }
-                                      // }
-                                      // }
-                                      setState(() {
-                                        submitLoad = true;
-                                      });
-                                      // }
-                                      //  else {
-                                      //   CommonToast(
-                                      //       "Select placement Left or Right");
-                                      // }
+                                    bool userchek = await userCheckFun();
+                                    if (userchek) {
+                                      signUpFun();
                                     }
-                                    // Get.to(
-                                    //     () => const CartScreen(from: "after_enroll"));
-                                  },
-                                  title: "Submit",
-                                  backgroundColor: blueColor,
-                                  textColor: whiteColor,
-                                  borderColor: blueColor,
-                                ),
-                        ),
+
+                                    setState(() {
+                                      submitLoad = true;
+                                    });
+                                  }
+                                },
+                                title: "Submit"),
                       ),
                       const SpaceHeightWidget(height: 25),
                     ],
@@ -845,7 +814,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           // delayBefore: const Duration(seconds: 2),
           // pauseBetween: const Duration(seconds: 2),
           style: TextStyle(
-              fontFamily: "OnestRegular", color: brownColor, fontSize: 12),
+              fontFamily: "OnestRegular", color: whiteColor, fontSize: 12),
         ),
       ),
     );

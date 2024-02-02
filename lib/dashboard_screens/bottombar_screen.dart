@@ -30,7 +30,10 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
 
   /// widget list
   List<Widget> bottomBarPages = [
-    const HomeScreen(),
+    HomeScreen(
+      bannerPopUpImages: const [],
+      data: "",
+    ),
     const ProductsScreen(
       from: "bottombar",
     ),
@@ -39,9 +42,9 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
     ),
     const PromotionsScreen(),
     AccountScreen(
-      bannerPopUpImages: const [],
-      data: "",
-    )
+        // bannerPopUpImages: const [],
+        // data: "",
+        )
   ];
   int badgeCount = 0;
   @override
@@ -52,7 +55,10 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
     });
     if (widget.index != null) {
       bottomBarPages = [
-        const HomeScreen(),
+        HomeScreen(
+          bannerPopUpImages: widget.bannerPopup ?? [],
+          data: widget.data ?? "",
+        ),
         ProductsScreen(
           from: "bottombar",
           index: widget.productIndex,
@@ -62,9 +68,9 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         ),
         const PromotionsScreen(),
         AccountScreen(
-          bannerPopUpImages: widget.bannerPopup ?? [],
-          data: widget.data ?? "",
-        )
+            // bannerPopUpImages: widget.bannerPopup ?? [],
+            // data: widget.data ?? "",
+            )
       ];
     }
     badgeCount = Constants.prefs.getInt("cart_count") ?? 0;
@@ -79,6 +85,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
     return PopScope(
       canPop: false,
       onPopInvoked: (pop) {
+        Get.back();
         Get.offAll(() => const BottomBarScreen());
       },
       child: Scaffold(

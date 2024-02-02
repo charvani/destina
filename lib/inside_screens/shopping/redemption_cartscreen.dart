@@ -115,18 +115,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-            icon: const Icon(Icons.keyboard_arrow_left_rounded),
-            onPressed: () {
-              Get.back();
-            }),
-        title: const Text(
-          "Cart",
-          style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 20),
-        ),
-      ),
+      appBar: commonAppBar(title: "Cart", backNavigation: true),
       body: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
@@ -339,7 +328,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                       .loading.value
                                                   ? const Text("RP 0.0")
                                                   : Text(
-                                                      "RP ${cartController.salesMallTAmount.value}",
+                                                      "RP ${cartController.salesMallTAmount.value.roundToDouble()}",
                                                       style: const TextStyle(
                                                         fontFamily:
                                                             "OnestRegular",
@@ -369,7 +358,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                       .loading.value
                                                   ? const Text("RP 0.0")
                                                   : Text(
-                                                      "RP ${cartController.salesMallTAmount.value}",
+                                                      "RP ${cartController.salesMallTAmount.value.roundToDouble()}",
                                                       style: TextStyle(
                                                         fontFamily:
                                                             "OnestSemiBold",
@@ -390,7 +379,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                     width: double.infinity,
                                     child: SizedBox(
                                       width: 200,
-                                      height: 35,
+                                      height: 30,
                                       child: IconElevatedButton(
                                         onTapFun: () async {
                                           print(
@@ -403,7 +392,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                         imagePath:
                                             'assets/images/shopping_cart_img.jpg',
                                         labelColor: whiteColor,
-                                        buttonColor: lightDarKBlue,
+                                        buttonColor: blackColor,
                                         titile: "Checkout",
                                       ),
                                     ),
@@ -415,7 +404,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: SizedBox(
                                       width: 200,
-                                      height: 35,
+                                      height: 30,
                                       child: IconElevatedButton(
                                         onTapFun: () {
                                           Get.back();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-Color appthemeColor = const Color.fromARGB(255, 70, 19, 125);
+Color appthemeColor = const Color(0XFF00008B);
+Color lightAppthemeColor = const Color.fromARGB(255, 54, 54, 169);
 // const Color(0XFF001f53);
 Color blackColor = Colors.black;
 Color whiteColor = Colors.white;
@@ -18,8 +19,10 @@ Color naviBlue = const Color.fromARGB(255, 98, 77, 193);
 Color splashBgColor = const Color.fromARGB(255, 204, 228, 247);
 Color lightAmberColor = Colors.amber.shade50;
 Color limeColor = Colors.lime.shade900;
-Color darkBlue = const Color(0XFF00008B);
-Color lightDarKBlue = const Color.fromARGB(255, 54, 54, 169);
+Color darkBlue = const Color(0XFF02274B);
+//  Color(0XFF00008B);
+Color lightDarKBlue = const Color(0XFF022F60);
+// const Color.fromARGB(255, 54, 54, 169);
 Color lightYellow = Colors.yellow.shade100;
 Color woodColor = const Color(0XFFE6BF83);
 Color biscutColor = Colors.deepOrange.shade100;

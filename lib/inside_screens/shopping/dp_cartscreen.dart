@@ -111,18 +111,8 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-            icon: const Icon(Icons.keyboard_arrow_left_rounded),
-            onPressed: () {
-              Get.back();
-            }),
-        title: const Text(
-          "Cart",
-          style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 20),
-        ),
-      ),
+      appBar: commonAppBar(title: "Cart", backNavigation: true),
+
       body: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
@@ -408,7 +398,7 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                     width: double.infinity,
                                     child: SizedBox(
                                       width: 200,
-                                      height: 35,
+                                      height: 30,
                                       child: IconElevatedButton(
                                         onTapFun: () async {
                                           print(
@@ -421,7 +411,7 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                         imagePath:
                                             'assets/images/shopping_cart_img.jpg',
                                         labelColor: whiteColor,
-                                        buttonColor: lightDarKBlue,
+                                        buttonColor: blackColor,
                                         titile: "Checkout",
                                       ),
                                     ),
@@ -434,7 +424,7 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                     width: double.infinity,
                                     child: SizedBox(
                                       width: 200,
-                                      height: 35,
+                                      height: 30,
                                       child: IconElevatedButton(
                                         onTapFun: () {
                                           Get.back();

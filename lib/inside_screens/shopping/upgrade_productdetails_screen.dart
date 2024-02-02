@@ -210,6 +210,10 @@ class _UpgradeProductDetailsScreenState
                           ),
                         const SpaceHeightWidget(height: 30),
                         ProductAmountDetailsWidget(
+
+                          units: "1",
+
+                          qty: "1",
                           price: _dataController.saleProductDetails.value.mrp,
                           cv: _dataController.saleProductDetails.value.cv,
                           productCode:

@@ -1121,6 +1121,8 @@ class PromotionItemWidget extends StatelessWidget {
       behavior: HitTestBehavior.translucent,
       onTap: onTapFun,
       child: Card(
+        shadowColor: blackColor,
+        elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         color: whiteColor,
         child: Container(
@@ -1426,7 +1428,7 @@ class SopWidget extends StatelessWidget {
     return Container(
       height: 380,
       width: double.infinity,
-      color: darkBlue.withOpacity(0.1),
+      color: appthemeColor.withOpacity(0.1),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1441,20 +1443,16 @@ class SopWidget extends StatelessWidget {
                     Text(
                       "SOP Customize",
                       style: TextStyle(
-                          color: darkBlue.withOpacity(0.7),
+                          color: appthemeColor.withOpacity(0.7),
                           fontFamily: "OnestBold",
                           fontSize: 19),
                     ),
                     SizedBox(
-                      height: 28,
-                      width: 65,
-                      child: CommonOulineTextButton(
-                        onTapFun: () {},
-                        title: "See all",
-                        borderColor: darkBlue,
-                        textColor: darkBlue,
-                      ),
-                    )
+                      height: 25,
+                      width: 93,
+                      child: CustomAutoWidthButton(
+                          onTapFun: () {}, title: "See all"),
+                    ),
                   ],
                 ),
               ),
@@ -1468,7 +1466,7 @@ class SopWidget extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: "OnestRegular",
                       fontSize: 12.5,
-                      color: lightDarKBlue,
+                      color: lightAppthemeColor,
                     )),
               ),
               Container(
@@ -1480,45 +1478,45 @@ class SopWidget extends StatelessWidget {
                     Image.asset(
                       "assets/images/truck.png",
                       height: 20,
-                      color: lightDarKBlue,
+                      color: lightAppthemeColor,
                     ),
                     const SpaceWidthWidget(width: 5),
                     Text("Delivery free",
                         style: TextStyle(
                           fontFamily: "OnestRegular",
                           fontSize: 11.5,
-                          color: lightDarKBlue,
+                          color: lightAppthemeColor,
                         )),
                     const SpaceWidthWidget(width: 5),
                     Container(
                       height: 15,
                       width: 1.2,
-                      color: lightDarKBlue,
+                      color: lightAppthemeColor,
                     ),
                     const SpaceWidthWidget(width: 5),
                     Image.asset(
                       "assets/images/offer_tag.png",
                       height: 20,
-                      color: lightDarKBlue,
+                      color: lightAppthemeColor,
                     ),
                     const SpaceWidthWidget(width: 5),
                     Text("Get discount",
                         style: TextStyle(
                           fontFamily: "OnestRegular",
                           fontSize: 11.5,
-                          color: lightDarKBlue,
+                          color: lightAppthemeColor,
                         )),
                     const SpaceWidthWidget(width: 5),
                     Container(
                       height: 15,
                       width: 1.2,
-                      color: lightDarKBlue,
+                      color: lightAppthemeColor,
                     ),
                     const SpaceWidthWidget(width: 10),
                     Image.asset(
                       "assets/images/gift.png",
                       height: 15,
-                      color: lightDarKBlue,
+                      color: lightAppthemeColor,
                     ),
                     const SpaceWidthWidget(width: 5),
                     Text("More privileged",
@@ -1526,7 +1524,7 @@ class SopWidget extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: "OnestRegular",
                           fontSize: 11.5,
-                          color: lightDarKBlue,
+                          color: lightAppthemeColor,
                         )),
                   ],
                 ),
@@ -1536,7 +1534,7 @@ class SopWidget extends StatelessWidget {
           Container(
             height: 100,
             width: double.infinity,
-            color: lightDarKBlue.withOpacity(0.3),
+            color: appthemeColor.withOpacity(0.3),
           )
         ],
       ),
@@ -1672,9 +1670,10 @@ class SopCarouselWidget extends StatelessWidget {
               height: 57,
               width: double.maxFinite,
               decoration: BoxDecoration(
-                color: darkBlue.withOpacity(0.1),
+                color: appthemeColor.withOpacity(0.1),
                 image: DecorationImage(
-                    colorFilter: ColorFilter.mode(darkBlue, BlendMode.color),
+                    colorFilter:
+                        ColorFilter.mode(appthemeColor, BlendMode.color),
                     image: const AssetImage("assets/images/tag_banner.png"),
                     fit: BoxFit.fill),
               ),
@@ -1685,7 +1684,7 @@ class SopCarouselWidget extends StatelessWidget {
                   Row(
                     children: [
                       CircleAvatar(
-                        backgroundColor: darkBlue.withOpacity(0.7),
+                        backgroundColor: appthemeColor.withOpacity(0.7),
                         radius: 2,
                       ),
                       const SpaceWidthWidget(width: 10),
@@ -1694,14 +1693,14 @@ class SopCarouselWidget extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: "OnestSemiBold",
                             fontSize: 12,
-                            color: darkBlue.withOpacity(0.7),
+                            color: appthemeColor.withOpacity(0.7),
                           )),
                     ],
                   ),
                   Row(
                     children: [
                       CircleAvatar(
-                        backgroundColor: darkBlue.withOpacity(0.7),
+                        backgroundColor: appthemeColor.withOpacity(0.7),
                         radius: 2,
                       ),
                       const SpaceWidthWidget(width: 10),
@@ -1710,7 +1709,7 @@ class SopCarouselWidget extends StatelessWidget {
                           style: TextStyle(
                             fontFamily: "OnestSemiBold",
                             fontSize: 12,
-                            color: darkBlue.withOpacity(0.7),
+                            color: appthemeColor.withOpacity(0.7),
                           )),
                     ],
                   ),
@@ -1775,6 +1774,8 @@ class CategroyItemWidget extends StatelessWidget {
       behavior: HitTestBehavior.translucent,
       onTap: onTapFun,
       child: Card(
+        shadowColor: blackColor,
+        elevation: 5,
         color: whiteColor,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 5),
@@ -2102,13 +2103,13 @@ PreferredSizeWidget commonAppBar(
     Widget? action,
     bool backNavigation = false}) {
   return AppBar(
-      backgroundColor: lightBlackColor,
+      backgroundColor: darkBlue,
       toolbarHeight: 0,
       bottom: PreferredSize(
         preferredSize: const Size(double.infinity, 50),
         child: Card(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-          color: whiteColor,
+          color: darkBlue,
           margin: const EdgeInsets.all(0),
           borderOnForeground: false,
           child: SizedBox(
@@ -2119,8 +2120,9 @@ PreferredSizeWidget commonAppBar(
               leading: backNavigation
                   ? IconButton(
                       padding: const EdgeInsets.all(0),
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.keyboard_arrow_left,
+                        color: whiteColor,
                       ),
                       onPressed: onTapFun ??
                           () {
@@ -2133,6 +2135,7 @@ PreferredSizeWidget commonAppBar(
                 title ?? "",
                 style: TextStyle(
                     fontFamily: "OnestSemiBold",
+                    color: whiteColor,
                     overflow: TextOverflow.ellipsis,
                     fontSize: title!.length > 20 ? 16 : 18),
               ),
@@ -2149,6 +2152,8 @@ class ProductAmountDetailsWidget extends StatelessWidget {
   final String cv;
   // final String memberPrice;
   final String price;
+  final String qty;
+  final String units;
 
   const ProductAmountDetailsWidget(
       {super.key,
@@ -2156,6 +2161,8 @@ class ProductAmountDetailsWidget extends StatelessWidget {
       required this.productCode,
       required this.cv,
       required this.price,
+      required this.qty,
+      required this.units,
       required this.title});
 
   @override
@@ -2208,28 +2215,47 @@ class ProductAmountDetailsWidget extends StatelessWidget {
                     color: blackColor.withOpacity(0.4)),
               )
             ])),
+          // Row(
+          //   children: [
+          //     Text(
+          //       "Quantity: ",
+          //       style: TextStyle(
+          //           fontFamily: "OnestSemiBold",
+          //           fontSize: 14,
+          //           color: blackColor.withOpacity(0.4)),
+          //     ),
+          //     const SpaceWidthWidget(width: 5),
+          //     Text(
+          //       qty,
+          //       style: TextStyle(
+          //           fontFamily: "OnestSemiBold",
+          //           fontSize: 14,
+          //           color: blackColor.withOpacity(0.4)),
+          //     ),
+          //   ],
+          // ),
+          Row(
+            children: [
+              Text(
+                "Units: ",
+                style: TextStyle(
+                    fontFamily: "OnestSemiBold",
+                    fontSize: 14,
+                    color: blackColor.withOpacity(0.4)),
+              ),
+              const SpaceWidthWidget(width: 5),
+              Text(
+                units,
+                style: TextStyle(
+                    fontFamily: "OnestSemiBold",
+                    fontSize: 14,
+                    color: blackColor.withOpacity(0.4)),
+              ),
+            ],
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              //     Row(
-              //       children: [
-              //         Text(
-              //           "Member price",
-              //           style: TextStyle(
-              //               fontFamily: "OnestRegular",
-              //               fontSize: 12,
-              //               color: blackColor),
-              //         ),
-              //         const SpaceWidthWidget(width: 5),
-              //         Text(
-              //           "฿ $memberPrice",
-              //           style: TextStyle(
-              //               fontFamily: "OnestSemiBold",
-              //               fontSize: 14,
-              //               color: blackColor),
-              //         ),
-              //       ],
-              //     ),
               if (price != "")
                 Row(
                   children: [
@@ -2903,8 +2929,7 @@ class RegisterTextField extends StatelessWidget {
                     color: borderColor ?? lightDarKBlue.withOpacity(0.3))),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
-                borderSide:
-                    BorderSide(width: 3.5, color: blueColor.withOpacity(0.5)))),
+                borderSide: BorderSide(width: 1.3, color: lightDarKBlue))),
       ),
     );
   }
@@ -2968,8 +2993,7 @@ class RegisterDropDown extends StatelessWidget {
                       BorderSide(color: lightDarKBlue.withOpacity(0.3))),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5),
-                  borderSide: BorderSide(
-                      width: 3.5, color: blueColor.withOpacity(0.5)))),
+                  borderSide: BorderSide(width: 1.3, color: darkBlue))),
           padding: const EdgeInsets.all(0),
           borderRadius: BorderRadius.circular(5),
           style: TextStyle(
@@ -3367,18 +3391,26 @@ class MemberScreenInfoWidget extends StatelessWidget {
                             color: activeColor),
                       ),
                       const SpaceHeightWidget(height: 15),
-                      GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: signupFun,
-                        child: Text(
-                          "SIGN UP here! >",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontFamily: "OnestSemiBold",
-                              fontSize: 13,
-                              color: activeColor),
+                      SizedBox(
+                        height: 25,
+                        child: CustomAutoWidthButton(
+                          bcolor: activeColor,
+                          onTapFun: signupFun,
+                          title: "SIGN UP here! >",
                         ),
                       ),
+                      // GestureDetector(
+                      //   behavior: HitTestBehavior.translucent,
+                      //   onTap: signupFun,
+                      //   child: Text(
+                      //     "SIGN UP here! >",
+                      //     textAlign: TextAlign.center,
+                      //     style: TextStyle(
+                      //         fontFamily: "OnestSemiBold",
+                      //         fontSize: 13,
+                      //         color: activeColor),
+                      //   ),
+                      // ),
                     ]),
               ),
               Container(
@@ -3568,8 +3600,9 @@ CommonToastTrue(String text) {
 class CommonTextButton extends StatelessWidget {
   final String title;
   final VoidCallback onTapFun;
+  final Color? textColor;
   const CommonTextButton(
-      {super.key, required this.title, required this.onTapFun});
+      {super.key, required this.title, required this.onTapFun, this.textColor});
 
   @override
   Widget build(BuildContext context) {
@@ -3579,7 +3612,8 @@ class CommonTextButton extends StatelessWidget {
         onPressed: onTapFun,
         child: Text(
           title,
-          style: const TextStyle(fontFamily: "OnestBold", fontSize: 14),
+          style: TextStyle(
+              fontFamily: "OnestBold", fontSize: 14, color: textColor),
         ),
       ),
     );
@@ -3680,8 +3714,7 @@ class LoginTextField extends StatelessWidget {
                     color: borderColor ?? lightDarKBlue.withOpacity(0.3))),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
-                borderSide:
-                    BorderSide(width: 3.5, color: blueColor.withOpacity(0.5)))),
+                borderSide: BorderSide(width: 1.3, color: lightDarKBlue))),
       ),
     );
   }
@@ -3797,8 +3830,7 @@ class AccountTextField extends StatelessWidget {
                     color: borderColor ?? lightDarKBlue.withOpacity(0.3))),
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(5),
-                borderSide:
-                    BorderSide(width: 3.5, color: blueColor.withOpacity(0.5)))),
+                borderSide: BorderSide(width: 1.3, color: darkBlue))),
       ),
     );
   }
@@ -4095,10 +4127,10 @@ class DownLineWidget extends StatelessWidget {
             subtitle,
             style: const TextStyle(fontFamily: "OnestRegular", fontSize: 11),
           ),
-          trailing: Image.asset(
-            "assets/images/share_mail.png",
-            height: 33,
-          ),
+          // trailing: Image.asset(
+          //   "assets/images/share_mail.png",
+          //   height: 33,
+          // ),
         ),
         const CommonDivider()
       ],
@@ -4204,8 +4236,7 @@ class ProfileDropDown extends StatelessWidget {
                       BorderSide(color: lightDarKBlue.withOpacity(0.3))),
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5),
-                  borderSide: BorderSide(
-                      width: 3.5, color: blueColor.withOpacity(0.5)))),
+                  borderSide: BorderSide(width: 1.3, color: darkBlue))),
           padding: const EdgeInsets.all(0),
           borderRadius: BorderRadius.circular(5),
           style: TextStyle(

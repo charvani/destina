@@ -126,79 +126,136 @@ class _RedemptionProductDetailsScreenState
             padding: const EdgeInsets.symmetric(
               horizontal: 20,
             ),
-            margin: const EdgeInsets.only(bottom: 1),
-            height: 60,
+            height: 90,
             alignment: Alignment.center,
             width: double.infinity,
             decoration: BoxDecoration(
+                border: Border.all(width: 1.5, color: darkBlue),
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30)),
                 color: whiteColor),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Text("Quantity: "),
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text("Quantity: "),
-                    SizedBox(
-                        width: 50,
-                        // height: 35,
-                        child: RegisterTextField(
-                          controller: firstQtyController,
-                          hintText: '',
-                          textInputType: TextInputType.number,
-                          validation: (val) {
-                            return null;
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              firstQtyController.text =
+                                  (int.parse(firstQtyController.text) + 1)
+                                      .toString();
+                            });
                           },
-                          labelText: '',
-                        )),
+                          child: const CircleAvatar(
+                            radius: 15,
+                            child: Icon(
+                              Icons.add,
+                              size: 18,
+                            ),
+                          ),
+                        ),
+                        const SpaceWidthWidget(width: 3),
+                        SizedBox(
+                            width: 60,
+                            // height: 35,
+                            child: RegisterTextField(
+                              inputFormatter: [
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              controller: firstQtyController,
+                              hintText: '',
+                              textInputType: TextInputType.number,
+                              onchangeFun: (val) {
+                                setState(() {});
+                              },
+                              validation: (val) {
+                                return null;
+
+                                // if (val!.isEmpty) {
+                                //   return "Enter Quantity";
+                                // } else {
+                                //   return null;
+                                // }
+                              },
+                              labelText: '',
+                            )),
+                        const SpaceWidthWidget(width: 3),
+                        InkWell(
+                          onTap: () {
+                            // print(
+                            //     "${double.parse(productDetailsController.productDetails.value.price.replaceAll(productDetailsController.productDetails.value.currency, "")) * int.parse(firstQtyController.text)}");
+                            if (int.parse(firstQtyController.text) > 1) {
+                              setState(() {
+                                firstQtyController.text =
+                                    (int.parse(firstQtyController.text) - 1)
+                                        .toString();
+                              });
+                            }
+                          },
+                          child: const CircleAvatar(
+                            radius: 15,
+                            child: Icon(
+                              Icons.remove,
+                              size: 18,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    packageLoading
+                        ? loader
+                        : SizedBox(
+                            // width: 150,
+                            height: 35,
+                            child: IconElevatedButton(
+                              onTapFun: () async {
+                                // if (widget.from == "register") {
+                                print("popup");
+                                // Get.defaultDialog();
+                                setState(() {
+                                  packageLoading = true;
+                                });
+                                await getPackageItemsData();
+                                textEControllerList.clear();
+
+                                for (int i = 0;
+                                    i <
+                                        _dataController.packageDetails.value
+                                            .getPkgItemsRpt.length;
+                                    i++) {
+                                  textEControllerList
+                                      .add(TextEditingController());
+
+                                  if (_dataController.packageDetails.value
+                                          .getPkgItemsRpt[i].compulsory ==
+                                      "True") {
+                                    textEControllerList[i].text =
+                                        _dataController.packageDetails.value
+                                            .getPkgItemsRpt[i].qty;
+                                  }
+                                }
+
+                                setState(() {
+                                  packageLoading = false;
+                                });
+                                Get.dialog(PackageDilog(),
+                                    barrierDismissible: false);
+                              },
+                              imagePath: 'assets/images/cart_icon.png',
+                              labelColor: whiteColor,
+                              buttonColor: blackColor,
+                              titile: "Check Products",
+                            ),
+                          )
                   ],
                 ),
-                packageLoading
-                    ? loader
-                    : SizedBox(
-                        // width: 150,
-                        height: 35,
-                        child: IconElevatedButton(
-                          onTapFun: () async {
-                            // if (widget.from == "register") {
-                            print("popup");
-                            // Get.defaultDialog();
-                            setState(() {
-                              packageLoading = true;
-                            });
-                            await getPackageItemsData();
-                            textEControllerList.clear();
-
-                            for (int i = 0;
-                                i <
-                                    _dataController.packageDetails.value
-                                        .getPkgItemsRpt.length;
-                                i++) {
-                              textEControllerList.add(TextEditingController());
-
-                              if (_dataController.packageDetails.value
-                                      .getPkgItemsRpt[i].compulsory ==
-                                  "True") {
-                                textEControllerList[i].text = _dataController
-                                    .packageDetails.value.getPkgItemsRpt[i].qty;
-                              }
-                            }
-
-                            setState(() {
-                              packageLoading = false;
-                            });
-                            Get.dialog(PackageDilog(),
-                                barrierDismissible: false);
-                          },
-                          imagePath: 'assets/images/cart_icon.png',
-                          labelColor: whiteColor,
-                          buttonColor: blackColor,
-                          titile: "Check Products",
-                        ),
-                      )
               ],
             ),
           ),
@@ -228,6 +285,8 @@ class _RedemptionProductDetailsScreenState
                           ),
                         const SpaceHeightWidget(height: 30),
                         ProductAmountDetailsWidget(
+                          qty: "1",
+                          units: "1",
                           price: _dataController.saleProductDetails.value.mrp,
                           cv: _dataController.saleProductDetails.value.cv,
                           productCode:

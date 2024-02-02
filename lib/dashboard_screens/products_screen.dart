@@ -71,12 +71,21 @@ class _ProductsScreenState extends State<ProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          // shape: const RoundedRectangleBorder(
+          //     borderRadius: BorderRadius.only(
+          //         bottomLeft: Radius.circular(30),
+          //         bottomRight: Radius.circular(30))),
+          backgroundColor: darkBlue,
           leading: const SizedBox.shrink(),
           leadingWidth: 0,
-          title: SearchWidget(
-            borderColor: blackColor.withOpacity(0.5),
-            hintText: "What are you looking for?",
-            onTapFun: () {},
+          title: Container(
+            margin: const EdgeInsets.only(top: 8),
+            height: 50,
+            child: SearchWidget(
+              borderColor: transperantColor,
+              hintText: "What are you looking for?",
+              onTapFun: () {},
+            ),
           ),
           elevation: 0,
         ),
@@ -150,6 +159,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     child: Column(
                       children: [
                         Container(
+                          margin: const EdgeInsets.only(top: 1),
                           height: 120,
                           decoration: BoxDecoration(
                               image: DecorationImage(

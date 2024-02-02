@@ -1,3 +1,4 @@
+import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -58,11 +59,13 @@ class _SalesMallScreenState extends State<SalesMallScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          backgroundColor: darkBlue,
           scrolledUnderElevation: 8,
-          title: const Text(
+          title: Text(
             "Sales Order",
             style: TextStyle(
               fontSize: 18,
+              color: whiteColor,
               fontFamily: "OnestSemiBold",
             ),
           ),
@@ -74,7 +77,10 @@ class _SalesMallScreenState extends State<SalesMallScreen> {
                   print("ooooo");
                   Get.back();
                 },
-                child: const Icon(Icons.keyboard_arrow_left_rounded)),
+                child: Icon(
+                  Icons.keyboard_arrow_left_rounded,
+                  color: whiteColor,
+                )),
           ),
           actions: const [
             // Row(

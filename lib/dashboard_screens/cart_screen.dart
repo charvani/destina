@@ -101,15 +101,18 @@ class _CartScreenState extends State<CartScreen> {
       behavior: HitTestBehavior.translucent,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: darkBlue,
           centerTitle: true,
           leading: IconButton(
               icon: const Icon(Icons.keyboard_arrow_left_rounded),
+              color: whiteColor,
               onPressed: () {
                 Get.back();
               }),
-          title: const Text(
+          title: Text(
             "Cart",
-            style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 20),
+            style: TextStyle(
+                fontFamily: "OnestSemiBold", fontSize: 20, color: whiteColor),
           ),
           // actions: [
           //   SizedBox(
@@ -333,6 +336,8 @@ class _CartScreenState extends State<CartScreen> {
                                       ),
                                     ),
                                     Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Expanded(
                                           child: SizedBox(
@@ -359,13 +364,13 @@ class _CartScreenState extends State<CartScreen> {
                                                   });
                                                 } else {
                                                   setState(() {
-                                                    opacityVal = 0.5;
+                                                    opacityVal = 0.7;
                                                   });
                                                 }
                                               },
                                               style: TextStyle(
                                                   fontFamily: "OnestRegular",
-                                                  fontSize: 10,
+                                                  fontSize: 12,
                                                   color: blackColor),
                                               decoration: InputDecoration(
                                                 hintText: "Sponsor Id :",
@@ -438,8 +443,8 @@ class _CartScreenState extends State<CartScreen> {
                                                 }
                                               },
                                               title: "Submit",
-                                              backgroundColor: woodColor,
-                                              borderColor: woodColor,
+                                              backgroundColor: blackColor,
+                                              borderColor: blackColor,
                                               textColor: whiteColor,
                                               titleFontSize: 14,
                                             ),
@@ -458,7 +463,7 @@ class _CartScreenState extends State<CartScreen> {
                                   width: double.infinity,
                                   child: SizedBox(
                                     width: 200,
-                                    height: 35,
+                                    height: 30,
                                     child: IconElevatedButton(
                                       onTapFun: () async {
                                         Map parameters = {
@@ -500,7 +505,7 @@ class _CartScreenState extends State<CartScreen> {
                                 width: double.infinity,
                                 child: SizedBox(
                                   width: 200,
-                                  height: 35,
+                                  height: 30,
                                   child: IconElevatedButton(
                                     onTapFun: () {
                                       Get.offAll(() => const BottomBarScreen(
@@ -509,7 +514,7 @@ class _CartScreenState extends State<CartScreen> {
                                     },
                                     imagePath: 'assets/images/arrow_right.png',
                                     labelColor: whiteColor,
-                                    buttonColor: lightDarKBlue,
+                                    buttonColor: blackColor,
                                     titile: "Continue Shopping",
                                   ),
                                 ),
@@ -618,16 +623,13 @@ class _CartScreenState extends State<CartScreen> {
         const SpaceHeightWidget(height: 10),
         SizedBox(
           height: 30,
-          child: CommonOulineTextButton(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            onTapFun: () {
-              Get.offAll(() => const BottomBarScreen(
-                    index: 1,
-                  ));
-            },
-            title: "Shopping",
-            titleFontSize: 10,
-          ),
+          child: CustomAutoWidthButton(
+              onTapFun: () {
+                Get.offAll(() => const BottomBarScreen(
+                      index: 1,
+                    ));
+              },
+              title: "Shopping"),
         ),
       ],
     );

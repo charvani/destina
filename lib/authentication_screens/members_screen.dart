@@ -146,7 +146,7 @@ class _MemberScreenState extends State<MemberScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: const SizedBox.shrink(),
-        backgroundColor: lightBlackColor,
+        backgroundColor: darkBlue,
         toolbarHeight: 50,
         flexibleSpace: SafeArea(
           child: Column(
@@ -154,7 +154,7 @@ class _MemberScreenState extends State<MemberScreen> {
               Card(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(0)),
-                color: whiteColor,
+                color: darkBlue,
                 margin: const EdgeInsets.all(0),
                 borderOnForeground: false,
                 child: SizedBox(
@@ -162,8 +162,9 @@ class _MemberScreenState extends State<MemberScreen> {
                   width: double.infinity,
                   child: ListTile(
                     leading: IconButton(
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.keyboard_arrow_left,
+                        color: whiteColor,
                       ),
                       onPressed: () {
                         Get.back();

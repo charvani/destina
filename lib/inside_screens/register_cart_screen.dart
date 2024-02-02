@@ -104,14 +104,19 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        backgroundColor: darkBlue,
         leading: IconButton(
-            icon: const Icon(Icons.keyboard_arrow_left_rounded),
+            icon: Icon(
+              Icons.keyboard_arrow_left_rounded,
+              color: whiteColor,
+            ),
             onPressed: () {
               Get.back();
             }),
-        title: const Text(
+        title: Text(
           "Cart",
-          style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 20),
+          style: TextStyle(
+              fontFamily: "OnestSemiBold", fontSize: 20, color: whiteColor),
         ),
         // actions: [
         //   SizedBox(
@@ -424,7 +429,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                         const SpaceHeightWidget(height: 20),
                                         SizedBox(
                                           width: 200,
-                                          height: 35,
+                                          height: 33,
                                           child: IconElevatedButton(
                                             onTapFun: () async {
                                               // print("sess...$sessionId");
@@ -461,7 +466,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                             imagePath:
                                                 'assets/images/shopping_cart_img.jpg',
                                             labelColor: whiteColor,
-                                            buttonColor: lightDarKBlue,
+                                            buttonColor: blackColor,
                                             titile: "Checkout",
                                           ),
                                         ),

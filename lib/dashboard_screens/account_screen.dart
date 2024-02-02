@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:destina_1_international/authentication_screens/countryselect_screen.dart';
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../authentication_screens/login_screen.dart';
@@ -13,7 +13,7 @@ import '../commons/constants.dart';
 import '../controllers/main_controller.dart';
 import '../inside_screens/myaccount_screen.dart';
 import '../inside_screens/privacy_policyscreen.dart';
-import '../inside_screens/profileDashBoard/profile_dashboard_screen.dart';
+import 'bottombar_screen.dart';
 
 class AccountScreen extends StatefulWidget {
   List<String>? bannerPopUpImages = [];
@@ -51,21 +51,20 @@ class _AccountScreenState extends State<AccountScreen>
     // Run the animation
     _controller.repeat(reverse: true);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (widget.bannerPopUpImages!.isNotEmpty) {
-        _scaffoldKey.currentState!.openDrawer();
-        Get.to(
-          () => DashBoardScreen(
-            data: widget.data,
-            bannerPopUpImages: widget.bannerPopUpImages,
-          ),
-        );
-       
-      }
+      // if (widget.bannerPopUpImages!.isNotEmpty) {
+      //   _scaffoldKey.currentState!.openDrawer();
+      //   Get.to(
+      //     () => DashBoardScreen(
+      //         // data: widget.data,
+      //         // bannerPopUpImages: widget.bannerPopUpImages,
+      //         ),
+      //   );
+      // }
     });
 
-    Timer(const Duration(seconds: 1), () {
-      widget.bannerPopUpImages!.clear();
-    });
+    // Timer(const Duration(seconds: 1), () {
+    //   widget.bannerPopUpImages!.clear();
+    // });
   }
 
   @override
@@ -80,11 +79,11 @@ class _AccountScreenState extends State<AccountScreen>
   Widget build(BuildContext context) {
     return Scaffold(
         key: _scaffoldKey,
-        drawer: Drawer(
+        drawer: const Drawer(
           child: MyAccountScreen(
-            data: widget.data,
-            bannerPopUpImages: widget.bannerPopUpImages,
-          ),
+              // data: widget.data,
+              // bannerPopUpImages: widget.bannerPopUpImages,
+              ),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -94,29 +93,34 @@ class _AccountScreenState extends State<AccountScreen>
                 children: [
                   Stack(
                     children: [
-                      SizedBox(
-                          height: 200,
-                          width: double.infinity,
-                          child: SvgPicture.asset("assets/svg/grey_banner.svg",
-                              fit: BoxFit.cover)),
+                      Container(
+                        height: 200,
+                        width: double.infinity,
+                        color: darkBlue,
+                      ),
+                      // SizedBox(
+                      //     height: 200,
+                      //     width: double.infinity,
+                      //     child: SvgPicture.asset("assets/svg/grey_banner.svg",
+                      //         fit: BoxFit.cover)),
                       if (Constants.prefs.getString("user_id") != null &&
                           Constants.prefs.getString("user_id") != "false")
                         Padding(
-                          padding: const EdgeInsets.only(top: 30),
+                          padding: const EdgeInsets.only(top: 25),
                           child: IconButton(
                               onPressed: () {
                                 _scaffoldKey.currentState!.openDrawer();
                               },
-                              icon: Icon(Icons.menu, color: woodColor)),
+                              icon: Icon(Icons.menu, color: whiteColor)),
                         ),
                     ],
                   ),
                   SafeArea(
                     child: Container(
                         margin: const EdgeInsets.all(15),
-                        height: 110,
+                        // height: 110,
                         decoration: BoxDecoration(
-                            border: Border.all(width: 3, color: woodColor),
+                            border: Border.all(width: 3, color: whiteColor),
                             borderRadius: BorderRadius.circular(15),
                             color: whiteColor),
                         width: double.infinity,
@@ -138,15 +142,24 @@ class _AccountScreenState extends State<AccountScreen>
                                 ),
                               ),
                               const SpaceWidthWidget(width: 15),
-                              Flexible(
-                                child: Text(
-                                    "Welcome to Destina 1 International",
-                                    maxLines: 2,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontFamily: "OnestSemiBold",
-                                        color: blackColor,
-                                        fontSize: 17)),
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/logo.png",
+                                      height: 55,
+                                    ),
+                                    Text(
+                                      "Welcome to Destina 1 International",
+                                      maxLines: 3,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontFamily: "OnestSemiBold",
+                                          color: blackColor,
+                                          fontSize: 15),
+                                    ),
+                                  ],
+                                ),
                               )
                             ],
                           ),
@@ -154,85 +167,91 @@ class _AccountScreenState extends State<AccountScreen>
                   ),
                 ],
               ),
-              Stack(
-                // alignment: Alignment.topRight,
-                children: [
-                  Container(
-                    height: 130,
-                    width: double.infinity,
-                    margin: const EdgeInsets.all(10),
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                              "assets/images/join_banner.png",
-                            ),
-                            fit: BoxFit.fill)),
-                  ),
-                  Positioned(
-                    top: -30,
-                    right: -5,
-                    child: Image.asset(
-                      "assets/videos/join_family.gif",
-                      alignment: Alignment.topRight,
-                      height: 190,
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  Get.to(() => const CountySelectScreen());
+                },
+                child: Stack(
+                  // alignment: Alignment.topRight,
+                  children: [
+                    Container(
+                      height: 130,
+                      width: double.infinity,
+                      margin: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(
+                                "assets/images/join_banner.png",
+                              ),
+                              fit: BoxFit.fill)),
                     ),
-                  ),
-                  Positioned(
-                      top: 40,
-                      // bottom: 5,
-                      left: 20,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Join Destina 1 family",
-                                style: TextStyle(
-                                    fontFamily: "OnestRegular",
-                                    fontSize: 12,
-                                    color: whiteColor),
-                              ),
-                              Text(
-                                "Starting at only",
-                                style: TextStyle(
-                                    fontFamily: "OnestSemiBold",
-                                    fontSize: 14,
-                                    color: whiteColor),
-                              ),
-                              const SpaceHeightWidget(height: 10),
-                              if (Constants.prefs.getString("user_id") ==
-                                      null ||
-                                  Constants.prefs.getString("user_id") ==
-                                      "false")
-                                CustomFixedElevatedButton(
-                                  onTapFun: () {
-                                    Get.to(() => const LoginScreen());
-                                  },
-                                  title: "Sign Up / Sign in",
+                    Positioned(
+                      top: -30,
+                      right: -5,
+                      child: Image.asset(
+                        "assets/videos/join_family.gif",
+                        alignment: Alignment.topRight,
+                        height: 190,
+                      ),
+                    ),
+                    Positioned(
+                        top: 40,
+                        // bottom: 5,
+                        left: 20,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Join Destina 1 family",
+                                  style: TextStyle(
+                                      fontFamily: "OnestRegular",
+                                      fontSize: 12,
+                                      color: whiteColor),
                                 ),
-                            ],
-                          ),
-                          // const SpaceWidthWidget(width: 5),
-                          Column(
-                            children: [
-                              const SpaceHeightWidget(height: 16),
-                              AnimatedBuilder(
-                                  animation: _animation,
-                                  builder: (context, child) {
-                                    return Text(
-                                      'RM 100',
-                                      style: TextStyle(
-                                          fontSize: _animation.value,
-                                          color: lightYellow),
-                                    );
-                                  }),
-                            ],
-                          ),
-                        ],
-                      ))
-                ],
+                                Text(
+                                  "Starting at only",
+                                  style: TextStyle(
+                                      fontFamily: "OnestSemiBold",
+                                      fontSize: 14,
+                                      color: whiteColor),
+                                ),
+                                const SpaceHeightWidget(height: 10),
+                                if (Constants.prefs.getString("user_id") ==
+                                        null ||
+                                    Constants.prefs.getString("user_id") ==
+                                        "false")
+                                  CustomFixedElevatedButton(
+                                    onTapFun: () {
+                                      Get.to(() => const LoginScreen());
+                                    },
+                                    title: "Sign Up / Sign in",
+                                  ),
+                              ],
+                            ),
+                            // const SpaceWidthWidget(width: 5),
+                            Column(
+                              children: [
+                                const SpaceHeightWidget(height: 16),
+                                AnimatedBuilder(
+                                    animation: _animation,
+                                    builder: (context, child) {
+                                      return Text(
+                                        'RM 100',
+                                        style: TextStyle(
+                                            fontSize: _animation.value,
+                                            color: lightYellow),
+                                      );
+                                    }),
+                              ],
+                            ),
+                          ],
+                        ))
+                  ],
+                ),
               ),
               Container(
                 // height: 40,
@@ -251,7 +270,14 @@ class _AccountScreenState extends State<AccountScreen>
                 child: CarouselSlider.builder(
                     itemCount: 5,
                     itemBuilder: (context, i, rindex) {
-                      return slideWidget(i + 1);
+                      return GestureDetector(
+                          behavior: HitTestBehavior.translucent,
+                          onTap: () {
+                            Get.offAll(() => const BottomBarScreen(
+                                  index: 3,
+                                ));
+                          },
+                          child: slideWidget(i + 1));
                     },
                     options: CarouselOptions(
                         pageSnapping: false,

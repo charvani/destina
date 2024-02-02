@@ -35,7 +35,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
   void initState() {
     super.initState();
     userId = Constants.prefs.getString("user_id");
-    passwordTController.text = widget.transPass;
+    // passwordTController.text = widget.transPass;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       dataFun();
     });

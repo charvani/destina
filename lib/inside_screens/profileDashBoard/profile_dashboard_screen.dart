@@ -14,9 +14,11 @@ import 'promo_screen.dart';
 import 'redeem_screen.dart';
 
 class DashBoardScreen extends StatefulWidget {
-  List<String>? bannerPopUpImages = [];
-  dynamic data;
-  DashBoardScreen({super.key, this.bannerPopUpImages, this.data});
+  // List<String>? bannerPopUpImages = [];
+  // dynamic data;
+  DashBoardScreen({super.key, 
+  // this.bannerPopUpImages, this.data
+  });
 
   @override
   State<DashBoardScreen> createState() => _DashBoardScreenState();
@@ -59,177 +61,179 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       dataFun();
 
-      print("da....${widget.data}");
-      if (widget.bannerPopUpImages!.isNotEmpty) {
-        print(widget.bannerPopUpImages!.length);
+      // print("da....${widget.data}");
+      // if (widget.bannerPopUpImages!.isNotEmpty) {
+      //   print(widget.bannerPopUpImages!.length);
 
-        Get.dialog(
-            barrierDismissible: false,
-            AlertDialog(
-                insetPadding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 53),
-                titlePadding: EdgeInsets.zero,
-                title: Container(
-                    width: double.maxFinite,
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 10),
-                      child: SizedBox(
-                        height: 25,
-                        child: CustomAutoWidthButton(
-                          onTapFun: () {
-                            Get.back();
-                          },
-                          title: "Close Ads",
-                          bcolor: darkRedColor,
-                        ),
-                      ),
-                    )
-                    // IconButton(
-                    //     onPressed: () {
-                    //       Get.back();
-                    //     },
-                    //     icon: Icon(
-                    //       Icons.cancel_outlined,
-                    //       color: redColor,
-                    //     )),
-                    ),
-                contentPadding: const EdgeInsets.only(
-                    top: 0, left: 3, right: 3, bottom: 18),
-                content: Scrollbar(
-                  thickness: 8,
-                  thumbVisibility: true,
-                  trackVisibility: true,
-                  interactive: true,
-                  radius: const Radius.circular(10),
-                  controller: _scrollController,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: SingleChildScrollView(
-                      controller: _scrollController,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          for (int i = 0;
-                              i < widget.bannerPopUpImages!.length;
-                              i++)
-                            CommonCachedNetworkImage(
-                                imagePath: widget.bannerPopUpImages![i])
-                        ],
-                      ),
-                    ),
-                  ),
-                )));
-      }
-      if (widget.data != null) {
-        Timer(const Duration(microseconds: 500), () {
-          if (widget.data['result1'].toString().toLowerCase() == "pending") {
-            Get.dialog(AlertDialog(
-                insetPadding: const EdgeInsets.symmetric(horizontal: 10),
-                titlePadding: EdgeInsets.zero,
-                title: Container(
-                  width: double.maxFinite,
-                  alignment: Alignment.topRight,
-                  child: IconButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      icon: Icon(
-                        Icons.cancel_outlined,
-                        color: redColor,
-                      )),
-                ),
-                contentPadding: const EdgeInsets.only(
-                    top: 0, left: 3, right: 3, bottom: 18),
-                content: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CommonTitle(
-                        titleName: "Destina 1 International alerts!!!!",
-                        fontColor: darkRedColor,
-                      ),
-                      const SpaceHeightWidget(height: 15),
-                      SideTitle(title: widget.data['UploadIdMsg'])
-                    ],
-                  ),
-                )));
-          } else if (widget.data['result1'] == "No Id") {
-            Get.dialog(
-                barrierDismissible: false,
-                AlertDialog(
-                    insetPadding: const EdgeInsets.symmetric(horizontal: 10),
-                    titlePadding: EdgeInsets.zero,
-                    contentPadding: const EdgeInsets.only(
-                        top: 0, left: 3, right: 3, bottom: 18),
-                    content: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const SpaceHeightWidget(height: 20),
-                          CommonTitle(
-                            titleName: "Account Locked!!!!",
-                            fontColor: darkRedColor,
-                          ),
-                          const SpaceHeightWidget(height: 15),
-                          const SideTitle(
-                              title:
-                                  "Account Locked - Upload Your Valid government Issued ID."),
-                          const SpaceHeightWidget(height: 10),
-                          const SideTitle(
-                              title:
-                                  "click the below button to unlock your account!!!"),
-                          const SpaceHeightWidget(height: 15),
-                          CustomAutoWidthButton(
-                              bcolor: greenColor,
-                              onTapFun: () {
-                                Get.back();
-                                Get.off(() => const UploadIDScreen());
-                              },
-                              title: "Click Here To Unlock Your Account")
-                        ],
-                      ),
-                    )));
-          }
-        });
-        Timer(const Duration(microseconds: 700), () {
-          if (widget.data['RenewaAlert'] != "No") {
-            Get.dialog(
-                barrierDismissible: false,
-                AlertDialog(
-                    insetPadding: const EdgeInsets.symmetric(horizontal: 10),
-                    titlePadding: EdgeInsets.zero,
-                    title: Container(
-                      width: double.maxFinite,
-                      alignment: Alignment.topRight,
-                      child: IconButton(
-                          onPressed: () {
-                            Get.back();
-                          },
-                          icon: Icon(
-                            Icons.cancel_outlined,
-                            color: redColor,
-                          )),
-                    ),
-                    contentPadding: const EdgeInsets.only(
-                        top: 0, left: 3, right: 3, bottom: 18),
-                    content: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CommonTitle(
-                            titleName: "Destina 1 International alerts!!!!",
-                            fontColor: darkRedColor,
-                          ),
-                          const SpaceHeightWidget(height: 15),
-                          SideTitle(title: widget.data['RenNotifyMsg'])
-                        ],
-                      ),
-                    )));
-          }
-        });
-      }
+      //   Get.dialog(
+      //       barrierDismissible: false,
+      //       AlertDialog(
+      //           insetPadding:
+      //               const EdgeInsets.symmetric(horizontal: 30, vertical: 53),
+      //           titlePadding: EdgeInsets.zero,
+      //           title: Container(
+      //               width: double.maxFinite,
+      //               alignment: Alignment.topRight,
+      //               child: Padding(
+      //                 padding: const EdgeInsets.symmetric(
+      //                     horizontal: 10, vertical: 10),
+      //                 child: SizedBox(
+      //                   height: 25,
+      //                   child: CustomAutoWidthButton(
+      //                     onTapFun: () {
+      //                       Get.back();
+      //                     },
+      //                     title: "Close Ads",
+      //                     bcolor: darkRedColor,
+      //                   ),
+      //                 ),
+      //               )
+      //               // IconButton(
+      //               //     onPressed: () {
+      //               //       Get.back();
+      //               //     },
+      //               //     icon: Icon(
+      //               //       Icons.cancel_outlined,
+      //               //       color: redColor,
+      //               //     )),
+      //               ),
+      //           contentPadding: const EdgeInsets.only(
+      //               top: 0, left: 3, right: 3, bottom: 18),
+      //           content: Scrollbar(
+      //             thickness: 8,
+      //             thumbVisibility: true,
+      //             trackVisibility: true,
+      //             interactive: true,
+      //             radius: const Radius.circular(10),
+      //             controller: _scrollController,
+      //             child: Padding(
+      //               padding: const EdgeInsets.symmetric(horizontal: 8),
+      //               child: SingleChildScrollView(
+      //                 controller: _scrollController,
+      //                 child: Column(
+      //                   mainAxisSize: MainAxisSize.min,
+      //                   children: [
+      //                     for (int i = 0;
+      //                         i < widget.bannerPopUpImages!.length;
+      //                         i++)
+      //                       CommonCachedNetworkImage(
+      //                           imagePath: widget.bannerPopUpImages![i])
+      //                   ],
+      //                 ),
+      //               ),
+      //             ),
+      //           )));
+      // }
+
+      // if (widget.data != null) {
+      //   Timer(const Duration(microseconds: 500), () {
+      //     if (widget.data['result1'].toString().toLowerCase() == "pending") {
+      //       Get.dialog(AlertDialog(
+      //           insetPadding: const EdgeInsets.symmetric(horizontal: 10),
+      //           titlePadding: EdgeInsets.zero,
+      //           title: Container(
+      //             width: double.maxFinite,
+      //             alignment: Alignment.topRight,
+      //             child: IconButton(
+      //                 onPressed: () {
+      //                   Get.back();
+      //                 },
+      //                 icon: Icon(
+      //                   Icons.cancel_outlined,
+      //                   color: redColor,
+      //                 )),
+      //           ),
+      //           contentPadding: const EdgeInsets.only(
+      //               top: 0, left: 3, right: 3, bottom: 18),
+      //           content: SingleChildScrollView(
+      //             child: Column(
+      //               mainAxisSize: MainAxisSize.min,
+      //               children: [
+      //                 CommonTitle(
+      //                   titleName: "Destina 1 International alerts!!!!",
+      //                   fontColor: darkRedColor,
+      //                 ),
+      //                 const SpaceHeightWidget(height: 15),
+      //                 SideTitle(title: widget.data['UploadIdMsg'])
+      //               ],
+      //             ),
+      //           )));
+      //     } else if (widget.data['result1'] == "No Id") {
+      //       Get.dialog(
+      //           barrierDismissible: false,
+      //           AlertDialog(
+      //               insetPadding: const EdgeInsets.symmetric(horizontal: 10),
+      //               titlePadding: EdgeInsets.zero,
+      //               contentPadding: const EdgeInsets.only(
+      //                   top: 0, left: 3, right: 3, bottom: 18),
+      //               content: SingleChildScrollView(
+      //                 child: Column(
+      //                   mainAxisSize: MainAxisSize.min,
+      //                   children: [
+      //                     const SpaceHeightWidget(height: 20),
+      //                     CommonTitle(
+      //                       titleName: "Account Locked!!!!",
+      //                       fontColor: darkRedColor,
+      //                     ),
+      //                     const SpaceHeightWidget(height: 15),
+      //                     const SideTitle(
+      //                         title:
+      //                             "Account Locked - Upload Your Valid government Issued ID."),
+      //                     const SpaceHeightWidget(height: 10),
+      //                     const SideTitle(
+      //                         title:
+      //                             "click the below button to unlock your account!!!"),
+      //                     const SpaceHeightWidget(height: 15),
+      //                     CustomAutoWidthButton(
+      //                         bcolor: greenColor,
+      //                         onTapFun: () {
+      //                           Get.back();
+      //                           Get.off(() => const UploadIDScreen());
+      //                         },
+      //                         title: "Click Here To Unlock Your Account")
+      //                   ],
+      //                 ),
+      //               )));
+      //     }
+      //   });
+      //   Timer(const Duration(microseconds: 700), () {
+      //     if (widget.data['RenewaAlert'] != "No") {
+      //       Get.dialog(
+      //           barrierDismissible: false,
+      //           AlertDialog(
+      //               insetPadding: const EdgeInsets.symmetric(horizontal: 10),
+      //               titlePadding: EdgeInsets.zero,
+      //               title: Container(
+      //                 width: double.maxFinite,
+      //                 alignment: Alignment.topRight,
+      //                 child: IconButton(
+      //                     onPressed: () {
+      //                       Get.back();
+      //                     },
+      //                     icon: Icon(
+      //                       Icons.cancel_outlined,
+      //                       color: redColor,
+      //                     )),
+      //               ),
+      //               contentPadding: const EdgeInsets.only(
+      //                   top: 0, left: 3, right: 3, bottom: 18),
+      //               content: SingleChildScrollView(
+      //                 child: Column(
+      //                   mainAxisSize: MainAxisSize.min,
+      //                   children: [
+      //                     CommonTitle(
+      //                       titleName: "Destina 1 International alerts!!!!",
+      //                       fontColor: darkRedColor,
+      //                     ),
+      //                     const SpaceHeightWidget(height: 15),
+      //                     SideTitle(title: widget.data['RenNotifyMsg'])
+      //                   ],
+      //                 ),
+      //               )));
+      //     }
+      //   });
+      // }
+
       if (Constants.prefs.getString("user_type") == "MEMBERSHIP") {
         setState(() {
           myData = [
