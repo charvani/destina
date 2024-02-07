@@ -137,9 +137,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         const Text("Quantity: "),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment:
-                           
-                              MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
                               children: [
@@ -210,8 +208,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ),
                               ],
                             ),
-                           
-                           
                             packageLoading
                                 ? loader
                                 : SizedBox(
@@ -473,10 +469,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               ),
                             ],
                           ),
-                        const SpaceHeightWidget(height: 15),
+                        const SpaceHeightWidget(height: 20),
                         const Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                           child: Text(
                             "Similar Products",
                             style: TextStyle(
@@ -494,6 +490,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   i++)
                                 SizedBox(
                                   width: 150,
+                                  height: 183,
                                   child: PromotionItemWidget(
                                     onTapFun: () {
                                       Get.back();
@@ -543,7 +540,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             ],
                           ),
                         ),
-                        const SpaceHeightWidget(height: 65),
+                        const SpaceHeightWidget(height: 115),
                       ]),
                 );
         }),

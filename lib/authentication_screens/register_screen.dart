@@ -388,7 +388,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             flex: 3,
                             child: RegisterTextField(
                               textInputType: TextInputType.name,
-                              labelText: "FULL NAME AS PER NRIC",
+                              labelText: "Name as per Gov. Id/Company name",
                               hintText: "Ex: Michale John Lee",
                               controller: fullNameTController,
                               validation: (val) {
@@ -419,24 +419,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                         },
                       ),
-                      RegisterDropDown(
-                        hintText: "Gender",
-                        labelText: "GENDER",
-                        items: const ["Male", "Female"],
-                        onChangedFun: (val) {
-                          setState(() {
-                            gender = val.toString();
-                          });
-                        },
-                        value: gender,
-                        validationFun: (val) {
-                          if (val == "" || val == null) {
-                            return "Gender";
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
+                      // RegisterDropDown(
+                      //   hintText: "Gender",
+                      //   labelText: "GENDER",
+                      //   items: const ["Male", "Female"],
+                      //   onChangedFun: (val) {
+                      //     setState(() {
+                      //       gender = val.toString();
+                      //     });
+                      //   },
+                      //   value: gender,
+                      //   validationFun: (val) {
+                      //     if (val == "" || val == null) {
+                      //       return "Gender";
+                      //     } else {
+                      //       return null;
+                      //     }
+                      //   },
+                      // ),
                       RegisterTextField(
                         textInputType: TextInputType.emailAddress,
                         labelText: "EMAIL ADDRESS",
@@ -460,8 +460,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SpaceHeightWidget(height: 10),
                       RegisterTextField(
                         textInputType: TextInputType.name,
-                        labelText: "Address 1",
-                        hintText: "Enter Your address 1",
+                        labelText: "Full Address",
+                        hintText: "Enter Your Full Address",
                         controller: address1TController,
                         validation: (val) {
                           if (val!.isEmpty) {
@@ -473,21 +473,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                         },
                       ),
-                      RegisterTextField(
-                        textInputType: TextInputType.name,
-                        labelText: "Address 2",
-                        hintText: "Enter Your address 2",
-                        controller: address2TController,
-                        validation: (val) {
-                          if (val!.isEmpty) {
-                            return "Address";
-                          } else if (val.length < 3) {
-                            return "Enter valid address";
-                          } else {
-                            return null;
-                          }
-                        },
-                      ),
+                      // RegisterTextField(
+                      //   textInputType: TextInputType.name,
+                      //   labelText: "Address 2",
+                      //   hintText: "Enter Your address 2",
+                      //   controller: address2TController,
+                      //   validation: (val) {
+                      //     if (val!.isEmpty) {
+                      //       return "Address";
+                      //     } else if (val.length < 3) {
+                      //       return "Enter valid address";
+                      //     } else {
+                      //       return null;
+                      //     }
+                      //   },
+                      // ),
                       RegisterTextField(
                         textInputType: TextInputType.name,
                         labelText: "City/Area",
@@ -778,7 +778,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     }
 
                                     setState(() {
-                                      submitLoad = true;
+                                      submitLoad = false;
                                     });
                                   }
                                 },
@@ -830,11 +830,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       "Password": passwordTController.text,
       "Title": namePrefix,
       "Name": fullNameTController.text,
-      "Gender": gender == "Male" ? "0" : "1",
+      "Gender": "",
       "Mobile": mobileTController.text,
       "Email": emailTController.text,
       "Address": address1TController.text,
-      "Location": address2TController.text,
+      "Location": "",
       "City": cityTController.text,
       "ZipCode": zipcodeTController.text,
       "StateID": stateId,

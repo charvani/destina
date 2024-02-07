@@ -2,11 +2,11 @@ import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/dashboard_screens/cart_screen.dart';
 import 'package:destina_1_international/dashboard_screens/home_screen.dart';
-import 'package:destina_1_international/dashboard_screens/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'account_screen.dart';
+import 'products_screen2.dart';
 import 'promotions_screen.dart';
 
 class BottomBarScreen extends StatefulWidget {
@@ -34,7 +34,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
       bannerPopUpImages: const [],
       data: "",
     ),
-    const ProductsScreen(
+    const ProductsScreen2(
       from: "bottombar",
     ),
     const CartScreen(
@@ -59,7 +59,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           bannerPopUpImages: widget.bannerPopup ?? [],
           data: widget.data ?? "",
         ),
-        ProductsScreen(
+        ProductsScreen2(
           from: "bottombar",
           index: widget.productIndex,
         ),

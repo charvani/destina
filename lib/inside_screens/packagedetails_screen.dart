@@ -75,7 +75,8 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
         productCode: widget.packageCode,
         uniqId: uniqId,
         sessionId: sessionId,
-        dtype: "Package");
+        dtype: "Package",
+        params: {});
 
     print("packages data...$res");
   }

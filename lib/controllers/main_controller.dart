@@ -881,7 +881,7 @@ class MainController extends GetxController {
 
   getAddToCart(Map parameters) async {
     dynamic res = await ApiCall().postMethodFun(
-        methodName: ApiData().addtoCartMethod, params: parameters);
+        methodName: ApiData().nSGAddToCartItems, params: parameters);
     return res;
   }
 
@@ -952,17 +952,18 @@ class MainController extends GetxController {
     loading.value = true;
     dynamic res = await ApiCall().postMethodFun(
         methodName: ApiData().packageDetailsMethod, params: parameters);
+    print("res...$res");
     packageDetailsData.value = PackageDetailsModel.fromJson(res);
     loading.value = false;
     return "res";
   }
 
-  getPacktPackageItems({
-    required String productCode,
-    required String uniqId,
-    required String sessionId,
-    required String dtype,
-  }) async {
+  getPacktPackageItems(
+      {required String productCode,
+      required String uniqId,
+      required String sessionId,
+      required String dtype,
+      required Map params}) async {
     Map parameters = {
       "pkgcode":
           // "MYJD02",
@@ -977,7 +978,12 @@ class MainController extends GetxController {
     };
 
     dynamic res = await ApiCall().postMethodFun(
-        methodName: ApiData().packPackageItemsMethod, params: parameters);
+        methodName: ApiData()
+            .
+            // registerCart,
+
+            packPackageItemsMethod,
+        params: parameters);
     packPackageDetails.value = PackageItemsModel.fromJson(res);
     return res;
   }

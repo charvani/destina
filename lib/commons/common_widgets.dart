@@ -1198,8 +1198,9 @@ class PromotionItemWidget extends StatelessWidget {
                     child: Text(
                       itemName.toString(),
                       // .capitalize.toString().replaceAll("d1", "D1"),
-                      maxLines: 4,
+                      maxLines: 3,
                       textAlign: TextAlign.center,
+
                       style: const TextStyle(
                           fontFamily: "OnestSemiBold", fontSize: 14),
                     ),
@@ -1830,6 +1831,93 @@ class CategroyItemWidget extends StatelessWidget {
     );
   }
 }
+
+class KritaliaItemWidget extends StatelessWidget {
+  final bool tapped;
+  final String imagePath;
+  final String titile;
+  final VoidCallback onTapFun;
+  final String? amount;
+  const KritaliaItemWidget(
+      {super.key,
+      required this.tapped,
+      required this.imagePath,
+      required this.titile,
+      this.amount,
+      required this.onTapFun});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: onTapFun,
+      child: Card(
+        shadowColor: blackColor,
+        elevation: 5,
+        color: whiteColor,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 5),
+          decoration: BoxDecoration(
+              border: Border.all(
+                  color: tapped ? blackColor : lightBlackColor,
+                  width: tapped ? 0.4 : 0.2),
+              color: whiteColor,
+              borderRadius: BorderRadius.circular(15)),
+          child: Column(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                tapped
+                    ? Row(
+                        // alignment: Alignment.center,
+                        children: [
+                          const Icon(
+                            Icons.arrow_back_ios_new_rounded,
+                            size: 10,
+                          ),
+                          CommonCachedNetworkImage(
+                            imagePath: imagePath,
+                            height: 80,
+                          ),
+                          const Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            size: 10,
+                          ),
+                        ],
+                      )
+                    : CommonCachedNetworkImage(
+                        imagePath: imagePath,
+                        height: 95,
+                      ),
+                const SpaceHeightWidget(height: 5),
+                if (tapped)
+                  Column(
+                    children: [
+                      Text(
+                        titile.toString(),
+                        // capitalizeFirst.toString().replaceAll("d1", "D1"),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontFamily: "OnestSemiBold",
+                            fontSize: 11,
+                            color: blackColor),
+                      ),
+                      CustomAutoWidthButton(
+                          textSize: 11.5,
+                          onTapFun: () {},
+                          title: "$amount Add to Bag")
+                    ],
+                  )
+              ]),
+        ),
+      ),
+    );
+  }
+}
+
 // commonCachedNetworkImage
 
 class CommonCachedNetworkImage extends StatelessWidget {
@@ -3292,9 +3380,7 @@ class FlagWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
                   width: selected ? 3.5 : 0,
-                  color: selected
-                      ? blueColor.withOpacity(0.6)
-                      : blueColor.withOpacity(0)),
+                  color: selected ? darkBlue : darkBlue.withOpacity(0)),
               color: whiteColor,
             ),
             padding: const EdgeInsets.all(7.0),
@@ -4580,12 +4666,14 @@ class CustomAutoWidthButton extends StatelessWidget {
   final VoidCallback onTapFun;
   final String title;
   final Color? bcolor;
+  final Color? textColor;
   final double? textSize;
   const CustomAutoWidthButton(
       {super.key,
       required this.onTapFun,
       required this.title,
       this.bcolor,
+      this.textColor,
       this.textSize});
 
   @override
@@ -4599,7 +4687,7 @@ class CustomAutoWidthButton extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-              color: whiteColor,
+              color: textColor ?? whiteColor,
               fontFamily: "OnestSemiBold",
               fontSize: textSize),
         ));
@@ -4938,14 +5026,8 @@ class InfoDescOviewWidget extends StatelessWidget {
       children: [
         ExpansionTile(
           textColor: lightDarKBlue,
-          // collapsedBackgroundColor: redColor,
           title: Text(
             title,
-            // i == 0
-            //     ? "What It Is"
-            //     : i == 1
-            //         ? "Overview"
-            //         : "Description",
             style: const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
           ),
           children: [
@@ -4958,16 +5040,63 @@ class InfoDescOviewWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5)),
                   padding: const EdgeInsets.all(10),
                   width: double.infinity,
-                  child: datahtml.HtmlWidget(data)
-                  // i == 0
-                  //   ? packDetailsController.packageDetailsData.value.info
-                  //   : i == 1
-                  //       ? packDetailsController
-                  //           .packageDetailsData.value.overview
-                  //       : packDetailsController
-                  //           .packageDetailsData.value.desc
-                  ),
+                  child: datahtml.HtmlWidget(data)),
             )
+          ],
+        ),
+        const CommonDivider()
+      ],
+    );
+  }
+}
+
+class KristaliaTileWidget extends StatelessWidget {
+  final String title;
+  final String data;
+  const KristaliaTileWidget(
+      {super.key, required this.title, required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ExpansionTile(
+          textColor: lightDarKBlue,
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style:
+                    const TextStyle(fontFamily: "OnestSemiBold", fontSize: 14),
+              ),
+              Text(
+                data,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style:
+                    const TextStyle(fontFamily: "OnestRegular", fontSize: 12),
+              ),
+            ],
+          ),
+          children: const [
+            // Padding(
+            //   padding: const EdgeInsets.only(bottom: 10),
+            //   child: Container(
+            //       margin: const EdgeInsets.only(right: 10, left: 10),
+            //       decoration: BoxDecoration(
+            //           color: lightDarKBlue.withOpacity(0.1),
+            //           borderRadius: BorderRadius.circular(5)),
+            //       padding: const EdgeInsets.all(10),
+            //       width: double.infinity,
+            //       child: CommonTitle(
+            //         titleName: "Learn More",
+            //         fontColor: brownColor,
+            //         fontFamily: "OnestSemiBold",
+            //         size: 14,
+            //       )),
+            // )
           ],
         ),
         const CommonDivider()

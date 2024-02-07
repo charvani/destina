@@ -693,69 +693,152 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: NotAvailableText(
                                     text: "Recommended products not available",
                                   ))
-                              : Container(
-                                  alignment: Alignment.center,
-                                  // height: (4 / 2) * 325,
-                                  child: GridView.builder(
-                                    padding: const EdgeInsets.all(0),
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 2,
-                                            childAspectRatio: 1 / 1.1),
-                                    itemBuilder: (context, i) {
-                                      return PromotionItemWidget(
-                                        onTapFun: () {
-                                          Get.to(() => ProductDetailsScreen(
-                                                from: "recommended_for_you",
-                                                packageCode: productController
-                                                    .productItemList[i]
-                                                    .packagecode,
-                                              ));
-                                        },
-                                        amountColor: darkBlue,
-                                        // imagePath: i == 0
-                                        //     ? promotionItems[0].image
-                                        //     : i == 1
-                                        //         ? promotionItems[1].image
-                                        //         : i == 2
-                                        //             ? promotionItems[2].image
-                                        //             : i == 3
-                                        //                 ? promotionItems[3].image
-                                        //                 : promotionItems[4].image,
-                                        // itemName: i == 0
-                                        //     ? promotionItems[0].title
-                                        //     : i == 1
-                                        //         ? promotionItems[1].title
-                                        //         : i == 2
-                                        //             ? promotionItems[2].title
-                                        //             : i == 3
-                                        //                 ? promotionItems[3].title
-                                        //                 : promotionItems[4]
-                                        //                     .title
-                                        //                     .capitalize
-                                        //                     .toString(),
-                                        // amount: "23$i",
-                                        imagePath: productController
-                                            .productItemList[i].image,
-                                        itemName: productController
-                                            .productItemList[i]
-                                            .packageName
-                                            .capitalizeFirst
-                                            .toString(),
-                                        amount: productController
-                                                    .productItemList[i].dp !=
-                                                0.0
-                                            ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
-                                            : "",
+                              : SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      for (int i = 0;
+                                          i <
+                                              productController
+                                                  .productItemList.length;
+                                          i++)
+                                        SizedBox(
+                                          width: 150,
+                                          height: 183,
+                                          child: PromotionItemWidget(
+                                            onTapFun: () {
+                                              Get.to(() => ProductDetailsScreen(
+                                                    from: "recommended_for_you",
+                                                    packageCode:
+                                                        productController
+                                                            .productItemList[i]
+                                                            .packagecode,
+                                                  ));
+                                            },
+                                            amountColor: darkBlue,
+                                            imagePath: productController
+                                                .productItemList[i].image,
+                                            itemName: productController
+                                                .productItemList[i]
+                                                .packageName
+                                                .capitalizeFirst
+                                                .toString(),
+                                            amount: productController
+                                                        .productItemList[i]
+                                                        .dp !=
+                                                    0.0
+                                                ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
+                                                : "",
+                                            exclusiveProduct: false,
+                                          ),
+                                        )
+                                    ],
+                                  ),
+                                ),
 
-                                        exclusiveProduct: false,
-                                      );
-                                    },
-                                    itemCount: productController
-                                        .productItemList.length,
+                      // Container(
+                      //     alignment: Alignment.center,
+                      //     child: GridView.builder(
+                      //       padding: const EdgeInsets.all(0),
+                      //       physics:
+                      //           const NeverScrollableScrollPhysics(),
+                      //       shrinkWrap: true,
+                      //       gridDelegate:
+                      //           const SliverGridDelegateWithFixedCrossAxisCount(
+                      //               crossAxisCount: 2,
+                      //               childAspectRatio: 1 / 1.1),
+                      //       itemBuilder: (context, i) {
+                      //         return PromotionItemWidget(
+                      //           onTapFun: () {
+                      //             Get.to(() => ProductDetailsScreen(
+                      //                   from: "recommended_for_you",
+                      //                   packageCode: productController
+                      //                       .productItemList[i]
+                      //                       .packagecode,
+                      //                 ));
+                      //           },
+                      //           amountColor: darkBlue,
+                      //           imagePath: productController
+                      //               .productItemList[i].image,
+                      //           itemName: productController
+                      //               .productItemList[i]
+                      //               .packageName
+                      //               .capitalizeFirst
+                      //               .toString(),
+                      //           amount: productController
+                      //                       .productItemList[i].dp !=
+                      //                   0.0
+                      //               ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
+                      //               : "",
+                      //           exclusiveProduct: false,
+                      //         );
+                      //       },
+                      //       itemCount: productController
+                      //           .productItemList.length,
+                      //     ),
+                      //   ),
+
+                      const SpaceHeightWidget(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CommonTitle(
+                              titleName: "Best Seller",
+                              fontColor: darkBlue,
+                            ),
+                          ),
+                        ],
+                      ),
+                      productController.loading.value
+                          ? loader
+                          : productController.productItemList.isEmpty
+                              ? const SizedBox(
+                                  height: 100,
+                                  child: NotAvailableText(
+                                    text: "Best seller products not available",
+                                  ))
+                              : SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      for (int i = 0;
+                                          i <
+                                              productController
+                                                  .productItemList.length;
+                                          i++)
+                                        SizedBox(
+                                          width: 150,
+                                          height: 183,
+                                          child: PromotionItemWidget(
+                                            onTapFun: () {
+                                              Get.to(() => ProductDetailsScreen(
+                                                    from: "Best_seller",
+                                                    packageCode:
+                                                        productController
+                                                            .productItemList[i]
+                                                            .packagecode,
+                                                  ));
+                                            },
+                                            amountColor: darkBlue,
+                                            imagePath: productController
+                                                .productItemList[i].image,
+                                            itemName: productController
+                                                .productItemList[i]
+                                                .packageName
+                                                .capitalizeFirst
+                                                .toString(),
+                                            amount: productController
+                                                        .productItemList[i]
+                                                        .dp !=
+                                                    0.0
+                                                ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
+                                                : "",
+                                            exclusiveProduct: false,
+                                          ),
+                                        )
+                                    ],
                                   ),
                                 ),
                       const SpaceHeightWidget(height: 40)

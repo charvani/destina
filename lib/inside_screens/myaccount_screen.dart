@@ -6,7 +6,6 @@ import 'package:destina_1_international/inside_screens/services/downloads_screen
 import 'package:destina_1_international/inside_screens/services/kyc_upload.dart';
 import 'package:destina_1_international/inside_screens/services/trainingtools_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../authentication_screens/members_screen.dart';
@@ -86,15 +85,15 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         flexibleSpace: Stack(
           alignment: Alignment.center,
           children: [
-            Container(
-              color: redColor,
-              height: 125,
-              width: double.infinity,
-              child: SvgPicture.asset(
-                "assets/images/myaccount_bg.svg",
-                fit: BoxFit.fill,
-              ),
-            ),
+            // Container(
+            //   color: redColor,
+            //   height: 125,
+            //   width: double.infinity,
+            //   child: SvgPicture.asset(
+            //     "assets/images/myaccount_bg.svg",
+            //     fit: BoxFit.fill,
+            //   ),
+            // ),
             // InkWell(
             //   onTap: () {
             //     print("dflkskdlf");
@@ -113,7 +112,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
             //   ),
             // ),
             Padding(
-              padding: const EdgeInsets.only(left: 15, top: 30),
+              padding: const EdgeInsets.only(left: 15, top: 35),
               child: Row(
                 children: [
                   Expanded(
@@ -171,6 +170,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              const SpaceHeightWidget(height: 2),
+              Divider(
+                color: woodColor,
+                thickness: 1.5,
+                height: 0,
+              ),
               MyAccountWidget(
                 traillingFun: () {},
                 leadingIcon: Icons.home,
@@ -181,6 +186,11 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       ));
                 },
                 title: "Dashboard",
+              ),
+              Divider(
+                color: woodColor,
+                thickness: 1.5,
+                height: 0,
               ),
               MyAccountWidget(
                 traillingFun: () {

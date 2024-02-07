@@ -5,7 +5,10 @@ class ApiData {
   String productCategoryMethod = "GetProductsdata";
   String productDetailsMethod = "GetSingleProduct";
   String packageItemsMethod = "GetPkgItems";
-  String addtoCartMethod = "AddtocartItems";
+  // String addtoCartMethod = "AddtocartItems";
+  String nSGAddToCartItems = "NSGAddToCartItems";
+  String nSGCartItems = "NSGCartItems";
+  String checkOutSignupCartItems = "CheckOutSignupCartItems";
   String cartItemsMethod = "GetcartItems";
   String removeCartItemMethod = "removeCartItems";
   String checkSdponsorMethod = "checkSponsor";

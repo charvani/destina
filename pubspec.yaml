@@ -71,6 +71,8 @@ dependencies:
   permission_handler: ^11.1.0
   device_information:
   flutter_file_downloader:
+  url_launcher: ^6.2.4
+  # agora_uikit: ^1.3.7
   
   
 
@@ -141,25 +143,43 @@ flutter:
     - family: PoppinsItalic
       fonts:
          - asset: assets/fonts/Poppins-Italic.ttf
+    # - family: OnestBold
+    #   fonts:
+    #      - asset: assets/fonts/onest/Onest-Bold.ttf
+    # - family: OnestLight
+    #   fonts:
+    #      - asset: assets/fonts/onest/Onest-Light.ttf
+    # - family: OnestRegular
+    #   fonts:
+    #      - asset: assets/fonts/onest/Onest-Regular.ttf
+    # - family: OnestSemiBold
+    #   fonts:
+    #      - asset: assets/fonts/onest/Onest-SemiBold.ttf
+    # - family: OnestMedium
+    #   fonts:
+    #      - asset: assets/fonts/onest/Onest-Medium.ttf
+    # - family: OnestExtraBold
+    #   fonts:
+    #      - asset: assets/fonts/onest/Onest-ExtraBold.ttf
+  
     - family: OnestBold
       fonts:
-         - asset: assets/fonts/onest/Onest-Bold.ttf
+         - asset: assets/fonts/san/SourceSans3-Bold.ttf
     - family: OnestLight
       fonts:
-         - asset: assets/fonts/onest/Onest-Light.ttf
+         - asset: assets/fonts/san/SourceSans3-Light.ttf
     - family: OnestRegular
       fonts:
-         - asset: assets/fonts/onest/Onest-Regular.ttf
+         - asset: assets/fonts/san/SourceSans3-Regular.ttf
     - family: OnestSemiBold
       fonts:
-         - asset: assets/fonts/onest/Onest-SemiBold.ttf
+         - asset: assets/fonts/san/SourceSans3-SemiBold.ttf
     - family: OnestMedium
       fonts:
-         - asset: assets/fonts/onest/Onest-Medium.ttf
+         - asset: assets/fonts/san/SourceSans3-Medium.ttf
     - family: OnestExtraBold
       fonts:
-         - asset: assets/fonts/onest/Onest-ExtraBold.ttf
-
+         - asset: assets/fonts/san/SourceSans3-ExtraBold.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

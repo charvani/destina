@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../commons/colors.dart';
-import '../inside_screens/packages_screen.dart';
+import '../inside_screens/register_packages_screen.dart';
 
 class MemberScreen extends StatefulWidget {
   final String countryId;
@@ -219,8 +219,12 @@ class _MemberScreenState extends State<MemberScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const SpaceWidthWidget(width: 3),
-                            if (double.parse(checkController
-                                            .checkCountryData.value.pCiRenFee)
+                            if (double.parse(checkController.checkCountryData
+                                                    .value.pCiRenFee !=
+                                                ""
+                                            ? checkController.checkCountryData
+                                                .value.pCiRenFee
+                                            : "0.0")
                                         .round() >
                                     0 &&
                                 double.parse(checkController
@@ -317,7 +321,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                   (pcTap == true))
                                 MemberScreenInfoWidget(
                                   signupFun: () {
-                                    Get.to(() => PackageScreen(
+                                    Get.to(() => RegisterPackageScreen(
                                           from: ddcTap
                                               ? "DDC"
                                               : ddTap
@@ -348,7 +352,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                   (ddcTap == true))
                                 MemberScreenInfoWidget(
                                   signupFun: () {
-                                    Get.to(() => PackageScreen(
+                                    Get.to(() => RegisterPackageScreen(
                                           from: ddcTap
                                               ? "DDC"
                                               : ddTap
@@ -383,7 +387,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                   (ddTap == true))
                                 MemberScreenInfoWidget(
                                   signupFun: () {
-                                    Get.to(() => PackageScreen(
+                                    Get.to(() => RegisterPackageScreen(
                                           from: ddcTap
                                               ? "DDC"
                                               : ddTap
@@ -490,7 +494,8 @@ class _MemberScreenState extends State<MemberScreen> {
                                                     ? darkRedColor
                                                     : darkBlue,
                                             onTapFun: () {
-                                              Get.to(() => PackageScreen(
+                                              Get.to(() =>
+                                                  RegisterPackageScreen(
                                                     from: ddcTap
                                                         ? "DDC"
                                                         : ddTap

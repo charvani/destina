@@ -59,20 +59,20 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
     }
 
     cartParams = {
-      "rpt": "GetMCtPackageDet",
-      "cname": Constants.prefs.get("uniq_id"),
-      "mname": widget.packageCode
+      "rpt": "GetCtPackageDet",
+      "cname": Constants.prefs.getString("uniq_id"),
+      "mname": Constants.prefs.getString("country_id")
     };
     print("cart params...$cartParams");
     dynamic res = await cartController.getRegisterCartItems(from, cartParams);
     print("cart res...$res");
-    if (int.parse(res['PrCnt']) > 0 && int.parse(res['Itemcnt']) < 1) {
+    if (int.parse(res['PrCnt']) > 0 && int.parse(res['Itemcnt']) > 1) {
       setState(() {
-        showProductsSelection = true;
+        showProductsSelection = false;
       });
     } else {
       setState(() {
-        showProductsSelection = false;
+        showProductsSelection = true;
       });
     }
     if (from != "init") {
@@ -89,12 +89,17 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
 
   getPackageItemsData() async {
     print("my para...${widget.packageCode}....$uniqId...$sessionId");
-
+    Map params = {
+      "rpt": "GetPromoPack",
+      "cname": widget.packageCode,
+      "mname": "0"
+    };
     dynamic res = await cartController.getPacktPackageItems(
         productCode: widget.packageCode,
         uniqId: uniqId,
         sessionId: sessionId,
-        dtype: "Promotion");
+        dtype: "Promotion",
+        params: params);
     print("packages data...$res");
   }
 
@@ -112,6 +117,11 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
             ),
             onPressed: () {
               Get.back();
+              // setState(() {
+              //   packageLoading = false;
+              //   loading = false;
+              // });
+              // getData("init");
             }),
         title: Text(
           "Cart",
@@ -299,7 +309,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                                 : CustomElevatedButton(
                                                     onTapFun: () async {
                                                       setState(() {
-                                                        packageLoading = true;
+                                                        loading = false;
                                                       });
                                                       await getPackageItemsData();
                                                       textEControllerList

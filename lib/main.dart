@@ -23,8 +23,11 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   Constants.prefs = await SharedPreferences.getInstance();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   await SystemChrome.setPreferredOrientations(
-    [DeviceOrientation.portraitUp],
+    [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp],
   );
   runApp(const MyApp());
 }
