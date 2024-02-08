@@ -17,22 +17,22 @@ class ProductDetails {
   List<dynamic> endorsements;
   List<Tab> tabs;
   List<Tabcontent> tabcontent;
-  String msg;
-  String message;
+  dynamic msg;
+  dynamic message;
   bool available;
   int pkid;
-  String pcode;
-  String name;
-  String url;
-  String category;
-  String description;
-  String currency;
-  String price;
+  dynamic pcode;
+  dynamic name;
+  dynamic url;
+  dynamic category;
+  dynamic description;
+  dynamic currency;
+  dynamic price;
   dynamic downloadpdf;
-  String pType;
-  String howtoUse;
-  String videoUrl;
-  String cv;
+  dynamic pType;
+  dynamic howtoUse;
+  dynamic videoUrl;
+  dynamic cv;
   List<ProductCategoryItem> similarProducts;
 
   ProductDetails(

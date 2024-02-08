@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:destina_1_international/commons/constants.dart';
-import 'package:destina_1_international/controllers/package_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -27,8 +26,7 @@ class RegisterPackageScreen extends StatefulWidget {
   State<RegisterPackageScreen> createState() => _RegisterPackageScreenState();
 }
 
-PackageController packageController = Get.put(PackageController());
-MainController packDetailsController = Get.put(MainController());
+MainController packageController = Get.put(MainController());
 
 class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
   String jadePackageVal = "19";
@@ -110,6 +108,7 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
         });
       }
       dataFun("Health Care");
+      packageController.packCartList.clear();
     });
     super.initState();
   }
@@ -387,11 +386,12 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
                                     ? const SizedBox.shrink()
                                     : Column(
                                         children: [
-                                          const Padding(
-                                            padding: EdgeInsets.all(10),
+                                          Padding(
+                                            padding: const EdgeInsets.all(10),
                                             child: Text(
                                               "Recommended for You",
                                               style: TextStyle(
+                                                  color: darkBlue,
                                                   fontFamily: "OnestSemiBold",
                                                   fontSize: 16),
                                             ),
@@ -473,7 +473,7 @@ checkOutFun() async {
         "mid": "0"
       };
 
-      dynamic res = await packDetailsController.getEnrollPack(params);
+      dynamic res = await packageController.getEnrollPack(params);
       print("enroll res..$res");
       print("***********${double.parse(res['EnrollPackageRpt'][0]['RenFee'])}");
 

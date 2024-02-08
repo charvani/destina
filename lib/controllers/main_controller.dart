@@ -47,6 +47,7 @@ import '../models/member_productdetail_model.dart';
 import '../models/myteam_viewmodel.dart';
 import '../models/ordermall_model.dart';
 import '../models/packageitems_model.dart';
+import '../models/packcart_model.dart';
 import '../models/product_categoryitem_model.dart';
 import '../models/productdetails_model.dart';
 import '../models/promo_cartitem_model.dart';
@@ -71,6 +72,12 @@ class MainController extends GetxController {
   Rx<dynamic> mobileInfo = "".obs;
   Rx<dynamic> memberMallCartCount = "0".obs;
 
+  RxBool cartLoading = false.obs;
+
+  List<SelPackageModel> selPackageItemList = <SelPackageModel>[].obs;
+  List<SelPackageModel> relPackageItemList = <SelPackageModel>[].obs;
+  List<PackCartModel> packCartList = <PackCartModel>[].obs;
+  Rx<double> cvVal = 0.0.obs;
   RxList<ProductCategoryItem> productItemList = <ProductCategoryItem>[].obs;
   Rx<ProductDetails> productDetails = ProductDetails(
           similarProducts: [],
@@ -125,9 +132,6 @@ class MainController extends GetxController {
           pcCnt: "",
           name: "")
       .obs;
-
-  RxList<SelPackageModel> selPackageItemList = <SelPackageModel>[].obs;
-  RxList<SelPackageModel> relPackageItemList = <SelPackageModel>[].obs;
 
   Rx<PackageDetailsModel> packageDetailsData = PackageDetailsModel(
           packageDescriptionRpt1: [],
@@ -879,9 +883,14 @@ class MainController extends GetxController {
     return res;
   }
 
-  getAddToCart(Map parameters) async {
+  getRegPackAddToCart(Map parameters) async {
     dynamic res = await ApiCall().postMethodFun(
         methodName: ApiData().nSGAddToCartItems, params: parameters);
+    return res;
+  }
+  getAddToCart(Map parameters) async {
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().addtoCartMethod, params: parameters);
     return res;
   }
 
@@ -2457,6 +2466,57 @@ class MainController extends GetxController {
         .postMethodFun(methodName: ApiData().redeemRequest, params: parameters);
     loading.value = false;
 
+    return res;
+  }
+
+  getPackages({required String packageMalVal, required String countyId}) async {
+    loading.value = true;
+    Map parameters = {
+      // "action": "GetMDiPackagesNew",
+      "action": "GetShoppeProducts",
+      "CountryID": countyId,
+      "MallName": packageMalVal
+    };
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().loadDistSelPackageMethod, params: parameters);
+    selPackageItemList.clear();
+    relPackageItemList.clear();
+    if (res['DistSelPackageRpt'].length > 0) {
+      for (int i = 0; i < res['DistSelPackageRpt'].length; i++) {
+        selPackageItemList
+            .add(SelPackageModel.fromJson(res['DistSelPackageRpt'][i]));
+      }
+    }
+    if (res['DistRelPackageRpt'].length > 0) {
+      for (int i = 0; i < res['DistRelPackageRpt'].length; i++) {
+        relPackageItemList
+            .add(SelPackageModel.fromJson(res['DistRelPackageRpt'][i]));
+      }
+    }
+    // print(productItemList.length);
+    loading.value = false;
+    return res;
+  }
+
+  getCartData(Map params) async {
+    cartLoading.value = true;
+    packCartList.clear();
+    cvVal.value = 0.0;
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().nSGCartItems, params: params);
+    if (res != null) {
+      for (int i = 0; i < res['SGCartItemRpt'].length; i++) {
+        packCartList.add(PackCartModel.fromJson(res['SGCartItemRpt'][i]));
+        cvVal.value = cvVal.value + double.parse(res['SGCartItemRpt'][i]['CV']);
+      }
+    }
+    cartLoading.value = false;
+    return res;
+  }
+
+  getCheckoutCheck(Map params) async {
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().checkOutSignupCartItems, params: params);
     return res;
   }
 }

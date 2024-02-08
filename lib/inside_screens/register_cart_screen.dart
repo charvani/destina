@@ -371,12 +371,12 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        const Text(
+                                        Text(
                                           "Order Summary",
                                           style: TextStyle(
-                                            fontFamily: "OnestBold",
-                                            fontSize: 17,
-                                          ),
+                                              fontFamily: "OnestBold",
+                                              fontSize: 17,
+                                              color: darkBlue),
                                         ),
                                         const SpaceHeightWidget(height: 10),
                                         Row(
@@ -670,8 +670,9 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
             key: _fomkey,
             child: Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: blackColor.withOpacity(0.8)),
+                  borderRadius: BorderRadius.circular(10), color: darkBlue
+                  // blackColor.withOpacity(0.8)
+                  ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [

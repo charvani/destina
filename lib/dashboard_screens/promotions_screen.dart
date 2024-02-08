@@ -53,7 +53,7 @@ class _PromotionsScreenState extends State<PromotionsScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: darkBlue,
-          centerTitle: true,
+          centerTitle: false,
           leading: const SizedBox.shrink(),
           title: Text(
             "Promotion",

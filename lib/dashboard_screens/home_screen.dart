@@ -31,7 +31,7 @@ List<OnboardModel> productsCategories = [
   OnboardModel(image: "assets/images/health_care.png", title: "Health Care"),
   OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
   OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
-  OnboardModel(image: "assets/images/beauty.png", title: "Personal Care"),
+  OnboardModel(image: "assets/images/a_start_privilege.png", title: "kritalia"),
 ];
 List<OnboardModel> promotionItems = [
   OnboardModel(
@@ -145,6 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           widget.data = null;
                         },
                         title: "Close Ads",
+                        changeColor: true,
                         bcolor: darkRedColor,
                       ),
                     ),
@@ -370,10 +371,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         "false")
                                   Container(
                                     margin: const EdgeInsets.only(
-                                        bottom: 15, left: 12, top: 10),
-                                    // height: 35,
-                                    // width: 155,
-                                    child: CustomFixedElevatedButton(
+                                        bottom: 30, left: 12, top: 0),
+                                    height: 28,
+                                    width: 148,
+                                    child: CustomAutoWidthButton(
                                       onTapFun: () {
                                         Get.to(() => const LoginScreen());
                                       },
@@ -704,7 +705,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           i++)
                                         SizedBox(
                                           width: 150,
-                                          height: 183,
+                                          height: 190,
                                           child: PromotionItemWidget(
                                             onTapFun: () {
                                               Get.to(() => ProductDetailsScreen(
@@ -810,7 +811,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           i++)
                                         SizedBox(
                                           width: 150,
-                                          height: 183,
+                                          height: 190,
                                           child: PromotionItemWidget(
                                             onTapFun: () {
                                               Get.to(() => ProductDetailsScreen(

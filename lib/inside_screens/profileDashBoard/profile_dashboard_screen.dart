@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../services/upload_id_screen.dart';
 import '../shopping/upgradeorder.screen.dart';
 import 'promo_screen.dart';
 import 'redeem_screen.dart';
@@ -16,8 +15,9 @@ import 'redeem_screen.dart';
 class DashBoardScreen extends StatefulWidget {
   // List<String>? bannerPopUpImages = [];
   // dynamic data;
-  DashBoardScreen({super.key, 
-  // this.bannerPopUpImages, this.data
+  const DashBoardScreen({
+    super.key,
+    // this.bannerPopUpImages, this.data
   });
 
   @override
@@ -362,6 +362,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           padding: const EdgeInsets.only(right: 10),
                           height: 30,
                           child: CustomAutoWidthButton(
+                              changeColor: true,
                               bcolor: darkRedColor,
                               onTapFun: () {
                                 print("upgrade");

@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:destina_1_international/commons/constants.dart';
-import 'package:destina_1_international/controllers/package_controller.dart';
+import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,7 +22,7 @@ class PackageScreen extends StatefulWidget {
   State<PackageScreen> createState() => _PackageScreenState();
 }
 
-PackageController packageController = Get.put(PackageController());
+MainController packageController = Get.put(MainController());
 
 class _PackageScreenState extends State<PackageScreen> {
   String jadePackageVal = "19";

@@ -37,8 +37,8 @@ import 'services/salesstools_screen.dart';
 import 'services/upload_id_screen.dart';
 import 'shopping/dpmall_screen.dart';
 import 'shopping/membermall_screen.dart';
-import 'shopping/redemptionmall_screen.dart.dart';
-import 'shopping/salesmall_screen.dart';
+import 'shopping/redemptionmall_screen.dart2.dart';
+import 'shopping/salesmall_screen2.dart';
 import 'tools/faqs_screen.dart';
 import 'tools/ftaform_reportscreen.dart';
 import 'tools/ftareg_formscreen.dart';
@@ -180,7 +180,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 traillingFun: () {},
                 leadingIcon: Icons.home,
                 onTapFun: () {
-                  Get.to(() => DashBoardScreen(
+                  Get.to(() => const DashBoardScreen(
                       // data: widget.data,
                       // bannerPopUpImages: widget.bannerPopUpImages,
                       ));
@@ -618,13 +618,13 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 children: [
                   MyAccountItemWidget(
                     onTapFun: () {
-                      Get.to(() => const SalesMallScreen());
+                      Get.to(() => const SalesMallScreen2());
                     },
                     title: "Sales Mall",
                   ),
                   MyAccountItemWidget(
                     onTapFun: () {
-                      Get.to(() => const RedemptionMallScreen());
+                      Get.to(() => const RedemptionMallScreen2());
                     },
                     title: "Redemption Mall",
                   ),

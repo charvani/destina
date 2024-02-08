@@ -304,11 +304,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                   firstQtyController.text != ""
                               ? "${productDetailsController.productDetails.value.currency} ${double.parse(productDetailsController.productDetails.value.price.replaceAll(productDetailsController.productDetails.value.currency, "")) * int.parse(firstQtyController.text)}"
                               : "",
-                          cv: productDetailsController.productDetails.value.cv,
+                          cv: productDetailsController
+                                  .productDetails.value.cv ??
+                              "",
                           productCode: productDetailsController
-                              .productDetails.value.pcode,
+                                  .productDetails.value.pcode ??
+                              "",
                           title: productDetailsController
-                              .productDetails.value.name,
+                                  .productDetails.value.name ??
+                              "",
                         ),
                         const SpaceHeightWidget(height: 10),
                         const CommonDivider(),

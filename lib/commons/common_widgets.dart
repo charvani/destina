@@ -51,7 +51,7 @@ class CustomElevatedButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: onTapFun,
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(blackColor),
+          backgroundColor: MaterialStateProperty.all(darkBlue),
           minimumSize:
               const MaterialStatePropertyAll(Size(double.infinity, 40)),
         ),
@@ -105,14 +105,14 @@ class CustomFixedElevatedButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: onTapFun,
         style: ElevatedButton.styleFrom(
-            backgroundColor: blackColor,
+            backgroundColor: whiteColor,
             minimumSize: Size.zero,
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 7),
             foregroundColor: whiteColor),
         child: Text(
           title,
           style: TextStyle(
-              color: whiteColor, fontFamily: "OnestSemiBold", fontSize: 12),
+              color: darkBlue, fontFamily: "OnestSemiBold", fontSize: 12),
         ));
   }
 }
@@ -1194,11 +1194,11 @@ class PromotionItemWidget extends StatelessWidget {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(4.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: Text(
                       itemName.toString(),
                       // .capitalize.toString().replaceAll("d1", "D1"),
-                      maxLines: 3,
+                      maxLines: 2,
                       textAlign: TextAlign.center,
 
                       style: const TextStyle(
@@ -1741,8 +1741,10 @@ class IconElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
-        style:
-            ButtonStyle(backgroundColor: MaterialStatePropertyAll(buttonColor)),
+        style: ButtonStyle(
+            backgroundColor: MaterialStatePropertyAll(darkBlue
+                // buttonColor
+                )),
         onPressed: onTapFun,
         icon: Image.asset(
           imagePath,
@@ -1812,7 +1814,7 @@ class CategroyItemWidget extends StatelessWidget {
                   style: TextStyle(
                       fontFamily: "OnestSemiBold",
                       fontSize: 11,
-                      color: blackColor),
+                      color: darkBlue),
                 ),
                 const SpaceHeightWidget(height: 5),
                 if (amount != "" && amount != null)
@@ -1823,7 +1825,7 @@ class CategroyItemWidget extends StatelessWidget {
                     style: TextStyle(
                         fontFamily: "OnestSemiBold",
                         fontSize: 12,
-                        color: blackColor),
+                        color: darkBlue),
                   ),
               ]),
         ),
@@ -1859,8 +1861,8 @@ class KritaliaItemWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 5),
           decoration: BoxDecoration(
               border: Border.all(
-                  color: tapped ? blackColor : lightBlackColor,
-                  width: tapped ? 0.4 : 0.2),
+                  color: tapped ? darkBlue : lightBlackColor,
+                  width: tapped ? 0.6 : 0.2),
               color: whiteColor,
               borderRadius: BorderRadius.circular(15)),
           child: Column(
@@ -1870,7 +1872,7 @@ class KritaliaItemWidget extends StatelessWidget {
               children: [
                 tapped
                     ? Row(
-                        // alignment: Alignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Icon(
                             Icons.arrow_back_ios_new_rounded,
@@ -1903,12 +1905,12 @@ class KritaliaItemWidget extends StatelessWidget {
                         style: TextStyle(
                             fontFamily: "OnestSemiBold",
                             fontSize: 11,
-                            color: blackColor),
+                            color: darkBlue),
                       ),
                       CustomAutoWidthButton(
                           textSize: 11.5,
                           onTapFun: () {},
-                          title: "$amount Add to Bag")
+                          title: "$amount\nAdd to Bag")
                     ],
                   )
               ]),
@@ -2264,7 +2266,7 @@ class ProductAmountDetailsWidget extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-                fontFamily: "OnestSemiBold", fontSize: 18, color: blackColor),
+                fontFamily: "OnestSemiBold", fontSize: 18, color: darkBlue),
           ),
           const SpaceHeightWidget(height: 10),
           RichText(
@@ -2360,7 +2362,7 @@ class ProductAmountDetailsWidget extends StatelessWidget {
                       style: TextStyle(
                           fontFamily: "OnestSemiBold",
                           fontSize: 20,
-                          color: blackColor),
+                          color: darkBlue),
                     ),
                   ],
                 ),
@@ -2929,8 +2931,8 @@ class RegisterTitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: TextStyle(
-          fontFamily: "OnestRegular", color: brownColor, fontSize: 15),
+      style:
+          TextStyle(fontFamily: "OnestSemiBold", color: darkBlue, fontSize: 15),
     );
   }
 }
@@ -3478,13 +3480,26 @@ class MemberScreenInfoWidget extends StatelessWidget {
                       ),
                       const SpaceHeightWidget(height: 15),
                       SizedBox(
-                        height: 25,
-                        child: CustomAutoWidthButton(
-                          bcolor: activeColor,
-                          onTapFun: signupFun,
-                          title: "SIGN UP here! >",
-                        ),
-                      ),
+                          height: 25,
+                          child: ElevatedButton(
+                              onPressed: signupFun,
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(activeColor),
+                              ),
+                              child: Text(
+                                "SIGN UP here! >",
+                                style: TextStyle(
+                                  color: whiteColor,
+                                  fontFamily: "OnestSemiBold",
+                                ),
+                              ))
+                          // CustomAutoWidthButton(
+                          //   bcolor: activeColor,
+                          //   onTapFun: signupFun,
+                          //   title: "SIGN UP here! >",
+                          // ),
+                          ),
                       // GestureDetector(
                       //   behavior: HitTestBehavior.translucent,
                       //   onTap: signupFun,
@@ -4663,6 +4678,7 @@ class NotAvailableText extends StatelessWidget {
 }
 
 class CustomAutoWidthButton extends StatelessWidget {
+  final bool? changeColor;
   final VoidCallback onTapFun;
   final String title;
   final Color? bcolor;
@@ -4674,20 +4690,23 @@ class CustomAutoWidthButton extends StatelessWidget {
       required this.title,
       this.bcolor,
       this.textColor,
-      this.textSize});
+      this.textSize,
+      this.changeColor});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         onPressed: onTapFun,
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(bcolor ?? blackColor),
-          // minimumSize: const MaterialStatePropertyAll(Size(40)),
+          backgroundColor: MaterialStateProperty.all(
+              changeColor == true ? bcolor : darkBlue),
         ),
         child: Text(
           title,
           style: TextStyle(
-              color: textColor ?? whiteColor,
+              color:
+                  // textColor ??
+                  whiteColor,
               fontFamily: "OnestSemiBold",
               fontSize: textSize),
         ));

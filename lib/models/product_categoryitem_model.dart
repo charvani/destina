@@ -11,10 +11,10 @@ String productCategoryItemToJson(ProductCategoryItem data) =>
     json.encode(data.toJson());
 
 class ProductCategoryItem {
-  String packageId;
+  dynamic packageId;
   String image;
   String packageName;
-  String packagecode;
+  dynamic packagecode;
   String category;
   String slugUrl;
   double dp;
