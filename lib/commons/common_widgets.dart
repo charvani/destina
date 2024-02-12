@@ -97,22 +97,30 @@ class CustomBorderElevatedButton extends StatelessWidget {
 class CustomFixedElevatedButton extends StatelessWidget {
   final VoidCallback onTapFun;
   final String title;
+  final Color? color;
+  final Color? tColor;
   const CustomFixedElevatedButton(
-      {super.key, required this.onTapFun, required this.title});
+      {super.key,
+      required this.onTapFun,
+      required this.title,
+      this.color,
+      this.tColor});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         onPressed: onTapFun,
         style: ElevatedButton.styleFrom(
-            backgroundColor: whiteColor,
+            backgroundColor: color ?? whiteColor,
             minimumSize: Size.zero,
             padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 7),
             foregroundColor: whiteColor),
         child: Text(
           title,
           style: TextStyle(
-              color: darkBlue, fontFamily: "OnestSemiBold", fontSize: 12),
+              color: tColor ?? darkBlue,
+              fontFamily: "OnestSemiBold",
+              fontSize: 12),
         ));
   }
 }
@@ -3974,7 +3982,7 @@ class MyAccountWidget extends StatelessWidget {
               : Icon(leadingIcon, size: 20, color: middleBlackColor),
           title: Text(
             title,
-            style: const TextStyle(fontSize: 14, fontFamily: "OnestRegular"),
+            style: const TextStyle(fontSize: 14, fontFamily: "OnestSemiBold"),
           ),
           trailing: trailing == null
               ? const Icon(

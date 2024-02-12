@@ -1,10 +1,10 @@
+import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
-import 'sales_productdetailsscreen.dart';
 import 'upgrade_productdetails_screen.dart';
 
 class UpgradeOrderScreen extends StatefulWidget {
@@ -59,11 +59,13 @@ class _UpgradeOrderScreenState extends State<UpgradeOrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          backgroundColor: darkBlue,
           scrolledUnderElevation: 8,
-          title: const Text(
+          title: Text(
             "Upgrade Order",
             style: TextStyle(
               fontSize: 18,
+              color: whiteColor,
               fontFamily: "OnestSemiBold",
             ),
           ),
@@ -75,7 +77,10 @@ class _UpgradeOrderScreenState extends State<UpgradeOrderScreen> {
                   print("ooooo");
                   Get.back();
                 },
-                child: const Icon(Icons.keyboard_arrow_left_rounded)),
+                child: Icon(
+                  Icons.keyboard_arrow_left_rounded,
+                  color: whiteColor,
+                )),
           ),
           actions: const [
             // Row(

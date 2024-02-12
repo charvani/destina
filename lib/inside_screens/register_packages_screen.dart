@@ -278,7 +278,8 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
                               ? SizedBox(height: 200, child: loader)
                               : packageController.selPackageItemList.isEmpty
                                   ? SizedBox(height: 100, child: notAvailableW)
-                                  : GridView.builder(
+                                  : 
+                                  GridView.builder(
                                       padding: const EdgeInsets.all(0),
                                       physics:
                                           const NeverScrollableScrollPhysics(),

@@ -37,7 +37,7 @@ import 'services/salesstools_screen.dart';
 import 'services/upload_id_screen.dart';
 import 'shopping/dpmall_screen.dart';
 import 'shopping/membermall_screen.dart';
-import 'shopping/redemptionmall_screen.dart2.dart';
+import 'shopping/redemptionmall_screen.dart.dart';
 import 'shopping/salesmall_screen2.dart';
 import 'tools/faqs_screen.dart';
 import 'tools/ftaform_reportscreen.dart';
@@ -624,7 +624,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   ),
                   MyAccountItemWidget(
                     onTapFun: () {
-                      Get.to(() => const RedemptionMallScreen2());
+                      Get.to(() => const RedemptionMallScreen());
                     },
                     title: "Redemption Mall",
                   ),

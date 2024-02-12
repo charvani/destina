@@ -95,7 +95,15 @@ class _PackageScreenState extends State<PackageScreen> {
           jadePackageVal = "18";
         });
       }
+      //before`
       dataFun(jadePackageVal);
+
+      // //after
+      // if (widget.from == "DDC") {
+      //   dataFun("Health Care");
+      // } else {
+      //   dataFun(jadePackageVal);
+      // }
     });
     super.initState();
   }

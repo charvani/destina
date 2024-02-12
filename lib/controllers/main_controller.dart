@@ -888,6 +888,7 @@ class MainController extends GetxController {
         methodName: ApiData().nSGAddToCartItems, params: parameters);
     return res;
   }
+
   getAddToCart(Map parameters) async {
     dynamic res = await ApiCall().postMethodFun(
         methodName: ApiData().addtoCartMethod, params: parameters);

@@ -110,7 +110,6 @@ class _ProductsScreen2State extends State<ProductsScreen2> {
       appBar: commonAppBar(
         title: "Packages",
         backNavigation: false,
-        
       ),
       body: Row(
         children: [

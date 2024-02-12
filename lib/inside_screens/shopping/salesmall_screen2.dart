@@ -82,7 +82,7 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
       ),
       body: Column(
         children: [
-          const SpaceHeightWidget(height: 15),
+          const SpaceHeightWidget(height: 5),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -106,7 +106,7 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
                 : _dataController.selPackageItemList.isEmpty
                     ? SizedBox(height: 100, child: notAvailableW)
                     : Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: GridView.builder(
                             padding: const EdgeInsets.all(0),
                             // physics: const NeverScrollableScrollPhysics(),

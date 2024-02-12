@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-import '../shopping/upgradeorder.screen.dart';
+import '../shopping/upgradeorder.screen2.dart';
 import 'promo_screen.dart';
 import 'redeem_screen.dart';
 
@@ -366,7 +366,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               bcolor: darkRedColor,
                               onTapFun: () {
                                 print("upgrade");
-                                Get.to(() => const UpgradeOrderScreen());
+                                Get.to(() => const UpgradeOrderScreen2());
                               },
                               title: "Click to Upgrade"),
                         ),

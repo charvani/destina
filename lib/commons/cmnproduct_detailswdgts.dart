@@ -1351,21 +1351,23 @@ class ProductCatScrollWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       child: index == selInd
           ? SizedBox(
               height: 35,
-              child: CustomAutoWidthButton(
-                  bcolor: darkBlue, onTapFun: () {}, title: productCtgs[index]),
+              child: CustomFixedElevatedButton(
+                  tColor: whiteColor,
+                  color: darkBlue,
+                  onTapFun: () {},
+                  title: productCtgs[index]),
             )
           : InkWell(
               onTap: onTapFun,
               child: Container(
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(15),
                     border: Border.all(color: middleBlackColor)),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 child: Text(
                   productCtgs[index],
                   style: TextStyle(
