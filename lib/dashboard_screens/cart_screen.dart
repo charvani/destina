@@ -69,16 +69,45 @@ class _CartScreenState extends State<CartScreen> {
     sessionId = Constants.prefs.getString("ss_id");
     sponsorController.text = "";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      checkUniqIdFun();
       // if (uniqId != null && sessionId != null) {
-      getData();
+      // getData();
       // }
     });
+  }
+
+  checkUniqIdFun() async {
+    cartParams = {
+      "Action": "NCheckUnId",
+      "Pkid": "0",
+      "pid": "0",
+      "Quantity": "0",
+      "uniqid": Constants.prefs.getString("uniq_id"),
+      "sessid": Constants.prefs.getString("ss_id"),
+      "ipaddress": Constants.prefs.getString("ip"),
+      "sprno": "0",
+      "prdtype": "Package",
+    };
+    dynamic res = await cartController.getCartItems(cartParams);
+    print("gettting res...$res");
+    if (res != null) {
+      if (res['productDataRpt'][0]['ProductType'] == "Old Id") {
+        getData();
+      } else {
+        uniqId = generateRandomString(10);
+        await Constants.prefs.setString("uniq_id", uniqId);
+        sessionId = generateTimeStamp();
+        await Constants.prefs.setString("ss_id", sessionId);
+        getData();
+      }
+    }
   }
 
   Map cartParams = {};
   getData() async {
     cartParams = {
-      "Action": "getcartitems",
+      "Action": "getNcartitems",
+      // "getcartitems",
       "Pkid": "0",
       "pid": "0",
       "Quantity": "0",
@@ -108,6 +137,8 @@ class _CartScreenState extends State<CartScreen> {
               color: whiteColor,
               onPressed: () {
                 Get.back();
+                // getData();
+                // checkUniqIdFun();
               }),
           title: Text(
             "Cart",
@@ -195,7 +226,8 @@ class _CartScreenState extends State<CartScreen> {
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              if (widget.from != "after_enroll")
+                              if (widget.from != "after_enroll" &&
+                                  Constants.prefs.getString("user_id") == null)
                                 signInReqWidget(),
                               // const SpaceHeightWidget(height: 8),
                               // Padding(
@@ -486,6 +518,7 @@ class _CartScreenState extends State<CartScreen> {
                                                 .toLowerCase() ==
                                             "success") {
                                           Get.off(() => CheckOutScreen(
+                                              fromScreen: "OpenCart",
                                               redirectUrl:
                                                   "https://showcase.worldunityfoundation.org/checkwebitems.html?countrycode=MY&sprno=${sponsorController.text}&sessid=$sessionId&uniqId=$uniqId"));
                                         }

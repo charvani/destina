@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../commons/colors.dart';
-import '../inside_screens/packages_screen.dart';
 import '../inside_screens/register_packages_screen.dart';
 
 class MemberScreen extends StatefulWidget {
@@ -322,25 +321,25 @@ class _MemberScreenState extends State<MemberScreen> {
                                   (pcTap == true))
                                 MemberScreenInfoWidget(
                                   signupFun: () {
-                                    if (ddcTap) {
-                                      Get.to(() => PackageScreen(
-                                            from: ddcTap
-                                                ? "DDC"
-                                                : ddTap
-                                                    ? "DD"
-                                                    : "PC",
-                                            countryId: widget.countryId,
-                                          ));
-                                    } else {
-                                      Get.to(() => RegisterPackageScreen(
-                                            from: ddcTap
-                                                ? "DDC"
-                                                : ddTap
-                                                    ? "DD"
-                                                    : "PC",
-                                            countryId: widget.countryId,
-                                          ));
-                                    }
+                                    // if (ddcTap) {
+                                    //   Get.to(() => PackageScreen(
+                                    //         from: ddcTap
+                                    //             ? "DDC"
+                                    //             : ddTap
+                                    //                 ? "DD"
+                                    //                 : "PC",
+                                    //         countryId: widget.countryId,
+                                    //       ));
+                                    // } else {
+                                    Get.to(() => RegisterPackageScreen(
+                                          from: ddcTap
+                                              ? "DDC"
+                                              : ddTap
+                                                  ? "DD"
+                                                  : "PC",
+                                          countryId: widget.countryId,
+                                        ));
+                                    // }
                                   },
                                   amount: checkController
                                       .checkCountryData.value.pcRenFee,
@@ -364,25 +363,25 @@ class _MemberScreenState extends State<MemberScreen> {
                                   (ddcTap == true))
                                 MemberScreenInfoWidget(
                                   signupFun: () {
-                                    if (ddcTap) {
-                                      Get.to(() => PackageScreen(
-                                            from: ddcTap
-                                                ? "DDC"
-                                                : ddTap
-                                                    ? "DD"
-                                                    : "PC",
-                                            countryId: widget.countryId,
-                                          ));
-                                    } else {
-                                      Get.to(() => RegisterPackageScreen(
-                                            from: ddcTap
-                                                ? "DDC"
-                                                : ddTap
-                                                    ? "DD"
-                                                    : "PC",
-                                            countryId: widget.countryId,
-                                          ));
-                                    }
+                                    // if (ddcTap) {
+                                    //   Get.to(() => PackageScreen(
+                                    //         from: ddcTap
+                                    //             ? "DDC"
+                                    //             : ddTap
+                                    //                 ? "DD"
+                                    //                 : "PC",
+                                    //         countryId: widget.countryId,
+                                    //       ));
+                                    // } else {
+                                    Get.to(() => RegisterPackageScreen(
+                                          from: ddcTap
+                                              ? "DDC"
+                                              : ddTap
+                                                  ? "DD"
+                                                  : "PC",
+                                          countryId: widget.countryId,
+                                        ));
+                                    // }
                                   },
                                   amount: checkController
                                       .checkCountryData.value.dcRenFee,
@@ -410,25 +409,25 @@ class _MemberScreenState extends State<MemberScreen> {
                                   (ddTap == true))
                                 MemberScreenInfoWidget(
                                   signupFun: () {
-                                    if (ddcTap) {
-                                      Get.to(() => PackageScreen(
-                                            from: ddcTap
-                                                ? "DDC"
-                                                : ddTap
-                                                    ? "DD"
-                                                    : "PC",
-                                            countryId: widget.countryId,
-                                          ));
-                                    } else {
-                                      Get.to(() => RegisterPackageScreen(
-                                            from: ddcTap
-                                                ? "DDC"
-                                                : ddTap
-                                                    ? "DD"
-                                                    : "PC",
-                                            countryId: widget.countryId,
-                                          ));
-                                    }
+                                    // if (ddcTap) {
+                                    //   Get.to(() => PackageScreen(
+                                    //         from: ddcTap
+                                    //             ? "DDC"
+                                    //             : ddTap
+                                    //                 ? "DD"
+                                    //                 : "PC",
+                                    //         countryId: widget.countryId,
+                                    //       ));
+                                    // } else {
+                                    Get.to(() => RegisterPackageScreen(
+                                          from: ddcTap
+                                              ? "DDC"
+                                              : ddTap
+                                                  ? "DD"
+                                                  : "PC",
+                                          countryId: widget.countryId,
+                                        ));
+                                    // }
                                   },
                                   amount: checkController
                                       .checkCountryData.value.dRenFee,
@@ -528,28 +527,27 @@ class _MemberScreenState extends State<MemberScreen> {
                                                     ? darkRedColor
                                                     : darkBlue,
                                             onTapFun: () {
-                                              if (ddcTap) {
-                                                Get.to(() => PackageScreen(
-                                                      from: ddcTap
-                                                          ? "DDC"
-                                                          : ddTap
-                                                              ? "DD"
-                                                              : "PC",
-                                                      countryId:
-                                                          widget.countryId,
-                                                    ));
-                                              } else {
-                                                Get.to(
-                                                    () => RegisterPackageScreen(
-                                                          from: ddcTap
-                                                              ? "DDC"
-                                                              : ddTap
-                                                                  ? "DD"
-                                                                  : "PC",
-                                                          countryId:
-                                                              widget.countryId,
-                                                        ));
-                                              }
+                                              // if (ddcTap) {
+                                              //   Get.to(() => PackageScreen(
+                                              //         from: ddcTap
+                                              //             ? "DDC"
+                                              //             : ddTap
+                                              //                 ? "DD"
+                                              //                 : "PC",
+                                              //         countryId:
+                                              //             widget.countryId,
+                                              //       ));
+                                              // } else {
+                                              Get.to(() =>
+                                                  RegisterPackageScreen(
+                                                    from: ddcTap
+                                                        ? "DDC"
+                                                        : ddTap
+                                                            ? "DD"
+                                                            : "PC",
+                                                    countryId: widget.countryId,
+                                                  ));
+                                              // }
                                             },
                                             title: ddcTap
                                                 ? "Become a DDC"

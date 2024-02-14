@@ -77,7 +77,8 @@ class _SalesProductDetailsScreen2State
   List<String> carouselImages = [];
   getRegisterPackageData() async {
     Map parameters = {
-      "Action": "GetPackdescr",
+      // "Action": "GetPackdescr",
+      "Action": "GetNPackdescr",
       "pkid": "3",
       "Desc": widget.packageCode,
       "overview": " ",
@@ -88,7 +89,7 @@ class _SalesProductDetailsScreen2State
       "PkImg2": "",
       "PkImg3": "",
       "PkImg4": "",
-      "CountryID": countryid,
+      "CountryID": Constants.prefs.getString("country_id"),
       "MallName": widget.packageCode
     };
 
@@ -231,69 +232,67 @@ class _SalesProductDetailsScreen2State
                                   packageLoading = true;
                                 });
                                 // this register add to cart fun
-/*
                                 print("add to car fun");
                                 Map parameters = {
-                                  "action": "addSGCartitems",
+                                  "action": "addSACartitems",
+                                  // "addSGCartitems",
                                   "Pkid": widget.packageCode,
-                                  "Country": widget.countryid,
+                                  "Country":
+                                      Constants.prefs.getString("country_id"),
                                   "Uniqid": uniqId,
                                   "sessid": sessionId,
                                   "ipaddress": Constants.prefs.getString("ip"),
-                                  "sprno": "0",
+                                  "sprno": Constants.prefs.getString("reg_id"),
+                                  // "0",
                                   "Quantity": firstQtyController.text
                                 };
                                 print("add to cart params...$parameters");
                                 dynamic res = await MainController()
-                                    .getAddToCart(parameters);
+                                    .getRegPackAddToCart(parameters);
 
                                 if (res['Msg'].toString().toLowerCase() ==
                                     "success") {
-                                
                                   print("res....$res");
                                   setState(() {
                                     packageLoading = false;
                                   });
                                   Timer(const Duration(seconds: 1), () {
-                                    Get.back(result: [true]);
+                                    Get.back();
+                                    Get.to(() => const SalesmallCartScreen());
                                   });
                                 } else {
                                   setState(() {
                                     packageLoading = false;
                                   });
                                 }
-                                */
 
                                 //this is original exitsted function
 
-                                print("add to car fun");
-                                Map parameters = {
-                                  "Pkid": widget.packageCode,
-                                  "pid": pidList.join(":"),
-                                  "uniqid": uniqId,
-                                  "sessid": sessionId,
-                                  // "uniqid": widget.hidUid,
-                                  // "sessid": widget.hidUid,
-                                  "ipaddress": Constants.prefs.getString("ip"),
-                                  "sprno": Constants.prefs.getString("reg_id"),
-                                  "prdtype": "Package",
-                                  "qty": firstQtyController.text,
-                                  "country":
-                                      Constants.prefs.getString("country_id"),
-                                };
-                                print("add to cart params...$parameters");
-                                dynamic res = await MainController()
-                                    .getSalesMallAddToCart(parameters);
-                                if (res['Msg'].toString().toLowerCase() ==
-                                    "success") {
-                                  Timer(const Duration(seconds: 1), () {
-                                    Get.back();
-                                    Get.to(() => const SalesmallCartScreen());
-                                  });
-                                }
-                                setState(() {
-                                  packageLoading = false;
-                                });
+                                // print("add to car fun");
+                                // Map parameters = {
+                                //   "Pkid": widget.packageCode,
+                                //   "pid": pidList.join(":"),
+                                //   "uniqid": uniqId,
+                                //   "sessid": sessionId,
+                                //   // "uniqid": widget.hidUid,
+                                //   // "sessid": widget.hidUid,
+                                //   "ipaddress": Constants.prefs.getString("ip"),
+                                //   "sprno": Constants.prefs.getString("reg_id"),
+                                //   "prdtype": "Package",
+                                //   "qty": firstQtyController.text,
+                                //   "country":
+                                //       Constants.prefs.getString("country_id"),
+                                // };
+                                // print("add to cart params...$parameters");
+                                // dynamic res = await MainController()
+                                //     .getSalesMallAddToCart(parameters);
+                                // if (res['Msg'].toString().toLowerCase() ==
+                                //     "success") {
+                                //   Timer(const Duration(seconds: 1), () {
+                                //     Get.back();
+                                //     Get.to(() => const SalesmallCartScreen());
+                                //   });
+                                // }
                               },
                               imagePath: 'assets/images/cart_icon.png',
                               labelColor: whiteColor,

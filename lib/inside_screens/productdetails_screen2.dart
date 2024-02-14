@@ -7,7 +7,6 @@ import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:motion_toast/motion_toast.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../commons/cmnproduct_detailswdgts.dart';
@@ -52,7 +51,6 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
     print("from...${widget.from}");
     firstQtyController.text = "1";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      countryid = Constants.prefs.getString("country_id");
       getRegisterPackageData();
       if (Constants.prefs.getString("uniq_id") == null) {
         uniqId = generateRandomString(10);
@@ -77,7 +75,7 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
   getRegisterPackageData() async {
     Map parameters = {
       "Action": "GetPackdescr",
-      "pkid": "3",
+      "pkid": "1",
       "Desc": widget.packageCode,
       "overview": " ",
       "info": "",
@@ -87,7 +85,7 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
       "PkImg2": "",
       "PkImg3": "",
       "PkImg4": "",
-      "CountryID": countryid,
+      "CountryID": Constants.prefs.getString("open_country"),
       "MallName": widget.packageCode
     };
 
@@ -230,12 +228,13 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                                   packageLoading = true;
                                 });
                                 // this register add to cart fun
-/*
+
                                 print("add to car fun");
                                 Map parameters = {
-                                  "action": "addSGCartitems",
+                                  "action": "addRTCartitems",
                                   "Pkid": widget.packageCode,
-                                  "Country": widget.countryid,
+                                  "Country":
+                                      Constants.prefs.getString("country_id"),
                                   "Uniqid": uniqId,
                                   "sessid": sessionId,
                                   "ipaddress": Constants.prefs.getString("ip"),
@@ -244,54 +243,46 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                                 };
                                 print("add to cart params...$parameters");
                                 dynamic res = await MainController()
-                                    .getAddToCart(parameters);
+                                    .getRegPackAddToCart(parameters);
 
                                 if (res['Msg'].toString().toLowerCase() ==
                                     "success") {
-                                
-                                  print("res....$res");
-                                  setState(() {
-                                    packageLoading = false;
-                                  });
                                   Timer(const Duration(seconds: 1), () {
-                                    Get.back(result: [true]);
-                                  });
-                                } else {
-                                  setState(() {
-                                    packageLoading = false;
+                                    // Get.back(result: [true]);
+                                    Get.back();
+                                    Get.to(() => CartScreen(from: widget.from));
                                   });
                                 }
-                                */
 
                                 //this is original exitsted function
-                                Map parameters = {
-                                  "Action": "addCartitems",
-                                  "Pkid": widget.packageCode,
-                                  "pid": pidList.join(":"),
-                                  "uniqid": uniqId,
-                                  "sessid": sessionId,
-                                  "ipaddress": Constants.prefs.getString("ip"),
-                                  "sprno": "0",
-                                  "prdtype": "Package",
-                                  "Quantity": firstQtyController.text
-                                };
-                                print("add to cart params...$parameters");
-                                dynamic res = await MainController()
-                                    .getAddToCart(parameters);
-                                if (res['Msg'].toString().toLowerCase() ==
-                                    "success") {
-                                  // ignore: use_build_context_synchronously
-                                  MotionToast.success(
-                                    title: const Text("Congartulations!"),
-                                    description: const Text(
-                                        "Products added successfully to your cart."),
-                                  ).show(context);
-                                  Timer(const Duration(seconds: 1), () {
-                                    Get.back();
-                                    Get.off(
-                                        () => CartScreen(from: widget.from));
-                                  });
-                                }
+                                // Map parameters = {
+                                //   "Action": "addCartitems",
+                                //   "Pkid": widget.packageCode,
+                                //   "pid": pidList.join(":"),
+                                //   "uniqid": uniqId,
+                                //   "sessid": sessionId,
+                                //   "ipaddress": Constants.prefs.getString("ip"),
+                                //   "sprno": "0",
+                                //   "prdtype": "Package",
+                                //   "Quantity": firstQtyController.text
+                                // };
+                                // print("add to cart params...$parameters");
+                                // dynamic res = await MainController()
+                                //     .getAddToCart(parameters);
+                                // if (res['Msg'].toString().toLowerCase() ==
+                                //     "success") {
+                                //   // ignore: use_build_context_synchronously
+                                //   MotionToast.success(
+                                //     title: const Text("Congartulations!"),
+                                //     description: const Text(
+                                //         "Products added successfully to your cart."),
+                                //   ).show(context);
+                                //   Timer(const Duration(seconds: 1), () {
+                                //     Get.back();
+                                //     Get.off(
+                                //         () => CartScreen(from: widget.from));
+                                //   });
+                                // }
                                 setState(() {
                                   packageLoading = false;
                                 });
@@ -400,8 +391,11 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                             "UNIWAVE INSTANT COFFEE")
                           coffeeWidget(),
                         if (packDetailsController
-                                .packageDetailsData.value.pkname ==
-                            "UNIWAVE BIOMATRIX SHIELD")
+                                    .packageDetailsData.value.pkname ==
+                                "UNIWAVE BIOMATRIX SHIELD" ||
+                            packDetailsController
+                                    .packageDetailsData.value.pkname ==
+                                "UNIWAVE BIO MATRIX SHIELD")
                           biomatrixWidget(),
 
                         if (videoId != "" && videoId != null)

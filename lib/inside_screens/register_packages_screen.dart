@@ -104,10 +104,12 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
             "assets/images/products_baground.png",
           ];
           // jadePackageVal = "18";
-          jadePackageVal = "Health Care";
+          // jadePackageVal = "Health Care";
         });
+        dataFun("DIRECT CUSTOMER");
+      } else {
+        dataFun("Health Care");
       }
-      dataFun("Health Care");
       packageController.packCartList.clear();
     });
     super.initState();
@@ -148,56 +150,59 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
         title: "Packages",
         backNavigation: true,
       ),
-      bottomNavigationBar: Container(
-        width: double.infinity,
-        height: 50,
-        decoration: BoxDecoration(
-          border: Border.all(color: darkBlue),
-          borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Obx(() {
-              return packageController.cartLoading.value
-                  ? loader
-                  : packageController.packCartList.isNotEmpty
-                      ? Badge.count(
-                          count: packageController.packCartList.length,
-                          child: InkWell(
-                            onTap: () {
-                              print("tapp");
-                              dialogFun();
-                            },
-                            child: const Icon(
-                              Icons.shopping_cart,
-                              // color: appthemeColor,
-                            ),
-                          ),
-                        )
-                      : InkWell(
-                          onTap: () {},
-                          child: const Icon(
-                            Icons.shopping_cart,
-                            // color: appthemeColor,
-                          ),
-                        );
-            }),
-            const SpaceWidthWidget(width: 25),
-            SizedBox(
-                height: 30,
-                child: CustomAutoWidthButton(
-                  onTapFun: () {
-                    if (packageController.packCartList.isNotEmpty) {
-                      checkOutFun();
-                    }
-                  },
-                  title: "Checkout",
-                ))
-          ],
-        ),
-      ),
+      bottomNavigationBar: (widget.from != "DDC")
+          ? Container(
+              width: double.infinity,
+              height: 50,
+              decoration: BoxDecoration(
+                border: Border.all(color: darkBlue),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10)),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Obx(() {
+                    return packageController.cartLoading.value
+                        ? loader
+                        : packageController.packCartList.isNotEmpty
+                            ? Badge.count(
+                                count: packageController.packCartList.length,
+                                child: InkWell(
+                                  onTap: () {
+                                    print("tapp");
+                                    dialogFun();
+                                  },
+                                  child: const Icon(
+                                    Icons.shopping_cart,
+                                    // color: appthemeColor,
+                                  ),
+                                ),
+                              )
+                            : InkWell(
+                                onTap: () {},
+                                child: const Icon(
+                                  Icons.shopping_cart,
+                                  // color: appthemeColor,
+                                ),
+                              );
+                  }),
+                  const SpaceWidthWidget(width: 25),
+                  SizedBox(
+                      height: 30,
+                      child: CustomAutoWidthButton(
+                        onTapFun: () {
+                          if (packageController.packCartList.isNotEmpty) {
+                            checkOutFun();
+                          }
+                        },
+                        title: "Checkout",
+                      ))
+                ],
+              ),
+            )
+          : const SizedBox.shrink(),
       body: Row(
         children: [
           SizedBox(
@@ -278,8 +283,7 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
                               ? SizedBox(height: 200, child: loader)
                               : packageController.selPackageItemList.isEmpty
                                   ? SizedBox(height: 100, child: notAvailableW)
-                                  : 
-                                  GridView.builder(
+                                  : GridView.builder(
                                       padding: const EdgeInsets.all(0),
                                       physics:
                                           const NeverScrollableScrollPhysics(),

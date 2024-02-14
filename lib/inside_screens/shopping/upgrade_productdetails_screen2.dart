@@ -220,12 +220,13 @@ class _UpgradeProductDetailsScreen2State
                                   packageLoading = true;
                                 });
                                 // this register add to cart fun
-/*
                                 print("add to car fun");
                                 Map parameters = {
-                                  "action": "addSGCartitems",
+                                  "action": "addSACartitems",
+                                  // "addSGCartitems",
                                   "Pkid": widget.packageCode,
-                                  "Country": widget.countryid,
+                                  "Country":
+                                      Constants.prefs.getString("country_id"),
                                   "Uniqid": uniqId,
                                   "sessid": sessionId,
                                   "ipaddress": Constants.prefs.getString("ip"),
@@ -234,25 +235,27 @@ class _UpgradeProductDetailsScreen2State
                                 };
                                 print("add to cart params...$parameters");
                                 dynamic res = await MainController()
-                                    .getAddToCart(parameters);
+                                    .getRegPackAddToCart(parameters);
 
                                 if (res['Msg'].toString().toLowerCase() ==
                                     "success") {
-                                
                                   print("res....$res");
                                   setState(() {
                                     packageLoading = false;
                                   });
                                   Timer(const Duration(seconds: 1), () {
-                                    Get.back(result: [true]);
+                                    Get.back();
+                                    Get.to(() => UpgradeCartScreen(
+                                          packCode: widget.packageCode,
+                                        ));
                                   });
                                 } else {
                                   setState(() {
                                     packageLoading = false;
                                   });
                                 }
-                                */
 
+/*
                                 //this is original exitsted function
 
                                 print("add to car fun");
@@ -287,6 +290,8 @@ class _UpgradeProductDetailsScreen2State
                                 setState(() {
                                   packageLoading = false;
                                 });
+
+                                */
                               },
                               imagePath: 'assets/images/cart_icon.png',
                               labelColor: whiteColor,

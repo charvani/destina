@@ -15,14 +15,13 @@ import '../heroanimation_screen.dart';
 class MemberProductDetailsScreen2 extends StatefulWidget {
   final String from;
   final String packageCode;
-  final String? countryid;
   final String fromPack;
-  const MemberProductDetailsScreen2(
-      {super.key,
-      required this.from,
-      required this.packageCode,
-      required this.fromPack,
-      this.countryid});
+  const MemberProductDetailsScreen2({
+    super.key,
+    required this.from,
+    required this.packageCode,
+    required this.fromPack,
+  });
 
   @override
   State<MemberProductDetailsScreen2> createState() =>
@@ -76,7 +75,9 @@ class _MemberProductDetailsScreen2State
   List<String> carouselImages = [];
   getRegisterPackageData() async {
     Map parameters = {
-      "Action": "GetPackdescr",
+      // "Action": "GetPackdescr",
+      "Action": "GetNPackdescr",
+
       "pkid": "3",
       "Desc": widget.packageCode,
       "overview": " ",
@@ -87,7 +88,7 @@ class _MemberProductDetailsScreen2State
       "PkImg2": "",
       "PkImg3": "",
       "PkImg4": "",
-      "CountryID": widget.countryid,
+      "CountryID": Constants.prefs.getString("country_id"),
       "MallName": widget.packageCode
     };
 
@@ -218,38 +219,49 @@ class _MemberProductDetailsScreen2State
                                 setState(() {
                                   packageLoading = true;
                                 });
-                                /* 
+                                // this register add to cart fun
                                 print("add to car fun");
                                 Map parameters = {
-                                  "action": "addSGCartitems",
+                                  "action": "addMECartitems",
+                                  // "addSGCartitems",
                                   "Pkid": widget.packageCode,
-                                  "Country": widget.countryid,
+                                  "Country":
+                                      Constants.prefs.getString("country_id"),
                                   "Uniqid": uniqId,
                                   "sessid": sessionId,
                                   "ipaddress": Constants.prefs.getString("ip"),
-                                  "sprno": "0",
+                                  "sprno": Constants.prefs.get("reg_id"),
                                   "Quantity": firstQtyController.text
                                 };
                                 print("add to cart params...$parameters");
                                 dynamic res = await MainController()
                                     .getRegPackAddToCart(parameters);
+
                                 if (res['Msg'].toString().toLowerCase() ==
                                     "success") {
-                                  // ignore: use_build_context_synchronously
-                                  // MotionToast.success(
-                                  //   title: const Text("Congartulations!"),
-                                  //   description: const Text(
-                                  //       "Products added successfully to your cart."),
-                                  // ).show(context);
                                   print("res....$res");
                                   setState(() {
                                     packageLoading = false;
                                   });
                                   Timer(const Duration(seconds: 1), () {
-                                    Get.back(result: [true]);
+                                    // Get.back(result: [true, res['Cnt']]);
+                                    Get.back(result: [
+                                      true,
+                                      int.parse(packDetailsController
+                                              .memberMallCartCount.value) +
+                                          1
+                                    ]);
                                   });
-                                } 
-                                */
+                                } else {
+                                  Timer(const Duration(seconds: 1), () {
+                                    CommonToast(res['Message']);
+                                    Get.back();
+                                  });
+                                  setState(() {
+                                    packageLoading = false;
+                                  });
+                                }
+                                /*
                                 //existed add to cart fun
                                 Map parameters = {
                                   "Pkid": widget.packageCode,
@@ -280,7 +292,7 @@ class _MemberProductDetailsScreen2State
                                 }
                                 setState(() {
                                   packageLoading = false;
-                                });
+                                }); */
                               },
                               imagePath: 'assets/images/cart_icon.png',
                               labelColor: whiteColor,

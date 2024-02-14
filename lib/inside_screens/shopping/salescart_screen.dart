@@ -185,8 +185,8 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                                     },
                                                     title: "Are you sure?"));
                                           },
-                                          itemsPrice: cartController
-                                              .salesMallCartItems[i].mrp,
+                                          itemsPrice:
+                                              "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallCartItems[i].mrp}",
                                           itemname: cartController
                                               .salesMallCartItems[i].pkname,
                                           productCode: cartController
@@ -326,7 +326,7 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                                       .loading.value
                                                   ? const Text("RM 0.0")
                                                   : Text(
-                                                      "RM ${cartController.salesMallTAmount.value}",
+                                                      "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallTAmount.value}",
                                                       style: const TextStyle(
                                                         fontFamily:
                                                             "OnestRegular",
@@ -356,7 +356,7 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                                       .loading.value
                                                   ? const Text("RM 0.0")
                                                   : Text(
-                                                      "RM ${cartController.salesMallTAmount.value}",
+                                                      "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallTAmount.value}",
                                                       style: TextStyle(
                                                         fontFamily:
                                                             "OnestSemiBold",

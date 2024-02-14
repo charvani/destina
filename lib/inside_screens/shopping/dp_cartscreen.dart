@@ -75,15 +75,18 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
     print("cart params...$cartParams");
     dynamic res = await cartController.getDPMCartItems(from, cartParams);
     print("cart res...$res");
-    if (res['result'] == "Promotion") {
-      setState(() {
-        showProductsSelection = true;
-      });
-    } else {
-      setState(() {
-        showProductsSelection = false;
-      });
+    if (res != null) {
+      if (res['result'] == "Promotion") {
+        setState(() {
+          showProductsSelection = true;
+        });
+      } else {
+        setState(() {
+          showProductsSelection = false;
+        });
+      }
     }
+
     if (from != "init") {
       setState(() {
         screenLoad = false;
@@ -111,8 +114,15 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(title: "Cart", backNavigation: true),
+      appBar: commonAppBar(
+          title: "Cart",
+          backNavigation: true,
+          onTapFun: () {
+            // getData("init");
 
+            Get.back();
+            Get.back();
+          }),
       body: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {

@@ -1,6 +1,3 @@
-
-
-
 // To parse this JSON data, do
 //
 //     final salesMallCartItemModel = salesMallCartItemModelFromJson(jsonString);
@@ -19,6 +16,7 @@ class SalesMallCartItemModel {
   String pimage;
   String mrp;
   String qty;
+  String symbol;
   dynamic sno;
 
   SalesMallCartItemModel({
@@ -28,6 +26,7 @@ class SalesMallCartItemModel {
     required this.mrp,
     required this.qty,
     required this.sno,
+    required this.symbol,
   });
 
   factory SalesMallCartItemModel.fromJson(Map<String, dynamic> json) =>
@@ -38,6 +37,7 @@ class SalesMallCartItemModel {
         mrp: json["mrp"],
         qty: json["qty"],
         sno: json["sno"],
+        symbol: json["Symbol"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -47,5 +47,6 @@ class SalesMallCartItemModel {
         "mrp": mrp,
         "qty": qty,
         "sno": sno,
+        "Symbol": symbol
       };
 }

@@ -9,6 +9,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../authentication_screens/enrollpackage_screen.dart';
+import '../authentication_screens/sponsor_check_screen.dart';
 import '../commons/cmnproduct_detailswdgts.dart';
 import 'heroanimation_screen.dart';
 
@@ -75,7 +77,8 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
   List<String> carouselImages = [];
   getRegisterPackageData() async {
     Map parameters = {
-      "Action": "GetPackdescr",
+      // "Action": "GetPackdescr",
+      "Action": "GetNPackdescr",
       "pkid": "3",
       "Desc": widget.packageCode,
       "overview": " ",
@@ -228,6 +231,7 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                                 setState(() {
                                   packageLoading = true;
                                 });
+
                                 print("add to car fun");
                                 Map parameters = {
                                   "action": "addSGCartitems",
@@ -254,9 +258,15 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                                   setState(() {
                                     packageLoading = false;
                                   });
-                                  Timer(const Duration(seconds: 1), () {
-                                    Get.back(result: [true]);
-                                  });
+                                  if (packDetailsController
+                                          .packageDetailsData.value.pkname ==
+                                      "DIRECT CUSTOMER") {
+                                    ddcFun();
+                                  } else {
+                                    Timer(const Duration(seconds: 1), () {
+                                      Get.back(result: [true]);
+                                    });
+                                  }
                                 } else {
                                   setState(() {
                                     packageLoading = false;
@@ -405,5 +415,26 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
         }),
       ),
     );
+  }
+
+  ddcFun() async {
+    Map params = {"rpt": "EnrollDetails", "Cid": widget.countryid, "mid": "0"};
+
+    dynamic res = await packDetailsController.getEnrollPack(params);
+    print("enroll res..$res");
+    print("***********${double.parse(res['EnrollPackageRpt'][0]['RenFee'])}");
+
+    Get.back();
+    if (double.parse(res['EnrollPackageRpt'][0]['RenFee']) > 0) {
+      Get.off(() => EnrollPackageScreen(
+            packageCoded: widget.packageCode,
+            countyId: widget.countryid!,
+          ));
+    } else {
+      Get.off(() => SponsorCheckScreen(
+            packageCode: widget.packageCode,
+            countryId: widget.countryid!,
+          ));
+    }
   }
 }

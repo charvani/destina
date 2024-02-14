@@ -66,13 +66,15 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
     print("cart params...$cartParams");
     dynamic res = await cartController.getRegisterCartItems(from, cartParams);
     print("cart res...$res");
-    if (int.parse(res['PrCnt']) > 0 && int.parse(res['Itemcnt']) > 1) {
-      setState(() {
-        showProductsSelection = false;
-      });
+    if (int.parse(res['Itemcnt']) == 1) {
+      if (int.parse(res['PrCnt']) > 0) {
+        setState(() {
+          showProductsSelection = true;
+        });
+      }
     } else {
       setState(() {
-        showProductsSelection = true;
+        showProductsSelection = false;
       });
     }
     if (from != "init") {
@@ -116,7 +118,9 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
               color: whiteColor,
             ),
             onPressed: () {
+              // getData("init");
               Get.back();
+
               // setState(() {
               //   packageLoading = false;
               //   loading = false;

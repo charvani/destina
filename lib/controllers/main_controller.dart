@@ -834,7 +834,7 @@ class MainController extends GetxController {
     Map parameters = {
       "action": productType,
       "pcode": "0",
-      "country": Constants.prefs.getString("country")
+      "country": Constants.prefs.getString("open_country")
     };
     dynamic res = await ApiCall().postMethodFun(
         methodName: ApiData().productCategoryMethod, params: parameters);
@@ -1089,6 +1089,7 @@ class MainController extends GetxController {
             bannerPopUp.add(res['MemberPopuprpt'][i]['MemPopup']);
           }
         }
+        Constants.prefs.setString("country", res['CountryCode']);
         Constants.prefs.setString("country_name", res['Country']);
         Constants.prefs.setString("country_id", res['CountryID']);
         Constants.prefs.setString("reg_id", res['RegId']);
@@ -2104,8 +2105,9 @@ class MainController extends GetxController {
         }
       }
     } else {
-      Get.back();
-      Get.back();
+      Timer(const Duration(seconds: 1), () {
+        Get.back();
+      });
     }
     if (from == "init") {
       loading.value = false;
@@ -2323,6 +2325,7 @@ class MainController extends GetxController {
     }
     salesMallCartItems.clear();
     salesMallTAmount.value = 0.0;
+    memberMallCartCount.value = "0";
     dynamic res = await ApiCall().postMethodFun(
         methodName: ApiData().getMemberPackages, params: parameters);
 
@@ -2339,10 +2342,11 @@ class MainController extends GetxController {
         }
       }
     } else {
-      Timer(const Duration(seconds: 1), () {
-        Get.back();
-        memberMallCartCount.value = "0";
-      });
+      if (from != "screen") {
+        Timer(const Duration(seconds: 1), () {
+          Get.back();
+        });
+      }
     }
     if (from == "init") {
       loading.value = false;
@@ -2397,8 +2401,9 @@ class MainController extends GetxController {
     if (res != null) {
       upgradeCartData.value = UpgradeCartItemModel.fromJson(res);
     } else {
-      Get.back();
-      Get.back();
+      Timer(const Duration(seconds: 1), () {
+        Get.back();
+      });
     }
     if (from == "init") {
       loading.value = false;

@@ -8,20 +8,22 @@ import '../../commons/cmnproduct_detailswdgts.dart';
 import '../../commons/colors.dart';
 import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
-import 'member_productdetail_screen.dart';
+import '../../service_call/api_call.dart';
+import '../../service_call/api_data.dart';
+import 'member_productdetail_screen2.dart';
 import 'membermall_cartscreen.dart';
 import 'membermall_upgradescreen.dart';
 
-class MembershipMallScreen extends StatefulWidget {
-  const MembershipMallScreen({
+class MembershipMallScreen2 extends StatefulWidget {
+  const MembershipMallScreen2({
     super.key,
   });
 
   @override
-  State<MembershipMallScreen> createState() => _MembershipMallScreenState();
+  State<MembershipMallScreen2> createState() => _MembershipMallScreen2State();
 }
 
-class _MembershipMallScreenState extends State<MembershipMallScreen> {
+class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
   final MainController _dataController = Get.put(MainController());
   dynamic userId, password, countryId, hidUid, uniqId, sessionId;
   @override
@@ -76,6 +78,32 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
     }
   }
 
+  Map cartParams = {};
+
+  bool cartLoad = false;
+  getCartData() async {
+    setState(() {
+      cartLoad = true;
+    });
+
+    cartParams = {
+      "Uniqid": uniqId,
+      "sessid": sessionId,
+      "ipaddress": "GetCartData",
+      "sprno": Constants.prefs.get("reg_id"),
+      "pcode": "",
+      "amt": "0",
+      "amttype": "",
+    };
+    print("cart params...$cartParams");
+    dynamic res =
+        await _dataController.getMemberMCartItems("screen", cartParams);
+    print("cart res...$res");
+    setState(() {
+      cartLoad = false;
+    });
+  }
+
   int selectedInd = 0;
   dynamic krialiaTappedInd;
   @override
@@ -90,7 +118,7 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
           child: Text(
             "Membership Order",
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 16,
               color: whiteColor,
               fontFamily: "OnestSemiBold",
             ),
@@ -125,21 +153,13 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        int.parse(_dataController.memberMallCartCount.value) > 0
+                        _dataController.salesMallCartItems.isNotEmpty
                             ? Badge.count(
-                                count: int.parse(
-                                    _dataController.memberMallCartCount.value),
+                                count:
+                                    _dataController.salesMallCartItems.length,
                                 child: InkWell(
                                   onTap: () {
-                                    if (_dataController
-                                                .memberMallCartCount.value !=
-                                            "0" &&
-                                        _dataController
-                                                .memberMallCartCount.value !=
-                                            "") {
-                                      // Get.to(() => const MembermallCartScreen());
-                                      actionFun();
-                                    } else {}
+                                    dialogFun();
                                   },
                                   child: Icon(
                                     Icons.shopping_cart,
@@ -148,17 +168,7 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
                                 ),
                               )
                             : InkWell(
-                                onTap: () {
-                                  if (_dataController
-                                              .memberMallCartCount.value !=
-                                          "0" &&
-                                      _dataController
-                                              .memberMallCartCount.value !=
-                                          "") {
-                                    // Get.to(() => const MembermallCartScreen());
-                                    actionFun();
-                                  } else {}
-                                },
+                                onTap: () {},
                                 child: Icon(
                                   Icons.shopping_cart,
                                   color: appthemeColor,
@@ -174,24 +184,10 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
                                   padding: const EdgeInsets.only(right: 5),
                                   child: CustomAutoWidthButton(
                                       onTapFun: () async {
-                                        if (_dataController.memberMallCartCount
-                                                    .value !=
-                                                "0" &&
-                                            _dataController.memberMallCartCount
-                                                    .value !=
-                                                "") {
+                                        if (_dataController
+                                            .salesMallCartItems.isNotEmpty) {
                                           actionFun();
-
-                                          // dynamic res = await Get.to(
-                                          //     () => const MembermallCheckoutScreen());
-                                          // //  MembermallCartScreen());
-
-                                          // if (res != null) {
-                                          //   if (res[0] == true) {
-                                          //     dataFun();
-                                          //   }
                                         }
-                                        // } else {}
                                       },
                                       title: "Checkout"));
                         })
@@ -227,14 +223,14 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
                 : _dataController.selPackageItemList.isEmpty
                     ? SizedBox(height: 100, child: notAvailableW)
                     : GridView.builder(
-                        padding: const EdgeInsets.all(0),
-                        physics: const NeverScrollableScrollPhysics(),
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        // physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2, childAspectRatio: 1 / 1.45),
+                                crossAxisCount: 2, childAspectRatio: 1 / 1.2),
                         itemBuilder: (context, i) {
-                          return productCtgs[i] == "Kritalia"
+                          return productCtgs[selectedInd] == "Kritalia"
                               ? KritaliaItemWidget(
                                   tapped: krialiaTappedInd == i ? true : false,
                                   amount:
@@ -245,16 +241,21 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
                                     });
 
                                     Timer(const Duration(seconds: 1), () async {
-                                      dynamic res = await Get.to(
-                                          () => MemberProductDetailsScreen(
-                                                packageCode: _dataController
-                                                    .salesOrdersList[i].pkcode,
-                                              ));
+                                      dynamic res = await Get.to(() =>
+                                          MemberProductDetailsScreen2(
+                                            // packageCode: _dataController
+                                            //     .salesOrdersList[i].pkcode,
+                                            from: 'membership',
+                                            packageCode: _dataController
+                                                .selPackageItemList[i].pkcode,
+                                            fromPack: productCtgs[selectedInd],
+                                          ));
 
                                       if (res != null) {
                                         if (res[0] == true) {
-                                          _dataController.memberMallCartCount
-                                              .value = res[1] ?? "0";
+                                          getCartData();
+                                          // _dataController.memberMallCartCount
+                                          //     .value = res[1].toString() ?? "0";
                                           setState(() {});
                                         }
                                       }
@@ -270,16 +271,21 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
                                   amount:
                                       _dataController.selPackageItemList[i].mrp,
                                   onTapFun: () async {
-                                    dynamic res = await Get.to(
-                                        () => MemberProductDetailsScreen(
-                                              packageCode: _dataController
-                                                  .salesOrdersList[i].pkcode,
-                                            ));
+                                    dynamic res = await Get.to(() =>
+                                        MemberProductDetailsScreen2(
+                                          from: 'membership',
+                                          packageCode: _dataController
+                                              .selPackageItemList[i].pkcode,
+                                          fromPack: productCtgs[selectedInd],
+                                          // packageCode: _dataController
+                                          //     .salesOrdersList[i].pkcode,
+                                        ));
 
                                     if (res != null) {
                                       if (res[0] == true) {
-                                        _dataController.memberMallCartCount
-                                            .value = res[1] ?? "0";
+                                        getCartData();
+                                        // _dataController.memberMallCartCount
+                                        //     .value = res[1].toString() ?? "0";
                                         setState(() {});
                                       }
                                     }
@@ -313,7 +319,7 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
       //                   return CategroyItemWidget(
       //                     onTapFun: () async {
       //                       dynamic res =
-      //                           await Get.to(() => MemberProductDetailsScreen(
+      //                           await Get.to(() => MemberProductDetailsScreen2(
       //                                 packageCode: _dataController
       //                                     .salesOrdersList[i].pkcode,
       //                               ));
@@ -336,5 +342,46 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
       //             );
       // }),
     );
+  }
+
+  dialogFun() {
+    Get.dialog(Dialog(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (int i = 0;
+                  i < _dataController.salesMallCartItems.length;
+                  i++)
+                CartItemWidget(
+                    removeFun: () async {
+                      Get.back();
+                      Map params = {
+                        "Regid": _dataController.salesMallCartItems[i].sno,
+                      };
+                      dynamic res = await ApiCall().postMethodFun(
+                          methodName: ApiData().removeMemberProduct,
+                          params: params);
+                      if (res != null) {
+                        if (res['Msg'] == "SUCCESS") {
+                          getCartData();
+                        } else {
+                          CommonToast(res['Message']);
+                        }
+                      }
+                    },
+                    imagePath: _dataController.salesMallCartItems[i].pimage,
+                    itemname: _dataController.salesMallCartItems[i].pkname,
+                    itemsPrice:
+                        "${_dataController.salesMallCartItems[i].symbol} ${_dataController.salesMallCartItems[i].mrp}",
+                    productCode: _dataController.salesMallCartItems[i].pkcode,
+                    itemCount: _dataController.salesMallCartItems[i].qty)
+            ],
+          ),
+        ),
+      ),
+    ));
   }
 }

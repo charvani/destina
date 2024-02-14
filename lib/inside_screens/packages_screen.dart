@@ -93,6 +93,7 @@ class _PackageScreenState extends State<PackageScreen> {
             "assets/images/products_baground.png",
           ];
           jadePackageVal = "18";
+          // jadePackageVal = "DIRECT CUSTOMER";
         });
       }
       //before`

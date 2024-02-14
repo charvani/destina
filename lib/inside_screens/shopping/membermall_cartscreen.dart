@@ -185,6 +185,13 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                                       if (res != null) {
                                                         print(
                                                             "remove res..$res");
+                                                        // if (res['Message'] ==
+                                                        //     "SUCCESS") {
+                                                        //   // int.parse(cartController
+                                                        //   //         .memberMallCartCount
+                                                        //   //         .value) -
+                                                        //   //     1;
+                                                        // }
                                                       }
 
                                                       // ignore: use_build_context_synchronously

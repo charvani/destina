@@ -9,7 +9,8 @@ import '../commons/constants.dart';
 
 class CheckOutScreen extends StatefulWidget {
   final String redirectUrl;
-  const CheckOutScreen({super.key, required this.redirectUrl});
+  final String? fromScreen;
+  const CheckOutScreen({super.key, required this.redirectUrl, this.fromScreen});
 
   @override
   State<CheckOutScreen> createState() => _CheckOutScreenState();
@@ -55,8 +56,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             onTapFun: () async {
               Get.back();
               Get.back();
-              await Constants.prefs.remove("uniq_id");
-              await Constants.prefs.remove("ss_id");
+              if (widget.fromScreen != "OpenCart") {
+                await Constants.prefs.remove("uniq_id");
+                await Constants.prefs.remove("ss_id");
+              }
+
               // Get.dialog(
               //   ConfrimationDialog(
               //   onTapFun: () async {
