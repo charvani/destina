@@ -45,8 +45,8 @@ class _MyTeamViewScreenState extends State<MyTeamViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: lightBlackColor,
-          toolbarHeight: 50,
+          backgroundColor: darkBlue,
+          toolbarHeight: 55,
           bottom: PreferredSize(
             preferredSize: const Size(double.infinity, 50),
             child: Column(
@@ -54,7 +54,7 @@ class _MyTeamViewScreenState extends State<MyTeamViewScreen> {
                 Card(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0)),
-                  color: whiteColor,
+                  color: darkBlue,
                   margin: const EdgeInsets.all(0),
                   borderOnForeground: false,
                   child: SizedBox(
@@ -64,8 +64,9 @@ class _MyTeamViewScreenState extends State<MyTeamViewScreen> {
                         minLeadingWidth: 0,
                         leading: IconButton(
                           padding: const EdgeInsets.all(0),
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.keyboard_arrow_left,
+                            color: whiteColor,
                           ),
                           onPressed: () {
                             Get.back();
@@ -73,6 +74,7 @@ class _MyTeamViewScreenState extends State<MyTeamViewScreen> {
                         )),
                   ),
                 ),
+                const SpaceHeightWidget(height: 5),
                 Container(
                     width: 1000,
                     padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -122,7 +124,7 @@ class _MyTeamViewScreenState extends State<MyTeamViewScreen> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      const SpaceHeightWidget(height: 15),
+                      const SpaceHeightWidget(height: 5),
                       Scrollbar(
                         interactive: true,
                         trackVisibility: true,
@@ -135,8 +137,7 @@ class _MyTeamViewScreenState extends State<MyTeamViewScreen> {
                             controller: _scrollController,
                             columnSpacing: 10,
                             horizontalMargin: 10,
-                            headingRowColor: MaterialStatePropertyAll(
-                                lightDarKBlue.withOpacity(0.2)),
+                            headingRowColor: MaterialStatePropertyAll(darkBlue),
                             columns: [
                               DataColumn(label: idTextStyle("S.No")),
                               DataColumn(label: _verticalDivider),
@@ -223,7 +224,7 @@ class _MyTeamViewScreenState extends State<MyTeamViewScreen> {
     return Text(
       id,
       style: TextStyle(
-          fontFamily: "OnestSemiBold", fontSize: 12, color: blackColor),
+          fontFamily: "OnestSemiBold", fontSize: 12, color: whiteColor),
     );
   }
 }
@@ -234,8 +235,8 @@ infoTextStyle(String id, Color textColor) {
     onTap: () {
       if (textColor == darkBlue) {
         Get.to(() => IdTeamViewScreen(
-          id: id,
-        ));
+              id: id,
+            ));
       }
     },
     child: Text(

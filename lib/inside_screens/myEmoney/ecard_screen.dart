@@ -30,8 +30,8 @@ class _EcardScreenState extends State<EcardScreen> {
             action: _dataController.ecardData.value.ecardButton
                 ? SizedBox(
                     height: 30,
-                    width: 150,
-                    child: CustomElevatedButton(
+                    width: 100,
+                    child: CustomFixedElevatedButton(
                         onTapFun: () {
                           Get.to(() => EcardTransferScreen(
                                 from: "E-Card",
@@ -66,8 +66,7 @@ class _EcardScreenState extends State<EcardScreen> {
                     controller: _scrollController,
                     columnSpacing: 0,
                     horizontalMargin: 0,
-                    headingRowColor: MaterialStatePropertyAll(
-                        lightDarKBlue.withOpacity(0.2)),
+                    headingRowColor: MaterialStatePropertyAll(darkBlue),
                     columns: [
                       const DataColumn(
                           label: TableHeadingWidget(title: "S.No")),

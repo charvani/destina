@@ -32,6 +32,7 @@ class _EcardReqReportScreenState extends State<EcardReqReportScreen> {
             : SingleChildScrollView(
                 child: Column(
                   children: [
+                    const SpaceHeightWidget(height: 10),
                     Scrollbar(
                       interactive: true,
                       trackVisibility: true,
@@ -44,8 +45,7 @@ class _EcardReqReportScreenState extends State<EcardReqReportScreen> {
                           controller: _scrollController,
                           columnSpacing: 0,
                           horizontalMargin: 0,
-                          headingRowColor: MaterialStatePropertyAll(
-                              lightDarKBlue.withOpacity(0.2)),
+                          headingRowColor: MaterialStatePropertyAll(darkBlue),
                           columns: [
                             const DataColumn(
                                 label: TableHeadingWidget(title: "S.No")),

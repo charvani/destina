@@ -55,6 +55,7 @@ class _NetGroupCvScreenState extends State<NetGroupCvScreen> {
               : SingleChildScrollView(
                   child: Column(
                     children: [
+                      const SpaceHeightWidget(height: 10),
                       Scrollbar(
                         interactive: true,
                         trackVisibility: true,
@@ -67,8 +68,7 @@ class _NetGroupCvScreenState extends State<NetGroupCvScreen> {
                             controller: _scrollController,
                             columnSpacing: 10,
                             horizontalMargin: 10,
-                            headingRowColor: MaterialStatePropertyAll(
-                                lightDarKBlue.withOpacity(0.2)),
+                            headingRowColor: MaterialStatePropertyAll(darkBlue),
                             columns: [
                               DataColumn(label: idTextStyle("S.No")),
                               DataColumn(label: _verticalDivider),
@@ -102,7 +102,7 @@ idTextStyle(String id) {
   return Text(
     id,
     style:
-        TextStyle(fontFamily: "OnestSemiBold", fontSize: 12, color: blackColor),
+        TextStyle(fontFamily: "OnestSemiBold", fontSize: 12, color: whiteColor),
   );
 }
 

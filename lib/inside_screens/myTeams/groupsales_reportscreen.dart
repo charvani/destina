@@ -29,8 +29,6 @@ class _GroupSalesReportScreenState extends State<GroupSalesReportScreen> {
   }
 
   dataFun() async {
-  
-
     Map bdata = {
       "UserId": Constants.prefs.getString("user_id"),
       "Pwd": Constants.prefs.getString("password"),
@@ -167,8 +165,8 @@ class _GroupSalesReportScreenState extends State<GroupSalesReportScreen> {
           ),
           title == "Net Left Group CV" && info != "0"
               ? SizedBox(
-                  height: 23,
-                  child: CommonOulineTextButton(
+                  height: 25,
+                  child: CustomAutoWidthButton(
                     title: info,
                     onTapFun: () {
                       Get.to(() => NetGroupCvScreen(
@@ -211,8 +209,8 @@ class _GroupSalesReportScreenState extends State<GroupSalesReportScreen> {
           ),
           title == "Net Right Group CV" && info != "0"
               ? SizedBox(
-                  height: 23,
-                  child: CommonOulineTextButton(
+                  height: 25,
+                  child: CustomAutoWidthButton(
                     title: info,
                     onTapFun: () {
                       Get.to(() => NetGroupCvScreen(

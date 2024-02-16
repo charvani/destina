@@ -83,8 +83,7 @@ class _ComissionAmountScreenState extends State<ComissionAmountScreen> {
                   controller: _scrollController,
                   columnSpacing: 0,
                   horizontalMargin: 0,
-                  headingRowColor:
-                      MaterialStatePropertyAll(lightDarKBlue.withOpacity(0.2)),
+                  headingRowColor: MaterialStatePropertyAll(darkBlue),
                   columns: [
                     const DataColumn(label: TableHeadingWidget(title: "S.No")),
                     DataColumn(label: _verticalDivider),

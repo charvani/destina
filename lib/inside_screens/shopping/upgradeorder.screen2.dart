@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import '../../commons/cmnproduct_detailswdgts.dart';
 import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
+import 'upgrade_cartscreen2.dart';
 import 'upgrade_productdetails_screen2.dart';
 
 class UpgradeOrderScreen2 extends StatefulWidget {
@@ -33,13 +34,10 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
     countryId = Constants.prefs.getString("country_id");
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      if (Constants.prefs.getString("uniq_id") == null) {
-        uniqId = generateRandomString(10);
-        await Constants.prefs.setString("uniq_id", uniqId);
-      } else {
-        uniqId = Constants.prefs.getString("uniq_id");
-      }
+      uniqId = generateRandomString(10);
+      await Constants.prefs.setString("uniq_id", uniqId);
       dataFun("Health Care");
+      _dataController.packCartList.clear();
     });
   }
 
@@ -48,6 +46,47 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
         countyId: Constants.prefs.getString("country_id")!,
         packageMalVal: malVal);
     print("getPackages screen data...$res");
+  }
+
+  cartcountFun(String action, pid) {
+    Map bData = {
+      'Uniqid': Constants.prefs.getString("uniq_id"),
+      "sessid": Constants.prefs.getString("ss_id"),
+      "ipaddress": Constants.prefs.getString("ip"),
+      "regid": Constants.prefs.getString("reg_id"),
+      "pcode": pid != "" ? pid : "0",
+      "action": action
+    };
+    _dataController.getCartData(bData);
+  }
+
+  dialogFun() {
+    Get.dialog(Dialog(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (int i = 0; i < _dataController.packCartList.length; i++)
+                CartItemWidget(
+                    showQuantity: true,
+                    removeFun: () {
+                      Get.back();
+                      cartcountFun("DeleteUpgItem",
+                          _dataController.packCartList[i].pkid);
+                    },
+                    imagePath: _dataController.packCartList[i].pImage,
+                    itemname: _dataController.packCartList[i].pkname,
+                    itemsPrice:
+                        "${_dataController.packCartList[i].symbol} ${_dataController.packCartList[i].mrp}",
+                    productCode: _dataController.packCartList[i].pkcode,
+                    itemCount: _dataController.packCartList[i].qty)
+            ],
+          ),
+        ),
+      ),
+    ));
   }
 
   @override
@@ -76,6 +115,56 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
                       Icons.keyboard_arrow_left_rounded,
                       color: whiteColor,
                     )))),
+        bottomNavigationBar: Container(
+          width: double.infinity,
+          height: 50,
+          decoration: BoxDecoration(
+            border: Border.all(color: darkBlue),
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Obx(() {
+                return _dataController.cartLoading.value
+                    ? loader
+                    : _dataController.packCartList.isNotEmpty
+                        ? Badge.count(
+                            count: _dataController.packCartList.length,
+                            child: InkWell(
+                              onTap: () {
+                                print("tapp");
+                                dialogFun();
+                              },
+                              child: const Icon(
+                                Icons.shopping_cart,
+                                // color: appthemeColor,
+                              ),
+                            ),
+                          )
+                        : InkWell(
+                            onTap: () {},
+                            child: const Icon(
+                              Icons.shopping_cart,
+                              // color: appthemeColor,
+                            ),
+                          );
+              }),
+              const SpaceWidthWidget(width: 25),
+              SizedBox(
+                  height: 30,
+                  child: CustomAutoWidthButton(
+                    onTapFun: () {
+                      if (_dataController.packCartList.isNotEmpty) {
+                        checkOutFun();
+                      }
+                    },
+                    title: "Checkout",
+                  ))
+            ],
+          ),
+        ),
         body: Column(
           children: [
             const SpaceHeightWidget(height: 5),
@@ -126,7 +215,7 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
 
                                           Timer(const Duration(seconds: 1),
                                               () async {
-                                            Get.to(() =>
+                                            dynamic res = await Get.to(() =>
                                                 UpgradeProductDetailsScreen2(
                                                   from: 'upgradeorder',
                                                   packageCode: _dataController
@@ -135,6 +224,12 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
                                                   fromPack:
                                                       productCtgs[selectedInd],
                                                 ));
+                                            if (res != null) {
+                                              if (res[0] == true) {
+                                                cartcountFun(
+                                                    "GetUpgCartData", "");
+                                              }
+                                            }
                                           });
                                         },
                                         imagePath:
@@ -149,7 +244,7 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
                                         onTapFun: () async {
                                           Timer(const Duration(seconds: 1),
                                               () async {
-                                            Get.to(() =>
+                                            dynamic res = await Get.to(() =>
                                                 UpgradeProductDetailsScreen2(
                                                   from: 'upgradeorder',
                                                   packageCode: _dataController
@@ -158,6 +253,12 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
                                                   fromPack:
                                                       productCtgs[selectedInd],
                                                 ));
+                                            if (res != null) {
+                                              if (res[0] == true) {
+                                                cartcountFun(
+                                                    "GetUpgCartData", "");
+                                              }
+                                            }
                                           });
                                         },
                                         imagePath:
@@ -213,5 +314,27 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
     //               );
     //   }),
     // );
+  }
+
+  checkOutFun() async {
+    Map bData = {
+      "rpt": "Upgrade",
+      "Uniqid": Constants.prefs.getString("uniq_id"),
+      "sessid": Constants.prefs.getString("ss_id"),
+      "countryid": Constants.prefs.getString("country_id"),
+      "cv": _dataController.cvVal.value
+    };
+    dynamic resss = await _dataController.getCheckoutCheck(bData);
+    if (resss != null) {
+      print("res....$resss");
+      if (resss['result'] != "Fail") {
+        Get.to(() => UpgradeOrderCartSceen2(
+              packageCode: resss['Pkcode'],
+            ));
+      } else {
+        CommonToast(
+            "Please Select Some Products To Qualify For Package Signup");
+      }
+    }
   }
 }

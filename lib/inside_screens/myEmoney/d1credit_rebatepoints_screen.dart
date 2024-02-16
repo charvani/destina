@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/main_controller.dart';
-import 'ecard_transfer_screen.dart';
 import 'withdrawal_screen.dart';
 
 class D1CreditRebatePointsScreen extends StatefulWidget {
@@ -84,8 +83,7 @@ class _D1CreditRebatePointsScreenState
                   controller: _scrollController,
                   columnSpacing: 0,
                   horizontalMargin: 0,
-                  headingRowColor:
-                      MaterialStatePropertyAll(lightDarKBlue.withOpacity(0.2)),
+                  headingRowColor: MaterialStatePropertyAll(darkBlue),
                   columns: [
                     const DataColumn(label: TableHeadingWidget(title: "S.No")),
                     DataColumn(label: _verticalDivider),

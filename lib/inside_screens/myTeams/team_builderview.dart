@@ -116,8 +116,7 @@ class _TeamBuilderViewScreenState extends State<TeamBuilderViewScreen> {
                                                             10)),
                                                 headingRowColor:
                                                     MaterialStatePropertyAll(
-                                                        blackColor
-                                                            .withOpacity(0.8)),
+                                                        darkBlue),
                                                 dataRowColor:
                                                     MaterialStatePropertyAll(
                                                         lightDarKBlue

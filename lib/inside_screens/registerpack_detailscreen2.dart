@@ -412,6 +412,7 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                             ],
                           ),
 
+                        const PdfWidget(),
                         const SpaceHeightWidget(height: 115),
                       ]),
                 );

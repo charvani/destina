@@ -11,7 +11,6 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../commons/cmnproduct_detailswdgts.dart';
 import '../heroanimation_screen.dart';
-import 'upgrade_cartscreen.dart';
 
 class UpgradeProductDetailsScreen2 extends StatefulWidget {
   final String from;
@@ -223,7 +222,7 @@ class _UpgradeProductDetailsScreen2State
                                 // this register add to cart fun
                                 print("add to car fun");
                                 Map parameters = {
-                                  "action": "addSACartitems",
+                                  "action": "addUGCartitems",
                                   // "addSGCartitems",
                                   "Pkid": widget.packageCode,
                                   "Country":
@@ -231,7 +230,8 @@ class _UpgradeProductDetailsScreen2State
                                   "Uniqid": uniqId,
                                   "sessid": sessionId,
                                   "ipaddress": Constants.prefs.getString("ip"),
-                                  "sprno": "0",
+                                  "sprno": Constants.prefs.getString("reg_id"),
+                                  // "0",
                                   "Quantity": firstQtyController.text
                                 };
                                 print("add to cart params...$parameters");
@@ -245,10 +245,12 @@ class _UpgradeProductDetailsScreen2State
                                     packageLoading = false;
                                   });
                                   Timer(const Duration(seconds: 1), () {
-                                    Get.back();
-                                    Get.to(() => UpgradeCartScreen(
-                                          packCode: widget.packageCode,
-                                        ));
+                                    Get.back(result: [true]);
+
+                                    // Get.back();
+                                    // Get.to(() => UpgradeCartScreen2(
+                                    //       packCode: widget.packageCode,
+                                    //     ));
                                   });
                                 } else {
                                   setState(() {
@@ -403,6 +405,7 @@ class _UpgradeProductDetailsScreen2State
                               ),
                             ],
                           ),
+                        const PdfWidget(),
                         const SpaceHeightWidget(height: 115),
                       ]),
                 );

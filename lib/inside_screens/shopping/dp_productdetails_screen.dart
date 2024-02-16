@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../../commons/cmnproduct_detailswdgts.dart';
 import '../heroanimation_screen.dart';
 import 'dp_cartscreen.dart';
 
@@ -298,7 +299,7 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                           ],
                         ),
                       ),
-                      const SpaceHeightWidget(height: 65),
+                      const SpaceHeightWidget(height: 10),
                       if (videoId != "" && videoId != null)
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -325,7 +326,8 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                             ),
                           ],
                         ),
-                      const SpaceHeightWidget(height: 65),
+                      const PdfWidget(),
+                      const SpaceHeightWidget(height: 105),
                     ]),
               );
       }),

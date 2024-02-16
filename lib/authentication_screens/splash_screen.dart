@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
     login = Constants.prefs.getString("user_id") ?? "false";
 
     countyCodeFun();
-    Timer(const Duration(seconds: 4), () {
+    Timer(const Duration(seconds: 3), () {
       navgationFun();
     });
   }
@@ -66,23 +66,28 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: darkBlue,
         body: Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        Container(
-          color: splashBgColor,
-          width: double.infinity,
-          child: Image.asset(
-            "assets/videos/splash-video.gif",
-            fit: BoxFit.cover,
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: VersionText(),
-        ),
-      ],
-    )
+          alignment: Alignment.bottomCenter,
+          children: [
+            Container(
+              color: splashBgColor,
+              width: double.infinity,
+              height: double.infinity,
+              child: Image.asset(
+                // "assets/videos/splash-video.gif",
+                "assets/images/splash_img.png",
+                fit: BoxFit.fill,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: VersionText(
+                colorT: whiteColor,
+              ),
+            ),
+          ],
+        )
         // Stack(
         //   alignment: Alignment.center,
         //   children: [

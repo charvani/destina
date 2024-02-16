@@ -53,24 +53,16 @@ class _UpgradeCartScreenState extends State<UpgradeCartScreen> {
       });
     }
 
-    // cartParams = {
-    //   "Pkid": "",
-    //   "pid": "",
-    //   "Uniqid": uniqId,
-    //   "sessid": sessionId,
-    //   "ipaddress": Constants.prefs.get("ip"),
-    //   "sprno": Constants.prefs.get("reg_id"),
-    //   "prdtype": "Package",
-    //   "qty": "1",
-    //   "country": Constants.prefs.get("country_id"),
-    // };
     cartParams = {
       "Uniqid": uniqId,
       "sessid": sessionId,
       // "action": "GetCartData",
       // "ipaddress": "GetCartData",
       "ipaddress": "GetPromoPacks",
-      "sprno": Constants.prefs.get("user_id"),
+      // "ipaddress": "GetUpgCartData",
+
+      "sprno": Constants.prefs.getString("reg_id"),
+
       "pcode": widget.packCode,
       "amt": "0",
       "amttype": "",

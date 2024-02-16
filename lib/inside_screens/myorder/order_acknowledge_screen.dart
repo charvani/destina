@@ -71,8 +71,7 @@ class _OrderAknowledgeScreenState extends State<OrderAknowledgeScreen> {
                         controller: _scrollController,
                         columnSpacing: 0,
                         horizontalMargin: 0,
-                        headingRowColor: MaterialStatePropertyAll(
-                            lightDarKBlue.withOpacity(0.2)),
+                        headingRowColor: MaterialStatePropertyAll(darkBlue),
                         columns: [
                           DataColumn(label: tableTitleWidget("S.No")),
                           DataColumn(label: _verticalDivider),
@@ -113,7 +112,7 @@ class _OrderAknowledgeScreenState extends State<OrderAknowledgeScreen> {
       child: Text(
         title,
         style: TextStyle(
-            fontFamily: "OnestSemiBold", fontSize: 12, color: blackColor),
+            fontFamily: "OnestSemiBold", fontSize: 12, color: whiteColor),
       ),
     );
   }

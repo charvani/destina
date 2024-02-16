@@ -62,8 +62,7 @@ class _CVScreenState extends State<CVScreen> {
                   dataRowMaxHeight: 50,
                   horizontalMargin: 0,
                   columnSpacing: 0,
-                  headingRowColor:
-                      MaterialStatePropertyAll(lightDarKBlue.withOpacity(0.15)),
+                  headingRowColor: MaterialStatePropertyAll(darkBlue),
                   border: TableBorder.all(
                       color: middleBlackColor.withOpacity(0.15)),
                   columns: const [

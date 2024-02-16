@@ -196,8 +196,7 @@ class _MyListViewGetReportScreenState extends State<MyListViewGetReportScreen> {
                                                           10)),
                                               headingRowColor:
                                                   MaterialStatePropertyAll(
-                                                      blackColor
-                                                          .withOpacity(0.8)),
+                                                      darkBlue),
                                               dataRowColor:
                                                   MaterialStatePropertyAll(
                                                       lightDarKBlue

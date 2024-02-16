@@ -883,10 +883,10 @@ class MyOrderItemWidget extends StatelessWidget {
                         const SpaceHeightWidget(height: 15),
                         SizedBox(
                             height: 25,
-                            width: 120,
+                            // width: 120,
                             child: loading
                                 ? loader
-                                : CommonOulineTextButton(
+                                : CustomAutoWidthButton(
                                     onTapFun: shippingFun,
                                     title: "Shipping History"))
                       ],
@@ -982,7 +982,8 @@ class CommonUnderlineTextForm extends StatelessWidget {
 }
 
 class VersionText extends StatelessWidget {
-  const VersionText({super.key});
+  final Color? colorT;
+  const VersionText({super.key, this.colorT});
 
   @override
   Widget build(BuildContext context) {
@@ -990,7 +991,7 @@ class VersionText extends StatelessWidget {
       "version ${Constants.appversion}",
       style: TextStyle(
           fontFamily: "OnestLight",
-          color: middleBlackColor.withOpacity(0.5),
+          color: colorT ?? middleBlackColor.withOpacity(0.5),
           fontSize: 11),
     );
   }
@@ -1738,13 +1739,15 @@ class IconElevatedButton extends StatelessWidget {
   final String titile;
   final Color buttonColor;
   final Color labelColor;
+  final IconData? idata;
   const IconElevatedButton(
       {super.key,
       required this.imagePath,
       required this.onTapFun,
       required this.buttonColor,
       required this.labelColor,
-      required this.titile});
+      required this.titile,
+      this.idata});
 
   @override
   Widget build(BuildContext context) {
@@ -1754,11 +1757,16 @@ class IconElevatedButton extends StatelessWidget {
                 // buttonColor
                 )),
         onPressed: onTapFun,
-        icon: Image.asset(
-          imagePath,
-          color: labelColor,
-          height: 22,
-        ),
+        icon: imagePath.contains("assets")
+            ? Image.asset(
+                imagePath,
+                color: labelColor,
+                height: 22,
+              )
+            : Icon(
+                idata,
+                color: whiteColor,
+              ),
         label: Text(
           titile,
           style: TextStyle(
@@ -4711,7 +4719,7 @@ class TableHeadingWidget extends StatelessWidget {
           style: TextStyle(
               fontFamily: fontFamily ?? "OnestSemiBold",
               fontSize: 12,
-              color: blackColor),
+              color: whiteColor),
         ),
       );
     }

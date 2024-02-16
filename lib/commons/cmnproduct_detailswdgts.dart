@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../models/biomatriximage_model.dart';
@@ -1349,8 +1350,7 @@ class ProductCatScrollWidget extends StatelessWidget {
       required this.selInd,
       required this.onTapFun,
       required this.index,
-      this.title
-      });
+      this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -1373,7 +1373,7 @@ class ProductCatScrollWidget extends StatelessWidget {
                     border: Border.all(color: middleBlackColor)),
                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 child: Text(
-             title ??     productCtgs[index],
+                  title ?? productCtgs[index],
                   style: TextStyle(
                       fontFamily: "OnestSemiBold",
                       color: blackColor,
@@ -1436,4 +1436,90 @@ viewRatingWidget() {
       ),
     ),
   );
+}
+
+class PdfWidget extends StatefulWidget {
+  const PdfWidget({super.key});
+
+  @override
+  State<PdfWidget> createState() => _PdfWidgetState();
+}
+
+class _PdfWidgetState extends State<PdfWidget> {
+  double? progressVal;
+  bool progressbar = false;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonTitle(
+                titleName: "Download Broucher:",
+                fontColor: darkBlue,
+                size: 16,
+              ),
+              SizedBox(
+                // width: 130,
+                height: 30,
+                child: IconElevatedButton(
+                  onTapFun: () {
+                    if (progressbar == false) {
+                      FileDownloader.downloadFile(
+                          url:
+                              "https://admin.destina1.com/Resources/Mini%20Book%20web.pdf",
+                          // url:
+                          //     "https://admin.destina1.com/MemberDownloads/GoProChapter_12.mp3",
+                          name:
+                              "https://admin.destina1.com/Resources/Mini%20Book%20web.pdf"
+                                  .split('MemberDownloads/')
+                                  .last, //(optional)
+                          onProgress: (String? name, double? onProgress) {
+                            setState(() {
+                              progressbar = true;
+                              progressVal = onProgress;
+                              if (progressVal == 100.0) {
+                                progressbar = false;
+                              }
+                            });
+
+                            print('FILE fileName HAS PROGRESS $onProgress');
+                          },
+                          onDownloadCompleted: (String path) {
+                            print('FILE DOWNLOADED TO PATH: $path');
+                            CommonToastTrue("Successfully donwloaded");
+                          },
+                          onDownloadError: (String error) {
+                            print('DOWNLOAD ERROR: $error');
+                            CommonToast(error);
+                          });
+                    }
+                  },
+                  idata: Icons.picture_as_pdf_outlined,
+                  imagePath: '',
+                  labelColor: whiteColor,
+                  buttonColor: blackColor,
+                  titile: "Download",
+                ),
+              ),
+            ],
+          ),
+          if (progressbar)
+            Column(
+              children: [
+                const SpaceHeightWidget(height: 10),
+                LinearProgressIndicator(
+                  borderRadius: BorderRadius.circular(10),
+                  value: progressVal! / 100.00,
+                ),
+                const SpaceHeightWidget(height: 10)
+              ],
+            ),
+        ],
+      ),
+    );
+  }
 }

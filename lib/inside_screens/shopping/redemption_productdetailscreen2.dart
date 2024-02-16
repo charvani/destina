@@ -396,6 +396,7 @@ class _RedemptionProductDetailsScreen2State
                               ),
                             ],
                           ),
+                        const PdfWidget(),
                         const SpaceHeightWidget(height: 115),
                       ]),
                 );
@@ -403,8 +404,4 @@ class _RedemptionProductDetailsScreen2State
       ),
     );
   }
-  
-
-
-  
 }

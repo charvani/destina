@@ -109,8 +109,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
       child: StatefulBuilder(builder: (context, myState) {
         return Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: blackColor.withOpacity(0.8)),
+              borderRadius: BorderRadius.circular(10), color: darkBlue),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,

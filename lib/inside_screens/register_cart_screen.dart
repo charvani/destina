@@ -1014,7 +1014,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                                       .getString("ip"),
                                                   "sprno": "0",
                                                   "jointype": "Promotion",
-                                                  "action": "addSGPromoitems",
+                                                  "action": "addUGPromoitems",
                                                 };
                                                 print(
                                                     "add to cart params...$parameters");

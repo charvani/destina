@@ -2518,14 +2518,39 @@ class MainController extends GetxController {
 
   getCartData(Map params) async {
     cartLoading.value = true;
-    packCartList.clear();
-    cvVal.value = 0.0;
+
     dynamic res = await ApiCall()
         .postMethodFun(methodName: ApiData().nSGCartItems, params: params);
+    packCartList.clear();
+    cvVal.value = 0.0;
+    if (res != null) {
+      for (int i = 0; i < res['SGCartItemRpt'].length; i++) {
+        packCartList.add(PackCartModel.fromJson(res['SGCartItemRpt'][i]));
+        cvVal.value = cvVal.value + (double.parse(res['SGCartItemRpt'][i]['CV'])*
+        double.parse(res['SGCartItemRpt'][i]['Qty'])
+        );
+      }
+    }
+    cartLoading.value = false;
+    return res;
+  }
+
+  getUpgradeCartData2(Map params) async {
+    cartLoading.value = true;
+
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().nSGCartItems, params: params);
+    totalAmount.value = 0.0;
+    packCartList.clear();
+    cvVal.value = 0.0;
     if (res != null) {
       for (int i = 0; i < res['SGCartItemRpt'].length; i++) {
         packCartList.add(PackCartModel.fromJson(res['SGCartItemRpt'][i]));
         cvVal.value = cvVal.value + double.parse(res['SGCartItemRpt'][i]['CV']);
+
+        totalAmount.value = totalAmount.value +
+            (double.parse(res['SGCartItemRpt'][i]['mrp']) *
+                double.parse(res['SGCartItemRpt'][i]['Qty']));
       }
     }
     cartLoading.value = false;

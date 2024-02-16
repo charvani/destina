@@ -402,6 +402,7 @@ class _SalesProductDetailsScreen2State
                               ),
                             ],
                           ),
+                        const PdfWidget(),
                         const SpaceHeightWidget(height: 115),
                       ]),
                 );

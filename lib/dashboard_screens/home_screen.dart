@@ -6,7 +6,6 @@ import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:destina_1_international/dashboard_screens/bottombar_screen.dart';
-import 'package:destina_1_international/inside_screens/productdetails_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -372,7 +371,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         "false")
                                   Container(
                                     margin: const EdgeInsets.only(
-                                        bottom: 30, left: 12, top: 0),
+                                        bottom: 8, left: 12, top: 0),
                                     height: 28,
                                     width: 148,
                                     child: CustomAutoWidthButton(
@@ -548,11 +547,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                     itemBuilder: (context, i, rindex) {
                                       return HomeScreenNewArrivalItemWidget(
                                         onTapFun: () {
-                                          Get.to(() => ProductDetailsScreen(
+                                          Get.to(() => ProductDetailsScreen2(
                                                 from: "newarrival",
                                                 packageCode: productController
                                                     .productItemList[i]
                                                     .packagecode,
+                                                fromPack: 'Health Care',
                                               ));
                                         },
                                         imagePath: productController

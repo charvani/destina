@@ -431,6 +431,7 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                             ],
                           ),
                         const SpaceHeightWidget(height: 5),
+                         PdfWidget(),
 
                         ratingReviewWidget(),
                         const SpaceHeightWidget(height: 110),
@@ -445,7 +446,7 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
     return ExpansionTile(
       shape: const Border(),
       title: CommonTitle(
-        titleName: "Rating & Reviews",
+        titleName: "Customer Reviews",
         fontColor: darkBlue,
         size: 16,
       ),
@@ -453,24 +454,18 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
-                  CommonTitle(
-                    titleName: "5.0",
-                    size: 30,
-                    fontFamily: "OnestExtraBold",
-                    fontColor: lightDarKBlue,
-                  ),
-                  const SpaceWidthWidget(width: 15),
                   RatingBar.builder(
                     initialRating: 3,
                     minRating: 1,
                     direction: Axis.horizontal,
                     allowHalfRating: false,
                     itemCount: 5,
-                    itemSize: 30,
-                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    itemSize: 15,
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
                     itemBuilder: (context, _) => const Icon(
                       Icons.star,
                       color: Colors.amber,
@@ -478,8 +473,21 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                     onRatingUpdate: (rating) {
                       print(rating);
                     },
-                  )
+                  ),
+                  const SpaceWidthWidget(width: 10),
+                  CommonTitle(
+                    titleName: "5 out of 5",
+                    size: 14,
+                    fontFamily: "OnestRegular",
+                    fontColor: lightDarKBlue,
+                  ),
                 ],
+              ),
+              CommonTitle(
+                titleName: "712 global ratings",
+                size: 14,
+                fontFamily: "OnestRegular",
+                fontColor: lightDarKBlue,
               ),
               const SpaceHeightWidget(height: 10),
               for (int i = 0; i < 4; i++) viewRatingWidget(),
