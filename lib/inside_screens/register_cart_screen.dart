@@ -52,7 +52,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
   Map cartParams = {};
   bool showProductsSelection = false;
   getData(String from) async {
-    if (from != "init") {
+    if (from == "add to cart") {
       setState(() {
         screenLoad = true;
       });
@@ -77,7 +77,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
         showProductsSelection = false;
       });
     }
-    if (from != "init") {
+    if (from == "add to cart") {
       setState(() {
         screenLoad = false;
       });
@@ -254,6 +254,29 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                     Column(
                                       children: [
                                         CartItemWidget(
+                                          showQuantity: true,
+                                          // decrementFun: () {
+                                          //   if (int.parse(cartController
+                                          //           .registerCartItems[i].qty) >
+                                          //       1) {
+                                          //     incrdcrFun(
+                                          //         "decrement",
+                                          //         cartController
+                                          //             .registerCartItems[i].qty,
+                                          //         cartController
+                                          //             .registerCartItems[i]
+                                          //             .pkcode);
+                                          //   }
+                                          // },
+                                          // incrementFun: () {
+                                          //   incrdcrFun(
+                                          //       "increment",
+                                          //       cartController
+                                          //           .registerCartItems[i].qty,
+                                          //       cartController
+                                          //           .registerCartItems[i]
+                                          //           .pkcode);
+                                          // },
                                           removeCartOption: true,
                                           imagePath: cartController
                                               .registerCartItems[i].pImage,
@@ -397,9 +420,10 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                             Obx(() {
                                               return cartController
                                                       .loading.value
-                                                  ? const Text("RM 0.0")
+                                                  ? Text(
+                                                      "${cartController.registerCartItems[0].symbol} 0.0")
                                                   : Text(
-                                                      "RM ${cartController.totalAmount.value}",
+                                                      "${cartController.registerCartItems[0].symbol} ${cartController.totalAmount.value}",
                                                       style: const TextStyle(
                                                         fontFamily:
                                                             "OnestRegular",
@@ -427,9 +451,10 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                             Obx(() {
                                               return cartController
                                                       .loading.value
-                                                  ? const Text("RM 0.0")
+                                                  ? Text(
+                                                      "${cartController.registerCartItems[0].symbol} 0.0")
                                                   : Text(
-                                                      "RM ${cartController.totalAmount.value}",
+                                                      "${cartController.registerCartItems[0].symbol} ${cartController.totalAmount.value}",
                                                       style: TextStyle(
                                                         fontFamily:
                                                             "OnestSemiBold",
@@ -1061,5 +1086,26 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
         );
       }),
     );
+  }
+
+  incrdcrFun(String from, String itemcount, String packCode) async {
+    print("add to car fun");
+    Map parameters = {
+      "action": "addSGCartitems",
+      "Pkid": packCode,
+      "Country": Constants.prefs.getString("country_id"),
+      "Uniqid": uniqId,
+      "sessid": sessionId,
+      "ipaddress": Constants.prefs.getString("ip"),
+      "sprno": "0",
+      "Quantity": from == "increment"
+          ? "${int.parse(itemcount) + 1}"
+          : "${int.parse(itemcount) - 1}"
+    };
+    print("add to cart params...$parameters");
+    dynamic res = await MainController().getRegPackAddToCart(parameters);
+    if (res['Msg'].toString().toLowerCase() == "success") {
+      getData("not init");
+    }
   }
 }

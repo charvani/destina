@@ -370,8 +370,11 @@ class _MemberProductDetailsScreen2State
                             "UNIWAVE INSTANT COFFEE")
                           coffeeWidget(),
                         if (packDetailsController
-                                .packageDetailsData.value.pkname ==
-                            "UNIWAVE BIOMATRIX SHIELD")
+                                    .packageDetailsData.value.pkname ==
+                                "UNIWAVE BIOMATRIX SHIELD" ||
+                            packDetailsController
+                                    .packageDetailsData.value.pkname ==
+                                "UNIWAVE BIO MATRIX SHIELD")
                           biomatrixWidget(),
                         if (videoId != "" && videoId != null)
                           Column(

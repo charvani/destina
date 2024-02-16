@@ -57,12 +57,11 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
   Map cartParams = {};
   bool showProductsSelection = false;
   getData(String from) async {
-    if (from != "init") {
+    if (from == "add to cart") {
       setState(() {
         screenLoad = true;
       });
     }
-
     cartParams = {
       "Uniqid": uniqId,
       "sessid": sessionId,
@@ -87,7 +86,7 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
       }
     }
 
-    if (from != "init") {
+    if (from == "add to cart") {
       setState(() {
         screenLoad = false;
       });
@@ -156,6 +155,30 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                       children: [
                                         CartItemWidget(
                                           // removeCartOption: true,
+                                          decrementFun: () {
+                                            if (int.parse(cartController
+                                                    .salesMallCartItems[i]
+                                                    .qty) >
+                                                1) {
+                                              incrdcrFun(
+                                                  "decrement",
+                                                  cartController
+                                                      .salesMallCartItems[i]
+                                                      .qty,
+                                                  cartController
+                                                      .salesMallCartItems[i]
+                                                      .pkcode);
+                                            }
+                                          },
+                                          incrementFun: () {
+                                            incrdcrFun(
+                                                "increment",
+                                                cartController
+                                                    .salesMallCartItems[i].qty,
+                                                cartController
+                                                    .salesMallCartItems[i]
+                                                    .pkcode);
+                                          },
                                           imagePath: cartController
                                               .salesMallCartItems[i].pimage,
                                           removeFun: () {
@@ -991,5 +1014,26 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
         );
       }),
     );
+  }
+
+  incrdcrFun(String from, String itemcount, String packCode) async {
+    print("add to car fun");
+    Map parameters = {
+      "Pkid": packCode,
+      "pid": "1",
+      "uniqid": uniqId,
+      "sessid": sessionId,
+      "ipaddress": Constants.prefs.getString("ip"),
+      "sprno": Constants.prefs.getString("reg_id"),
+      "prdtype": "Package",
+      "qty": from == "increment"
+          ? "${int.parse(itemcount) + 1}"
+          : "${int.parse(itemcount) - 1}"
+    };
+    print("add to cart params...$parameters");
+    dynamic res = await MainController().getDPMallAddToCart(parameters);
+    if (res['Msg'].toString().toLowerCase() == "success") {
+      getData("not init");
+    }
   }
 }

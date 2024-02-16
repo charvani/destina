@@ -6,12 +6,14 @@ import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../commons/cmnproduct_detailswdgts.dart';
 import '../dashboard_screens/cart_screen.dart';
 import 'heroanimation_screen.dart';
+import 'reviewlist_screen.dart';
 
 class ProductDetailsScreen2 extends StatefulWidget {
   final String from;
@@ -35,11 +37,14 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
   int currentProductCartCount = 0;
   int? badgeCount;
   TextEditingController firstQtyController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController reviewController = TextEditingController();
   late YoutubePlayerController _ycontroller;
   List<TextEditingController> textEControllerList = [];
   dynamic uniqId;
   dynamic sessionId, countryid;
   final _fomkey = GlobalKey<FormState>();
+  final _fomkey2 = GlobalKey<FormState>();
   final _fomkey1 = GlobalKey<FormState>();
   bool showQtyErrorText = false;
   bool loading = false;
@@ -425,11 +430,195 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                               ),
                             ],
                           ),
+                        const SpaceHeightWidget(height: 5),
 
-                        const SpaceHeightWidget(height: 115),
+                        ratingReviewWidget(),
+                        const SpaceHeightWidget(height: 110),
                       ]),
                 );
         }),
+      ),
+    );
+  }
+
+  Widget ratingReviewWidget() {
+    return ExpansionTile(
+      shape: const Border(),
+      title: CommonTitle(
+        titleName: "Rating & Reviews",
+        fontColor: darkBlue,
+        size: 16,
+      ),
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  CommonTitle(
+                    titleName: "5.0",
+                    size: 30,
+                    fontFamily: "OnestExtraBold",
+                    fontColor: lightDarKBlue,
+                  ),
+                  const SpaceWidthWidget(width: 15),
+                  RatingBar.builder(
+                    initialRating: 3,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: false,
+                    itemCount: 5,
+                    itemSize: 30,
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    onRatingUpdate: (rating) {
+                      print(rating);
+                    },
+                  )
+                ],
+              ),
+              const SpaceHeightWidget(height: 10),
+              for (int i = 0; i < 4; i++) viewRatingWidget(),
+              const SpaceHeightWidget(height: 15),
+              Container(
+                height: 30,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomAutoWidthButton(
+                        onTapFun: () {
+                          Get.dialog(addReviewandRatingDialog());
+                        },
+                        title: "Write Review"),
+                    CustomAutoWidthButton(
+                        onTapFun: () {
+                          Get.to(() => const ReviewListScreen());
+                        },
+                        title: "View All"),
+                  ],
+                ),
+              ),
+              const SpaceHeightWidget(height: 25)
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  addReviewandRatingDialog() {
+    return Dialog(
+      backgroundColor: whiteColor,
+      child: Container(
+        decoration: BoxDecoration(
+            color: whiteColor, borderRadius: BorderRadius.circular(13)),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  color: darkBlue,
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(13),
+                      topRight: Radius.circular(13))),
+              alignment: Alignment.center,
+              width: double.infinity,
+              height: 45,
+              child: CommonTitle(
+                titleName: "Add Review",
+                size: 16,
+                fontColor: whiteColor,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Form(
+                key: _fomkey2,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const CommonTitle(
+                      titleName: "Your Name",
+                      size: 14,
+                    ),
+                    RegisterTextField(
+                      // inputFormatter: [FilteringTextInputFormatter.digitsOnly],
+                      controller: nameController,
+                      hintText: '',
+                      textInputType: TextInputType.name,
+                      onchangeFun: (val) {
+                        setState(() {});
+                      },
+                      validation: (val) {
+                        return null;
+                      },
+                      labelText: '',
+                    ),
+                    const CommonTitle(
+                      titleName: "Review",
+                      size: 14,
+                    ),
+                    AccountTextField(
+                      minLines: 3,
+                      onchangeFun: (val) {},
+                      outsideFun: (val) async {},
+                      textInputType: TextInputType.multiline,
+                      hintText: "",
+                      controller: reviewController,
+                      validation: (val) {
+                        if (val!.isEmpty) {
+                          return "Enter your review";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    const CommonTitle(
+                      titleName: "Rating",
+                      size: 14,
+                    ),
+                    RatingBar.builder(
+                      initialRating: 3,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: false,
+                      itemCount: 5,
+                      itemSize: 25,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        print(rating);
+                      },
+                    ),
+                    const SpaceHeightWidget(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                            height: 35,
+                            child: CustomAutoWidthButton(
+                                onTapFun: () {
+                                  Get.back();
+                                },
+                                title: "Submit")),
+                      ],
+                    ),
+                    const SpaceHeightWidget(height: 10),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

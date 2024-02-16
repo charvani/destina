@@ -895,26 +895,35 @@ class MainController extends GetxController {
     return res;
   }
 
-  getCartItems(Map parameters) async {
-    loading.value = true;
+  getCartItems(Map parameters, String from) async {
+    if (from == "init") {
+      loading.value = true;
+    }
     dynamic res = await ApiCall().postMethodFun(
         methodName: ApiData().cartItemsMethod, params: parameters);
     cartItemsList.clear();
+    totalAmount.value = 0.0;
+
     print("cart_itmes...${cartItemsList.length}");
     if (res['packageDataRpt'].length > 0) {
       for (int i = 0; i < res['packageDataRpt'].length; i++) {
         cartItemsList.add(CartItemModel.fromJson(res['packageDataRpt'][i]));
+        totalAmount.value = totalAmount.value +
+            (double.parse(res['packageDataRpt'][i]['packMrp']) *
+                int.parse(res['packageDataRpt'][i]['packQuantity']));
       }
     }
     print(cartItemsList.length);
-    loading.value = false;
+    if (from == "init") {
+      loading.value = false;
+    }
     return res;
   }
 
   getRemoveCartItem(Map parameters, cartParameters) async {
     dynamic res = await ApiCall().postMethodFun(
         methodName: ApiData().removeCartItemMethod, params: parameters);
-    getCartItems(cartParameters);
+    getCartItems(cartParameters, "init");
     return res;
   }
 
@@ -2084,14 +2093,15 @@ class MainController extends GetxController {
   }
 
   getSalesMCartItems(String from, Map parameters) async {
+    print("in cont...$from");
     if (from == "init") {
       loading.value = true;
     }
-    salesMallCartItems.clear();
-    salesMallTAmount.value = 0.0;
+
     dynamic res = await ApiCall().postMethodFun(
         methodName: ApiData().checkOutSalesCartItems, params: parameters);
-
+    salesMallCartItems.clear();
+    salesMallTAmount.value = 0.0;
     print("cart_itmes...${salesMallCartItems.length}");
     if (res != null) {
       if (res['SalesPackgeRpt'].length > 0 &&
@@ -2165,11 +2175,11 @@ class MainController extends GetxController {
     if (from == "init") {
       loading.value = true;
     }
-    salesMallCartItems.clear();
-    salesMallTAmount.value = 0.0;
+
     dynamic res = await ApiCall().postMethodFun(
         methodName: ApiData().getRedemPackages, params: parameters);
-
+    salesMallCartItems.clear();
+    salesMallTAmount.value = 0.0;
     print("cart_itmes...${salesMallCartItems.length}");
     if (res != null) {
       if (res['SalesPackgeRpt'].length > 0 &&
@@ -2183,8 +2193,9 @@ class MainController extends GetxController {
         }
       }
     } else {
-      Get.back();
-      Get.back();
+      Timer(const Duration(seconds: 1), () {
+        Get.back();
+      });
     }
     if (from == "init") {
       loading.value = false;
@@ -2236,11 +2247,12 @@ class MainController extends GetxController {
     if (from == "init") {
       loading.value = true;
     }
-    salesMallCartItems.clear();
-    dpMallDPAmount.value = 0.0;
-    dpMallRMAmount.value = 0.0;
+
     dynamic res = await ApiCall()
         .postMethodFun(methodName: ApiData().getdppackages, params: parameters);
+    dpMallDPAmount.value = 0.0;
+    dpMallRMAmount.value = 0.0;
+    salesMallCartItems.clear();
 
     print("cart_itmes...${salesMallCartItems.length}");
     if (res != null) {
@@ -2323,12 +2335,12 @@ class MainController extends GetxController {
     if (from == "init") {
       loading.value = true;
     }
+
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().getMemberPackages, params: parameters);
     salesMallCartItems.clear();
     salesMallTAmount.value = 0.0;
     memberMallCartCount.value = "0";
-    dynamic res = await ApiCall().postMethodFun(
-        methodName: ApiData().getMemberPackages, params: parameters);
-
     print("cart_itmes...${salesMallCartItems.length}");
     if (res != null) {
       if (res['SalesPackgeRpt'].length > 0 &&

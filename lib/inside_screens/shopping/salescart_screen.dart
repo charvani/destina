@@ -48,7 +48,8 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
   Map cartParams = {};
   bool showProductsSelection = false;
   getData(String from) async {
-    if (from != "init") {
+    print("ciming from ...$from");
+    if (from == "add to cart") {
       setState(() {
         screenLoad = true;
       });
@@ -86,7 +87,7 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
         showProductsSelection = false;
       });
     }
-    if (from != "init") {
+    if (from == "add to cart") {
       setState(() {
         screenLoad = false;
       });
@@ -147,6 +148,30 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                       children: [
                                         CartItemWidget(
                                           // removeCartOption: true,
+                                          decrementFun: () {
+                                            if (int.parse(cartController
+                                                    .salesMallCartItems[i]
+                                                    .qty) >
+                                                1) {
+                                              incrdcrFun(
+                                                "decrement",
+                                                cartController
+                                                    .salesMallCartItems[i].qty,
+                                                cartController
+                                                    .salesMallCartItems[i]
+                                                    .pkcode,
+                                              );
+                                            }
+                                          },
+                                          incrementFun: () {
+                                            incrdcrFun(
+                                              "increment",
+                                              cartController
+                                                  .salesMallCartItems[i].qty,
+                                              cartController
+                                                  .salesMallCartItems[i].pkcode,
+                                            );
+                                          },
                                           imagePath: cartController
                                               .salesMallCartItems[i].pimage,
                                           removeFun: () {
@@ -324,7 +349,8 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                             Obx(() {
                                               return cartController
                                                       .loading.value
-                                                  ? const Text("RM 0.0")
+                                                  ? Text(
+                                                      "${cartController.salesMallCartItems[0].symbol} 0.0")
                                                   : Text(
                                                       "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallTAmount.value}",
                                                       style: const TextStyle(
@@ -354,7 +380,8 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                             Obx(() {
                                               return cartController
                                                       .loading.value
-                                                  ? const Text("RM 0.0")
+                                                  ? Text(
+                                                      "${cartController.salesMallCartItems[0].symbol} 0.0")
                                                   : Text(
                                                       "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallTAmount.value}",
                                                       style: TextStyle(
@@ -978,5 +1005,27 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
         );
       }),
     );
+  }
+
+  incrdcrFun(String from, String itemcount, String packCode) async {
+    print("add to car fun");
+    Map parameters = {
+      "action": "addSACartitems",
+      "Pkid": packCode,
+      "Country": Constants.prefs.getString("country_id"),
+      "Uniqid": uniqId,
+      "sessid": sessionId,
+      "ipaddress": Constants.prefs.getString("ip"),
+      "sprno": Constants.prefs.getString("reg_id"),
+      // "0",
+      "Quantity": from == "increment"
+          ? "${int.parse(itemcount) + 1}"
+          : "${int.parse(itemcount) - 1}"
+    };
+    print("add to cart params...$parameters");
+    dynamic res = await MainController().getRegPackAddToCart(parameters);
+    if (res['Msg'].toString().toLowerCase() == "success") {
+      getData("increand decre");
+    }
   }
 }

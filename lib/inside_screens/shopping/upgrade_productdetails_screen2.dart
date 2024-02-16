@@ -77,7 +77,8 @@ class _UpgradeProductDetailsScreen2State
   List<String> carouselImages = [];
   getRegisterPackageData() async {
     Map parameters = {
-      "Action": "GetPackdescr",
+      // "Action": "GetPackdescr",
+      "Action": "GetNPackdescr",
       "pkid": "3",
       "Desc": widget.packageCode,
       "overview": " ",
@@ -88,7 +89,7 @@ class _UpgradeProductDetailsScreen2State
       "PkImg2": "",
       "PkImg3": "",
       "PkImg4": "",
-      "CountryID": countryid,
+      "CountryID": Constants.prefs.getString("country_id"),
       "MallName": widget.packageCode
     };
 
@@ -369,8 +370,11 @@ class _UpgradeProductDetailsScreen2State
                             "UNIWAVE INSTANT COFFEE")
                           coffeeWidget(),
                         if (packDetailsController
-                                .packageDetailsData.value.pkname ==
-                            "UNIWAVE BIOMATRIX SHIELD")
+                                    .packageDetailsData.value.pkname ==
+                                "UNIWAVE BIOMATRIX SHIELD" ||
+                            packDetailsController
+                                    .packageDetailsData.value.pkname ==
+                                "UNIWAVE BIO MATRIX SHIELD")
                           biomatrixWidget(),
                         if (videoId != "" && videoId != null)
                           Column(

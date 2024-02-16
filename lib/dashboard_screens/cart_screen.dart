@@ -88,23 +88,23 @@ class _CartScreenState extends State<CartScreen> {
       "sprno": "0",
       "prdtype": "Package",
     };
-    dynamic res = await cartController.getCartItems(cartParams);
+    dynamic res = await cartController.getCartItems(cartParams, "init");
     print("gettting res...$res");
     if (res != null) {
       if (res['productDataRpt'][0]['ProductType'] == "Old Id") {
-        getData();
+        getData("init");
       } else {
         uniqId = generateRandomString(10);
         await Constants.prefs.setString("uniq_id", uniqId);
         sessionId = generateTimeStamp();
         await Constants.prefs.setString("ss_id", sessionId);
-        getData();
+        getData("init");
       }
     }
   }
 
   Map cartParams = {};
-  getData() async {
+  getData(String from) async {
     cartParams = {
       "Action": "getNcartitems",
       // "getcartitems",
@@ -117,7 +117,7 @@ class _CartScreenState extends State<CartScreen> {
       "sprno": "0",
       "prdtype": "Package",
     };
-    dynamic res = await cartController.getCartItems(cartParams);
+    dynamic res = await cartController.getCartItems(cartParams, from);
     print("cart res...$res");
   }
 
@@ -263,6 +263,27 @@ class _CartScreenState extends State<CartScreen> {
                                 Column(
                                   children: [
                                     CartItemWidget(
+                                      decrementFun: () {
+                                        if (int.parse(cartController
+                                                .cartItemsList[i]
+                                                .packQuantity) >
+                                            1) {
+                                          incrdcrFun(
+                                              "decrement",
+                                              cartController.cartItemsList[i]
+                                                  .packQuantity,
+                                              cartController.cartItemsList[i]
+                                                  .packageCode);
+                                        }
+                                      },
+                                      incrementFun: () {
+                                        incrdcrFun(
+                                            "increment",
+                                            cartController
+                                                .cartItemsList[i].packQuantity,
+                                            cartController
+                                                .cartItemsList[i].packageCode);
+                                      },
                                       imagePath:
                                           cartController.cartItemsList[i].image,
                                       removeFun: () {
@@ -312,8 +333,8 @@ class _CartScreenState extends State<CartScreen> {
                                                 },
                                                 title: "Are you sure?"));
                                       },
-                                      itemsPrice: cartController
-                                          .cartItemsList[i].packMrp,
+                                      itemsPrice:
+                                          "${cartController.cartItemsList[i].symbol} ${cartController.cartItemsList[i].packMrp}",
                                       itemname: cartController
                                           .cartItemsList[i].packageName,
                                       productCode: cartController
@@ -353,6 +374,15 @@ class _CartScreenState extends State<CartScreen> {
                                     const CommonDivider(),
                                   ],
                                 ),
+
+                              const SpaceHeightWidget(height: 10),
+                              OrderSummaryWidget(
+                                  estimatedT: cartController.totalAmount.value
+                                      .toString(),
+                                  subT: cartController.totalAmount.value
+                                      .toString(),
+                                  symbol:
+                                      cartController.cartItemsList[0].symbol),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Column(
@@ -668,6 +698,7 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
+  bool incrementLoading = false;
   Widget signInReqWidget() {
     return Container(
       height: 100,
@@ -704,5 +735,26 @@ class _CartScreenState extends State<CartScreen> {
         ],
       ),
     );
+  }
+
+  incrdcrFun(String from, String itemcount, String packCode) async {
+    print("add to car fun");
+    Map parameters = {
+      "action": "addRTCartitems",
+      "Pkid": packCode,
+      "Country": Constants.prefs.getString("country_id"),
+      "Uniqid": uniqId,
+      "sessid": sessionId,
+      "ipaddress": Constants.prefs.getString("ip"),
+      "sprno": "0",
+      "Quantity": from == "increment"
+          ? "${int.parse(itemcount) + 1}"
+          : "${int.parse(itemcount) - 1}"
+    };
+    print("add to cart params...$parameters");
+    dynamic res = await MainController().getRegPackAddToCart(parameters);
+    if (res['Msg'].toString().toLowerCase() == "success") {
+      getData("not init");
+    }
   }
 }

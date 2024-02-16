@@ -35,12 +35,16 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
     countryId = Constants.prefs.getString("country_id");
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      if (Constants.prefs.getString("uniq_id") == null) {
-        uniqId = generateRandomString(10);
-        await Constants.prefs.setString("uniq_id", uniqId);
-      } else {
-        uniqId = Constants.prefs.getString("uniq_id");
-      }
+      // if (Constants.prefs.getString("uniq_id") == null) {
+      //   uniqId = generateRandomString(10);
+      //   await Constants.prefs.setString("uniq_id", uniqId);
+      // } else {
+      //   uniqId = Constants.prefs.getString("uniq_id");
+      // }
+      uniqId = generateRandomString(10);
+      await Constants.prefs.setString("uniq_id", uniqId);
+      sessionId = generateTimeStamp();
+      await Constants.prefs.setString("ss_id", sessionId);
       dataFun("Health Care");
     });
   }
@@ -57,7 +61,7 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
       "Pkid": "",
       "pid": "",
       "Uniqid": uniqId,
-      "sessid": sessionId,
+      "sessid": Constants.prefs.get("ss_id"),
       "ipaddress": Constants.prefs.get("ip"),
       "sprno": Constants.prefs.get("user_id"),
       "prdtype": "Package",
@@ -174,7 +178,7 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
                                   color: appthemeColor,
                                 ),
                               ),
-                        const SpaceWidthWidget(width: 5),
+                        const SpaceWidthWidget(width: 15),
                         Obx(() {
                           return _dataController.genealogyLoading.value
                               ? SizedBox(width: 50, child: loader)
@@ -356,6 +360,7 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
                   i < _dataController.salesMallCartItems.length;
                   i++)
                 CartItemWidget(
+                  showQuantity: true,
                     removeFun: () async {
                       Get.back();
                       Map params = {

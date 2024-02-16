@@ -11,7 +11,7 @@ import '../commons/colors.dart';
 import '../commons/common_widgets.dart';
 import '../controllers/main_controller.dart';
 import '../models/onboarding_model.dart';
-import 'registerpack_detailscreen.dart';
+import 'registerpack_detailscreen2.dart';
 
 class RegisterPackageScreen extends StatefulWidget {
   final String from;
@@ -125,6 +125,7 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
             children: [
               for (int i = 0; i < packageController.packCartList.length; i++)
                 CartItemWidget(
+                    showQuantity: true,
                     removeFun: () {
                       Get.back();
                       cartcountFun("DeleteSignupItem",

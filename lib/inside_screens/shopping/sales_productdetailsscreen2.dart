@@ -227,7 +227,6 @@ class _SalesProductDetailsScreen2State
                           : IconElevatedButton(
                               onTapFun: () async {
                                 FocusManager.instance.primaryFocus?.unfocus();
-
                                 setState(() {
                                   packageLoading = true;
                                 });
@@ -370,8 +369,11 @@ class _SalesProductDetailsScreen2State
                             "UNIWAVE INSTANT COFFEE")
                           coffeeWidget(),
                         if (packDetailsController
-                                .packageDetailsData.value.pkname ==
-                            "UNIWAVE BIOMATRIX SHIELD")
+                                    .packageDetailsData.value.pkname ==
+                                "UNIWAVE BIOMATRIX SHIELD" ||
+                            packDetailsController
+                                    .packageDetailsData.value.pkname ==
+                                "UNIWAVE BIO MATRIX SHIELD")
                           biomatrixWidget(),
                         if (videoId != "" && videoId != null)
                           Column(

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../commons/colors.dart';
-import '../inside_screens/register_packages_screen.dart';
+import '../inside_screens/register_packages_screen2.dart';
 
 class MemberScreen extends StatefulWidget {
   final String countryId;

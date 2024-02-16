@@ -18,6 +18,7 @@ class CartItemModel {
   String packQuantity;
   String packSno;
   String packId;
+  String symbol;
 
   CartItemModel({
     required this.packageName,
@@ -28,6 +29,7 @@ class CartItemModel {
     required this.packQuantity,
     required this.packSno,
     required this.packId,
+    required this.symbol,
   });
 
   factory CartItemModel.fromJson(Map<String, dynamic> json) => CartItemModel(
@@ -39,6 +41,7 @@ class CartItemModel {
         packQuantity: json["packQuantity"],
         packSno: json["packSno"],
         packId: json["packID"],
+        symbol: json["Symbol"],
       );
 
   Map<String, dynamic> toJson() => {

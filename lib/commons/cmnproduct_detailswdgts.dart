@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../models/biomatriximage_model.dart';
 import 'colors.dart';
@@ -1342,11 +1343,14 @@ class ProductCatScrollWidget extends StatelessWidget {
   final int selInd;
   final VoidCallback onTapFun;
   final int index;
+  final String? title;
   const ProductCatScrollWidget(
       {super.key,
       required this.selInd,
       required this.onTapFun,
-      required this.index});
+      required this.index,
+      this.title
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -1359,7 +1363,7 @@ class ProductCatScrollWidget extends StatelessWidget {
                   tColor: whiteColor,
                   color: darkBlue,
                   onTapFun: () {},
-                  title: productCtgs[index]),
+                  title: title ?? productCtgs[index]),
             )
           : InkWell(
               onTap: onTapFun,
@@ -1369,7 +1373,7 @@ class ProductCatScrollWidget extends StatelessWidget {
                     border: Border.all(color: middleBlackColor)),
                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 child: Text(
-                  productCtgs[index],
+             title ??     productCtgs[index],
                   style: TextStyle(
                       fontFamily: "OnestSemiBold",
                       color: blackColor,
@@ -1379,4 +1383,57 @@ class ProductCatScrollWidget extends StatelessWidget {
             ),
     );
   }
+}
+
+viewRatingWidget() {
+  return Card(
+    child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonTitle(
+                titleName: "Charvani",
+                fontColor: middleBlackColor,
+                size: 14,
+                fontFamily: "OnestBold",
+              ),
+              CommonTitle(
+                titleName: "10 oct 2023",
+                fontColor: middleBlackColor.withOpacity(0.6),
+                size: 13,
+              )
+            ],
+          ),
+          const SpaceHeightWidget(height: 4),
+          RatingBar.builder(
+            initialRating: 5,
+            minRating: 1,
+            direction: Axis.horizontal,
+            allowHalfRating: false,
+            itemCount: 5,
+            itemSize: 18,
+            itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+            itemBuilder: (context, _) => const Icon(
+              Icons.star,
+              color: Colors.amber,
+            ),
+            onRatingUpdate: (rating) {
+              print(rating);
+            },
+          ),
+          const SpaceHeightWidget(height: 4),
+          CommonTitle(
+            titleName: "Very healthy product for us.",
+            fontColor: middleBlackColor,
+            size: 14,
+            fontFamily: "OnestSemiBold",
+          ),
+        ],
+      ),
+    ),
+  );
 }

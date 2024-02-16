@@ -356,8 +356,11 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
                             "UNIWAVE INSTANT COFFEE")
                           coffeeWidget(),
                         if (packDetailsController
-                                .packageDetailsData.value.pkname ==
-                            "UNIWAVE BIOMATRIX SHIELD")
+                                    .packageDetailsData.value.pkname ==
+                                "UNIWAVE BIOMATRIX SHIELD" ||
+                            packDetailsController
+                                    .packageDetailsData.value.pkname ==
+                                "UNIWAVE BIO MATRIX SHIELD")
                           biomatrixWidget(),
                         if (videoId != "" && videoId != null)
                           Column(

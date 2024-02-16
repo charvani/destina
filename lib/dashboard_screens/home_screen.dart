@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../commons/constants.dart';
+import '../inside_screens/productdetails_screen2.dart';
 import '../inside_screens/services/upload_id_screen.dart';
 import '../models/onboarding_model.dart';
 import '../models/productitem_model.dart';
@@ -708,12 +709,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                           height: 190,
                                           child: PromotionItemWidget(
                                             onTapFun: () {
-                                              Get.to(() => ProductDetailsScreen(
+                                              Get.to(() =>
+                                                  ProductDetailsScreen2(
                                                     from: "recommended_for_you",
                                                     packageCode:
                                                         productController
                                                             .productItemList[i]
                                                             .packagecode,
+                                                    fromPack: "Health care",
                                                   ));
                                             },
                                             amountColor: darkBlue,
@@ -814,12 +817,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                           height: 190,
                                           child: PromotionItemWidget(
                                             onTapFun: () {
-                                              Get.to(() => ProductDetailsScreen(
+                                              Get.to(() =>
+                                                  ProductDetailsScreen2(
                                                     from: "Best_seller",
                                                     packageCode:
                                                         productController
                                                             .productItemList[i]
                                                             .packagecode,
+                                                    fromPack: "Health care",
                                                   ));
                                             },
                                             amountColor: darkBlue,

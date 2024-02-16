@@ -77,7 +77,9 @@ class _RedemptionProductDetailsScreen2State
   List<String> carouselImages = [];
   getRegisterPackageData() async {
     Map parameters = {
-      "Action": "GetPackdescr",
+      // "Action": "GetPackdescr",
+      "Action": "GetNPackdescr",
+
       "pkid": "3",
       "Desc": widget.packageCode,
       "overview": " ",
@@ -88,7 +90,7 @@ class _RedemptionProductDetailsScreen2State
       "PkImg2": "",
       "PkImg3": "",
       "PkImg4": "",
-      "CountryID": countryid,
+      "CountryID": Constants.prefs.getString("country_id"),
       "MallName": widget.packageCode
     };
 
@@ -220,66 +222,66 @@ class _RedemptionProductDetailsScreen2State
                                   packageLoading = true;
                                 });
                                 // this register add to cart fun
-/*
+
                                 print("add to car fun");
                                 Map parameters = {
-                                  "action": "addSGCartitems",
+                                  "action": "addRDCartitems",
                                   "Pkid": widget.packageCode,
-                                  "Country": widget.countryid,
+                                  "Country":
+                                      Constants.prefs.getString("country_id"),
                                   "Uniqid": uniqId,
                                   "sessid": sessionId,
                                   "ipaddress": Constants.prefs.getString("ip"),
-                                  "sprno": "0",
+                                  "sprno": Constants.prefs.getString("reg_id"),
+                                  // "0",
                                   "Quantity": firstQtyController.text
                                 };
                                 print("add to cart params...$parameters");
                                 dynamic res = await MainController()
-                                    .getAddToCart(parameters);
-
+                                    .getRegPackAddToCart(parameters);
                                 if (res['Msg'].toString().toLowerCase() ==
                                     "success") {
-                                
                                   print("res....$res");
                                   setState(() {
                                     packageLoading = false;
                                   });
                                   Timer(const Duration(seconds: 1), () {
-                                    Get.back(result: [true]);
+                                    Get.back();
+                                    Get.to(() => const RedemptionCartScreen());
                                   });
                                 } else {
                                   setState(() {
                                     packageLoading = false;
                                   });
                                 }
-                                */
 
                                 //this is original exitsted function
 
-                                print("add to car fun");
-                                Map parameters = {
-                                  "Pkid": widget.packageCode,
-                                  "pid": pidList.join(":"),
-                                  "uniqid": uniqId,
-                                  "sessid": sessionId,
-                                  // "uniqid": widget.hidUid,
-                                  // "sessid": widget.hidUid,
-                                  "ipaddress": Constants.prefs.getString("ip"),
-                                  "sprno": Constants.prefs.getString("user_id"),
-                                  "prdtype": "Package",
-                                  "qty": firstQtyController.text,
-                                  "country":
-                                      Constants.prefs.getString("country_id"),
-                                };
-                                print("add to cart params...$parameters");
-                                dynamic res = await MainController()
-                                    .getRedemptionMallAddToCart(parameters);
-                                if (res['Msg'].toString().toLowerCase() ==
-                                    "success") {
-                                  Timer(const Duration(seconds: 1), () {
-                                    Get.back();
-                                    Get.to(() => const RedemptionCartScreen());
-                                  });
-                                }
+                                // print("add to car fun");
+                                // Map parameters = {
+                                //   "Pkid": widget.packageCode,
+                                //   "pid": pidList.join(":"),
+                                //   "uniqid": uniqId,
+                                //   "sessid": sessionId,
+                                //   // "uniqid": widget.hidUid,
+                                //   // "sessid": widget.hidUid,
+                                //   "ipaddress": Constants.prefs.getString("ip"),
+                                //   "sprno": Constants.prefs.getString("user_id"),
+                                //   "prdtype": "Package",
+                                //   "qty": firstQtyController.text,
+                                //   "country":
+                                //       Constants.prefs.getString("country_id"),
+                                // };
+                                // print("add to cart params...$parameters");
+                                // dynamic res = await MainController()
+                                //     .getRedemptionMallAddToCart(parameters);
+                                // if (res['Msg'].toString().toLowerCase() ==
+                                //     "success") {
+                                //   Timer(const Duration(seconds: 1), () {
+                                //     Get.back();
+                                //     Get.to(() => const RedemptionCartScreen());
+                                //   });
+                                // }
 
                                 setState(() {
                                   packageLoading = false;
@@ -361,8 +363,11 @@ class _RedemptionProductDetailsScreen2State
                             "UNIWAVE INSTANT COFFEE")
                           coffeeWidget(),
                         if (packDetailsController
-                                .packageDetailsData.value.pkname ==
-                            "UNIWAVE BIOMATRIX SHIELD")
+                                    .packageDetailsData.value.pkname ==
+                                "UNIWAVE BIOMATRIX SHIELD" ||
+                            packDetailsController
+                                    .packageDetailsData.value.pkname ==
+                                "UNIWAVE BIO MATRIX SHIELD")
                           biomatrixWidget(),
                         if (videoId != "" && videoId != null)
                           Column(
@@ -398,4 +403,8 @@ class _RedemptionProductDetailsScreen2State
       ),
     );
   }
+  
+
+
+  
 }

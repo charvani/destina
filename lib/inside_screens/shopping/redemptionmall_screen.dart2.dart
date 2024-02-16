@@ -24,6 +24,12 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
   dynamic userId, password, countryId, hidUid, countOfCart, uniqId;
   int selectedInd = 0;
   dynamic krialiaTappedInd;
+  List<String> productCatgs = [
+    "Health Care",
+    "Hair Care",
+    "Skin Care",
+    "Redemption"
+  ];
   @override
   void initState() {
     super.initState();
@@ -72,8 +78,9 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
                       print("ooooo");
                       Get.back();
                     },
-                    child: const Icon(
+                    child: Icon(
                       Icons.keyboard_arrow_left_rounded,
+                      color: whiteColor,
                     )))),
         body: Column(
           children: [
@@ -82,15 +89,16 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  for (int i = 0; i < productCtgs.length; i++)
+                  for (int i = 0; i < productCatgs.length; i++)
                     ProductCatScrollWidget(
+                        title: productCatgs[i],
                         index: i,
                         selInd: selectedInd,
                         onTapFun: () {
                           setState(() {
                             selectedInd = i;
                           });
-                          dataFun(productCtgs[i]);
+                          dataFun(productCatgs[i]);
                         }),
                 ],
               ),
@@ -111,60 +119,28 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
                                       crossAxisCount: 2,
                                       childAspectRatio: 1 / 1.2),
                               itemBuilder: (context, i) {
-                                return productCtgs[selectedInd] == "Kritalia"
-                                    ? KritaliaItemWidget(
-                                        tapped: krialiaTappedInd == i
-                                            ? true
-                                            : false,
-                                        amount: _dataController
-                                            .selPackageItemList[i].mrp,
-                                        onTapFun: () {
-                                          setState(() {
-                                            krialiaTappedInd = i;
-                                          });
-
-                                          Timer(const Duration(seconds: 1),
-                                              () async {
-                                            Get.to(() =>
-                                                RedemptionProductDetailsScreen2(
-                                                  from: 'redemptionmall',
-                                                  packageCode: _dataController
-                                                      .selPackageItemList[i]
-                                                      .pkcode,
-                                                  fromPack:
-                                                      productCtgs[selectedInd],
-                                                ));
-                                          });
-                                        },
-                                        imagePath:
-                                            // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                            _dataController
-                                                .selPackageItemList[i].pImage,
-                                        titile: _dataController
-                                            .selPackageItemList[i].pkname)
-                                    : CategroyItemWidget(
-                                        amount: _dataController
-                                            .selPackageItemList[i].mrp,
-                                        onTapFun: () async {
-                                          Timer(const Duration(seconds: 1),
-                                              () async {
-                                            Get.to(() =>
-                                                RedemptionProductDetailsScreen2(
-                                                  from: 'redemptionmall',
-                                                  packageCode: _dataController
-                                                      .selPackageItemList[i]
-                                                      .pkcode,
-                                                  fromPack:
-                                                      productCtgs[selectedInd],
-                                                ));
-                                          });
-                                        },
-                                        imagePath:
-                                            // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                            _dataController
-                                                .selPackageItemList[i].pImage,
-                                        titile: _dataController
-                                            .selPackageItemList[i].pkname);
+                                return CategroyItemWidget(
+                                    amount: _dataController
+                                        .selPackageItemList[i].mrp,
+                                    onTapFun: () async {
+                                      Timer(const Duration(seconds: 1),
+                                          () async {
+                                        Get.to(() =>
+                                            RedemptionProductDetailsScreen2(
+                                              from: 'redemptionmall',
+                                              packageCode: _dataController
+                                                  .selPackageItemList[i].pkcode,
+                                              fromPack:
+                                                  productCatgs[selectedInd],
+                                            ));
+                                      });
+                                    },
+                                    imagePath:
+                                        // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
+                                        _dataController
+                                            .selPackageItemList[i].pImage,
+                                    titile: _dataController
+                                        .selPackageItemList[i].pkname);
                               },
                               itemCount:
                                   _dataController.selPackageItemList.length),

@@ -2608,6 +2608,10 @@ class CartItemWidget extends StatelessWidget {
   final String itemsPrice;
   final bool? removeCartOption;
   final String? dp;
+  final VoidCallback? incrementFun;
+  final VoidCallback? decrementFun;
+  final String? indecrCount;
+  final bool? showQuantity;
 
   const CartItemWidget(
       {super.key,
@@ -2617,7 +2621,11 @@ class CartItemWidget extends StatelessWidget {
       required this.itemname,
       required this.itemsPrice,
       required this.productCode,
+      this.showQuantity,
       this.dp,
+      this.indecrCount,
+      this.incrementFun,
+      this.decrementFun,
       required this.itemCount});
 
   @override
@@ -2662,41 +2670,6 @@ class CartItemWidget extends StatelessWidget {
                           fontSize: 12,
                           color: blackColor.withOpacity(0.5)))
                 ])),
-                const SpaceHeightWidget(height: 5),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                    text: "Quantity: ",
-                    style: TextStyle(
-                        fontFamily: "OnestRegular",
-                        fontSize: 12,
-                        color: blackColor.withOpacity(0.7)),
-                  ),
-                  TextSpan(
-                      text: itemCount,
-                      style: TextStyle(
-                          fontFamily: "OnestRegular",
-                          fontSize: 12,
-                          color: blackColor.withOpacity(0.5)))
-                ])),
-                const SpaceHeightWidget(height: 5),
-                if (dp != null && dp != "")
-                  RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                      text: "DP: ",
-                      style: TextStyle(
-                          fontFamily: "OnestRegular",
-                          fontSize: 12,
-                          color: blackColor.withOpacity(0.7)),
-                    ),
-                    TextSpan(
-                        text: dp,
-                        style: TextStyle(
-                            fontFamily: "OnestRegular",
-                            fontSize: 12,
-                            color: blackColor.withOpacity(0.5)))
-                  ])),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -2716,21 +2689,115 @@ class CartItemWidget extends StatelessWidget {
                               fontSize: 12,
                               color: blackColor.withOpacity(0.5)))
                     ])),
-                    if (removeCartOption != true)
-                      GestureDetector(
-                          onTap: removeFun,
-                          child: CircleAvatar(
-                            radius: 15,
-                            backgroundColor: darkRedColor,
-                            child: Icon(
-                              Icons.delete_forever,
-                              color: whiteColor,
-                              size: 17,
-                            ),
-                          ))
                   ],
                 ),
-                const SpaceHeightWidget(height: 5),
+                // const SpaceHeightWidget(height: 5),
+                if (dp != null && dp != "")
+                  RichText(
+                      text: TextSpan(children: [
+                    TextSpan(
+                      text: "DP: ",
+                      style: TextStyle(
+                          fontFamily: "OnestRegular",
+                          fontSize: 12,
+                          color: blackColor.withOpacity(0.7)),
+                    ),
+                    TextSpan(
+                        text: dp,
+                        style: TextStyle(
+                            fontFamily: "OnestRegular",
+                            fontSize: 12,
+                            color: blackColor.withOpacity(0.5)))
+                  ])),
+                (showQuantity == true)
+                    ? Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              // const SpaceHeightWidget(height: 5),
+                              RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                  text: "Quantity: ",
+                                  style: TextStyle(
+                                      fontFamily: "OnestRegular",
+                                      fontSize: 12,
+                                      color: blackColor.withOpacity(0.7)),
+                                ),
+                                TextSpan(
+                                    text: itemCount,
+                                    style: TextStyle(
+                                        fontFamily: "OnestRegular",
+                                        fontSize: 12,
+                                        color: blackColor.withOpacity(0.5)))
+                              ])),
+                            ],
+                          ),
+                          if (removeCartOption != true)
+                            GestureDetector(
+                                onTap: removeFun,
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: darkRedColor,
+                                  child: Icon(
+                                    Icons.delete_forever,
+                                    color: whiteColor,
+                                    size: 17,
+                                  ),
+                                ))
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          const SpaceHeightWidget(height: 3),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  InkWell(
+                                    onTap: decrementFun,
+                                    child: const CircleAvatar(
+                                      radius: 11,
+                                      child: Icon(
+                                        Icons.remove,
+                                        size: 13,
+                                      ),
+                                    ),
+                                  ),
+                                  const SpaceWidthWidget(width: 8),
+                                  SideTitle(title: indecrCount ?? itemCount),
+                                  const SpaceWidthWidget(width: 8),
+                                  InkWell(
+                                    onTap: incrementFun,
+                                    child: const CircleAvatar(
+                                      radius: 11,
+                                      child: Icon(
+                                        Icons.add,
+                                        size: 13,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              if (removeCartOption != true)
+                                GestureDetector(
+                                    onTap: removeFun,
+                                    child: CircleAvatar(
+                                      radius: 15,
+                                      backgroundColor: darkRedColor,
+                                      child: Icon(
+                                        Icons.delete_forever,
+                                        color: whiteColor,
+                                        size: 17,
+                                      ),
+                                    ))
+                            ],
+                          ),
+                        ],
+                      )
               ],
             ),
           )
@@ -5128,6 +5195,83 @@ class KristaliaTileWidget extends StatelessWidget {
         ),
         const CommonDivider()
       ],
+    );
+  }
+}
+
+class OrderSummaryWidget extends StatelessWidget {
+  final String symbol, estimatedT, subT;
+
+  const OrderSummaryWidget(
+      {super.key,
+      required this.estimatedT,
+      required this.subT,
+      required this.symbol});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+      decoration: BoxDecoration(
+          color: lightDarKBlue.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(10)),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Order Summary",
+            style: TextStyle(
+                fontFamily: "OnestBold", fontSize: 17, color: darkBlue),
+          ),
+          const SpaceHeightWidget(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Subtotal",
+                style: TextStyle(
+                  fontFamily: "OnestRegular",
+                  fontSize: 15,
+                ),
+              ),
+              Text(
+                "$symbol $subT",
+                style: const TextStyle(
+                  fontFamily: "OnestRegular",
+                  fontSize: 15,
+                ),
+              )
+            ],
+          ),
+          const SpaceHeightWidget(height: 10),
+          const CommonDivider(),
+          const SpaceHeightWidget(height: 5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Estimated Total",
+                style: TextStyle(
+                  fontFamily: "OnestSemiBold",
+                  fontSize: 15,
+                  color: darkBlue,
+                ),
+              ),
+              Text(
+                "$symbol $estimatedT",
+                style: TextStyle(
+                  fontFamily: "OnestSemiBold",
+                  fontSize: 15,
+                  color: darkBlue,
+                ),
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
