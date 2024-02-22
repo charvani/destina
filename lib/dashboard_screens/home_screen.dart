@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 
 import '../commons/constants.dart';
 import '../inside_screens/productdetails_screen2.dart';
+import '../inside_screens/search/search_categoryscreen.dart';
 import '../inside_screens/services/upload_id_screen.dart';
 import '../models/onboarding_model.dart';
 import '../models/productitem_model.dart';
@@ -29,8 +30,8 @@ int promotionCarouselIndex = 0;
 int sopCarouselIndex = 0;
 List<OnboardModel> productsCategories = [
   OnboardModel(image: "assets/images/health_care.png", title: "Health Care"),
-  OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
-  OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
+  // OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
+  // OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
   OnboardModel(image: "assets/images/a_start_privilege.png", title: "kritalia"),
 ];
 List<OnboardModel> promotionItems = [
@@ -339,7 +340,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 SearchWidget(
                   borderColor: transperantColor,
                   hintText: "Search",
-                  onTapFun: () {},
+                  onTapFun: () {
+                    Get.to(() => const SearchCategoryScreen());
+                  },
                 ),
                 Container(
                   // height: MediaQuery.of(context).size.height * 0.785,
@@ -350,6 +353,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           topLeft: Radius.circular(30),
                           topRight: Radius.circular(30))),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(
@@ -492,6 +496,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             const SpaceWidthWidget(width: 5),
                             for (int i = 0; i < productsCategories.length; i++)

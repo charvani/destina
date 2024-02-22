@@ -326,15 +326,15 @@ class _RedemptionProductDetailsScreen2State
                         ProductAmountDetailsWidget(
                           units: "1",
                           qty: "1",
-                          price: packDetailsController
-                              .packageDetailsData.value.mrp,
+                          price:
+                              packDetailsController.packageDetailsData.value.rp,
                           cv: packDetailsController.packageDetailsData.value.cv,
                           productCode: packDetailsController
                               .packageDetailsData.value.pkcode,
                           title: packDetailsController
                               .packageDetailsData.value.pkname,
                         ),
-                        const SpaceHeightWidget(height: 5),
+                        const PdfWidget(),
                         if (widget.fromPack == "Kritalia")
                           kritaliaWidget(packDetailsController
                               .packageDetailsData.value.pkname),
@@ -396,7 +396,6 @@ class _RedemptionProductDetailsScreen2State
                               ),
                             ],
                           ),
-                        const PdfWidget(),
                         const SpaceHeightWidget(height: 115),
                       ]),
                 );

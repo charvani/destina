@@ -12,8 +12,9 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../commons/cmnproduct_detailswdgts.dart';
 import '../dashboard_screens/cart_screen.dart';
+import 'customer_reviews/reviewlist_screen.dart';
+import 'customer_reviews/writereview_screen.dart';
 import 'heroanimation_screen.dart';
-import 'reviewlist_screen.dart';
 
 class ProductDetailsScreen2 extends StatefulWidget {
   final String from;
@@ -50,6 +51,9 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
   bool loading = false;
   List<String> pidList = [];
   bool packageLoading = false;
+  final ScrollController _scrollController = ScrollController();
+  final ExpansionTileController _ecrollController = ExpansionTileController();
+  late Offset position;
   @override
   void initState() {
     super.initState();
@@ -72,6 +76,14 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
 
       print("uniqid...$uniqId");
       print("sessionid..$sessionId");
+      RenderBox renderBox =
+          expansionTileKey.currentContext!.findRenderObject() as RenderBox;
+      Size size = renderBox.size;
+      setState(() {
+        position = renderBox.localToGlobal(Offset.zero);
+      });
+      print('Widget size: $size');
+      print('Widget position: $position');
     });
   }
 
@@ -108,6 +120,16 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
         carouselImages.add(packDetailsController.packageDetailsData.value.img3);
       }
     }
+    videoId = YoutubePlayer.convertUrlToId(res['VideoUrl']);
+    if (videoId != "" && videoId != null) {
+      _ycontroller = YoutubePlayerController(
+          initialVideoId: videoId!,
+          flags: const YoutubePlayerFlags(
+            autoPlay: false,
+            mute: false,
+          ));
+    }
+
     if (mounted) {
       setState(() {});
     }
@@ -308,6 +330,7 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
           return packDetailsController.loading.value
               ? loader
               : SingleChildScrollView(
+                  controller: _scrollController,
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -365,12 +388,12 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                           title: packDetailsController
                               .packageDetailsData.value.pkname,
                         ),
+                        const PdfWidget(),
+
                         const SpaceHeightWidget(height: 5),
                         if (widget.fromPack == "Kritalia")
                           kritaliaWidget(packDetailsController
                               .packageDetailsData.value.pkname),
-
-                        const SpaceHeightWidget(height: 15),
 
                         if (packDetailsController
                                     .packageDetailsData.value.pkname ==
@@ -430,8 +453,6 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                               ),
                             ],
                           ),
-                        const SpaceHeightWidget(height: 5),
-                         PdfWidget(),
 
                         ratingReviewWidget(),
                         const SpaceHeightWidget(height: 110),
@@ -442,8 +463,23 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
     );
   }
 
+  final GlobalKey expansionTileKey = GlobalKey();
+  dynamic gval = "";
   Widget ratingReviewWidget() {
     return ExpansionTile(
+      key: expansionTileKey,
+      onExpansionChanged: (val) {
+        print("getting val...${position.dy}");
+        if (val) {
+          Timer(const Duration(milliseconds: 500), () {
+            _scrollController.animateTo(
+              position.dy + 50,
+              curve: Curves.ease,
+              duration: const Duration(milliseconds: 500),
+            );
+          });
+        }
+      },
       shape: const Border(),
       title: CommonTitle(
         titleName: "Customer Reviews",
@@ -490,7 +526,27 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                 fontColor: lightDarKBlue,
               ),
               const SpaceHeightWidget(height: 10),
-              for (int i = 0; i < 4; i++) viewRatingWidget(),
+              for (int i = 0; i < 3; i++)
+                ViewRatingWidget(
+                  reviewVideoData:
+                      "https://www.youtube.com/watch?v=wAMzvlCwTKU",
+                  reviewImagesData: const ["", ""],
+                  reportFun: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) =>
+                          StatefulBuilder(builder: (context, myState) {
+                        return RportWidget(
+                            onchangeFun: (val) {
+                              myState(() {
+                                gval = val;
+                              });
+                            },
+                            gVal: gval);
+                      }),
+                    );
+                  },
+                ),
               const SpaceHeightWidget(height: 15),
               Container(
                 height: 30,
@@ -500,7 +556,8 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                   children: [
                     CustomAutoWidthButton(
                         onTapFun: () {
-                          Get.dialog(addReviewandRatingDialog());
+                          // Get.dialog(addReviewandRatingDialog());,
+                          Get.to(() => const WriteReviewScreen());
                         },
                         title: "Write Review"),
                     CustomAutoWidthButton(

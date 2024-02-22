@@ -56,9 +56,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             onTapFun: () async {
               Get.back();
               Get.back();
+
               if (widget.fromScreen != "OpenCart") {
+                print("uniqid removed....");
                 await Constants.prefs.remove("uniq_id");
                 await Constants.prefs.remove("ss_id");
+                print("uniqid removed....");
               }
 
               // Get.dialog(

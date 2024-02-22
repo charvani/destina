@@ -22,20 +22,21 @@ int selectedCategoryIndex = 0;
 
 List<OnboardModel> productsCategoriesOnTap = [
   OnboardModel(image: "assets/images/health_care.png", title: "Health Care"),
-  OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
-  OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
-  OnboardModel(image: "assets/packImg/SAPPHIRE.png", title: "Kritalia"),
+  // OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
+  // OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
+  OnboardModel(image: "assets/images/a_start_privilege.png", title: "Kritalia"),
 ];
 List<OnboardModel> productsCategories = [
   OnboardModel(image: "assets/images/health_care_wb.png", title: "Health Care"),
-  OnboardModel(image: "assets/images/sop_wb.png", title: "Skin Care"),
-  OnboardModel(image: "assets/images/body_care_wb.png", title: "Hair Care"),
-  OnboardModel(image: "assets/packImg/SAPPHIRE NO BG.png", title: "Kritalia"),
+  // OnboardModel(image: "assets/images/sop_wb.png", title: "Skin Care"),
+  // OnboardModel(image: "assets/images/body_care_wb.png", title: "Hair Care"),
+  OnboardModel(
+      image: "assets/images/a_start_privilege_wb.png", title: "Kritalia"),
 ];
 List<String> topBannerImages = [
   "assets/images/products_baground.png",
-  "assets/images/products_beauty_banner.jpg",
-  "assets/images/hair_care_bg.jpg",
+  // "assets/images/products_beauty_banner.jpg",
+  // "assets/images/hair_care_bg.jpg",
   "assets/packImg/BANNER SAPPHIRE.png",
 ];
 
@@ -51,11 +52,13 @@ class _ProductsScreen2State extends State<ProductsScreen2> {
         });
         dataFun(widget.index == 0
             ? "Health Care"
-            : widget.index == 1
-                ? "Skin Care"
-                : widget.index == 2
-                    ? "Hair Care"
-                    : "Kritalia");
+            :
+            // : widget.index == 1
+            //     ? "Skin Care"
+            //     : widget.index == 2
+            //         ? "Hair Care"
+            //         :
+            "Kritalia");
       } else {
         print("at else");
         dataFun("Health Care");

@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
-import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -69,9 +66,9 @@ class _GlobalLeadershipBonusScreenState
         return _dataController.loading.value
             ? loader
             : SingleChildScrollView(
-            child: Column(
-              children: [
-                 Padding(
+                child: Column(
+                  children: [
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ViewProfileWidget(
                           infoColor: redColor,
@@ -91,82 +88,63 @@ class _GlobalLeadershipBonusScreenState
                           controller: _scrollController,
                           columnSpacing: 0,
                           horizontalMargin: 0,
-                          headingRowColor: MaterialStatePropertyAll(
-                              lightDarKBlue.withOpacity(0.2)),
+                          headingRowColor: MaterialStatePropertyAll(darkBlue),
                           columns: [
-                            
-
-                            DataColumn(
+                            const DataColumn(
                                 label: TableHeadingWidget(title: "S.No")),
                             DataColumn(label: _verticalDivider),
-
-                            DataColumn(
+                            const DataColumn(
                                 label: TableHeadingWidget(
                                     title: "Distributor ID")),
                             DataColumn(label: _verticalDivider),
-
-                            DataColumn(
+                            const DataColumn(
                                 label: TableHeadingWidget(title: "Month")),
                             DataColumn(label: _verticalDivider),
-
-                            DataColumn(
+                            const DataColumn(
                                 label: TableHeadingWidget(title: "Date")),
                             DataColumn(label: _verticalDivider),
-
-                            DataColumn(
+                            const DataColumn(
                                 label:
                                     TableHeadingWidget(title: "Total Steps")),
                             DataColumn(label: _verticalDivider),
-
-                            DataColumn(
+                            const DataColumn(
                                 label: TableHeadingWidget(
                                     title: "Qualify Shares")),
                             DataColumn(label: _verticalDivider),
-
-                            DataColumn(
+                            const DataColumn(
                                 label:
                                     TableHeadingWidget(title: "Free Shares")),
                             DataColumn(label: _verticalDivider),
-
-                            DataColumn(
+                            const DataColumn(
                                 label:
                                     TableHeadingWidget(title: "Total Shares")),
                             DataColumn(label: _verticalDivider),
-
-                            DataColumn(
+                            const DataColumn(
                                 label: TableHeadingWidget(
                                     title: "Value Per Share\n(D1 \$)")),
                             DataColumn(label: _verticalDivider),
-
-                            DataColumn(
+                            const DataColumn(
                                 label: TableHeadingWidget(
                                     title: "Share Bonus\n(D1 \$)")),
                             DataColumn(label: _verticalDivider),
-
-                            DataColumn(
+                            const DataColumn(
                                 label: TableHeadingWidget(
                                     title: "Redemption Deduction\n(RP)")),
                             DataColumn(label: _verticalDivider),
-
-                            DataColumn(
+                            const DataColumn(
                                 label: TableHeadingWidget(
                                     title: "Net Leadership Bonus\n(D1 \$)")),
-
-
                           ],
                           source: tSource),
                     ),
-                
-                const SpaceHeightWidget(height: 25)
-              ],
-            ),
-          );
-        }
-      ),
+                    const SpaceHeightWidget(height: 25)
+                  ],
+                ),
+              );
+      }),
     );
   }
 }
-
 
 class MyData extends DataTableSource {
   @override
@@ -222,7 +200,7 @@ class MyData extends DataTableSource {
         TableInfoWidget(
             info: _dataController.customerBonusList[index].netBonus),
       ),
-       DataCell(_verticalDivider),
+      DataCell(_verticalDivider),
       DataCell(
         TableInfoWidget(
             info: _dataController.customerBonusList[index].netBonus),

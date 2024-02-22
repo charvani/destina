@@ -19,6 +19,7 @@ class SelPackageModel {
   String codeNo;
   String cv;
   String img;
+  String rp;
 
   SelPackageModel({
     required this.pkid,
@@ -29,6 +30,7 @@ class SelPackageModel {
     required this.codeNo,
     required this.cv,
     required this.img,
+    required this.rp,
   });
 
   factory SelPackageModel.fromJson(Map<String, dynamic> json) =>
@@ -41,6 +43,7 @@ class SelPackageModel {
         codeNo: json["CodeNo"],
         cv: json["CV"],
         img: json["Img"],
+        rp: json["RP"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {

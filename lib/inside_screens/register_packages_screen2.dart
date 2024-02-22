@@ -38,21 +38,23 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
   dynamic krialiaTappedInd;
   List<OnboardModel> productsCategoriesOnTap = [
     OnboardModel(image: "assets/images/health_care.png", title: "Health Care"),
-    OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
-    OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
-    OnboardModel(image: "assets/packImg/SAPPHIRE.png", title: "Kritalia"),
+    // OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
+    // OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
+    OnboardModel(
+        image: "assets/images/a_start_privilege.png", title: "Kritalia"),
   ];
   List<OnboardModel> productsCategories = [
     OnboardModel(
         image: "assets/images/health_care_wb.png", title: "Health Care"),
-    OnboardModel(image: "assets/images/sop_wb.png", title: "Skin Care"),
-    OnboardModel(image: "assets/images/body_care_wb.png", title: "Hair Care"),
-    OnboardModel(image: "assets/packImg/SAPPHIRE NO BG.png", title: "Kritalia"),
+    // OnboardModel(image: "assets/images/sop_wb.png", title: "Skin Care"),
+    // OnboardModel(image: "assets/images/body_care_wb.png", title: "Hair Care"),
+    OnboardModel(
+        image: "assets/images/a_start_privilege_wb.png", title: "Kritalia"),
   ];
   List<String> topBannerImages = [
     "assets/images/products_baground.png",
-    "assets/images/products_beauty_banner.jpg",
-    "assets/images/hair_care_bg.jpg",
+    // "assets/images/products_beauty_banner.jpg",
+    // "assets/images/hair_care_bg.jpg",
     "assets/packImg/BANNER SAPPHIRE.png",
   ];
   bool isloading = true;

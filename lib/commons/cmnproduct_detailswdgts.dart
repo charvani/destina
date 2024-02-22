@@ -1,6 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../models/biomatriximage_model.dart';
 import 'colors.dart';
@@ -1335,8 +1338,8 @@ kritaliaWidget(String itemName) {
 
 List<String> productCtgs = [
   "Health Care",
-  "Hair Care",
-  "Skin Care",
+  // "Hair Care",
+  // "Skin Care",
   "Kritalia"
 ];
 
@@ -1372,12 +1375,14 @@ class ProductCatScrollWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                     border: Border.all(color: middleBlackColor)),
                 padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                child: Text(
-                  title ?? productCtgs[index],
-                  style: TextStyle(
-                      fontFamily: "OnestSemiBold",
-                      color: blackColor,
-                      fontSize: 14),
+                child: Center(
+                  child: Text(
+                    title ?? productCtgs[index],
+                    style: TextStyle(
+                        fontFamily: "OnestSemiBold",
+                        color: blackColor,
+                        fontSize: 12),
+                  ),
                 ),
               ),
             ),
@@ -1385,57 +1390,353 @@ class ProductCatScrollWidget extends StatelessWidget {
   }
 }
 
-viewRatingWidget() {
-  return Card(
-    child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CommonTitle(
-                titleName: "Charvani",
-                fontColor: middleBlackColor,
-                size: 14,
-                fontFamily: "OnestBold",
-              ),
-              CommonTitle(
-                titleName: "10 oct 2023",
-                fontColor: middleBlackColor.withOpacity(0.6),
-                size: 13,
-              )
-            ],
-          ),
-          const SpaceHeightWidget(height: 4),
-          RatingBar.builder(
-            initialRating: 5,
-            minRating: 1,
-            direction: Axis.horizontal,
-            allowHalfRating: false,
-            itemCount: 5,
-            itemSize: 18,
-            itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-            itemBuilder: (context, _) => const Icon(
-              Icons.star,
-              color: Colors.amber,
+class ViewRatingWidget extends StatelessWidget {
+  final VoidCallback reportFun;
+  final String? reviewVideoData;
+  final List<String>? reviewImagesData;
+  const ViewRatingWidget(
+      {super.key,
+      required this.reportFun,
+      this.reviewImagesData,
+      this.reviewVideoData});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CommonTitle(
+                  titleName: "Charvani",
+                  fontColor: middleBlackColor,
+                  size: 14,
+                  fontFamily: "OnestBold",
+                ),
+                CommonTitle(
+                  titleName: "10 oct 2023",
+                  fontColor: middleBlackColor.withOpacity(0.6),
+                  size: 13,
+                )
+              ],
             ),
-            onRatingUpdate: (rating) {
-              print(rating);
-            },
-          ),
-          const SpaceHeightWidget(height: 4),
-          CommonTitle(
-            titleName: "Very healthy product for us.",
-            fontColor: middleBlackColor,
-            size: 14,
-            fontFamily: "OnestSemiBold",
-          ),
-        ],
+            const SpaceHeightWidget(height: 4),
+            Row(
+              children: [
+                RatingBar.builder(
+                  initialRating: 5,
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  allowHalfRating: false,
+                  itemCount: 5,
+                  itemSize: 18,
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
+                  itemBuilder: (context, _) => const Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (rating) {
+                    print(rating);
+                  },
+                ),
+                // const SpaceWidthWidget(width: 5),
+                // CommonTitle(
+                //   titleName: "Verified Purchase",
+                //   fontColor: darkRedColor,
+                //   size: 10,
+                //   fontFamily: "OnestRegular",
+                // )
+              ],
+            ),
+            const SpaceHeightWidget(height: 4),
+            // const SideTitle(title: "Reviewed in India"),
+            CommonTitle(
+              titleName: "Very healthy product for us.",
+              fontColor: middleBlackColor,
+              size: 14,
+              fontFamily: "OnestSemiBold",
+            ),
+            const SpaceHeightWidget(height: 4),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  if (reviewVideoData! != "")
+                    SizedBox(
+                      width: 180,
+                      child: ReviewVideoWidget(
+                        videoUrl: reviewVideoData!,
+                        videoImgHeight: 100,
+                      ),
+                    ),
+                  if (reviewImagesData!.isNotEmpty)
+                    for (int i = 0; i < reviewImagesData!.length; i++)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 2),
+                        child: CommonCachedNetworkImage(
+                          imagePath: reviewImagesData![i],
+                          height: 100,
+                        ),
+                      ),
+                ],
+              ),
+            ),
+            const SpaceHeightWidget(height: 6),
+            CommonTitle(
+              titleName: "77 people found this helpful",
+              size: 12,
+              fontColor: middleBlackColor,
+              fontFamily: "OnestRegular",
+            ),
+            const SpaceHeightWidget(height: 3),
+            (true == true)
+                ? SizedBox(
+                    height: 25,
+                    child: CustomAutoWidthButton(
+                        onTapFun: () {}, title: "Helpful"))
+                : Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 8,
+                        backgroundColor: greenColor,
+                        child: Icon(
+                          Icons.done_rounded,
+                          size: 15,
+                          color: whiteColor,
+                        ),
+                      ),
+                      const SpaceWidthWidget(width: 2),
+                      CommonTitle(
+                        titleName: "Thank you for your feedback",
+                        size: 12,
+                        fontColor: greenColor,
+                        fontFamily: "OnestSemiBold",
+                      )
+                    ],
+                  ),
+            const SpaceHeightWidget(height: 3),
+            SizedBox(
+              height: 25,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconElevatedButton(
+                    buttonColor: darkBlue,
+                    imagePath: '',
+                    idata: Icons.share,
+                    onTapFun: () {
+                      CommonToast("Will share soon");
+                    },
+                    labelColor: whiteColor,
+                    titile: 'Share',
+                  ),
+                  CustomAutoWidthButton(onTapFun: reportFun, title: "Report")
+                  // IconElevatedButton(
+                  //   buttonColor: darkBlue,
+                  //   imagePath: '',
+                  //   idata: Icons.report_gmailerrorred_rounded,
+                  //   onTapFun: () {},
+                  //   labelColor: whiteColor,
+                  //   titile: 'Report',
+                  // ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
+}
+
+List<dynamic> reportOptions = [
+  {"title": "Off topic", "subtitle": "Not about the product"},
+  {"title": "Inappropriate", "subtitle": "Disrespectful, hateful, obscene"},
+  {"title": "Fake", "subtitle": "Paid for, inauthentic"},
+  {"title": "Other", "subtitle": "Something else"},
+];
+
+class RportWidget extends StatelessWidget {
+  final Function(dynamic)? onchangeFun;
+  final String gVal;
+  const RportWidget({super.key, required this.onchangeFun, required this.gVal});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CommonTitle(
+              titleName: "Report this review",
+              fontColor: darkBlue,
+              size: 16,
+            ),
+            IconButton(
+                onPressed: () {
+                  Get.back();
+                },
+                icon: const Icon(Icons.close))
+          ],
+        ),
+        Row(
+          children: [
+            CommonTitle(
+              titleName: "Optional: Why are you reporting this?",
+              fontColor: middleBlackColor,
+              size: 14,
+              fontFamily: "OnestRegular",
+            )
+          ],
+        ),
+        for (int i = 0; i < reportOptions.length; i++)
+          RadioListTile(
+            contentPadding: EdgeInsets.zero,
+            visualDensity: const VisualDensity(
+              horizontal: VisualDensity.minimumDensity,
+              vertical: VisualDensity.minimumDensity,
+            ),
+            value: reportOptions[i]['title'],
+            groupValue: gVal,
+            onChanged: onchangeFun,
+            title: CommonTitle(
+              titleName: reportOptions[i]['title'],
+              size: 14,
+              fontColor: blackColor,
+              fontFamily: "OnestRegular",
+            ),
+            subtitle: CommonTitle(
+              titleName: reportOptions[i]['subtitle'],
+              size: 14,
+              fontColor: middleBlackColor,
+              fontFamily: "OnestRegular",
+            ),
+          ),
+        RichText(
+            text: TextSpan(
+                text: "We'll check if this review meets our ",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: blackColor,
+                  fontFamily: "OnestRegular",
+                ),
+                children: [
+              TextSpan(
+                  text: 'community guidelines.',
+                  style: TextStyle(
+                    fontSize: 13.5,
+                    color: lightDarKBlue.withOpacity(0.8),
+                    fontFamily: "OnestSemiBold",
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      print('community guidelines.');
+                    }),
+              TextSpan(
+                text: " If it doesn't, we'll remove it.",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: blackColor,
+                  fontFamily: "OnestRegular",
+                ),
+              )
+            ])),
+        const SpaceHeightWidget(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 35,
+              child: CustomAutoWidthButton(
+                  onTapFun: () {
+                    Get.back();
+                  },
+                  title: "Submit"),
+            ),
+          ],
+        )
+      ]),
+    );
+  }
+}
+
+List<String> filterOptions = [
+  "Image and video reviews only",
+  "Positive reviews",
+  "Critical reviews",
+  "Clear All"
+];
+
+class ReviewFilter extends StatelessWidget {
+  final Function(dynamic)? onchangeFun;
+  final String rFVal;
+  const ReviewFilter(
+      {super.key, required this.onchangeFun, required this.rFVal});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SpaceHeightWidget(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CommonTitle(
+                  titleName: "Filter",
+                  fontColor: darkBlue,
+                  size: 16,
+                ),
+                IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: const Icon(Icons.close))
+              ],
+            ),
+            for (int i = 0; i < filterOptions.length; i++)
+              RadioListTile(
+                contentPadding: EdgeInsets.zero,
+                visualDensity: const VisualDensity(
+                  horizontal: VisualDensity.minimumDensity,
+                  vertical: VisualDensity.minimumDensity,
+                ),
+                value: filterOptions[i],
+                groupValue: rFVal,
+                onChanged: onchangeFun,
+                title: CommonTitle(
+                  titleName: filterOptions[i],
+                  size: 14,
+                  fontColor: blackColor,
+                  fontFamily: "OnestRegular",
+                ),
+              ),
+            const SpaceHeightWidget(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 35,
+                  child: CustomAutoWidthButton(
+                      onTapFun: () {
+                        Get.back();
+                      },
+                      title: "Apply"),
+                ),
+              ],
+            )
+          ]),
+    );
+  }
 }
 
 class PdfWidget extends StatefulWidget {
@@ -1519,6 +1820,136 @@ class _PdfWidgetState extends State<PdfWidget> {
               ],
             ),
         ],
+      ),
+    );
+  }
+}
+
+class RatingBarWidget extends StatelessWidget {
+  final int index;
+  final int percentage;
+  const RatingBarWidget(
+      {super.key, required this.index, required this.percentage});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 3),
+      child: Row(
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CommonTitle(
+            titleName: "$index star",
+            size: 14,
+            fontFamily: "OnestRegular",
+            fontColor: lightDarKBlue,
+          ),
+          const SpaceWidthWidget(width: 10),
+          Expanded(
+            child: LinearProgressIndicator(
+              borderRadius: BorderRadius.circular(3.5),
+              minHeight: 20,
+              value: percentage / 100,
+              backgroundColor: lightBlackColor,
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                Colors.amber,
+              ),
+            ),
+          ),
+          const SpaceWidthWidget(width: 10),
+          CommonTitle(
+            titleName: "$percentage%",
+            size: 14,
+            fontFamily: "OnestRegular",
+            fontColor: lightDarKBlue,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ReviewVideoWidget extends StatefulWidget {
+  final String videoUrl;
+  final double videoImgHeight;
+  const ReviewVideoWidget(
+      {super.key, required this.videoUrl, required this.videoImgHeight});
+
+  @override
+  State<ReviewVideoWidget> createState() => _ReviewVideoWidgetState();
+}
+
+class _ReviewVideoWidgetState extends State<ReviewVideoWidget> {
+  late YoutubePlayerController _ycontroller;
+  String videoId = "";
+  String thumbNailImg = "";
+
+  @override
+  void initState() {
+    videoId = YoutubePlayer.convertUrlToId(widget.videoUrl)!;
+    thumbNailImg = YoutubePlayer.getThumbnail(videoId: videoId);
+    _ycontroller = YoutubePlayerController(
+        initialVideoId: videoId,
+        flags: const YoutubePlayerFlags(
+            autoPlay: true, mute: false, hideThumbnail: false));
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _ycontroller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          Get.dialog(Dialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            backgroundColor: whiteColor,
+            insetPadding: const EdgeInsets.all(10),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: whiteColor,
+              ),
+              child: YoutubePlayer(
+                controller: _ycontroller,
+                showVideoProgressIndicator: true,
+              ),
+            ),
+          ));
+        },
+        child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 3),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: CommonCachedNetworkImage(
+                    imagePath: thumbNailImg,
+                    height: widget.videoImgHeight,
+                    boxfit: BoxFit.fill,
+                  ),
+                ),
+                CircleAvatar(
+                  backgroundColor: darkRedColor,
+                  radius: 18,
+                  child: Icon(
+                    Icons.play_arrow_rounded,
+                    color: whiteColor,
+                    size: 35,
+                  ),
+                )
+              ],
+            )),
       ),
     );
   }

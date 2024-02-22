@@ -1041,6 +1041,65 @@ class SearchWidget extends StatelessWidget {
   }
 }
 
+class SearcItemhWidget extends StatelessWidget {
+  final TextEditingController controller;
+  final String hintText;
+  final Color borderColor;
+  final VoidCallback clearFun;
+  final Function(String)? onFieldSubFun;
+
+  final Function(String)? onchangeFun;
+  const SearcItemhWidget(
+      {super.key,
+      required this.onFieldSubFun,
+      required this.clearFun,
+      required this.onchangeFun,
+      required this.hintText,
+      required this.borderColor,
+      required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      onFieldSubmitted: onFieldSubFun,
+      controller: controller,
+      onChanged: onchangeFun,
+      decoration: InputDecoration(
+          suffix: controller.text.length > 3
+              ? GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: clearFun,
+                  child: CircleAvatar(
+                    backgroundColor: lightBlackColor,
+                    radius: 10,
+                    child: Icon(
+                      Icons.close,
+                      size: 15,
+                      color: middleBlackColor,
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink(),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: BorderSide(color: transperantColor)),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: BorderSide(width: 1.3, color: transperantColor)),
+          isDense: true,
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+          filled: true,
+          fillColor: whiteColor,
+          hintText: hintText,
+          hintStyle: TextStyle(
+              fontFamily: "OnestRegular",
+              color: middleBlackColor,
+              fontSize: 14)),
+    );
+  }
+}
+
 class FreeDeliveryBanner extends StatelessWidget {
   final String amount;
   const FreeDeliveryBanner({super.key, required this.amount});
@@ -4462,7 +4521,7 @@ class ImageOptionsDialog extends StatelessWidget {
     return AlertDialog(
       backgroundColor: whiteColor,
       title: const Text(
-        "Choose your image selection from?",
+        "Choose your selection from?",
         style: TextStyle(fontFamily: "OnestRegular", fontSize: 16),
       ),
       content: Row(
@@ -4511,6 +4570,13 @@ class ImageOptionsDialog extends StatelessWidget {
 imagePickFun(String from) async {
   final ImagePicker picker = ImagePicker();
   final XFile? image = await picker.pickImage(
+      source: from == "gallery" ? ImageSource.gallery : ImageSource.camera);
+  return image;
+}
+
+videoPickFun(String from) async {
+  final ImagePicker picker = ImagePicker();
+  final XFile? image = await picker.pickVideo(
       source: from == "gallery" ? ImageSource.gallery : ImageSource.camera);
   return image;
 }

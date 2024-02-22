@@ -66,6 +66,7 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               for (int i = 0; i < _dataController.packCartList.length; i++)
@@ -166,6 +167,7 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
           ),
         ),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SpaceHeightWidget(height: 5),
             SingleChildScrollView(

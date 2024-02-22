@@ -81,6 +81,7 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
         ),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SpaceHeightWidget(height: 5),
           SingleChildScrollView(

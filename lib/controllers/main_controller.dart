@@ -151,16 +151,17 @@ class MainController extends GetxController {
           img: "",
           img1: "",
           img2: "",
-          img3: "")
+          img3: "",
+          rp: "")
       .obs;
   Rx<PackageItemsModel> packPackageDetails = PackageItemsModel(
-          getPkgItemsRpt: [],
-          msg: "",
-          message: "",
-          lblMsg: "",
-          head: "",
-          maxQty: "")
-      .obs;
+    getPkgItemsRpt: [],
+    msg: "",
+    message: "",
+    lblMsg: "",
+    head: "",
+    maxQty: "",
+  ).obs;
   Rx<EnrollDataModel> enrollData = EnrollDataModel(
           enrollPackageRpt: [], iconDetails: [], msg: "", message: "")
       .obs;
@@ -2526,9 +2527,9 @@ class MainController extends GetxController {
     if (res != null) {
       for (int i = 0; i < res['SGCartItemRpt'].length; i++) {
         packCartList.add(PackCartModel.fromJson(res['SGCartItemRpt'][i]));
-        cvVal.value = cvVal.value + (double.parse(res['SGCartItemRpt'][i]['CV'])*
-        double.parse(res['SGCartItemRpt'][i]['Qty'])
-        );
+        cvVal.value = cvVal.value +
+            (double.parse(res['SGCartItemRpt'][i]['CV']) *
+                double.parse(res['SGCartItemRpt'][i]['Qty']));
       }
     }
     cartLoading.value = false;

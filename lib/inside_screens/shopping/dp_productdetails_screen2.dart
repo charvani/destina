@@ -327,7 +327,7 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
                           title: packDetailsController
                               .packageDetailsData.value.pkname,
                         ),
-                        const SpaceHeightWidget(height: 5),
+                        const PdfWidget(),
                         if (widget.fromPack == "Kritalia")
                           kritaliaWidget(packDetailsController
                               .packageDetailsData.value.pkname),

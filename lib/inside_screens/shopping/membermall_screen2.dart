@@ -202,6 +202,7 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
         ),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SpaceHeightWidget(height: 5),
           SingleChildScrollView(
@@ -360,7 +361,7 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
                   i < _dataController.salesMallCartItems.length;
                   i++)
                 CartItemWidget(
-                  showQuantity: true,
+                    showQuantity: true,
                     removeFun: () async {
                       Get.back();
                       Map params = {

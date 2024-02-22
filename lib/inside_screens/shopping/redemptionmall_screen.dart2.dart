@@ -26,8 +26,8 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
   dynamic krialiaTappedInd;
   List<String> productCatgs = [
     "Health Care",
-    "Hair Care",
-    "Skin Care",
+    // "Hair Care",
+    // "Skin Care",
     "Redemption"
   ];
   @override
@@ -83,11 +83,13 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
                       color: whiteColor,
                     )))),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SpaceHeightWidget(height: 5),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   for (int i = 0; i < productCatgs.length; i++)
                     ProductCatScrollWidget(
@@ -121,7 +123,7 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
                               itemBuilder: (context, i) {
                                 return CategroyItemWidget(
                                     amount: _dataController
-                                        .selPackageItemList[i].mrp,
+                                        .selPackageItemList[i].rp,
                                     onTapFun: () async {
                                       Timer(const Duration(seconds: 1),
                                           () async {
