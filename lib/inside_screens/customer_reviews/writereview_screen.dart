@@ -1,16 +1,22 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/commons/constants.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
 import 'package:video_player/video_player.dart';
 
+import '../../controllers/main_controller.dart';
+
 class WriteReviewScreen extends StatefulWidget {
-  const WriteReviewScreen({super.key});
+  final String pid;
+  const WriteReviewScreen({super.key, required this.pid});
 
   @override
   State<WriteReviewScreen> createState() => _WriteReviewScreenState();
@@ -21,12 +27,21 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
   TextEditingController reviewController = TextEditingController();
   final _fomkey = GlobalKey<FormState>();
   List<XFile>? imagesList = [];
+  List<dynamic>? finalImagesList = [];
+  List<dynamic>? imgExtensionsList = [];
   XFile? videoFile;
   VideoPlayerController _controller = VideoPlayerController.asset("");
+  //  MainController reviewController = Get.put(MainController());
+  final MainController _reviewController = Get.put(MainController());
+  dynamic ratingVal, reviewSession;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ratingVal = "3";
+      reviewSession = generateTimeStamp();
+    });
   }
 
   void _onVideoPlayerStateChanged() {
@@ -66,7 +81,11 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                         setState(() {});
                       },
                       validation: (val) {
-                        return null;
+                        if (val!.isEmpty) {
+                          return "Please enter your name";
+                        } else {
+                          return null;
+                        }
                       },
                       labelText: '',
                     ),
@@ -107,7 +126,9 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                         color: Colors.amber,
                       ),
                       onRatingUpdate: (rating) {
-                        print(rating);
+                        setState(() {
+                          ratingVal = rating;
+                        });
                       },
                     ),
                     const SpaceHeightWidget(height: 15),
@@ -146,6 +167,10 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                                         onTap: () {
                                           setState(() {
                                             imagesList!.remove(imagesList![i]);
+                                            finalImagesList!
+                                                .remove(finalImagesList![i]);
+                                            imgExtensionsList!
+                                                .remove(imgExtensionsList![i]);
                                           });
                                         },
                                         child: CircleAvatar(
@@ -190,8 +215,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                       titleName: "Share a video(single)",
                       size: 14,
                     ),
-                    if (videoFile != null) Text("my...$videoFile"),
-                    _controller.value.isInitialized
+                    _controller.value.isInitialized && videoFile != null
                         ? Stack(
                             alignment: Alignment.topRight,
                             children: [
@@ -247,6 +271,8 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                                     onTap: () {
                                       setState(() {
                                         videoFile = null;
+                                        videoExtension = null;
+                                        _controller.dispose();
                                       });
                                     },
                                     child: CircleAvatar(
@@ -287,13 +313,21 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                            height: 35,
-                            child: CustomAutoWidthButton(
-                                onTapFun: () {
-                                  Get.back();
-                                },
-                                title: "Submit")),
+                        Obx(() {
+                          return _reviewController.loading.value
+                              ? loader
+                              : SizedBox(
+                                  height: 35,
+                                  child: CustomAutoWidthButton(
+                                      onTapFun: () {
+                                        if (_fomkey.currentState!.validate()) {
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+                                          submitFun();
+                                        }
+                                      },
+                                      title: "Submit"));
+                        }),
                       ],
                     ),
                     const SpaceHeightWidget(height: 10),
@@ -307,33 +341,53 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
     );
   }
 
+  dynamic img64;
   imageSelctionFun() {
     Get.dialog(ImageOptionsDialog(
       cameraFun: () async {
         print("camera");
         Get.back();
         XFile imageFile = await imagePickFun("camera");
+        final filePath = imageFile.path;
+        final extension = path.extension(filePath);
+        final bytes = File(imageFile.path).readAsBytesSync();
+        img64 = base64Encode(bytes);
         setState(() {
           imagesList!.add(imageFile);
+          finalImagesList!.add(img64);
+          imgExtensionsList!.add(extension);
         });
       },
       galleryFun: () async {
         print("gallery");
         Get.back();
         XFile imageFile = await imagePickFun("gallery");
+        final filePath = imageFile.path;
+        final extension = path.extension(filePath);
+        final bytes = File(imageFile.path).readAsBytesSync();
+        img64 = base64Encode(bytes);
         setState(() {
           imagesList!.add(imageFile);
+          finalImagesList!.add(img64);
+          imgExtensionsList!.add(extension);
         });
       },
     ));
   }
 
+  dynamic videoExtension;
   videoSelctionFun() {
     Get.dialog(ImageOptionsDialog(
       cameraFun: () async {
         print("camera");
         Get.back();
         XFile videofile = await videoPickFun("camera");
+        final filePath = videofile.path;
+        final extension = path.extension(filePath);
+        setState(() {
+          videoFile = videofile;
+          videoExtension = extension;
+        });
         _controller = VideoPlayerController.file(File(videofile.path))
           ..initialize().then((_) {
             // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
@@ -345,7 +399,12 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
         print("gallery");
         Get.back();
         XFile videofile = await videoPickFun("gallery");
-
+        final filePath = videofile.path;
+        final extension = path.extension(filePath);
+        setState(() {
+          videoFile = videofile;
+          videoExtension = extension;
+        });
         _controller = VideoPlayerController.file(File(videofile.path))
           ..initialize().then((_) {
             // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
@@ -354,5 +413,53 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
         _controller.addListener(_onVideoPlayerStateChanged);
       },
     ));
+  }
+
+  submitFun() async {
+    dynamic video64;
+    print("my viiiiiii....$videoFile");
+    if (videoFile != null) {
+      final vbytes = File(videoFile!.path).readAsBytesSync();
+      video64 = base64Encode(vbytes);
+    }
+
+    Map bdata = {
+      "Action": "Insert",
+      "Pid": widget.pid,
+      "Name": nameController.text,
+      "Review": reviewController.text,
+      "Rating": ratingVal.toString(),
+      "Images": finalImagesList!.isEmpty ? "" : finalImagesList!.join(","),
+      "Video": video64 ?? "",
+      // "Images": "",
+      // "Video": "",
+      "ImgFiles": finalImagesList!.isEmpty ? "" : imgExtensionsList!.join(","),
+      "VidFiles": videoExtension ?? "",
+      "Session": reviewSession
+    };
+    print("b data...$bdata");
+    print("video...$video64");
+    print("videoExtension...$videoExtension");
+    print("imgExtensionsList...$imgExtensionsList");
+    Map reviewDataParams = {
+      "action": "Report",
+      "Pid": widget.pid,
+      "Name": null,
+      "Review": null,
+      "Rating": null,
+      "Images": null,
+      "Video": null,
+      "Session": null
+    };
+    dynamic res = await _reviewController.getReviewUpload(bdata, reviewDataParams);
+    if (res != null) {
+      print("get...$res");
+      if (res['Msg'] == "SUCCESS") {
+        Get.back();
+        CommonToastTrue(res['Message']);
+      } else {
+        CommonToast(res['Message']);
+      }
+    }
   }
 }

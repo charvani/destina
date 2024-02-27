@@ -52,6 +52,7 @@ import '../models/product_categoryitem_model.dart';
 import '../models/productdetails_model.dart';
 import '../models/promo_cartitem_model.dart';
 import '../models/registercart_item_model.dart';
+import '../models/reviewdata_model.dart';
 import '../models/rollupbonus_model.dart';
 import '../models/salesmall_cartitem_model.dart';
 import '../models/salesmall_model.dart';
@@ -79,6 +80,8 @@ class MainController extends GetxController {
   List<PackCartModel> packCartList = <PackCartModel>[].obs;
   Rx<double> cvVal = 0.0.obs;
   RxList<ProductCategoryItem> productItemList = <ProductCategoryItem>[].obs;
+  RxList<ProductCategoryItem> searchProductItemList =
+      <ProductCategoryItem>[].obs;
   Rx<ProductDetails> productDetails = ProductDetails(
           similarProducts: [],
           productImages: [],
@@ -824,17 +827,27 @@ class MainController extends GetxController {
           cv: "",
           totMrp: "")
       .obs;
+  Rx<ReviewData> reviewData = ReviewData(
+          reviewReport1: [],
+          reviewReport2: [],
+          reviewReport3: [],
+          reviewReport4: [],
+          msg: "",
+          message: "",
+          avgRating: "",
+          totalRating: "")
+      .obs;
 // *********************** *********************************************************************
   getCountryCode() async {
     dynamic res = await ApiCall().getMethodFun(url: ApiData().countryUrl);
     return res;
   }
 
-  getProducts(String productType) async {
+  getProducts(String productType, dynamic key) async {
     loading.value = true;
     Map parameters = {
       "action": productType,
-      "pcode": "0",
+      "pcode": key ?? "0",
       "country": Constants.prefs.getString("open_country")
     };
     dynamic res = await ApiCall().postMethodFun(
@@ -847,6 +860,28 @@ class MainController extends GetxController {
     }
     print(productItemList.length);
     loading.value = false;
+    return res;
+  }
+
+  getSearchProducts(String productType, dynamic key) async {
+    genealogyLoading.value = true;
+    Map parameters = {
+      "action": productType,
+      "pcode": key ?? "0",
+      "country": Constants.prefs.getString("open_country")
+    };
+    searchProductItemList.clear();
+
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().productCategoryMethod, params: parameters);
+    if (res['productRpt'].length > 0) {
+      for (int i = 0; i < res['productRpt'].length; i++) {
+        searchProductItemList
+            .add(ProductCategoryItem.fromJson(res['productRpt'][i]));
+      }
+    }
+    print(searchProductItemList.length);
+    genealogyLoading.value = false;
     return res;
   }
 
@@ -2562,5 +2597,55 @@ class MainController extends GetxController {
     dynamic res = await ApiCall().postMethodFun(
         methodName: ApiData().checkOutSignupCartItems, params: params);
     return res;
+  }
+
+  getReviewUpload(Map bdata, reviewDataParams) async {
+    loading.value = true;
+    dynamic res = await ApiCall().uploadReview(bData: bdata);
+    print("ressss....$res");
+    loading.value = false;
+    getReviewData(reviewDataParams, "init");
+    return res;
+  }
+
+  getReviewData(Map params, String from) async {
+    if (from == "init") {
+      genealogyLoading.value = true;
+    }
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().getReviewsdata, params: params);
+    if (res != null) {
+      reviewData.value = ReviewData.fromJson(res);
+    }
+    genealogyLoading.value = false;
+    return res;
+  }
+
+  getHelpFulFun(Map params, reviewDataParams) async {
+    dynamic res =
+        await ApiCall().rawFun(endUrl: "AddRevHelpful", params: params);
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS") {
+        CommonToastTrue(res['Message']);
+        getReviewData(reviewDataParams, "helpFun");
+      } else {
+        CommonToast(res['Message']);
+      }
+    }
+  }
+
+  getReviewReportingFun(
+    Map params,
+  ) async {
+    dynamic res =
+        await ApiCall().rawFun(endUrl: "AddRevReport", params: params);
+    if (res != null) {
+      print("res...$res");
+      if (res['Msg'] == "SUCCESS") {
+        CommonToastTrue(res['Message']);
+      } else {
+        CommonToast(res['Message']);
+      }
+    }
   }
 }

@@ -1,13 +1,22 @@
+import 'dart:io';
+
+import 'package:destina_1_international/commons/constants.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+import '../inside_screens/heroanimation_screen.dart';
 import '../models/biomatriximage_model.dart';
 import 'colors.dart';
 import 'common_widgets.dart';
+import 'videodisplay_screen.dart';
 
 Widget pendentWidget() {
   return Column(
@@ -1307,30 +1316,30 @@ kritaliaWidget(String itemName) {
           fontFamily: "OnestRegular",
         ),
         const SpaceHeightWidget(height: 10),
-        Container(
-          padding: const EdgeInsets.all(8),
-          width: double.infinity,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: purpleColor.withOpacity(0.05)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text("THE KRITALIA EXPERIENCE",
-                  style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14)),
-              const SpaceHeightWidget(height: 10),
-              const Text(
-                  "When you choose Kritalia & Co., you become a valued member of the Kritalia family. Since 1937, we’ve prided ourselves on providing premium service, a tradition that continues to this day.",
-                  style: TextStyle(fontFamily: "OnestRegular", fontSize: 12)),
-              const SpaceHeightWidget(height: 10),
-              const CommonDivider(),
-              for (int i = 0; i < kritaliaExpData.length; i++)
-                KristaliaTileWidget(
-                    title: kritaliaExpData[i]['title'],
-                    data: kritaliaExpData[i]['des'])
-            ],
-          ),
-        ),
+        // Container(
+        //   padding: const EdgeInsets.all(8),
+        //   width: double.infinity,
+        //   decoration: BoxDecoration(
+        //       borderRadius: BorderRadius.circular(5),
+        //       color: purpleColor.withOpacity(0.05)),
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       const Text("THE KRITALIA EXPERIENCE",
+        //           style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14)),
+        //       const SpaceHeightWidget(height: 10),
+        //       const Text(
+        //           "When you choose Kritalia & Co., you become a valued member of the Kritalia family. Since 1937, we’ve prided ourselves on providing premium service, a tradition that continues to this day.",
+        //           style: TextStyle(fontFamily: "OnestRegular", fontSize: 12)),
+        //       const SpaceHeightWidget(height: 10),
+        //       const CommonDivider(),
+        //       for (int i = 0; i < kritaliaExpData.length; i++)
+        //         KristaliaTileWidget(
+        //             title: kritaliaExpData[i]['title'],
+        //             data: kritaliaExpData[i]['des'])
+        //     ],
+        //   ),
+        // ),
       ],
     ),
   );
@@ -1391,14 +1400,31 @@ class ProductCatScrollWidget extends StatelessWidget {
 }
 
 class ViewRatingWidget extends StatelessWidget {
+  final String productImage;
+  final String productName;
   final VoidCallback reportFun;
+  final VoidCallback helpfulfun;
   final String? reviewVideoData;
   final List<String>? reviewImagesData;
-  const ViewRatingWidget(
-      {super.key,
-      required this.reportFun,
-      this.reviewImagesData,
-      this.reviewVideoData});
+  final String name;
+  final String date;
+  final String review;
+  final String rating;
+  final String helpfulPersons;
+  const ViewRatingWidget({
+    super.key,
+    required this.productImage,
+    required this.productName,
+    required this.reportFun,
+    required this.helpfulfun,
+    this.reviewImagesData,
+    this.reviewVideoData,
+    required this.date,
+    required this.name,
+    required this.rating,
+    required this.review,
+    required this.helpfulPersons,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -1412,13 +1438,13 @@ class ViewRatingWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CommonTitle(
-                  titleName: "Charvani",
+                  titleName: name,
                   fontColor: middleBlackColor,
                   size: 14,
                   fontFamily: "OnestBold",
                 ),
                 CommonTitle(
-                  titleName: "10 oct 2023",
+                  titleName: date,
                   fontColor: middleBlackColor.withOpacity(0.6),
                   size: 13,
                 )
@@ -1428,8 +1454,9 @@ class ViewRatingWidget extends StatelessWidget {
             Row(
               children: [
                 RatingBar.builder(
-                  initialRating: 5,
+                  initialRating: double.parse(rating),
                   minRating: 1,
+                  ignoreGestures: true,
                   direction: Axis.horizontal,
                   allowHalfRating: false,
                   itemCount: 5,
@@ -1455,7 +1482,7 @@ class ViewRatingWidget extends StatelessWidget {
             const SpaceHeightWidget(height: 4),
             // const SideTitle(title: "Reviewed in India"),
             CommonTitle(
-              titleName: "Very healthy product for us.",
+              titleName: review,
               fontColor: middleBlackColor,
               size: 14,
               fontFamily: "OnestSemiBold",
@@ -1467,8 +1494,7 @@ class ViewRatingWidget extends StatelessWidget {
                 children: [
                   if (reviewVideoData! != "")
                     SizedBox(
-                      width: 180,
-                      child: ReviewVideoWidget(
+                      child: ReviewViWidget(
                         videoUrl: reviewVideoData!,
                         videoImgHeight: 100,
                       ),
@@ -1477,27 +1503,38 @@ class ViewRatingWidget extends StatelessWidget {
                     for (int i = 0; i < reviewImagesData!.length; i++)
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 2),
-                        child: CommonCachedNetworkImage(
-                          imagePath: reviewImagesData![i],
-                          height: 100,
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.translucent,
+                          onTap: () {
+                            Get.to(() => HeroAnimationScreen(
+                                  tagData: reviewImagesData![i],
+                                ));
+                          },
+                          child: CommonCachedNetworkImage(
+                            imagePath: reviewImagesData![i],
+                            height: 100,
+                            width: 80,
+                            boxfit: BoxFit.fill,
+                          ),
                         ),
                       ),
                 ],
               ),
             ),
             const SpaceHeightWidget(height: 6),
-            CommonTitle(
-              titleName: "77 people found this helpful",
-              size: 12,
-              fontColor: middleBlackColor,
-              fontFamily: "OnestRegular",
-            ),
-            const SpaceHeightWidget(height: 3),
+            if (helpfulPersons != "0" && helpfulPersons != "")
+              CommonTitle(
+                titleName: "$helpfulPersons people found this helpful",
+                size: 12,
+                fontColor: middleBlackColor,
+                fontFamily: "OnestRegular",
+              ),
+            const SpaceHeightWidget(height: 5),
             (true == true)
                 ? SizedBox(
                     height: 25,
                     child: CustomAutoWidthButton(
-                        onTapFun: () {}, title: "Helpful"))
+                        onTapFun: helpfulfun, title: "Helpful"))
                 : Row(
                     children: [
                       CircleAvatar(
@@ -1518,7 +1555,7 @@ class ViewRatingWidget extends StatelessWidget {
                       )
                     ],
                   ),
-            const SpaceHeightWidget(height: 3),
+            const SpaceHeightWidget(height: 5),
             SizedBox(
               height: 25,
               child: Row(
@@ -1528,8 +1565,41 @@ class ViewRatingWidget extends StatelessWidget {
                     buttonColor: darkBlue,
                     imagePath: '',
                     idata: Icons.share,
-                    onTapFun: () {
-                      CommonToast("Will share soon");
+                    onTapFun: () async {
+                      print("sharing function");
+                      String imgUrl = "";
+                      if (reviewImagesData!.isNotEmpty) {
+                        imgUrl = reviewImagesData![0];
+                      } else if (productImage != "") {
+                        imgUrl = productImage;
+                      }
+                      if (imgUrl != "") {
+                        final url = Uri.parse(imgUrl);
+                        final response = await http.get(url);
+                        final bytes = response.bodyBytes;
+                        final temp = await getTemporaryDirectory();
+                        final path = "${temp.path}/image.jpg";
+                        File(path).writeAsBytesSync(bytes);
+                        if (reviewVideoData != "") {
+                          await Share.shareXFiles([XFile(path)],
+                              text:
+                                  "Product Name: $productName \nReview: $review \nVideo Review: $reviewVideoData \nApp link(Android): https://showcase.worldunityfoundation.org/");
+                        } else {
+                          await Share.shareXFiles([XFile(path)],
+                              text:
+                                  "Product Name: $productName \nReview: $review \nApp link(Android): https://showcase.worldunityfoundation.org/");
+                        }
+                      } else {
+                        if (reviewVideoData != "") {
+                          await Share.shareXFiles([],
+                              text:
+                                  "Product Name: $productName \nReview: $review \nVideo Review: $reviewVideoData \nApp link(Android): https://showcase.worldunityfoundation.org/");
+                        } else {
+                          await Share.shareXFiles([],
+                              text:
+                                  "Product Name: $productName \nReview: $review \nApp link(Android): https://showcase.worldunityfoundation.org/");
+                        }
+                      }
                     },
                     labelColor: whiteColor,
                     titile: 'Share',
@@ -1561,9 +1631,16 @@ List<dynamic> reportOptions = [
 ];
 
 class RportWidget extends StatelessWidget {
+  final bool submitLoading;
+  final VoidCallback submitFun;
   final Function(dynamic)? onchangeFun;
   final String gVal;
-  const RportWidget({super.key, required this.onchangeFun, required this.gVal});
+  const RportWidget(
+      {super.key,
+      required this.onchangeFun,
+      required this.submitLoading,
+      required this.gVal,
+      required this.submitFun});
 
   @override
   Widget build(BuildContext context) {
@@ -1653,11 +1730,9 @@ class RportWidget extends StatelessWidget {
           children: [
             SizedBox(
               height: 35,
-              child: CustomAutoWidthButton(
-                  onTapFun: () {
-                    Get.back();
-                  },
-                  title: "Submit"),
+              child: submitLoading
+                  ? loader
+                  : CustomAutoWidthButton(onTapFun: submitFun, title: "Submit"),
             ),
           ],
         )
@@ -1667,7 +1742,7 @@ class RportWidget extends StatelessWidget {
 }
 
 List<String> filterOptions = [
-  "Image and video reviews only",
+  "Image or video reviews only",
   "Positive reviews",
   "Critical reviews",
   "Clear All"
@@ -1675,9 +1750,13 @@ List<String> filterOptions = [
 
 class ReviewFilter extends StatelessWidget {
   final Function(dynamic)? onchangeFun;
+  final VoidCallback applyFun;
   final String rFVal;
   const ReviewFilter(
-      {super.key, required this.onchangeFun, required this.rFVal});
+      {super.key,
+      required this.onchangeFun,
+      required this.rFVal,
+      required this.applyFun});
 
   @override
   Widget build(BuildContext context) {
@@ -1726,11 +1805,8 @@ class ReviewFilter extends StatelessWidget {
               children: [
                 SizedBox(
                   height: 35,
-                  child: CustomAutoWidthButton(
-                      onTapFun: () {
-                        Get.back();
-                      },
-                      title: "Apply"),
+                  child:
+                      CustomAutoWidthButton(onTapFun: applyFun, title: "Apply"),
                 ),
               ],
             )
@@ -1827,7 +1903,7 @@ class _PdfWidgetState extends State<PdfWidget> {
 
 class RatingBarWidget extends StatelessWidget {
   final int index;
-  final int percentage;
+  final String percentage;
   const RatingBarWidget(
       {super.key, required this.index, required this.percentage});
 
@@ -1849,7 +1925,7 @@ class RatingBarWidget extends StatelessWidget {
             child: LinearProgressIndicator(
               borderRadius: BorderRadius.circular(3.5),
               minHeight: 20,
-              value: percentage / 100,
+              value: double.parse(percentage),
               backgroundColor: lightBlackColor,
               valueColor: const AlwaysStoppedAnimation<Color>(
                 Colors.amber,
@@ -1857,11 +1933,14 @@ class RatingBarWidget extends StatelessWidget {
             ),
           ),
           const SpaceWidthWidget(width: 10),
-          CommonTitle(
-            titleName: "$percentage%",
-            size: 14,
-            fontFamily: "OnestRegular",
-            fontColor: lightDarKBlue,
+          SizedBox(
+            width: 43,
+            child: CommonTitle(
+              titleName: "$percentage%",
+              size: 14,
+              fontFamily: "OnestRegular",
+              fontColor: lightDarKBlue,
+            ),
           ),
         ],
       ),
@@ -1939,6 +2018,93 @@ class _ReviewVideoWidgetState extends State<ReviewVideoWidget> {
                     boxfit: BoxFit.fill,
                   ),
                 ),
+                CircleAvatar(
+                  backgroundColor: darkRedColor,
+                  radius: 18,
+                  child: Icon(
+                    Icons.play_arrow_rounded,
+                    color: whiteColor,
+                    size: 35,
+                  ),
+                )
+              ],
+            )),
+      ),
+    );
+  }
+}
+
+class ReviewViWidget extends StatefulWidget {
+  final String videoUrl;
+  final double videoImgHeight;
+  final double? videoImgWidth;
+  const ReviewViWidget(
+      {super.key,
+      required this.videoUrl,
+      required this.videoImgHeight,
+      this.videoImgWidth});
+
+  @override
+  State<ReviewViWidget> createState() => _ReviewViWidgetState();
+}
+
+class _ReviewViWidgetState extends State<ReviewViWidget> {
+  File? img;
+  infoFun() async {
+    final fileName = await VideoThumbnail.thumbnailFile(
+      video: widget.videoUrl,
+      thumbnailPath: (await getTemporaryDirectory()).path,
+      imageFormat: ImageFormat.PNG,
+      maxHeight:
+          64, // specify the height of the thumbnail, let the width auto-scaled to keep the source aspect ratio
+      quality: 75,
+    );
+    if (fileName != null) {
+      if (mounted) {
+        setState(() {
+          img = File(fileName);
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    infoFun();
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          Get.to(() => VideoDisplayScreen(
+                videoUrl: widget.videoUrl,
+              ));
+        },
+        child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 3),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                SizedBox(
+                    child: (img != null)
+                        ? Image.file(
+                            img!,
+                            height: 100,
+                            width: 160,
+                            // widget.videoImgWidth
+                            //  ?? double.infinity,
+                            fit: BoxFit.cover,
+                          )
+                        : const CommonCachedNetworkImage(
+                            imagePath: "",
+                            height: 100,
+                          )),
                 CircleAvatar(
                   backgroundColor: darkRedColor,
                   radius: 18,

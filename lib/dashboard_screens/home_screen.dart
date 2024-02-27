@@ -299,7 +299,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   dataFun(String category) async {
-    dynamic data = await productController.getProducts(category);
+    dynamic data = await productController.getProducts(category, null);
     print("product screen data...$data");
   }
 

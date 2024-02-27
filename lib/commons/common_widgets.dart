@@ -1042,6 +1042,7 @@ class SearchWidget extends StatelessWidget {
 }
 
 class SearcItemhWidget extends StatelessWidget {
+  final bool readOnly;
   final TextEditingController controller;
   final String hintText;
   final Color borderColor;
@@ -1053,6 +1054,7 @@ class SearcItemhWidget extends StatelessWidget {
       {super.key,
       required this.onFieldSubFun,
       required this.clearFun,
+      required this.readOnly,
       required this.onchangeFun,
       required this.hintText,
       required this.borderColor,
@@ -1064,6 +1066,7 @@ class SearcItemhWidget extends StatelessWidget {
       onFieldSubmitted: onFieldSubFun,
       controller: controller,
       onChanged: onchangeFun,
+      readOnly: readOnly,
       decoration: InputDecoration(
           suffix: controller.text.length > 3
               ? GestureDetector(
@@ -2000,15 +2003,21 @@ class KritaliaItemWidget extends StatelessWidget {
 class CommonCachedNetworkImage extends StatelessWidget {
   final String imagePath;
   final double? height;
+  final double? width;
   final BoxFit? boxfit;
   const CommonCachedNetworkImage(
-      {super.key, required this.imagePath, this.height, this.boxfit});
+      {super.key,
+      required this.imagePath,
+      this.width,
+      this.height,
+      this.boxfit});
 
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: imagePath,
       height: height,
+      width: width,
       progressIndicatorBuilder: (context, url, progress) =>
           SizedBox(width: 80, child: loader),
       fit: boxfit,
@@ -4794,7 +4803,8 @@ class TableHeadingWidget extends StatelessWidget {
 
 class TableInfoWidget extends StatelessWidget {
   final String info;
-  const TableInfoWidget({super.key, required this.info});
+  final Color? color;
+  const TableInfoWidget({super.key, required this.info, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -4804,7 +4814,9 @@ class TableInfoWidget extends StatelessWidget {
         child: Text(
           info,
           style: TextStyle(
-              fontFamily: "OnestRegular", fontSize: 12, color: blackColor),
+              fontFamily: "OnestRegular",
+              fontSize: 12,
+              color: color ?? blackColor),
         ),
       );
     }

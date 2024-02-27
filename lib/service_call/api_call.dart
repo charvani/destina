@@ -41,7 +41,8 @@ class ApiCall {
     }
   }
 
-  saleMallPostMethodFun({required String methodName, required Map params}) async {
+  saleMallPostMethodFun(
+      {required String methodName, required Map params}) async {
     print("method...$methodName");
     print("params...$params");
 //encryption
@@ -128,6 +129,40 @@ class ApiCall {
     if (response.statusCode == 200) {
       return convertedData;
     } else {
+      CommonToast(convertedData['Message']);
+    }
+  }
+
+  uploadReview({
+    required bData,
+  }) async {
+    print("getting url...${"${ApiData().baseUrl}WriteNReview"}");
+    http.Response response = await http
+        .post(Uri.parse("${ApiData().baseUrl}WriteNReview"), body: bData);
+
+    print("cherry.....${response.body}");
+    dynamic convertedData = convert.jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      return convertedData;
+    } else {
+      print("get error....${convertedData['Message']}");
+      CommonToast(convertedData['Message']);
+    }
+  }
+
+  rawFun({required params, required endUrl}) async {
+    print("method....$endUrl");
+    print("params....$params");
+
+    http.Response response =
+        await http.post(Uri.parse(ApiData().baseUrl + endUrl), body: params);
+
+    print("cherry.....${response.body}");
+    dynamic convertedData = convert.jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      return convertedData;
+    } else {
+      print("get error....${convertedData['Message']}");
       CommonToast(convertedData['Message']);
     }
   }

@@ -96,7 +96,7 @@ class _UpdatePhotoScreenState extends State<UpdatePhotoScreen> {
                             onTapFun: () async {
                               if (image != null) {
                                 print("image fun");
-                                
+                                print("path....${image!.path}");
                                 final bytes =
                                     File(image!.path).readAsBytesSync();
 

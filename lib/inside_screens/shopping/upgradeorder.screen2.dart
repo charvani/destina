@@ -82,7 +82,14 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
                     itemsPrice:
                         "${_dataController.packCartList[i].symbol} ${_dataController.packCartList[i].mrp}",
                     productCode: _dataController.packCartList[i].pkcode,
-                    itemCount: _dataController.packCartList[i].qty)
+                    itemCount: _dataController.packCartList[i].qty),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: ViewProfileWidget(
+                    title: "Total CV",
+                    info: _dataController.cvVal.value.toString()),
+              ),
+              const SpaceHeightWidget(height: 10)
             ],
           ),
         ),
@@ -335,7 +342,7 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
             ));
       } else {
         CommonToast(
-            "Please Select Some Products To Qualify For Package Signup");
+            'Required ${double.parse(resss['Pkcode']) - _dataController.cvVal.value} CV to upgrade for next higher packages');
       }
     }
   }

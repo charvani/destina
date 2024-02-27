@@ -36,7 +36,7 @@ class _SearchItemsScreenState extends State<SearchItemsScreen> {
   }
 
   dataFun(String category) async {
-    dynamic data = await productController.getProducts(category);
+    dynamic data = await productController.getProducts(category, null);
     print("product screen data...$data");
   }
 
@@ -62,6 +62,7 @@ class _SearchItemsScreenState extends State<SearchItemsScreen> {
             margin: const EdgeInsets.only(top: 8),
             height: 50,
             child: SearcItemhWidget(
+              readOnly: true,
               onFieldSubFun: (val) {
                 print("submit val..$val");
                 Get.to(() => SearchItemsScreen(searchKeyword: val));

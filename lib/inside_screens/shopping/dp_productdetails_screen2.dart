@@ -6,10 +6,13 @@ import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../commons/cmnproduct_detailswdgts.dart';
+import '../customer_reviews/reviewlist_screen.dart';
+import '../customer_reviews/writereview_screen.dart';
 import '../heroanimation_screen.dart';
 import 'dp_cartscreen.dart';
 
@@ -105,6 +108,8 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
         carouselImages.add(packDetailsController.packageDetailsData.value.img3);
       }
     }
+    // reviewDataFun(packDetailsController.packageDetailsData.value.pkid);
+
     if (mounted) {
       setState(() {});
     }
@@ -389,11 +394,237 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
                               ),
                             ],
                           ),
+                        ratingReviewWidget(),
+
                         const SpaceHeightWidget(height: 115),
                       ]),
                 );
         }),
       ),
+    );
+  }
+  dynamic gval = "";
+  Widget ratingReviewWidget() {
+    return ExpansionTile(
+      initiallyExpanded: true,
+      shape: const Border(),
+      title: CommonTitle(
+        titleName: "Customer Reviews",
+        fontColor: darkBlue,
+        size: 16,
+      ),
+      children: [
+        packDetailsController.genealogyLoading.value
+            ? loader
+            : Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        RatingBar.builder(
+                          ignoreGestures: true,
+                          initialRating: packDetailsController
+                                      .reviewData.value.avgRating !=
+                                  ""
+                              ? double.parse(packDetailsController
+                                      .reviewData.value.avgRating)
+                                  .toDouble()
+                              : 0.0,
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemSize: 15,
+                          itemPadding:
+                              const EdgeInsets.symmetric(horizontal: 1.0),
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          onRatingUpdate: (rating) {
+                            print(rating);
+                          },
+                        ),
+                        const SpaceWidthWidget(width: 10),
+                        CommonTitle(
+                          titleName:
+                              "${double.parse(packDetailsController.reviewData.value.avgRating).toDouble().toStringAsFixed(1)} out of 5",
+                          size: 14,
+                          fontFamily: "OnestRegular",
+                          fontColor: lightDarKBlue,
+                        ),
+                      ],
+                    ),
+                    CommonTitle(
+                      titleName:
+                          "${packDetailsController.reviewData.value.totalRating} global ratings",
+                      size: 14,
+                      fontFamily: "OnestRegular",
+                      fontColor: lightDarKBlue,
+                    ),
+                    const SpaceHeightWidget(height: 10),
+                    for (int i = 0;
+                        i <
+                            packDetailsController
+                                .reviewData.value.reviewReport1.length;
+                        i++)
+                      if (i < 2)
+                        ViewRatingWidget(
+                          productName: packDetailsController
+                              .packageDetailsData.value.pkname,
+                          productImage: carouselImages.isNotEmpty
+                              ? carouselImages[0]
+                              : "",
+                          helpfulfun: () {
+                            helpfunFun(
+                                packDetailsController
+                                    .reviewData.value.reviewReport1[i].pId,
+                                packDetailsController
+                                    .packageDetailsData.value.pkid);
+                          },
+                          helpfulPersons: packDetailsController
+                              .reviewData.value.reviewReport1[i].helpful,
+                          name: packDetailsController
+                              .reviewData.value.reviewReport1[i].name,
+                          date: packDetailsController
+                              .reviewData.value.reviewReport1[i].dated,
+                          rating: packDetailsController
+                              .reviewData.value.reviewReport1[i].rating,
+                          review: packDetailsController
+                              .reviewData.value.reviewReport1[i].review,
+                          reviewVideoData: packDetailsController.reviewData
+                                      .value.reviewReport1[i].video !=
+                                  ""
+                              ? packDetailsController
+                                  .reviewData.value.reviewReport1[i].videoUrl
+                              : "",
+                          reviewImagesData: [
+                            for (int j = 0;
+                                j <
+                                    packDetailsController
+                                        .reviewData.value.reviewReport3.length;
+                                j++)
+                              if (packDetailsController
+                                      .reviewData.value.reviewReport1[i].pId ==
+                                  packDetailsController
+                                      .reviewData.value.reviewReport3[j].pId)
+                                packDetailsController
+                                    .reviewData.value.reviewReport3[j].image
+                          ],
+                          reportFun: () {
+                            reportFun(packDetailsController
+                                .reviewData.value.reviewReport1[i].pId);
+                          },
+                        ),
+                    const SpaceHeightWidget(height: 15),
+                    Container(
+                      height: 30,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomAutoWidthButton(
+                              onTapFun: () {
+                                Get.to(() => WriteReviewScreen(
+                                      pid: packDetailsController
+                                          .packageDetailsData.value.pkid,
+                                    ));
+                              },
+                              title: "Write Review"),
+                          if (packDetailsController
+                              .reviewData.value.reviewReport1.isNotEmpty)
+                            CustomAutoWidthButton(
+                                onTapFun: () {
+                                  Get.to(() => ReviewListScreen(
+                                      productName: packDetailsController
+                                          .packageDetailsData.value.pkname,
+                                      productImage: carouselImages.isNotEmpty
+                                          ? carouselImages[0]
+                                          : "",
+                                      pid: packDetailsController
+                                          .packageDetailsData.value.pkid));
+                                },
+                                title: "View All"),
+                        ],
+                      ),
+                    ),
+                    const SpaceHeightWidget(height: 25)
+                  ],
+                ),
+              )
+      ],
+    );
+  }
+
+  helpfunFun(pid, productId) {
+    Map bdata = {
+      "Action": "AddHelp",
+      "Pid": pid,
+      "Name": "",
+      "Session": "",
+    };
+
+    Map reviewDataParams = {
+      "action": "Report",
+      "Pid": productId,
+      "Name": null,
+      "Review": null,
+      "Rating": null,
+      "Images": null,
+      "Video": null,
+      "Session": null
+    };
+    packDetailsController.getHelpFulFun(bdata, reviewDataParams);
+  }
+
+  bool reportloading = false;
+  reportFun(pid) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => StatefulBuilder(builder: (context, myState) {
+        return RportWidget(
+          submitLoading: reportloading,
+          onchangeFun: (val) {
+            myState(() {
+              gval = val;
+            });
+            print("gValue.....$val");
+          },
+          gVal: gval,
+          submitFun: () {
+            myState(() {
+              reportloading = true;
+            });
+
+            Map params = {
+              "Action": "AddReport",
+              "Pid": pid,
+              "Name": gval == "Off topic"
+                  ? "1"
+                  : gval == "Inappropriate"
+                      ? "2"
+                      : gval == "Fake"
+                          ? "3"
+                          : "4",
+              "Review": "",
+              "Rating": "",
+              "Images": "",
+              "Video": "",
+              "Session": "",
+            };
+            packDetailsController.getReviewReportingFun(params);
+
+            Timer(const Duration(seconds: 1), () {
+              myState(() {
+                reportloading = false;
+              });
+              Get.back();
+            });
+          },
+        );
+      }),
     );
   }
 }

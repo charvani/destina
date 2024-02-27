@@ -1,6 +1,7 @@
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../commons/colors.dart';
 import '../../commons/constants.dart';
@@ -168,8 +169,8 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                   horizontalMargin: 0,
                                   columnSpacing: 0,
                                   // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
-                                  headingRowColor: MaterialStatePropertyAll(
-                                      lightDarKBlue.withOpacity(0.2)),
+                                  headingRowColor:
+                                      MaterialStatePropertyAll(darkBlue),
                                   border: TableBorder.all(
                                     color: middleBlackColor.withOpacity(0.15),
                                   ),
@@ -240,16 +241,31 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                                   .addedBy),
                                         ),
                                         DataCell(
-                                          TableInfoWidget(
-                                              info: _dataController
-                                                  .shippingOrderData[i]
-                                                  .addedBy),
+                                          _dataController.shippingOrderData[i]
+                                                      .awblink !=
+                                                  ""
+                                              ? lauchWidget(
+                                                  _dataController
+                                                      .shippingOrderData[i].awb,
+                                                  _dataController
+                                                      .shippingOrderData[i]
+                                                      .awblink)
+                                              : TableInfoWidget(
+                                                  info: _dataController
+                                                      .shippingOrderData[i]
+                                                      .awblink,
+                                                ),
                                         ),
                                         DataCell(
-                                          TableInfoWidget(
-                                              info: _dataController
-                                                  .shippingOrderData[i]
-                                                  .addedBy),
+                                          _dataController.shippingOrderData[i]
+                                                      .tracklink !=
+                                                  ""
+                                              ? lauchWidget(
+                                                  "Click here",
+                                                  _dataController
+                                                      .shippingOrderData[i]
+                                                      .tracklink)
+                                              : const TableInfoWidget(info: ""),
                                         ),
                                       ])
                                   ]),
@@ -265,5 +281,20 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
         );
       }),
     );
+  }
+
+  Widget lauchWidget(info, urlLink) {
+    return GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () async {
+          final Uri url = Uri.parse(urlLink);
+          if (!await launchUrl(url)) {
+            throw Exception('Could not launch $url');
+          }
+        },
+        child: TableInfoWidget(
+          info: info,
+          color: lightDarKBlue,
+        ));
   }
 }

@@ -18,6 +18,9 @@ class ShippingOrderModel {
   String dispatchDate;
   String remarks;
   String addedBy;
+  String awb;
+  String awblink;
+  String tracklink;
 
   ShippingOrderModel({
     required this.msg,
@@ -27,6 +30,9 @@ class ShippingOrderModel {
     required this.dispatchDate,
     required this.remarks,
     required this.addedBy,
+    required this.awb,
+    required this.awblink,
+    required this.tracklink,
   });
 
   factory ShippingOrderModel.fromJson(Map<String, dynamic> json) =>
@@ -38,6 +44,9 @@ class ShippingOrderModel {
         dispatchDate: json["DispatchDate"],
         remarks: json["Remarks"],
         addedBy: json["AddedBy"],
+        awb: json["awb"],
+        awblink: json["awblink"],
+        tracklink: json["trackingurl"],
       );
 
   Map<String, dynamic> toJson() => {

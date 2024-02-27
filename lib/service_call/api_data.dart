@@ -131,4 +131,7 @@ class ApiData {
   String selPackageDetailsUpgPro = "SelPackageDetails_UpgPro";
   String redeemRequest = "RedeemRequest";
   String getRedeemPoints = "GetRedeemPoints";
+  String uploadReview = "WriteNReview";
+  String getReviewsdata = "GetReviewsdata";
+  String addHelpful = "AddHelpful";
 }

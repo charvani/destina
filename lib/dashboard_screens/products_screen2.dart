@@ -68,7 +68,7 @@ class _ProductsScreen2State extends State<ProductsScreen2> {
   }
 
   dataFun(String category) async {
-    dynamic data = await productController.getProducts(category);
+    dynamic data = await productController.getProducts(category, null);
     print("product screen data...$data");
   }
 
@@ -76,23 +76,29 @@ class _ProductsScreen2State extends State<ProductsScreen2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          // shape: const RoundedRectangleBorder(
-          //     borderRadius: BorderRadius.only(
-          //         bottomLeft: Radius.circular(30),
-          //         bottomRight: Radius.circular(30))),
+        appBar:
+            // commonAppBar(title: "Products", backNavigation: false),
+            AppBar(
           backgroundColor: darkBlue,
           leading: const SizedBox.shrink(),
           leadingWidth: 0,
-          title: Container(
-            margin: const EdgeInsets.only(top: 8),
-            height: 50,
-            child: SearchWidget(
-              borderColor: transperantColor,
-              hintText: "What are you looking for?",
-              onTapFun: () {},
-            ),
+          centerTitle: true,
+          title: Text(
+            "Products",
+            style: TextStyle(
+                fontFamily: "OnestSemiBold", fontSize: 20, color: whiteColor),
           ),
+          // Container(
+          //   margin: const EdgeInsets.only(top: 8),
+          //   height: 50,
+          //   child: SearchWidget(
+          //     borderColor: transperantColor,
+          //     hintText: "What are you looking for?",
+          //     onTapFun: () {
+          //       Get.to(() => const SearchCategoryScreen());
+          //     },
+          //   ),
+          // ),
           elevation: 0,
         ),
         body: Row(
