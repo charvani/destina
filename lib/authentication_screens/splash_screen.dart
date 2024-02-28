@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../commons/common_widgets.dart';
+import '../controllers/network_connectivity/network_controller.dart';
+import '../controllers/network_connectivity/noInternet_connection.dart';
 import 'onboard_screen.dart';
 // import 'package:video_player/video_player.dart';
 
@@ -19,20 +21,19 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final NetworkController _networkController = Get.put(NetworkController());
+  // final NetworkController _networkController = Get.find<NetworkController>();
+
   bool splashAnimation = true;
   // late VideoPlayerController _controller;
   late bool onboard;
   late String login;
   navgationFun() {
     Get.offAll(
-        () => onboard == false ? const OnboardScreen() : const LoginScreen()
-        // login == "false" || login == "null"
-        //     ? const LoginScreen()
-        //     : const BottomBarScreen(
-        //         index: 0,
-        //       )
-
-        );
+        () => onboard == false ? const OnboardScreen() : const LoginScreen());
+    if (_networkController.connectionStatus.value == 0) {
+      Get.to(() => const NoInternetConnection());
+    }
   }
 
   countyCodeFun() async {

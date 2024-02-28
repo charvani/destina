@@ -78,6 +78,7 @@ dependencies:
   share_plus: ^7.2.2
   path: ^1.8.3
   video_thumbnail:
+  connectivity_plus: ^2.3.8
   # agora_uikit: ^1.3.7
   
   

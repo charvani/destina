@@ -77,20 +77,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               // )
               // );
             }),
-        body: WillPopScope(
-          onWillPop: () async {
-            // Get.dialog(ConfrimationDialog(
-            //   onTapFun: () async {
-            //     Get.back();
-            //     Get.back();
-            //     Get.back();
-            //     await Constants.prefs.remove("uniq_id");
-            //     await Constants.prefs.remove("ss_id");
-            //   },
-            //   title: "Do you want to clear these items from your cart?",
-            // ));
-            return false;
-          },
+        body: PopScope(
+          canPop: false,
           child: FutureBuilder<WebViewController>(
               future: webViewControllerFuture,
               builder: (context, snapshot) {
