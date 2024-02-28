@@ -55,7 +55,10 @@ class _NoInternetConnectionState extends State<NoInternetConnection> {
     return PopScope(
       canPop: false,
       onPopInvoked: (pop) {
-        onWillPop(pop);
+        print("pop...$pop");
+        if (!pop) {
+          onWillPop();
+        }
       },
       child: Scaffold(
         body: SizedBox(
@@ -142,18 +145,17 @@ class _NoInternetConnectionState extends State<NoInternetConnection> {
     );
   }
 
-  onWillPop(pop) {
+  onWillPop() {
     DateTime now = DateTime.now();
 
     if (currentBackPressTime == null ||
         now.difference(currentBackPressTime) > const Duration(seconds: 2)) {
       currentBackPressTime = now;
       Fluttertoast.showToast(msg: 'Tap back again to leave');
-
-      return Future.value(false);
+      return;
     }
     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-    return Future.value(true);
+    return;
   }
 
   autoLoginfun() async {

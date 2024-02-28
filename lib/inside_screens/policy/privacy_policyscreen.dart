@@ -54,6 +54,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       size: 13,
                       titleName:
                           "Destina 1 International Sdn. Bhd. (also referred to as 'DESTINA 1, 'we', 'us' throughout this document), a member of the D1 Group is committed to protecting your privacy and developing technology to give you a powerful and safe online experience. This Statement of Privacy applies to the DESTINA 1 website http://www.destina1.com and our mobile application and governs data collection and usage. Using the DESTINA 1 website, you consent to the data practices described in this statement."),
+                
                   const SpaceHeightWidget(height: 15),
                   const CommonTitle(
                       size: 14,

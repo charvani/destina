@@ -12,8 +12,9 @@ import 'package:get/get.dart';
 import '../authentication_screens/login_screen.dart';
 import '../commons/constants.dart';
 import '../controllers/main_controller.dart';
+import '../inside_screens/aboutus_screen.dart';
 import '../inside_screens/myaccount_screen.dart';
-import '../inside_screens/privacy_policyscreen.dart';
+import '../inside_screens/policy/policyselection_screen.dart';
 import 'bottombar_screen.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -319,22 +320,31 @@ class _AccountScreenState extends State<AccountScreen>
                 height: 0,
               ),
               AboutUsScreenWidget(
-                leadingIcon: Icons.settings_outlined,
+                leadingIcon: Icons.policy_outlined,
+                onTapFun: () {
+                  Get.to(() => const PolicySelectionScreen());
+                },
+                title: "Policies",
+              ),
+              AboutUsScreenWidget(
+                leadingIcon: Icons.info_outline_rounded,
+                onTapFun: () {
+                  Get.to(() => const AboutUsScreen());
+                },
+                title: "About Us",
+              ),
+              AboutUsScreenWidget(
+                leadingIcon: Icons.help_outline,
                 onTapFun: () {},
-                title: "Settings",
+                title: "Contact Us",
               ),
               // AboutUsScreenWidget(
-              //   leadingIcon: Icons.file_copy_outlined,
-              //   onTapFun: () {},
-              //   title: "FAQ",
+              //   leadingIcon: FeatherIcons.fileText,
+              //   onTapFun: () {
+              //     Get.to(() => const PrivacyPolicyScreen());
+              //   },
+              //   title: "Privacy Policy",
               // ),
-              AboutUsScreenWidget(
-                leadingIcon: FeatherIcons.fileText,
-                onTapFun: () {
-                  Get.to(() => const PrivacyPolicyScreen());
-                },
-                title: "Privacy Policy",
-              ),
               if (Constants.prefs.getString("user_id") != null &&
                   Constants.prefs.getString("user_id") != "false")
                 Obx(() {

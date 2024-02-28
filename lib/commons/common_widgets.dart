@@ -780,8 +780,10 @@ class AboutUsScreenWidget extends StatelessWidget {
   final VoidCallback onTapFun;
   final String title;
   final IconData leadingIcon;
+  final String? image;
   const AboutUsScreenWidget(
       {super.key,
+      this.image,
       required this.onTapFun,
       required this.title,
       required this.leadingIcon});
@@ -796,11 +798,16 @@ class AboutUsScreenWidget extends StatelessWidget {
           leading: CircleAvatar(
             radius: 15,
             backgroundColor: lightBlackColor.withOpacity(0.1),
-            child: Icon(
-              leadingIcon,
-              size: 18,
-              color: blackColor.withOpacity(0.5),
-            ),
+            child: image == null
+                ? Icon(
+                    leadingIcon,
+                    size: 18,
+                    color: blackColor.withOpacity(0.5),
+                  )
+                : Image.asset(
+                    image!,
+                    height: 20,
+                  ),
           ),
           title: Text(
             title,
