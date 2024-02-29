@@ -247,30 +247,33 @@ class _MemberScreenState extends State<MemberScreen> {
                                       : lightBlackColor.withOpacity(0.4),
                                   title: "Become a PC"),
                             const SpaceWidthWidget(width: 7),
-                            if (double.parse(checkController
-                                            .checkCountryData.value.dCiRenFee)
-                                        .round() >
-                                    0 &&
-                                double.parse(checkController
-                                            .checkCountryData.value.dcRenF)
-                                        .round() >
-                                    0)
-                              CustomMemberButton(
-                                  imagePath:
-                                      "assets/images/single_employee.png",
-                                  textColor:
-                                      ddcTap ? lightDarKBlue : blackColor,
-                                  onTapFun: () {
-                                    setState(() {
-                                      ddcTap = true;
-                                      ddTap = false;
-                                      pcTap = false;
-                                    });
-                                  },
-                                  activeColor: ddcTap
-                                      ? lightDarKBlue
-                                      : lightBlackColor.withOpacity(0.4),
-                                  title: "Become a DDC"),
+                            if (checkController
+                                    .checkCountryData.value.dCiRenFee !=
+                                "")
+                              if (double.parse(checkController
+                                              .checkCountryData.value.dCiRenFee)
+                                          .round() >
+                                      0 &&
+                                  double.parse(checkController
+                                              .checkCountryData.value.dcRenF)
+                                          .round() >
+                                      0)
+                                CustomMemberButton(
+                                    imagePath:
+                                        "assets/images/single_employee.png",
+                                    textColor:
+                                        ddcTap ? lightDarKBlue : blackColor,
+                                    onTapFun: () {
+                                      setState(() {
+                                        ddcTap = true;
+                                        ddTap = false;
+                                        pcTap = false;
+                                      });
+                                    },
+                                    activeColor: ddcTap
+                                        ? lightDarKBlue
+                                        : lightBlackColor.withOpacity(0.4),
+                                    title: "Become a DDC"),
                             const SpaceWidthWidget(width: 7),
                             // if (double.parse(checkController
                             //                 .checkCountryData

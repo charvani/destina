@@ -55,7 +55,7 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
     "assets/images/products_baground.png",
     // "assets/images/products_beauty_banner.jpg",
     // "assets/images/hair_care_bg.jpg",
-    "assets/packImg/BANNER SAPPHIRE.png",
+    "assets/images/kritalia_banner.jpg",
   ];
   bool isloading = true;
 
