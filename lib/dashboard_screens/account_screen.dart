@@ -13,6 +13,7 @@ import '../authentication_screens/login_screen.dart';
 import '../commons/constants.dart';
 import '../controllers/main_controller.dart';
 import '../inside_screens/aboutus_screen.dart';
+import '../inside_screens/contactus_screen.dart';
 import '../inside_screens/myaccount_screen.dart';
 import '../inside_screens/policy/policyselection_screen.dart';
 import 'bottombar_screen.dart';
@@ -335,7 +336,9 @@ class _AccountScreenState extends State<AccountScreen>
               ),
               AboutUsScreenWidget(
                 leadingIcon: Icons.help_outline,
-                onTapFun: () {},
+                onTapFun: () {
+                  Get.to(() => const ContactUsScreen());
+                },
                 title: "Contact Us",
               ),
               // AboutUsScreenWidget(

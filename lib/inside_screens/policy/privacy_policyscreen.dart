@@ -18,30 +18,8 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              alignment: Alignment.centerRight,
-              children: [
-                Image.asset(
-                  "assets/images/privacy-banner.jpg",
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: Column(
-                    children: [
-                      CommonTitle(
-                        titleName: "Our Privacy Policy",
-                        fontColor: lightDarKBlue.withOpacity(0.9),
-                      ),
-                      CommonTitle(
-                        titleName: "We're here to help you level up",
-                        fontColor: lightDarKBlue,
-                        size: 14,
-                        fontFamily: "OnestRegular",
-                      ),
-                    ],
-                  ),
-                )
-              ],
+            Image.asset(
+              "assets/images/privacy-banner.jpg",
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -54,7 +32,6 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
                       size: 13,
                       titleName:
                           "Destina 1 International Sdn. Bhd. (also referred to as 'DESTINA 1, 'we', 'us' throughout this document), a member of the D1 Group is committed to protecting your privacy and developing technology to give you a powerful and safe online experience. This Statement of Privacy applies to the DESTINA 1 website http://www.destina1.com and our mobile application and governs data collection and usage. Using the DESTINA 1 website, you consent to the data practices described in this statement."),
-                
                   const SpaceHeightWidget(height: 15),
                   const CommonTitle(
                       size: 14,

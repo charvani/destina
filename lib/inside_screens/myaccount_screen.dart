@@ -42,7 +42,6 @@ import 'shopping/salesmall_screen2.dart';
 import 'tools/faqs_screen.dart';
 import 'tools/ftaform_reportscreen.dart';
 import 'tools/ftareg_formscreen.dart';
-import 'tools/package_reviewscreen.dart';
 
 class MyAccountScreen extends StatefulWidget {
   // List<String>? bannerPopUpImages = [];
@@ -795,12 +794,12 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           },
           title: "FAQS",
         ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const PackageReviewScreen());
-          },
-          title: "Package Review",
-        ),
+        // MyAccountItemWidget(
+        //   onTapFun: () {
+        //     Get.to(() => const PackageReviewScreen());
+        //   },
+        //   title: "Package Review",
+        // ),
         MyAccountItemWidget(
           onTapFun: () {
             Get.to(() => const FTARegistrationFormScreen());
