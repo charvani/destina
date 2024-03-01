@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -105,8 +106,12 @@ class _UpdatePhotoScreenState extends State<UpdatePhotoScreen> {
                                 dynamic res = await _upoladController
                                     .getUploadPhoto(img64);
                                 if (res != null) {
+                                  print("res....$res");
                                   if (res['Msg'] == "SUCCESS") {
                                     CommonToastTrue(res['Message']);
+                                    Timer(const Duration(seconds: 1), () {
+                                      Get.back();
+                                    });
                                   }
                                 }
                               } else {

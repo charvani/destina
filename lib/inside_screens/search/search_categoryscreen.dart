@@ -24,7 +24,8 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
         image: "assets/images/health_care_wb.png", title: "Health Care"),
     // OnboardModel(image: "assets/images/sop_wb.png", title: "Skin Care"),
     // OnboardModel(image: "assets/images/body_care_wb.png", title: "Hair Care"),
-    OnboardModel(image: "assets/packImg/SAPPHIRE NO BG.png", title: "Kritalia"),
+    OnboardModel(
+        image: "assets/images/a_start_privilege_wb.png", title: "Kritalia"),
   ];
   final TextEditingController _seachTextController = TextEditingController();
   final MainController _productController = Get.put(MainController());

@@ -139,8 +139,14 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
                                     },
                                     imagePath:
                                         // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                        _dataController
-                                            .selPackageItemList[i].pImage,
+                                        productCatgs[selectedInd] ==
+                                                "Redemption"
+                                            ? _dataController
+                                                .selPackageItemList[i].pImage
+                                                .replaceAll("RetailImages",
+                                                    "PackageImages")
+                                            : _dataController
+                                                .selPackageItemList[i].pImage,
                                     titile: _dataController
                                         .selPackageItemList[i].pkname);
                               },

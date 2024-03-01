@@ -853,11 +853,15 @@ class MainController extends GetxController {
     dynamic res = await ApiCall().postMethodFun(
         methodName: ApiData().productCategoryMethod, params: parameters);
     productItemList.clear();
-    if (res['productRpt'].length > 0) {
-      for (int i = 0; i < res['productRpt'].length; i++) {
-        productItemList.add(ProductCategoryItem.fromJson(res['productRpt'][i]));
+    if (res != null) {
+      if (res['productRpt'].length > 0) {
+        for (int i = 0; i < res['productRpt'].length; i++) {
+          productItemList
+              .add(ProductCategoryItem.fromJson(res['productRpt'][i]));
+        }
       }
     }
+
     print(productItemList.length);
     loading.value = false;
     return res;
@@ -1141,6 +1145,7 @@ class MainController extends GetxController {
         Constants.prefs.setString("city", res['City']);
         Constants.prefs.setString("user_name", res['Name']);
         Constants.prefs.setString("user_type", res['PkType']);
+        Constants.prefs.setString("profile_image", res['Memberphoto']);
       }
       print("bbbb....${bannerPopUp.length}");
     }

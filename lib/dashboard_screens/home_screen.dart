@@ -14,7 +14,6 @@ import '../inside_screens/productdetails_screen2.dart';
 import '../inside_screens/search/search_categoryscreen.dart';
 import '../inside_screens/services/upload_id_screen.dart';
 import '../models/onboarding_model.dart';
-import '../models/productitem_model.dart';
 
 class HomeScreen extends StatefulWidget {
   List<String>? bannerPopUpImages = [];
@@ -64,47 +63,6 @@ List<OnboardModel> promotionItems = [
       title: "D1 ADVANCE SCALAR ENERGIZED COFFEE(5 IN 1)"),
 ];
 
-List<ProductItemModel> healthProductItmes = [
-  ProductItemModel(
-      imagePath: "assets/images/health1.jpg",
-      productCode: "D1MR002",
-      title: "D1 ADVANCE SCALAR ENERGIZED FLASK"),
-  ProductItemModel(
-      imagePath: "assets/images/health2.jpg",
-      productCode: "D1MR003",
-      title: "D1 ADVANCE SCALAR ENERGIZED STICK"),
-];
-List<ProductItemModel> hairProductItmes = [
-  ProductItemModel(
-      imagePath: "assets/images/hair.jpg",
-      productCode: "D1MR016",
-      title: "D1 PHYTOMILK ASE VOLUMIZING HAIR SHAMPOO"),
-  ProductItemModel(
-      imagePath: "assets/images/hair.jpg",
-      productCode: "D1MR017",
-      title: "D1 PHYTOMILK ASE NURTURING HAIR CONDITIONER"),
-];
-List<ProductItemModel> skinProductItmes = [
-  ProductItemModel(
-      imagePath: "assets/images/skin.jpg",
-      productCode: "D1MR009",
-      title: "D1 AMIPREY GENTLE CLEANSER ASE"),
-  ProductItemModel(
-      imagePath: "assets/images/skin.jpg",
-      productCode: "D1MR010",
-      title: "D1 AMIPREY AGE-DEFYING MIST ASE"),
-];
-List<ProductItemModel> personalProductItems = [
-  ProductItemModel(
-      imagePath: "assets/images/health3.jpg",
-      productCode: "D1MR004",
-      title: "D1 ADVANCE SCALAR ENERGIZED SCALARVIA"),
-  ProductItemModel(
-      imagePath: "assets/images/health4.jpg",
-      productCode: "D1MR005",
-      title: "DI ADVANCE SCALAR ENERGIZED BIO MATRIX SHIELD"),
-];
-
 class _HomeScreenState extends State<HomeScreen> {
   final MainController _homeController = Get.put(MainController());
   final ScrollController _scrollController = ScrollController();
@@ -115,8 +73,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       popupFun();
-
-      dataFun("Health Care");
     });
   }
 
@@ -296,11 +252,15 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       });
     }
+    dataFun("Health Care");
   }
 
   dataFun(String category) async {
     dynamic data = await productController.getProducts(category, null);
     print("product screen data...$data");
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override
@@ -315,7 +275,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             actions: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    CommonToast("Coming soon");
+                  },
                   icon: Icon(
                     Icons.notifications_none,
                     color: whiteColor,
@@ -396,13 +358,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 100,
                         width: 500,
                         child: CarouselSlider.builder(
-                            itemCount: 5,
+                            itemCount: 6,
                             itemBuilder: (context, i, rindex) {
                               return slideWidget(i + 1);
                             },
                             options: CarouselOptions(
                                 viewportFraction: 0.95,
-                                autoPlay: true,
+                                autoPlay: false,
                                 enlargeCenterPage: true,
                                 autoPlayInterval: const Duration(seconds: 2),
                                 onPageChanged: (index, reason) {
@@ -866,116 +828,31 @@ class _HomeScreenState extends State<HomeScreen> {
     return ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Image.asset(
-          "assets/images/cars$i.png",
+          "assets/images/home_banner$i.png",
           fit: BoxFit.fill,
         ));
   }
 
   Widget promotionWidget(int i) {
-    return ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Container(
-          alignment: Alignment.bottomCenter,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(
-                  "assets/images/promotion$i.png",
-                ),
-                fit: BoxFit.fill),
-          ),
-          // child: Column(
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   mainAxisAlignment: MainAxisAlignment.end,
-          //   children: [
-          //     Padding(
-          //       padding: const EdgeInsets.only(left: 10),
-          //       child: SizedBox(
-          //         width: 95,
-          //         height: 33,
-          //         child: CustomFixedElevatedButton(
-          //           onTapFun: () {
-          //             Get.to(() => const LoginScreen());
-          //           },
-          //           title: "See details",
-          //         ),
-          //       ),
-          //     ),
-          //     const SpaceHeightWidget(height: 10),
-          //     Container(
-          //       alignment: Alignment.center,
-          //       // height: 290,
-          //       child: GridView.builder(
-          //         padding: const EdgeInsets.all(0),
-          //         physics: const NeverScrollableScrollPhysics(),
-          //         shrinkWrap: true,
-          //         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          //             // crossAxisCount: i == 2 ? 1 : 2,
-          //             // childAspectRatio: i == 2 ? 1.3 : 1 / 1.55
-          //             crossAxisCount: 2,
-          //             childAspectRatio: 1 / 1.35),
-          //         itemBuilder: (context, index) {
-          //           return PromotionItemWidget(
-          //             onTapFun: () {
-          //               Get.to(() => const ProductDetailsScreen(
-          //                     from: "promotion",
-          //                     packageCode: "",
-          //                   ));
-          //             },
-          //             imagePath: (i == 1 && index == 0)
-          //                 ? promotionItems[0].image
-          //                 : (i == 1 && index == 1)
-          //                     ? promotionItems[1].image
-          //                     : (i == 2 && index == 0)
-          //                         ? promotionItems[2].image
-          //                         : (i == 3 && index == 0)
-          //                             ? promotionItems[3].image
-          //                             : (i == 3 && index == 1)
-          //                                 ? promotionItems[4].image
-          //                                 : (i == 4 && index == 0)
-          //                                     ? promotionItems[5].image
-          //                                     : (i == 4 && index == 1)
-          //                                         ? promotionItems[6].image
-          //                                         : (i == 5 && index == 0)
-          //                                             ? promotionItems[7].image
-          //                                             : (i == 5 && index == 1)
-          //                                                 ? promotionItems[8]
-          //                                                     .image
-          //                                                 : promotionItems[9]
-          //                                                     .image,
-          //             itemName: (i == 1 && index == 0)
-          //                 ? promotionItems[0].title
-          //                 : (i == 1 && index == 1)
-          //                     ? promotionItems[1].title
-          //                     : (i == 2 && index == 0)
-          //                         ? promotionItems[2].title
-          //                         : (i == 3 && index == 0)
-          //                             ? promotionItems[3].title
-          //                             : (i == 3 && index == 1)
-          //                                 ? promotionItems[4].title
-          //                                 : (i == 4 && index == 0)
-          //                                     ? promotionItems[5].title
-          //                                     : (i == 4 && index == 1)
-          //                                         ? promotionItems[6].title
-          //                                         : (i == 5 && index == 0)
-          //                                             ? promotionItems[7].title
-          //                                             : (i == 5 && index == 1)
-          //                                                 ? promotionItems[8]
-          //                                                     .title
-          //                                                 : promotionItems[9]
-          //                                                     .title,
-          //             amount: "3${i}5",
-          //             exclusiveProduct: true,
-          //           );
-          //         },
-          //         itemCount: i == 2 ? 1 : 2,
-          //       ),
-          //     ),
-          //     Padding(
-          //       padding: const EdgeInsets.only(left: 10, bottom: 10),
-          //       child: Text("$i products"),
-          //     ),
-          //   ],
-          // ),
-        ));
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        Get.offAll(() => const BottomBarScreen(
+              index: 3,
+            ));
+      },
+      child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Container(
+            alignment: Alignment.bottomCenter,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(
+                    "assets/images/promotion$i.png",
+                  ),
+                  fit: BoxFit.fill),
+            ),
+          )),
+    );
   }
 }

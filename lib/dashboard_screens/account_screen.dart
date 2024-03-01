@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:destina_1_international/authentication_screens/countryselect_screen.dart';
 import 'package:destina_1_international/commons/colors.dart';
@@ -136,19 +137,48 @@ class _AccountScreenState extends State<AccountScreen>
                           padding: const EdgeInsets.all(10.0),
                           child: Row(
                             children: [
-                              CircleAvatar(
-                                radius: 41,
-                                backgroundColor: blackColor.withOpacity(0.3),
-                                child: CircleAvatar(
-                                  radius: 40,
-                                  backgroundColor: whiteColor,
-                                  child: Icon(
-                                    Icons.person_rounded,
-                                    size: 50,
-                                    color: greyColor,
-                                  ),
-                                ),
-                              ),
+                              Constants.prefs.getString("profile_image") !=
+                                          null &&
+                                      Constants.prefs
+                                              .getString("profile_image") !=
+                                          ""
+                                  ? CircleAvatar(
+                                      radius: 41,
+                                      backgroundImage:
+                                          CachedNetworkImageProvider(
+                                              Constants.prefs
+                                                  .getString("profile_image")!,
+                                              errorListener: (error) {
+                                        CircleAvatar(
+                                          radius: 41,
+                                          backgroundColor:
+                                              blackColor.withOpacity(0.3),
+                                          child: CircleAvatar(
+                                            radius: 40,
+                                            backgroundColor: whiteColor,
+                                            child: Icon(
+                                              Icons.person_rounded,
+                                              size: 50,
+                                              color: greyColor,
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                    )
+                                  : CircleAvatar(
+                                      radius: 41,
+                                      backgroundColor:
+                                          blackColor.withOpacity(0.3),
+                                      child: CircleAvatar(
+                                        radius: 40,
+                                        backgroundColor: whiteColor,
+                                        child: Icon(
+                                          Icons.person_rounded,
+                                          size: 50,
+                                          color: greyColor,
+                                        ),
+                                      ),
+                                    ),
                               const SpaceWidthWidget(width: 15),
                               Expanded(
                                 child: Column(
@@ -370,6 +400,7 @@ class _AccountScreenState extends State<AccountScreen>
                                 Constants.prefs.remove("country_id");
                                 Constants.prefs.remove("city");
                                 Constants.prefs.remove("user_name");
+                                Constants.prefs.remove("profile_image");
                                 CommonToastTrue("Successfully logout");
                                 Get.offAll(() => const LoginScreen());
                               }
