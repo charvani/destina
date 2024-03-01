@@ -2,7 +2,12 @@ class ApiData {
   // String countryUrl = "https://ipinfo.io/?token=36d76d73391d6e";
   String countryUrl = "https://ipinfo.io/?token=fd2675b165f575";
 
-  String baseUrl = "https://worldunityfoundation.org/MobileAPI/api/MobileApp/";
+  // String baseUrl = "https://worldunityfoundation.org/MobileAPI/api/MobileApp/";
+
+  String baseUrl = "https://admin.destina1.com/MobileAPI/api/MobileApp/";
+  // String checkOutUrlDomain = "showcase.worldunityfoundation.org";
+
+  String checkOutUrlDomain = "beta.destina1.com";
   String productCategoryMethod = "GetProductsdata";
   String productDetailsMethod = "GetSingleProduct";
   String packageItemsMethod = "GetPkgItems";

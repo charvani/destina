@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/main_controller.dart';
+import '../../service_call/api_data.dart';
 import 'details_screen.dart';
 import 'invoice_screen.dart';
 
@@ -136,7 +137,7 @@ orderNumTextWidget(String from, title, int index) {
       if (from == "ordernum") {
         Get.to(() => InvoiceScreen(
             redirectUrl:
-                "https://showcase.worldunityfoundation.org/MobileAppCheckout/invoiceparam.html?BillNo=${_dataController.orderAcknowledgeData[index].orderNo}"
+                "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/invoiceparam.html?BillNo=${_dataController.orderAcknowledgeData[index].orderNo}"
 
             // 'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderAknowledge"&OrderNo=${_dataController.orderAcknowledgeData[index].orderNo}',
             ));

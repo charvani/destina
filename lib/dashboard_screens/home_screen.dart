@@ -358,7 +358,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 100,
                         width: 500,
                         child: CarouselSlider.builder(
-                            itemCount: 6,
+                            itemCount: 7,
                             itemBuilder: (context, i, rindex) {
                               return slideWidget(i + 1);
                             },
@@ -381,7 +381,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            for (int i = 0; i < 5; i++)
+                            for (int i = 0; i < 7; i++)
                               (i == carouselIndex)
                                   ? const ActiveDot()
                                   : const InactiveDot(),
@@ -828,7 +828,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Image.asset(
-          "assets/images/home_banner$i.png",
+          i == 7
+              ? "assets/images/home_banner$i.jpg"
+              : "assets/images/home_banner$i.png",
           fit: BoxFit.fill,
         ));
   }

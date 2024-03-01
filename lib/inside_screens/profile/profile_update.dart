@@ -109,7 +109,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
             _profileController.viewProfileData.value.acHolderName == "0"
                 ? ""
                 : _profileController.viewProfileData.value.acHolderName;
-        relation = _profileController.viewProfileData.value.nomieeRelation;
+        relation = _profileController.viewProfileData.value.nomieeRelation == ""
+            ? null
+            : _profileController.viewProfileData.value.nomieeRelation;
         nomineeNameTController.text =
             _profileController.viewProfileData.value.nomieeName == "0"
                 ? ""

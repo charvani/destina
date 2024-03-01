@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../commons/colors.dart';
+import '../service_call/api_data.dart';
 import 'checkout_screen.dart';
 
 class RegisterCartScreen extends StatefulWidget {
@@ -475,7 +476,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                               // print(
                                               //     "https://showcase.worldunityfoundation.org/checkwebitems.html?countrycode=MY&sprno=${widget.sponsorId}&sessid=$sessionId&uniqId=$uniqId");
                                               print(
-                                                  "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
+                                                  "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
 
                                               // Map parameters = {
                                               //   "Action": "checkoutitems_MA",
@@ -498,7 +499,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                               //     "success") {
                                               Get.off(() => CheckOutScreen(
                                                   redirectUrl:
-                                                      "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&sessid=$sessionId&uniqId=$uniqId"));
+                                                      "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&sessid=$sessionId&uniqId=$uniqId"));
 
                                               // }
                                             },

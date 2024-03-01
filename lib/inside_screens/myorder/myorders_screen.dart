@@ -6,6 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../commons/colors.dart';
 import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
+import '../../service_call/api_data.dart';
 import 'invoice_screen.dart';
 
 class MyOrdersScreen extends StatefulWidget {
@@ -92,7 +93,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                           invoiceFun: () {
                             Get.to(() => InvoiceScreen(
                                 redirectUrl:
-                                    "https://showcase.worldunityfoundation.org/MobileAppCheckout/invoiceparam.html?BillNo=${_dataController.orderReportData[i].orderNo}"
+                                    "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/invoiceparam.html?BillNo=${_dataController.orderReportData[i].orderNo}"
                                 // 'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderRpt"&OrderNo=${_dataController.orderReportData[i].orderNo}',
                                 ));
                           },

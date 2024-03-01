@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/main_controller.dart';
+import '../../service_call/api_data.dart';
 import '../myorder/invoice_screen.dart';
 import 'ecard_transfer_screen.dart';
 
@@ -244,7 +245,7 @@ remarkTextWidget(String title, int i) {
     onTap: () {
       Get.to(() => InvoiceScreen(
           redirectUrl:
-              "https://showcase.worldunityfoundation.org/MobileAppCheckout/invoiceparam.html?BillNo=${_dataController.ecardData.value.emoneyrpt[i].billNo}"
+              "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/invoiceparam.html?BillNo=${_dataController.ecardData.value.emoneyrpt[i].billNo}"
 
           // "https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?BillNo=${_dataController.ecardData.value.emoneyrpt[i].billNo}",
           ));

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/main_controller.dart';
+import '../../service_call/api_data.dart';
 import '../myorder/invoice_screen.dart';
 
 class WithdrawalStatusScreen extends StatefulWidget {
@@ -103,7 +104,7 @@ infoTextStyle(String id, sNo) {
     onTap: () {
       Get.to(() => InvoiceScreen(
           redirectUrl:
-              "https://showcase.worldunityfoundation.org/MobileAppCheckout/PayoutParam.html?DistId=$sNo"
+              "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/PayoutParam.html?DistId=$sNo"
           // 'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderRpt"&OrderNo=${_dataController.orderReportData[i].orderNo}',
           ));
     },

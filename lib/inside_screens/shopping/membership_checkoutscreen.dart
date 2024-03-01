@@ -45,10 +45,7 @@ class _MemberShipCheckOutScreenState extends State<MemberShipCheckOutScreen> {
   Future<WebViewController> createController() async {
     return WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse(
-          // "https://flutter.dev"
-          // "https://showcase.worldunityfoundation.org/checkwebitems.html?countrycode=MY&sprno=DESTINA1INT &sessid=1699941695546&uniqId=ulaqNDbzWh"
-          widget.redirectUrl));
+      ..loadRequest(Uri.parse(widget.redirectUrl));
   }
 
   @override

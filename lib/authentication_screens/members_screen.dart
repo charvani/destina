@@ -313,48 +313,52 @@ class _MemberScreenState extends State<MemberScreen> {
                         child: SingleChildScrollView(
                           child: Column(
                             children: [
-                              if (double.parse(checkController
-                                              .checkCountryData.value.pCiRenFee)
-                                          .round() >
-                                      0 &&
-                                  double.parse(checkController
-                                              .checkCountryData.value.pcRenF)
-                                          .round() >
-                                      0 &&
-                                  (pcTap == true))
-                                MemberScreenInfoWidget(
-                                  signupFun: () {
-                                    // if (ddcTap) {
-                                    //   Get.to(() => PackageScreen(
-                                    //         from: ddcTap
-                                    //             ? "DDC"
-                                    //             : ddTap
-                                    //                 ? "DD"
-                                    //                 : "PC",
-                                    //         countryId: widget.countryId,
-                                    //       ));
-                                    // } else {
-                                    Get.to(() => RegisterPackageScreen(
-                                          from: ddcTap
-                                              ? "DDC"
-                                              : ddTap
-                                                  ? "DD"
-                                                  : "PC",
-                                          countryId: widget.countryId,
-                                        ));
-                                    // }
-                                  },
-                                  amount: checkController
-                                      .checkCountryData.value.pcRenFee,
-                                  questioningText:
-                                      "Why Become a Preferred Customer?",
-                                  heading1: "START SHOPPING",
-                                  activeColor: darkBlue,
-                                  heading2:
-                                      "QUALITY PRODUCTS AS A PREFERRED CUSTOMER",
-                                  ddcInfo: ddInfo,
-                                  applicationInfo: applicationInfo,
-                                ),
+                              if (checkController.checkCountryData.value.pCiRenFee !=
+                                  "")
+                                if (double.parse(checkController
+                                                .checkCountryData
+                                                .value
+                                                .pCiRenFee)
+                                            .round() >
+                                        0 &&
+                                    double.parse(checkController
+                                                .checkCountryData.value.pcRenF)
+                                            .round() >
+                                        0 &&
+                                    (pcTap == true))
+                                  MemberScreenInfoWidget(
+                                    signupFun: () {
+                                      // if (ddcTap) {
+                                      //   Get.to(() => PackageScreen(
+                                      //         from: ddcTap
+                                      //             ? "DDC"
+                                      //             : ddTap
+                                      //                 ? "DD"
+                                      //                 : "PC",
+                                      //         countryId: widget.countryId,
+                                      //       ));
+                                      // } else {
+                                      Get.to(() => RegisterPackageScreen(
+                                            from: ddcTap
+                                                ? "DDC"
+                                                : ddTap
+                                                    ? "DD"
+                                                    : "PC",
+                                            countryId: widget.countryId,
+                                          ));
+                                      // }
+                                    },
+                                    amount: checkController
+                                        .checkCountryData.value.pcRenFee,
+                                    questioningText:
+                                        "Why Become a Preferred Customer?",
+                                    heading1: "START SHOPPING",
+                                    activeColor: darkBlue,
+                                    heading2:
+                                        "QUALITY PRODUCTS AS A PREFERRED CUSTOMER",
+                                    ddcInfo: ddInfo,
+                                    applicationInfo: applicationInfo,
+                                  ),
                               if (double.parse(checkController
                                               .checkCountryData.value.dCiRenFee)
                                           .round() >

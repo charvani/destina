@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../commons/colors.dart';
+import '../../service_call/api_data.dart';
 import '../checkout_screen.dart';
 
 class RedemptionCartScreen extends StatefulWidget {
@@ -410,12 +411,10 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                       height: 30,
                                       child: IconElevatedButton(
                                         onTapFun: () async {
-                                          print(
-                                              "https://showcase.worldunityfoundation.org/MobileAppCheckout/RedemptionCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId");
-
+                                    
                                           Get.off(() => CheckOutScreen(
                                               redirectUrl:
-                                                  "https://showcase.worldunityfoundation.org/MobileAppCheckout/RedemptionCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId"));
+                                                  "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/RedemptionCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId"));
                                         },
                                         imagePath:
                                             'assets/images/shopping_cart_img.jpg',

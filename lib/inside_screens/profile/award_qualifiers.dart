@@ -80,41 +80,46 @@ class _AwardQualifiersScreenState extends State<AwardQualifiersScreen> {
               Obx(() {
                 return _awardController.loading.value
                     ? loader
-                    : ProfileDropDown(
-                        hintText: "Select",
-                        onChangedFun: (val) {
-                          setState(() {
-                            award = val;
-                          });
-                        },
-                        items: awardDropDownData,
-                        validationFun: (val) {
-                          if (val == "" || val == null) {
-                            return "Select Award type";
-                          } else {
-                            return null;
-                          }
-                        },
-                      );
+                    : awardDropDownData.isEmpty
+                        ? const SizedBox(
+                            height: 100,
+                            child: NotAvailableText(text: "Not available"))
+                        : ProfileDropDown(
+                            hintText: "Select",
+                            onChangedFun: (val) {
+                              setState(() {
+                                award = val;
+                              });
+                            },
+                            items: awardDropDownData,
+                            validationFun: (val) {
+                              if (val == "" || val == null) {
+                                return "Select Award type";
+                              } else {
+                                return null;
+                              }
+                            },
+                          );
               }),
               const SpaceHeightWidget(height: 15),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 25,
-                ),
-                child: CustomElevatedButton(
-                    onTapFun: () {
-                      if (_formKey.currentState!.validate()) {
-                        if (award != null && award != "") {
-                          print("submit fun...$award");
-                          Get.to(() => AwardDataScreen(
-                                selectedVal: award,
-                              ));
+              if (awardDropDownData.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 25,
+                  ),
+                  child: CustomElevatedButton(
+                      onTapFun: () {
+                        if (_formKey.currentState!.validate()) {
+                          if (award != null && award != "") {
+                            print("submit fun...$award");
+                            Get.to(() => AwardDataScreen(
+                                  selectedVal: award,
+                                ));
+                          }
                         }
-                      }
-                    },
-                    title: "Submit"),
-              ),
+                      },
+                      title: "Submit"),
+                ),
             ],
           ),
         ),

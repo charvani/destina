@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../commons/colors.dart';
+import '../../service_call/api_data.dart';
 import 'membership_checkoutscreen.dart';
 
 class MembermallCartScreen extends StatefulWidget {
@@ -423,13 +424,11 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                           height: 35,
                                           child: IconElevatedButton(
                                             onTapFun: () async {
-                                              print(
-                                                  "https://showcase.worldunityfoundation.org/MobileAppCheckout/MembershipCheckoutParam.html?RegId=$regId&UpgMember=$upgradeMemVal&sessid=$sessionId&uniqId=$uniqId");
-
+                                           
                                               Get.off(() =>
                                                   MemberShipCheckOutScreen(
                                                       redirectUrl:
-                                                          "https://showcase.worldunityfoundation.org/MobileAppCheckout/MembershipCheckoutParam.html?RegId=$regId&UpgMember=$upgradeMemVal&sessid=$sessionId&uniqId=$uniqId"));
+                                                          "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/MembershipCheckoutParam.html?RegId=$regId&UpgMember=$upgradeMemVal&sessid=$sessionId&uniqId=$uniqId"));
                                             },
                                             imagePath:
                                                 'assets/images/shopping_cart_img.jpg',

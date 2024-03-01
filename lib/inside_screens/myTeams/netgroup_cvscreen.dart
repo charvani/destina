@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../commons/colors.dart';
 import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
+import '../../service_call/api_data.dart';
 import '../myorder/invoice_screen.dart';
 
 class NetGroupCvScreen extends StatefulWidget {
@@ -115,7 +116,7 @@ infoTextStyle(String id, Color textColor) {
 
         Get.to(() => InvoiceScreen(
             redirectUrl:
-                "https://showcase.worldunityfoundation.org/MobileAppCheckout/invoiceparam.html?BillNo=$id"
+                "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/invoiceparam.html?BillNo=$id"
             // 'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderRpt"&OrderNo=${_dataController.orderReportData[i].orderNo}',
             ));
       }

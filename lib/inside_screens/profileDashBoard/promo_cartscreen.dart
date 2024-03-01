@@ -260,17 +260,11 @@ class _PromoCartScreenState extends State<PromoCartScreen> {
                 height: 35,
                 child: IconElevatedButton(
                   onTapFun: () async {
-                    if (widget.pkMallNum == "3") {
-                      print(
-                          "https://showcase.worldunityfoundation.org/MobileAppCheckout/PromoCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId");
-                    } else {
-                      print(
-                          "https://showcase.worldunityfoundation.org/MobileAppCheckout/UpgradePromoCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId");
-                    }
+                    
                     Get.off(() => CheckOutScreen(
                         redirectUrl: widget.pkMallNum == "3"
-                            ? "https://showcase.worldunityfoundation.org/MobileAppCheckout/PromoCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId"
-                            : "https://showcase.worldunityfoundation.org/MobileAppCheckout/UpgradePromoCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId"));
+                            ? "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/PromoCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId"
+                            : "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/UpgradePromoCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId"));
                   },
                   imagePath: 'assets/images/shopping_cart_img.jpg',
                   labelColor: whiteColor,

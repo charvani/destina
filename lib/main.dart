@@ -43,8 +43,6 @@ class MyApp extends StatelessWidget {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: GetMaterialApp(
-        
-
         initialBinding: NetworkBinding(),
         title: 'Destina1 International',
         debugShowCheckedModeBanner: false,

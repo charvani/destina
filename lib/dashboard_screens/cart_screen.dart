@@ -3,6 +3,7 @@ import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:destina_1_international/dashboard_screens/bottombar_screen.dart';
+import 'package:destina_1_international/service_call/api_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motion_toast/motion_toast.dart';
@@ -550,7 +551,7 @@ class _CartScreenState extends State<CartScreen> {
                                           Get.off(() => CheckOutScreen(
                                               fromScreen: "OpenCart",
                                               redirectUrl:
-                                                  "https://showcase.worldunityfoundation.org/checkwebitems.html?countrycode=MY&sprno=${sponsorController.text}&sessid=$sessionId&uniqId=$uniqId"));
+                                                  "https://${ApiData().checkOutUrlDomain}/checkwebitems.html?countrycode=MY&sprno=${sponsorController.text.trim()}&sessid=$sessionId&uniqId=$uniqId"));
                                         }
                                       },
                                       imagePath:

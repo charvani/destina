@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../commons/colors.dart';
+import '../../service_call/api_data.dart';
 import '../checkout_screen.dart';
 
 class UpgradeOrderCartSceen2 extends StatefulWidget {
@@ -470,15 +471,9 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
                                           height: 33,
                                           child: IconElevatedButton(
                                             onTapFun: () async {
-                                              print(
-                                                  "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
-
-                                              // Get.off(() => CheckOutScreen(
-                                              //     redirectUrl:
-                                              //         "https://showcase.worldunityfoundation.org/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&sessid=$sessionId&uniqId=$uniqId"));
                                               Get.off(() => CheckOutScreen(
                                                   redirectUrl:
-                                                      "https://showcase.worldunityfoundation.org/MobileAppCheckout/UpgradeCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId"));
+                                                      "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/UpgradeCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId"));
                                             },
                                             imagePath:
                                                 'assets/images/shopping_cart_img.jpg',
