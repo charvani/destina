@@ -233,6 +233,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         "FcmId": "1233455",
                                         "IMEI": imei,
                                         "MOBINFO": mobileInfo,
+                                        "VERSION": Constants.appversion,
+                                        "APPTYPE": "A"
                                       };
                                       dynamic res = await _loginController
                                           .getMemberLogin(bodyData);

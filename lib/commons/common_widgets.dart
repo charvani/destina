@@ -2437,7 +2437,7 @@ class ProductAmountDetailsWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (price != "")
+              if (price != "" && price != "0.00")
                 Row(
                   children: [
                     Text(

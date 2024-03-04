@@ -42,6 +42,7 @@ import '../models/ftaregistration_model.dart';
 import '../models/ftareport_modle.dart';
 import '../models/geneology_popupmodel.dart';
 import '../models/groupsales_cvmodel.dart';
+import '../models/maintanenceCV_model.dart';
 import '../models/maintenancelist_model.dart';
 import '../models/member_productdetail_model.dart';
 import '../models/myteam_viewmodel.dart';
@@ -661,6 +662,8 @@ class MainController extends GetxController {
       .obs;
   RxList<UpgradeListModel> upgradeList = <UpgradeListModel>[].obs;
   RxList<MaintenanceListModel> maintenanceList = <MaintenanceListModel>[].obs;
+  RxList<MaintanenceCvModel> maintenanceCVData = <MaintanenceCvModel>[].obs;
+
   RxList<RetailBonusModel> retailBonusList = <RetailBonusModel>[].obs;
   RxDouble retailTotal = 0.0.obs;
   RxList<CustomerBonusModel> customerBonusList = <CustomerBonusModel>[].obs;
@@ -840,6 +843,12 @@ class MainController extends GetxController {
 // *********************** *********************************************************************
   getCountryCode() async {
     dynamic res = await ApiCall().getMethodFun(url: ApiData().countryUrl);
+    return res;
+  }
+
+  getVersionCheck(Map params) async {
+    dynamic res = await ApiCall()
+        .listPostMethodFun(methodName: "VersionChk", params: params);
     return res;
   }
 
@@ -1695,15 +1704,16 @@ class MainController extends GetxController {
 
   getMaintenanceDetails(Map parameters) async {
     loading.value = true;
-    // maintenanceList.clear();
+    maintenanceCVData.clear();
     dynamic res = await ApiCall().listPostMethodFun(
         methodName: ApiData().accMaintenceDetails, params: parameters);
     if (res != null) {
-      // if (res.length > 0) {
-      //   for (int i = 0; i < res.length; i++) {
-      //     maintenanceList.add(MaintenanceListModel.fromJson(res[i]));
-      //   }
-      // }
+      if (res.length > 0) {
+        for (int i = 0; i < res.length; i++) {
+          maintenanceCVData.add(MaintanenceCvModel.fromJson(res[i]));
+        }
+      }
+      print("///...${maintenanceCVData.length}");
     }
     loading.value = false;
     return res;
@@ -2017,10 +2027,10 @@ class MainController extends GetxController {
           if (res[i]['Title'] == "Bonus") {
             bonusfaqList.add(FaqModel.fromJson(res[i]));
           }
-          if (res[i]['Title'] == "D1 Pendant") {
+          if (res[i]['Title'] == "Uniwave Energy Pendant") {
             d1pendantfaqList.add(FaqModel.fromJson(res[i]));
           }
-          if (res[i]['Title'] == "Energizing Water") {
+          if (res[i]['Title'] == "Uniwave Energized Alkaline Water") {
             waterfaqList.add(FaqModel.fromJson(res[i]));
           }
         }

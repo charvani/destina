@@ -138,7 +138,7 @@ orderNumTextWidget(String title, int index) {
       Get.to(() => CVScreen(
             month: _dataController.maintenanceList[index].actualmonth,
             year: _dataController.maintenanceList[index].actualyear,
-            monthType: _dataController.maintenanceList[index].monthYear,
+            monthType: _dataController.maintenanceList[index].maintenanceType,
           ));
     },
     child: Padding(

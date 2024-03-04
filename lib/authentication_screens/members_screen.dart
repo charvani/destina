@@ -359,48 +359,52 @@ class _MemberScreenState extends State<MemberScreen> {
                                     ddcInfo: ddInfo,
                                     applicationInfo: applicationInfo,
                                   ),
-                              if (double.parse(checkController
-                                              .checkCountryData.value.dCiRenFee)
-                                          .round() >
-                                      0 &&
-                                  double.parse(checkController
-                                              .checkCountryData.value.dcRenF)
-                                          .round() >
-                                      0 &&
-                                  (ddcTap == true))
-                                MemberScreenInfoWidget(
-                                  signupFun: () {
-                                    // if (ddcTap) {
-                                    //   Get.to(() => PackageScreen(
-                                    //         from: ddcTap
-                                    //             ? "DDC"
-                                    //             : ddTap
-                                    //                 ? "DD"
-                                    //                 : "PC",
-                                    //         countryId: widget.countryId,
-                                    //       ));
-                                    // } else {
-                                    Get.to(() => RegisterPackageScreen(
-                                          from: ddcTap
-                                              ? "DDC"
-                                              : ddTap
-                                                  ? "DD"
-                                                  : "PC",
-                                          countryId: widget.countryId,
-                                        ));
-                                    // }
-                                  },
-                                  amount: checkController
-                                      .checkCountryData.value.dcRenFee,
-                                  questioningText:
-                                      "Why Become a Direct Customer & Become a Distributor?",
-                                  heading1: "START YOUR BUSINESS",
-                                  activeColor: darkNaviBlueColor,
-                                  heading2:
-                                      "AS A DESTINA 1 DIRECT CUSTOMER AND BECOME A DISTRIBUTOR",
-                                  ddcInfo: ddcInfo,
-                                  applicationInfo: applicationInfo,
-                                ),
+                              if (checkController.checkCountryData.value.dCiRenFee !=
+                                  "")
+                                if (double.parse(checkController
+                                                .checkCountryData
+                                                .value
+                                                .dCiRenFee)
+                                            .round() >
+                                        0 &&
+                                    double.parse(checkController
+                                                .checkCountryData.value.dcRenF)
+                                            .round() >
+                                        0 &&
+                                    (ddcTap == true))
+                                  MemberScreenInfoWidget(
+                                    signupFun: () {
+                                      // if (ddcTap) {
+                                      //   Get.to(() => PackageScreen(
+                                      //         from: ddcTap
+                                      //             ? "DDC"
+                                      //             : ddTap
+                                      //                 ? "DD"
+                                      //                 : "PC",
+                                      //         countryId: widget.countryId,
+                                      //       ));
+                                      // } else {
+                                      Get.to(() => RegisterPackageScreen(
+                                            from: ddcTap
+                                                ? "DDC"
+                                                : ddTap
+                                                    ? "DD"
+                                                    : "PC",
+                                            countryId: widget.countryId,
+                                          ));
+                                      // }
+                                    },
+                                    amount: checkController
+                                        .checkCountryData.value.dcRenFee,
+                                    questioningText:
+                                        "Why Become a Direct Customer & Become a Distributor?",
+                                    heading1: "START YOUR BUSINESS",
+                                    activeColor: darkNaviBlueColor,
+                                    heading2:
+                                        "AS A DESTINA 1 DIRECT CUSTOMER AND BECOME A DISTRIBUTOR",
+                                    ddcInfo: ddcInfo,
+                                    applicationInfo: applicationInfo,
+                                  ),
                               if (
 
                                   // double.parse(checkController

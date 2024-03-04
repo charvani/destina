@@ -35,50 +35,53 @@ class _CountySelectScreenState extends State<CountySelectScreen> {
     return Scaffold(
         backgroundColor: whiteColor.withOpacity(0.94),
         appBar: commonAppBar(title: "Select Country", backNavigation: true),
-        body: Obx(() {
-          return _countryController.loading.value
-              ? loader
-              : _countryController.countriesList.isEmpty
-                  ? SizedBox(height: 100, child: notAvailableW)
-                  : Container(
-                      width: double.infinity,
-                      alignment: Alignment.center,
-                      child: Wrap(
-                        children: [
-                          for (int i = 0;
-                              i < _countryController.countriesList.length;
-                              i++)
-                            FlagWidget(
-                                onTapFun: () {
-                                  setState(() {
-                                    currentIndex = i;
-                                  });
-                                  Timer(const Duration(milliseconds: 500), () {
-                                    Get.to(() => MemberScreen(
-                                          countryId: _countryController
-                                              .countriesList[i].countryId,
-                                        ));
-                                    Constants.prefs.setString(
-                                        "country_id",
-                                        _countryController
-                                            .countriesList[i].countryId);
-                                  });
-                                  Timer(const Duration(seconds: 1), () {
+        body: SingleChildScrollView(
+          child: Obx(() {
+            return _countryController.loading.value
+                ? loader
+                : _countryController.countriesList.isEmpty
+                    ? SizedBox(height: 100, child: notAvailableW)
+                    : Container(
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        child: Wrap(
+                          children: [
+                            for (int i = 0;
+                                i < _countryController.countriesList.length;
+                                i++)
+                              FlagWidget(
+                                  onTapFun: () {
                                     setState(() {
+                                      currentIndex = i;
+                                    });
+                                    Timer(const Duration(milliseconds: 500),
+                                        () {
+                                      Get.to(() => MemberScreen(
+                                            countryId: _countryController
+                                                .countriesList[i].countryId,
+                                          ));
+                                      Constants.prefs.setString(
+                                          "country_id",
+                                          _countryController
+                                              .countriesList[i].countryId);
+                                    });
+                                    Timer(const Duration(seconds: 1), () {
                                       setState(() {
-                                        currentIndex = null;
+                                        setState(() {
+                                          currentIndex = null;
+                                        });
                                       });
                                     });
-                                  });
-                                },
-                                selected: currentIndex == i ? true : false,
-                                imagePath: _countryController
-                                    .countriesList[i].countryFlag,
-                                countryName:
-                                    _countryController.countriesList[i].name)
-                        ],
-                      ),
-                    );
-        }));
+                                  },
+                                  selected: currentIndex == i ? true : false,
+                                  imagePath: _countryController
+                                      .countriesList[i].countryFlag,
+                                  countryName:
+                                      _countryController.countriesList[i].name)
+                          ],
+                        ),
+                      );
+          }),
+        ));
   }
 }

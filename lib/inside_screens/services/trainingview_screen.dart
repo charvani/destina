@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
+import 'package:get/get.dart';
 
 class TrainingToolsViewScreen extends StatefulWidget {
   final String date, description, downloadlink, title;
@@ -96,6 +99,9 @@ class _TrainingToolsViewScreenState extends State<TrainingToolsViewScreen> {
                         onDownloadCompleted: (String path) {
                           print('FILE DOWNLOADED TO PATH: $path');
                           CommonToastTrue("Successfully donwloaded");
+                          Timer(const Duration(seconds: 1), () {
+                            Get.back();
+                          });
                         },
                         onDownloadError: (String error) {
                           print('DOWNLOAD ERROR: $error');

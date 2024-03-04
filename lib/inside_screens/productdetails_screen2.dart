@@ -176,172 +176,196 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
           //   Get.back();
           // },
         ),
-        bottomSheet: Form(
-          key: _fomkey1,
-          child: Container(
-            padding: const EdgeInsets.fromLTRB(15, 5, 5, 0),
-            // margin: const EdgeInsets.only(bottom: 1),
-            height: 90,
-            alignment: Alignment.center,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              border: Border.all(width: 1.5, color: darkBlue),
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-              color: whiteColor,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text("Quantity: "),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            // print(
-                            //     "${double.parse(packDetailsController.productDetails.value.price.replaceAll(packDetailsController.productDetails.value.currency, "")) * int.parse(firstQtyController.text)}");
-                            if (int.parse(firstQtyController.text) > 1) {
-                              setState(() {
-                                firstQtyController.text =
-                                    (int.parse(firstQtyController.text) - 1)
-                                        .toString();
-                              });
-                            }
-                          },
-                          child: const CircleAvatar(
-                            radius: 15,
-                            child: Icon(
-                              Icons.remove,
-                              size: 18,
-                            ),
-                          ),
+        bottomSheet: Obx(() {
+          return packDetailsController.loading.value
+              ? const SizedBox.shrink()
+              : double.parse(
+                          packDetailsController.packageDetailsData.value.mrp) >
+                      0
+                  ? Form(
+                      key: _fomkey1,
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(15, 5, 5, 0),
+                        // margin: const EdgeInsets.only(bottom: 1),
+                        height: 90,
+                        alignment: Alignment.center,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1.5, color: darkBlue),
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30)),
+                          color: whiteColor,
                         ),
-                        const SpaceWidthWidget(width: 3),
-                        SizedBox(
-                            width: 60,
-                            // height: 35,
-                            child: RegisterTextField(
-                              inputFormatter: [
-                                FilteringTextInputFormatter.digitsOnly
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("Quantity: "),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        // print(
+                                        //     "${double.parse(packDetailsController.productDetails.value.price.replaceAll(packDetailsController.productDetails.value.currency, "")) * int.parse(firstQtyController.text)}");
+                                        if (int.parse(firstQtyController.text) >
+                                            1) {
+                                          setState(() {
+                                            firstQtyController.text =
+                                                (int.parse(firstQtyController
+                                                            .text) -
+                                                        1)
+                                                    .toString();
+                                          });
+                                        }
+                                      },
+                                      child: const CircleAvatar(
+                                        radius: 15,
+                                        child: Icon(
+                                          Icons.remove,
+                                          size: 18,
+                                        ),
+                                      ),
+                                    ),
+                                    const SpaceWidthWidget(width: 3),
+                                    SizedBox(
+                                        width: 60,
+                                        // height: 35,
+                                        child: RegisterTextField(
+                                          inputFormatter: [
+                                            FilteringTextInputFormatter
+                                                .digitsOnly
+                                          ],
+                                          controller: firstQtyController,
+                                          hintText: '',
+                                          textInputType: TextInputType.number,
+                                          onchangeFun: (val) {
+                                            setState(() {});
+                                          },
+                                          validation: (val) {
+                                            return null;
+                                          },
+                                          labelText: '',
+                                        )),
+                                    const SpaceWidthWidget(width: 3),
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          firstQtyController.text = (int.parse(
+                                                      firstQtyController.text) +
+                                                  1)
+                                              .toString();
+                                        });
+                                      },
+                                      child: const CircleAvatar(
+                                        radius: 15,
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 18,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 150,
+                                  height: 35,
+                                  child: packageLoading
+                                      ? loader
+                                      : IconElevatedButton(
+                                          onTapFun: () async {
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus();
+
+                                            setState(() {
+                                              packageLoading = true;
+                                            });
+                                            // this register add to cart fun
+
+                                            print("add to car fun");
+                                            Map parameters = {
+                                              "action": "addRTCartitems",
+                                              "Pkid": widget.packageCode,
+                                              "Country": Constants.prefs
+                                                  .getString("country_id"),
+                                              "Uniqid": uniqId,
+                                              "sessid": sessionId,
+                                              "ipaddress": Constants.prefs
+                                                  .getString("ip"),
+                                              "sprno": "0",
+                                              "Quantity":
+                                                  firstQtyController.text
+                                            };
+                                            print(
+                                                "add to cart params...$parameters");
+                                            dynamic res = await MainController()
+                                                .getRegPackAddToCart(
+                                                    parameters);
+
+                                            if (res['Msg']
+                                                    .toString()
+                                                    .toLowerCase() ==
+                                                "success") {
+                                              Timer(const Duration(seconds: 1),
+                                                  () {
+                                                // Get.back(result: [true]);
+                                                Get.back();
+                                                Get.to(() => CartScreen(
+                                                    from: widget.from));
+                                              });
+                                            }
+
+                                            //this is original exitsted function
+                                            // Map parameters = {
+                                            //   "Action": "addCartitems",
+                                            //   "Pkid": widget.packageCode,
+                                            //   "pid": pidList.join(":"),
+                                            //   "uniqid": uniqId,
+                                            //   "sessid": sessionId,
+                                            //   "ipaddress": Constants.prefs.getString("ip"),
+                                            //   "sprno": "0",
+                                            //   "prdtype": "Package",
+                                            //   "Quantity": firstQtyController.text
+                                            // };
+                                            // print("add to cart params...$parameters");
+                                            // dynamic res = await MainController()
+                                            //     .getAddToCart(parameters);
+                                            // if (res['Msg'].toString().toLowerCase() ==
+                                            //     "success") {
+                                            //   // ignore: use_build_context_synchronously
+                                            //   MotionToast.success(
+                                            //     title: const Text("Congartulations!"),
+                                            //     description: const Text(
+                                            //         "Products added successfully to your cart."),
+                                            //   ).show(context);
+                                            //   Timer(const Duration(seconds: 1), () {
+                                            //     Get.back();
+                                            //     Get.off(
+                                            //         () => CartScreen(from: widget.from));
+                                            //   });
+                                            // }
+                                            setState(() {
+                                              packageLoading = false;
+                                            });
+                                          },
+                                          imagePath:
+                                              'assets/images/cart_icon.png',
+                                          labelColor: whiteColor,
+                                          buttonColor: blackColor,
+                                          titile: "Add to Cart",
+                                        ),
+                                )
                               ],
-                              controller: firstQtyController,
-                              hintText: '',
-                              textInputType: TextInputType.number,
-                              onchangeFun: (val) {
-                                setState(() {});
-                              },
-                              validation: (val) {
-                                return null;
-                              },
-                              labelText: '',
-                            )),
-                        const SpaceWidthWidget(width: 3),
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              firstQtyController.text =
-                                  (int.parse(firstQtyController.text) + 1)
-                                      .toString();
-                            });
-                          },
-                          child: const CircleAvatar(
-                            radius: 15,
-                            child: Icon(
-                              Icons.add,
-                              size: 18,
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 150,
-                      height: 35,
-                      child: packageLoading
-                          ? loader
-                          : IconElevatedButton(
-                              onTapFun: () async {
-                                FocusManager.instance.primaryFocus?.unfocus();
-
-                                setState(() {
-                                  packageLoading = true;
-                                });
-                                // this register add to cart fun
-
-                                print("add to car fun");
-                                Map parameters = {
-                                  "action": "addRTCartitems",
-                                  "Pkid": widget.packageCode,
-                                  "Country":
-                                      Constants.prefs.getString("country_id"),
-                                  "Uniqid": uniqId,
-                                  "sessid": sessionId,
-                                  "ipaddress": Constants.prefs.getString("ip"),
-                                  "sprno": "0",
-                                  "Quantity": firstQtyController.text
-                                };
-                                print("add to cart params...$parameters");
-                                dynamic res = await MainController()
-                                    .getRegPackAddToCart(parameters);
-
-                                if (res['Msg'].toString().toLowerCase() ==
-                                    "success") {
-                                  Timer(const Duration(seconds: 1), () {
-                                    // Get.back(result: [true]);
-                                    Get.back();
-                                    Get.to(() => CartScreen(from: widget.from));
-                                  });
-                                }
-
-                                //this is original exitsted function
-                                // Map parameters = {
-                                //   "Action": "addCartitems",
-                                //   "Pkid": widget.packageCode,
-                                //   "pid": pidList.join(":"),
-                                //   "uniqid": uniqId,
-                                //   "sessid": sessionId,
-                                //   "ipaddress": Constants.prefs.getString("ip"),
-                                //   "sprno": "0",
-                                //   "prdtype": "Package",
-                                //   "Quantity": firstQtyController.text
-                                // };
-                                // print("add to cart params...$parameters");
-                                // dynamic res = await MainController()
-                                //     .getAddToCart(parameters);
-                                // if (res['Msg'].toString().toLowerCase() ==
-                                //     "success") {
-                                //   // ignore: use_build_context_synchronously
-                                //   MotionToast.success(
-                                //     title: const Text("Congartulations!"),
-                                //     description: const Text(
-                                //         "Products added successfully to your cart."),
-                                //   ).show(context);
-                                //   Timer(const Duration(seconds: 1), () {
-                                //     Get.back();
-                                //     Get.off(
-                                //         () => CartScreen(from: widget.from));
-                                //   });
-                                // }
-                                setState(() {
-                                  packageLoading = false;
-                                });
-                              },
-                              imagePath: 'assets/images/cart_icon.png',
-                              labelColor: whiteColor,
-                              buttonColor: blackColor,
-                              titile: "Add to Cart",
-                            ),
+                      ),
                     )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
+                  : const SizedBox.shrink();
+        }),
         body: Obx(() {
           return packDetailsController.loading.value
               ? loader
@@ -702,5 +726,4 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
       }),
     );
   }
-
 }

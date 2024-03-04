@@ -2,6 +2,7 @@ import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/main_controller.dart';
@@ -137,6 +138,10 @@ dipositSlipWidget(
   );
 }
 
+htmlDataWidget(info) {
+  return HtmlWidget(info);
+}
+
 class MyData extends DataTableSource {
   @override
   DataRow? getRow(int index) {
@@ -151,7 +156,8 @@ class MyData extends DataTableSource {
       ),
       DataCell(_verticalDivider),
       DataCell(
-        TableInfoWidget(info: _dataController.ecardReqReportList[index].reqby),
+        // TableInfoWidget(info: _dataController.ecardReqReportList[index].reqby),
+        htmlDataWidget(_dataController.ecardReqReportList[index].reqby),
       ),
       DataCell(_verticalDivider),
       DataCell(

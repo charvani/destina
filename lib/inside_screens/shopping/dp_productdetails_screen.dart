@@ -321,6 +321,29 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                           ],
                         ),
                       ),
+                      const SpaceHeightWidget(height: 15),
+                      if (_dataController.dpProductdata.value.pkname ==
+                              "D1DP PENDANT ASE" ||
+                          _dataController.dpProductdata.value.pkname ==
+                              "D1DP PENDANT ASE")
+                        pendentWidget(),
+                      if (_dataController.dpProductdata.value.pkname == "D1DP FLASK ASE" ||
+                          _dataController.dpProductdata.value.pkname ==
+                              "D1DP STICK ASE" ||
+                          _dataController.dpProductdata.value.pkname ==
+                              "UNIWAVE FILTER")
+                        flaskWidget(),
+                      if (_dataController.dpProductdata.value.pkname ==
+                          "D1DP SCALARVIA ASE")
+                        scalarviaWidget(),
+                      if (_dataController.dpProductdata.value.pkname ==
+                          "D1DP COFFEE (5 IN 1) ASE")
+                        coffeeWidget(),
+                      if (_dataController.dpProductdata.value.pkname ==
+                              "D1DP BIO MATRIX ASE" ||
+                          _dataController.dpProductdata.value.pkname ==
+                              "D1DP BIO MATRIX ASE")
+                        biomatrixWidget(),
                       const SpaceHeightWidget(height: 10),
                       if (videoId != "" && videoId != null)
                         Column(

@@ -37,7 +37,8 @@ class _CVScreenState extends State<CVScreen> {
     bData = {
       "UserId": userid,
       "Pwd": password,
-      "action": "Main",
+      // "action": "Main",
+      "action": "GetAdmin",
       "Month": widget.month,
       "year": widget.year,
       "Mtype": widget.monthType
@@ -49,65 +50,82 @@ class _CVScreenState extends State<CVScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar(title: "", backNavigation: true),
-      body: SingleChildScrollView(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SpaceHeightWidget(height: 10),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: DataTable(
-                  dataRowMaxHeight: 50,
-                  horizontalMargin: 0,
-                  columnSpacing: 0,
-                  headingRowColor: MaterialStatePropertyAll(darkBlue),
-                  border: TableBorder.all(
-                      color: middleBlackColor.withOpacity(0.15)),
-                  columns: const [
-                    DataColumn(
-                        label: TableHeadingWidget(
-                      title: "S.No",
-                      fontFamily: "OnestBold",
-                    )),
-                    DataColumn(
-                        label: TableHeadingWidget(
-                            title: "ID No", fontFamily: "OnestBold")),
-                    DataColumn(
-                        label: TableHeadingWidget(
-                            title: "Bill No", fontFamily: "OnestBold")),
-                    DataColumn(
-                        label: TableHeadingWidget(
-                            title: "Bill Date", fontFamily: "OnestBold")),
-                    DataColumn(
-                        label: TableHeadingWidget(
-                            title: "CV", fontFamily: "OnestBold")),
-                  ],
-                  rows: [
-                    for (int i = 1; i < 1; i++)
-                      DataRow(cells: [
-                        DataCell(
-                          TableInfoWidget(info: i.toString()),
-                        ),
-                        const DataCell(
-                          TableInfoWidget(info: ""),
-                        ),
-                        DataCell(
-                          orderNumTextWidget(""),
-                        ),
-                        const DataCell(
-                          TableInfoWidget(info: ""),
-                        ),
-                        const DataCell(
-                          TableInfoWidget(info: ""),
-                        ),
-                      ])
-                  ]),
-            ),
-          )
-        ],
-      )),
+      body: Obx(() {
+        return _dataController.loading.value
+            ? SizedBox(
+                height: 300,
+                child: loader,
+              )
+            : SingleChildScrollView(
+                child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SpaceHeightWidget(height: 10),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DataTable(
+                          dataRowMaxHeight: 50,
+                          horizontalMargin: 0,
+                          columnSpacing: 0,
+                          headingRowColor: MaterialStatePropertyAll(darkBlue),
+                          border: TableBorder.all(
+                              color: middleBlackColor.withOpacity(0.15)),
+                          columns: const [
+                            DataColumn(
+                                label: TableHeadingWidget(
+                              title: "S.No",
+                              fontFamily: "OnestBold",
+                            )),
+                            DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "ID No", fontFamily: "OnestBold")),
+                            DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "Bill No", fontFamily: "OnestBold")),
+                            DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "Bill Date",
+                                    fontFamily: "OnestBold")),
+                            DataColumn(
+                                label: TableHeadingWidget(
+                                    title: "CV", fontFamily: "OnestBold")),
+                          ],
+                          rows: [
+                            for (int i = 0;
+                                i < _dataController.maintenanceCVData.length;
+                                i++)
+                              DataRow(cells: [
+                                DataCell(
+                                  TableInfoWidget(info: "${i + 1}"),
+                                ),
+                                DataCell(
+                                  TableInfoWidget(
+                                      info: _dataController
+                                          .maintenanceCVData[i].iDno),
+                                ),
+                                DataCell(
+                                  orderNumTextWidget(_dataController
+                                      .maintenanceCVData[i].billNo),
+                                ),
+                                DataCell(
+                                  TableInfoWidget(
+                                      info: _dataController
+                                          .maintenanceCVData[i].billDate),
+                                ),
+                                DataCell(
+                                  TableInfoWidget(
+                                      info: _dataController
+                                          .maintenanceCVData[i].cv),
+                                ),
+                              ])
+                          ]),
+                    ),
+                  )
+                ],
+              ));
+      }),
     );
   }
 
