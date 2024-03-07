@@ -1,12 +1,18 @@
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/inside_screens/shopping/dpmall_screen.dart';
+import 'package:destina_1_international/inside_screens/shopping/redemptionmall_screen.dart2.dart';
+import 'package:destina_1_international/inside_screens/shopping/upgradeorder.screen2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../authentication_screens/members_screen.dart';
 import '../../commons/colors.dart';
 import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
 import '../../service_call/api_data.dart';
+import '../shopping/membermall_screen2.dart';
+import '../shopping/salesmall_screen2.dart';
 import 'invoice_screen.dart';
 
 class MyOrdersScreen extends StatefulWidget {
@@ -67,6 +73,53 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                           i < _dataController.orderReportData.length;
                           i++)
                         MyOrderItemWidget(
+                          showOrderAgain: _dataController
+                                          .orderReportData[i].mallType ==
+                                      "Sales Mall" ||
+                                  _dataController.orderReportData[i].mallType ==
+                                      "Redemption Mall" ||
+                                  _dataController.orderReportData[i].mallType ==
+                                      "Upgrade Mall" ||
+                                  _dataController.orderReportData[i].mallType
+                                          .toLowerCase() ==
+                                      "dp mall" ||
+                                  _dataController.orderReportData[i].mallType ==
+                                      "Signup Mall" ||
+                                  _dataController.orderReportData[i].mallType ==
+                                      "Membership Mall"
+                              ? true
+                              : false,
+                          orderAgainFun: () {
+                            print(
+                                "Mall  ${_dataController.orderReportData[i].mallType}");
+                            if (_dataController.orderReportData[i].mallType ==
+                                "Sales Mall") {
+                              Get.to(() => const SalesMallScreen2());
+                            } else if (_dataController
+                                    .orderReportData[i].mallType ==
+                                "Redemption Mall") {
+                              Get.to(() => const RedemptionMallScreen2());
+                            } else if (_dataController
+                                    .orderReportData[i].mallType ==
+                                "Upgrade Mall") {
+                              Get.to(() => const UpgradeOrderScreen2());
+                            } else if (_dataController
+                                    .orderReportData[i].mallType
+                                    .toLowerCase() ==
+                                "dp mall") {
+                              Get.to(() => const DPMallScreen());
+                            } else if (_dataController
+                                    .orderReportData[i].mallType ==
+                                "Signup Mall") {
+                              Get.to(() => MemberScreen(
+                                  countryId: Constants.prefs
+                                      .getString("country_id")!));
+                            } else if (_dataController
+                                    .orderReportData[i].mallType ==
+                                "Membership Mall") {
+                              Get.to(() => const MembershipMallScreen2());
+                            }
+                          },
                           loading: selectedInt == i ? true : false,
                           date: _dataController.orderReportData[i].orderDate,
                           itemName: _dataController.orderReportData[i].name,

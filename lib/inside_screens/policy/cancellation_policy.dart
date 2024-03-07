@@ -25,6 +25,7 @@ class _CancellationPolicyScreenState extends State<CancellationPolicyScreen> {
               CommonTitle(
                   fontColor: middleBlackColor,
                   size: 14,
+                  textAlign: TextAlign.justify,
                   titleName:
                       "Please be informed that we Do Not Accept cancellation for any order once payment has been made. If you have made a mistake in your order or a typo error in your details, please contact our admin at 03-58887789. The changes can be made subject to our policies and procedures."),
               const SpaceHeightWidget(height: 20),

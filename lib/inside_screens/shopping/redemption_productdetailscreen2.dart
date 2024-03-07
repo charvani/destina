@@ -471,8 +471,11 @@ class _RedemptionProductDetailsScreen2State
                         ),
                         const SpaceWidthWidget(width: 10),
                         CommonTitle(
-                          titleName:
-                              "${double.parse(packDetailsController.reviewData.value.avgRating).toDouble().toStringAsFixed(1)} out of 5",
+                          titleName: packDetailsController
+                                      .reviewData.value.avgRating !=
+                                  ""
+                              ? "${double.parse(packDetailsController.reviewData.value.avgRating).toDouble().toStringAsFixed(1)} out of 5"
+                              : "0.0 out 5",
                           size: 14,
                           fontFamily: "OnestRegular",
                           fontColor: lightDarKBlue,

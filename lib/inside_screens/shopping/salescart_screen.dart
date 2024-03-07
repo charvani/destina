@@ -131,340 +131,361 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                 : Obx(() {
                     return Column(
                       children: [
-                        cartController.loading.value ||
-                                cartController.salesMallCartItems.isEmpty
+                        cartController.loading.value
                             ? Container(
                                 height: 500,
                                 alignment: Alignment.center,
-                                child: Center(child: withoutCartCountWidget()))
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  for (int i = 0;
-                                      i <
-                                          cartController
-                                              .salesMallCartItems.length;
-                                      i++)
-                                    Column(
-                                      children: [
-                                        CartItemWidget(
-                                          // removeCartOption: true,
-                                          decrementFun: () {
-                                            if (int.parse(cartController
-                                                    .salesMallCartItems[i]
-                                                    .qty) >
-                                                1) {
-                                              incrdcrFun(
-                                                "decrement",
-                                                cartController
-                                                    .salesMallCartItems[i].qty,
-                                                cartController
-                                                    .salesMallCartItems[i]
-                                                    .pkcode,
-                                              );
-                                            }
-                                          },
-                                          incrementFun: () {
-                                            incrdcrFun(
-                                              "increment",
+                                child: Center(child: loader))
+                            : cartController.salesMallCartItems.isEmpty
+                                ? Container(
+                                    height: 500,
+                                    alignment: Alignment.center,
+                                    child:
+                                        Center(child: withoutCartCountWidget()))
+                                : Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      for (int i = 0;
+                                          i <
                                               cartController
-                                                  .salesMallCartItems[i].qty,
-                                              cartController
-                                                  .salesMallCartItems[i].pkcode,
-                                            );
-                                          },
-                                          imagePath: cartController
-                                              .salesMallCartItems[i].pimage,
-                                          removeFun: () {
-                                            Get.dialog(
-                                                barrierDismissible: false,
-                                                ConfrimationDialog(
-                                                    onTapFun: () async {
-                                                      Get.back();
-                                                      Map params = {
-                                                        "Regid": cartController
-                                                            .salesMallCartItems[
-                                                                i]
-                                                            .sno,
-                                                      };
-                                                      dynamic res =
-                                                          await cartController
-                                                              .getSalesMallItemRemove(
-                                                                  params,
-                                                                  cartParams);
-                                                      if (res != null) {
-                                                        print(
-                                                            "remove res..$res");
-                                                      }
-
-                                                      // ignore: use_build_context_synchronously
-
-                                                      //           Timer(
-                                                      //               const Duration(seconds: 1),
-                                                      //               () {
-                                                      //             Get.offAll(() =>
-                                                      //                 const BottomBarScreen(
-                                                      // index: 1,
-
-                                                      //                 ));
-                                                      //           });
-                                                    },
-                                                    title: "Are you sure?"));
-                                          },
-                                          itemsPrice:
-                                              "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallCartItems[i].mrp}",
-                                          itemname: cartController
-                                              .salesMallCartItems[i].pkname,
-                                          productCode: cartController
-                                              .salesMallCartItems[i].pkcode,
-                                          itemCount: cartController
-                                              .salesMallCartItems[i].qty,
-                                        ),
-                                        const CommonDivider(),
-                                      ],
-                                    ),
-                                  const SpaceHeightWidget(height: 10),
-                                  if (showProductsSelection)
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 10),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            "You qualified to receive an ADD ON products!",
-                                            // textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontFamily: "OnestSemiBold",
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                          const SpaceHeightWidget(height: 10),
-                                          const Text(
-                                            "You are eligible for the following promotion:",
-                                            // textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontFamily: "OnestRegular",
-                                              fontSize: 13,
-                                            ),
-                                          ),
-                                          const Text(
-                                            "Be sure to select your preferred choice in the given catalogue.",
-                                            // textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontFamily: "OnestRegular",
-                                              fontSize: 13,
-                                            ),
-                                          ),
-                                          const SpaceHeightWidget(height: 5),
-                                          SizedBox(
-                                            height: 35,
-                                            width: 200,
-                                            child: packageLoading
-                                                ? loader
-                                                : CustomElevatedButton(
-                                                    onTapFun: () async {
-                                                      setState(() {
-                                                        packageLoading = true;
-                                                      });
-                                                      await getPackageItemsData();
-                                                      textEControllerList
-                                                          .clear();
-
-                                                      for (int i = 0;
-                                                          i <
-                                                              cartController
-                                                                  .packPackageDetails
-                                                                  .value
-                                                                  .getPkgItemsRpt
-                                                                  .length;
-                                                          i++) {
-                                                        textEControllerList.add(
-                                                            TextEditingController());
-                                                        if (cartController
-                                                                .packPackageDetails
-                                                                .value
-                                                                .getPkgItemsRpt[
+                                                  .salesMallCartItems.length;
+                                          i++)
+                                        Column(
+                                          children: [
+                                            CartItemWidget(
+                                              // removeCartOption: true,
+                                              decrementFun: () {
+                                                if (int.parse(cartController
+                                                        .salesMallCartItems[i]
+                                                        .qty) >
+                                                    1) {
+                                                  incrdcrFun(
+                                                    "decrement",
+                                                    cartController
+                                                        .salesMallCartItems[i]
+                                                        .qty,
+                                                    cartController
+                                                        .salesMallCartItems[i]
+                                                        .pkcode,
+                                                  );
+                                                }
+                                              },
+                                              incrementFun: () {
+                                                incrdcrFun(
+                                                  "increment",
+                                                  cartController
+                                                      .salesMallCartItems[i]
+                                                      .qty,
+                                                  cartController
+                                                      .salesMallCartItems[i]
+                                                      .pkcode,
+                                                );
+                                              },
+                                              imagePath: cartController
+                                                  .salesMallCartItems[i].pimage,
+                                              removeFun: () {
+                                                Get.dialog(
+                                                    barrierDismissible: false,
+                                                    ConfrimationDialog(
+                                                        onTapFun: () async {
+                                                          Get.back();
+                                                          Map params = {
+                                                            "Regid": cartController
+                                                                .salesMallCartItems[
                                                                     i]
-                                                                .compulsory ==
-                                                            "True") {
-                                                          textEControllerList[i]
-                                                                  .text =
-                                                              cartController
-                                                                  .packPackageDetails
-                                                                  .value
-                                                                  .getPkgItemsRpt[
-                                                                      i]
-                                                                  .qty;
-                                                        }
-                                                      }
+                                                                .sno,
+                                                          };
+                                                          dynamic res =
+                                                              await cartController
+                                                                  .getSalesMallItemRemove(
+                                                                      params,
+                                                                      cartParams);
+                                                          if (res != null) {
+                                                            print(
+                                                                "remove res..$res");
+                                                          }
 
-                                                      setState(() {
-                                                        packageLoading = false;
-                                                      });
-                                                      Get.dialog(PackageDilog(),
-                                                          barrierDismissible:
-                                                              false);
-                                                    },
-                                                    title: "Select Products"),
-                                          ),
-                                          const SpaceHeightWidget(height: 15),
-                                          const CommonDivider(),
-                                        ],
-                                      ),
-                                    ),
-                                  const SpaceHeightWidget(height: 15),
-                                  Container(
-                                    width: double.infinity,
-                                    margin: const EdgeInsets.all(10),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 20),
-                                    decoration: BoxDecoration(
-                                        color: lightDarKBlue.withOpacity(0.1),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          "Order Summary",
-                                          style: TextStyle(
-                                            fontFamily: "OnestBold",
-                                            fontSize: 17,
+                                                          // ignore: use_build_context_synchronously
+
+                                                          //           Timer(
+                                                          //               const Duration(seconds: 1),
+                                                          //               () {
+                                                          //             Get.offAll(() =>
+                                                          //                 const BottomBarScreen(
+                                                          // index: 1,
+
+                                                          //                 ));
+                                                          //           });
+                                                        },
+                                                        title:
+                                                            "Are you sure?"));
+                                              },
+                                              itemsPrice:
+                                                  "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallCartItems[i].mrp}",
+                                              itemname: cartController
+                                                  .salesMallCartItems[i].pkname,
+                                              productCode: cartController
+                                                  .salesMallCartItems[i].pkcode,
+                                              itemCount: cartController
+                                                  .salesMallCartItems[i].qty,
+                                            ),
+                                            const CommonDivider(),
+                                          ],
+                                        ),
+                                      const SpaceHeightWidget(height: 10),
+                                      if (showProductsSelection)
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const Text(
+                                                "You qualified to receive an ADD ON products!",
+                                                // textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontFamily: "OnestSemiBold",
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                              const SpaceHeightWidget(
+                                                  height: 10),
+                                              const Text(
+                                                "You are eligible for the following promotion:",
+                                                // textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontFamily: "OnestRegular",
+                                                  fontSize: 13,
+                                                ),
+                                              ),
+                                              const Text(
+                                                "Be sure to select your preferred choice in the given catalogue.",
+                                                // textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontFamily: "OnestRegular",
+                                                  fontSize: 13,
+                                                ),
+                                              ),
+                                              const SpaceHeightWidget(
+                                                  height: 5),
+                                              SizedBox(
+                                                height: 35,
+                                                width: 200,
+                                                child: packageLoading
+                                                    ? loader
+                                                    : CustomElevatedButton(
+                                                        onTapFun: () async {
+                                                          setState(() {
+                                                            packageLoading =
+                                                                true;
+                                                          });
+                                                          await getPackageItemsData();
+                                                          textEControllerList
+                                                              .clear();
+
+                                                          for (int i = 0;
+                                                              i <
+                                                                  cartController
+                                                                      .packPackageDetails
+                                                                      .value
+                                                                      .getPkgItemsRpt
+                                                                      .length;
+                                                              i++) {
+                                                            textEControllerList.add(
+                                                                TextEditingController());
+                                                            if (cartController
+                                                                    .packPackageDetails
+                                                                    .value
+                                                                    .getPkgItemsRpt[
+                                                                        i]
+                                                                    .compulsory ==
+                                                                "True") {
+                                                              textEControllerList[
+                                                                          i]
+                                                                      .text =
+                                                                  cartController
+                                                                      .packPackageDetails
+                                                                      .value
+                                                                      .getPkgItemsRpt[
+                                                                          i]
+                                                                      .qty;
+                                                            }
+                                                          }
+
+                                                          setState(() {
+                                                            packageLoading =
+                                                                false;
+                                                          });
+                                                          Get.dialog(
+                                                              PackageDilog(),
+                                                              barrierDismissible:
+                                                                  false);
+                                                        },
+                                                        title:
+                                                            "Select Products"),
+                                              ),
+                                              const SpaceHeightWidget(
+                                                  height: 15),
+                                              const CommonDivider(),
+                                            ],
                                           ),
                                         ),
-                                        const SpaceHeightWidget(height: 10),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                      const SpaceHeightWidget(height: 15),
+                                      Container(
+                                        width: double.infinity,
+                                        margin: const EdgeInsets.all(10),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 20),
+                                        decoration: BoxDecoration(
+                                            color:
+                                                lightDarKBlue.withOpacity(0.1),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             const Text(
-                                              "Subtotal",
+                                              "Order Summary",
                                               style: TextStyle(
-                                                fontFamily: "OnestRegular",
-                                                fontSize: 15,
+                                                fontFamily: "OnestBold",
+                                                fontSize: 17,
                                               ),
                                             ),
-                                            Obx(() {
-                                              return cartController
-                                                      .loading.value
-                                                  ? Text(
-                                                      "${cartController.salesMallCartItems[0].symbol} 0.0")
-                                                  : Text(
-                                                      "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallTAmount.value}",
-                                                      style: const TextStyle(
-                                                        fontFamily:
-                                                            "OnestRegular",
-                                                        fontSize: 15,
-                                                      ),
-                                                    );
-                                            }),
-                                          ],
-                                        ),
-                                        const SpaceHeightWidget(height: 10),
-                                        const CommonDivider(),
-                                        const SpaceHeightWidget(height: 5),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Estimated Total",
-                                              style: TextStyle(
-                                                fontFamily: "OnestSemiBold",
-                                                fontSize: 15,
-                                                color: darkBlue,
-                                              ),
+                                            const SpaceHeightWidget(height: 10),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text(
+                                                  "Subtotal",
+                                                  style: TextStyle(
+                                                    fontFamily: "OnestRegular",
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                                Obx(() {
+                                                  return cartController
+                                                          .loading.value
+                                                      ? Text(
+                                                          "${cartController.salesMallCartItems[0].symbol} 0.0")
+                                                      : Text(
+                                                          "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallTAmount.value}",
+                                                          style:
+                                                              const TextStyle(
+                                                            fontFamily:
+                                                                "OnestRegular",
+                                                            fontSize: 15,
+                                                          ),
+                                                        );
+                                                }),
+                                              ],
                                             ),
-                                            Obx(() {
-                                              return cartController
-                                                      .loading.value
-                                                  ? Text(
-                                                      "${cartController.salesMallCartItems[0].symbol} 0.0")
-                                                  : Text(
-                                                      "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallTAmount.value}",
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            "OnestSemiBold",
-                                                        fontSize: 15,
-                                                        color: darkBlue,
-                                                      ),
-                                                    );
-                                            }),
+                                            const SpaceHeightWidget(height: 10),
+                                            const CommonDivider(),
+                                            const SpaceHeightWidget(height: 5),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Estimated Total",
+                                                  style: TextStyle(
+                                                    fontFamily: "OnestSemiBold",
+                                                    fontSize: 15,
+                                                    color: darkBlue,
+                                                  ),
+                                                ),
+                                                Obx(() {
+                                                  return cartController
+                                                          .loading.value
+                                                      ? Text(
+                                                          "${cartController.salesMallCartItems[0].symbol} 0.0")
+                                                      : Text(
+                                                          "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallTAmount.value}",
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                "OnestSemiBold",
+                                                            fontSize: 15,
+                                                            color: darkBlue,
+                                                          ),
+                                                        );
+                                                }),
+                                              ],
+                                            ),
+                                            const SpaceHeightWidget(height: 20),
                                           ],
                                         ),
-                                        const SpaceHeightWidget(height: 20),
-                                      ],
-                                    ),
-                                  ),
-                                  const SpaceHeightWidget(height: 20),
-                                  // Container(
-                                  //   padding: const EdgeInsets.all(8.0),
-                                  //   alignment: Alignment.center,
-                                  //   width: double.infinity,
-                                  //   child: SizedBox(
-                                  //     width: 200,
-                                  //     height: 35,
-                                  //     child: IconElevatedButton(
-                                  //       onTapFun: () {
-                                  //         Get.offAll(() => const BottomBarScreen(
-                                  //               index: 1,
-                                  //             ));
-                                  //       },
-                                  //       imagePath: 'assets/images/arrow_right.png',
-                                  //       labelColor: whiteColor,
-                                  //       buttonColor: lightDarKBlue,
-                                  //       titile: "Continue Shopping",
-                                  //     ),
-                                  //   ),
-                                  // )
-                                  Container(
-                                    alignment: Alignment.center,
-                                    width: double.infinity,
-                                    height: 30,
-                                    child: SizedBox(
-                                      width: 200,
-                                      child: IconElevatedButton(
-                                        onTapFun: () async {
-                                         
-                                          Get.off(() => CheckOutScreen(
-                                              redirectUrl:
-                                                  "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SalesCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId"));
-                                        },
-                                        imagePath:
-                                            'assets/images/shopping_cart_img.jpg',
-                                        labelColor: whiteColor,
-                                        buttonColor: blackColor,
-                                        titile: "Checkout",
                                       ),
-                                    ),
-                                  ),
-                                  const SpaceHeightWidget(height: 10),
+                                      const SpaceHeightWidget(height: 20),
+                                      // Container(
+                                      //   padding: const EdgeInsets.all(8.0),
+                                      //   alignment: Alignment.center,
+                                      //   width: double.infinity,
+                                      //   child: SizedBox(
+                                      //     width: 200,
+                                      //     height: 35,
+                                      //     child: IconElevatedButton(
+                                      //       onTapFun: () {
+                                      //         Get.offAll(() => const BottomBarScreen(
+                                      //               index: 1,
+                                      //             ));
+                                      //       },
+                                      //       imagePath: 'assets/images/arrow_right.png',
+                                      //       labelColor: whiteColor,
+                                      //       buttonColor: lightDarKBlue,
+                                      //       titile: "Continue Shopping",
+                                      //     ),
+                                      //   ),
+                                      // )
+                                      Container(
+                                        alignment: Alignment.center,
+                                        width: double.infinity,
+                                        height: 30,
+                                        child: SizedBox(
+                                          width: 200,
+                                          child: IconElevatedButton(
+                                            onTapFun: () async {
+                                              Get.off(() => CheckOutScreen(
+                                                  redirectUrl:
+                                                      "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SalesCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId"));
+                                            },
+                                            imagePath:
+                                                'assets/images/shopping_cart_img.jpg',
+                                            labelColor: whiteColor,
+                                            buttonColor: blackColor,
+                                            titile: "Checkout",
+                                          ),
+                                        ),
+                                      ),
+                                      const SpaceHeightWidget(height: 10),
 
-                                  Container(
-                                    padding: const EdgeInsets.all(8.0),
-                                    alignment: Alignment.center,
-                                    width: double.infinity,
-                                    child: SizedBox(
-                                      width: 200,
-                                      height: 30,
-                                      child: IconElevatedButton(
-                                        onTapFun: () {
-                                          Get.back();
-                                          Get.back(result: [true]);
-                                        },
-                                        imagePath:
-                                            'assets/images/arrow_right.png',
-                                        labelColor: whiteColor,
-                                        titile: "Continue Shopping",
-                                        buttonColor: blackColor,
+                                      Container(
+                                        padding: const EdgeInsets.all(8.0),
+                                        alignment: Alignment.center,
+                                        width: double.infinity,
+                                        child: SizedBox(
+                                          width: 200,
+                                          height: 30,
+                                          child: IconElevatedButton(
+                                            onTapFun: () {
+                                              Get.back();
+                                              Get.back(result: [true]);
+                                            },
+                                            imagePath:
+                                                'assets/images/arrow_right.png',
+                                            labelColor: whiteColor,
+                                            titile: "Continue Shopping",
+                                            buttonColor: blackColor,
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
                         // Container(
                         //   color: lightBlackColor.withOpacity(0.04),
                         //   child: const Row(

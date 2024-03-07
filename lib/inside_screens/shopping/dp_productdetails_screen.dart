@@ -230,6 +230,8 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                                   "sprno": Constants.prefs.getString("reg_id"),
                                   "prdtype": "Package",
                                   "qty": firstQtyController.text,
+                                  "country":
+                                      Constants.prefs.getString("country_id"),
                                 };
                                 print("add to cart params...$parameters");
                                 dynamic res = await MainController()
@@ -424,8 +426,11 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                         ),
                         const SpaceWidthWidget(width: 10),
                         CommonTitle(
-                          titleName:
-                              "${double.parse(_dataController.reviewData.value.avgRating).toDouble().toStringAsFixed(1)} out of 5",
+                          titleName: _dataController
+                                      .reviewData.value.avgRating !=
+                                  ""
+                              ? "${double.parse(_dataController.reviewData.value.avgRating).toDouble().toStringAsFixed(1)} out of 5"
+                              : "0.0 out of 5",
                           size: 14,
                           fontFamily: "OnestRegular",
                           fontColor: lightDarKBlue,

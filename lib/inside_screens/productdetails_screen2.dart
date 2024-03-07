@@ -179,9 +179,11 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
         bottomSheet: Obx(() {
           return packDetailsController.loading.value
               ? const SizedBox.shrink()
-              : double.parse(
-                          packDetailsController.packageDetailsData.value.mrp) >
-                      0
+              : packDetailsController.packageDetailsData.value.mrp != "0" &&
+                      packDetailsController.packageDetailsData.value.mrp !=
+                          "0.0" &&
+                      packDetailsController.packageDetailsData.value.mrp !=
+                          "0.00"
                   ? Form(
                       key: _fomkey1,
                       child: Container(
@@ -421,7 +423,11 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                           units: "1",
                           qty: "1",
                           price: packDetailsController
-                              .packageDetailsData.value.mrp,
+                                      .packageDetailsData.value.mrp !=
+                                  ""
+                              ? packDetailsController
+                                  .packageDetailsData.value.mrp
+                              : "",
                           cv: packDetailsController.packageDetailsData.value.cv,
                           productCode: packDetailsController
                               .packageDetailsData.value.pkcode,
@@ -548,8 +554,11 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                         ),
                         const SpaceWidthWidget(width: 10),
                         CommonTitle(
-                          titleName:
-                              "${double.parse(packDetailsController.reviewData.value.avgRating).toDouble().toStringAsFixed(1)} out of 5",
+                          titleName: packDetailsController
+                                      .reviewData.value.avgRating !=
+                                  ""
+                              ? "${double.parse(packDetailsController.reviewData.value.avgRating).toDouble().toStringAsFixed(1)} out of 5"
+                              : "0.0 out of 5",
                           size: 14,
                           fontFamily: "OnestRegular",
                           fontColor: lightDarKBlue,

@@ -210,332 +210,349 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                 : Obx(() {
                     return Column(
                       children: [
-                        cartController.loading.value ||
-                                cartController.registerCartItems.isEmpty
+                        cartController.loading.value
                             ? Container(
                                 height: 500,
                                 alignment: Alignment.center,
-                                child: Center(child: withoutCartCountWidget()))
-                            : Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  // const SpaceHeightWidget(height: 8),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.symmetric(
-                                  //       horizontal: 20, vertical: 5),
-                                  //   child: Row(
-                                  //     children: [
-                                  //       CircleAvatar(
-                                  //         radius: 14,
-                                  //         backgroundColor:
-                                  //             lightDarKBlue.withOpacity(0.1),
-                                  //         child: Icon(
-                                  //           Icons.location_on_outlined,
-                                  //           color: lightDarKBlue,
-                                  //           size: 20,
-                                  //         ),
-                                  //       ),
-                                  //       const SpaceWidthWidget(width: 10),
-                                  //       Text(
-                                  //         "Deliver in 1-3 business days",
-                                  //         style: TextStyle(
-                                  //             fontFamily: "OnestLight",
-                                  //             color: lightDarKBlue,
-                                  //             fontSize: 10),
-                                  //       )
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                  // const CommonDivider(),
-                                  for (int i = 0;
-                                      i <
-                                          cartController
-                                              .registerCartItems.length;
-                                      i++)
-                                    Column(
-                                      children: [
-                                        CartItemWidget(
-                                          showQuantity: true,
-                                          // decrementFun: () {
-                                          //   if (int.parse(cartController
-                                          //           .registerCartItems[i].qty) >
-                                          //       1) {
-                                          //     incrdcrFun(
-                                          //         "decrement",
-                                          //         cartController
-                                          //             .registerCartItems[i].qty,
-                                          //         cartController
-                                          //             .registerCartItems[i]
-                                          //             .pkcode);
-                                          //   }
-                                          // },
-                                          // incrementFun: () {
-                                          //   incrdcrFun(
-                                          //       "increment",
-                                          //       cartController
-                                          //           .registerCartItems[i].qty,
-                                          //       cartController
-                                          //           .registerCartItems[i]
-                                          //           .pkcode);
-                                          // },
-                                          removeCartOption: true,
-                                          imagePath: cartController
-                                              .registerCartItems[i].pImage,
-                                          removeFun: () {},
-                                          itemsPrice:
-                                              "${cartController.registerCartItems[i].symbol} ${cartController.registerCartItems[i].mrp}",
-                                          itemname: cartController
-                                              .registerCartItems[i].pkname,
-                                          productCode: cartController
-                                              .registerCartItems[i].pkcode,
-                                          itemCount: cartController
-                                              .registerCartItems[i].qty,
-                                        ),
-                                        const CommonDivider(),
-                                      ],
-                                    ),
-                                  const SpaceHeightWidget(height: 10),
-                                  if (showProductsSelection)
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 10),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            "You qualified to receive an ADD ON products!",
-                                            // textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontFamily: "OnestSemiBold",
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                          const SpaceHeightWidget(height: 10),
-                                          const Text(
-                                            "You are eligible for the following promotion:",
-                                            // textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontFamily: "OnestRegular",
-                                              fontSize: 13,
-                                            ),
-                                          ),
-                                          const Text(
-                                            "Be sure to select your preferred choice in the given catalogue.",
-                                            // textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontFamily: "OnestRegular",
-                                              fontSize: 13,
-                                            ),
-                                          ),
-                                          const SpaceHeightWidget(height: 5),
-                                          SizedBox(
-                                            height: 35,
-                                            width: 200,
-                                            child: packageLoading
-                                                ? loader
-                                                : CustomElevatedButton(
-                                                    onTapFun: () async {
-                                                      setState(() {
-                                                        loading = false;
-                                                      });
-                                                      await getPackageItemsData();
-                                                      textEControllerList
-                                                          .clear();
-
-                                                      for (int i = 0;
-                                                          i <
-                                                              cartController
-                                                                  .packPackageDetails
-                                                                  .value
-                                                                  .getPkgItemsRpt
-                                                                  .length;
-                                                          i++) {
-                                                        textEControllerList.add(
-                                                            TextEditingController());
-                                                        if (cartController
-                                                                .packPackageDetails
-                                                                .value
-                                                                .getPkgItemsRpt[
-                                                                    i]
-                                                                .compulsory ==
-                                                            "True") {
-                                                          textEControllerList[i]
-                                                                  .text =
-                                                              cartController
-                                                                  .packPackageDetails
-                                                                  .value
-                                                                  .getPkgItemsRpt[
-                                                                      i]
-                                                                  .qty;
-                                                        }
-                                                      }
-
-                                                      setState(() {
-                                                        packageLoading = false;
-                                                      });
-                                                      Get.dialog(PackageDilog(),
-                                                          barrierDismissible:
-                                                              false);
-                                                    },
-                                                    title: "Select Products"),
-                                          ),
-                                          const SpaceHeightWidget(height: 15),
-                                          const CommonDivider(),
-                                        ],
-                                      ),
-                                    ),
-                                  const SpaceHeightWidget(height: 15),
-                                  Container(
-                                    width: double.infinity,
-                                    margin: const EdgeInsets.all(10),
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 15, vertical: 20),
-                                    decoration: BoxDecoration(
-                                        color: lightDarKBlue.withOpacity(0.1),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Order Summary",
-                                          style: TextStyle(
-                                              fontFamily: "OnestBold",
-                                              fontSize: 17,
-                                              color: darkBlue),
-                                        ),
-                                        const SpaceHeightWidget(height: 10),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                child: Center(child: loader))
+                            : cartController.registerCartItems.isEmpty
+                                ? Container(
+                                    height: 500,
+                                    alignment: Alignment.center,
+                                    child:
+                                        Center(child: withoutCartCountWidget()))
+                                : Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      // const SpaceHeightWidget(height: 8),
+                                      // Padding(
+                                      //   padding: const EdgeInsets.symmetric(
+                                      //       horizontal: 20, vertical: 5),
+                                      //   child: Row(
+                                      //     children: [
+                                      //       CircleAvatar(
+                                      //         radius: 14,
+                                      //         backgroundColor:
+                                      //             lightDarKBlue.withOpacity(0.1),
+                                      //         child: Icon(
+                                      //           Icons.location_on_outlined,
+                                      //           color: lightDarKBlue,
+                                      //           size: 20,
+                                      //         ),
+                                      //       ),
+                                      //       const SpaceWidthWidget(width: 10),
+                                      //       Text(
+                                      //         "Deliver in 1-3 business days",
+                                      //         style: TextStyle(
+                                      //             fontFamily: "OnestLight",
+                                      //             color: lightDarKBlue,
+                                      //             fontSize: 10),
+                                      //       )
+                                      //     ],
+                                      //   ),
+                                      // ),
+                                      // const CommonDivider(),
+                                      for (int i = 0;
+                                          i <
+                                              cartController
+                                                  .registerCartItems.length;
+                                          i++)
+                                        Column(
                                           children: [
-                                            const Text(
-                                              "Subtotal",
-                                              style: TextStyle(
-                                                fontFamily: "OnestRegular",
-                                                fontSize: 15,
-                                              ),
+                                            CartItemWidget(
+                                              showQuantity: true,
+                                              // decrementFun: () {
+                                              //   if (int.parse(cartController
+                                              //           .registerCartItems[i].qty) >
+                                              //       1) {
+                                              //     incrdcrFun(
+                                              //         "decrement",
+                                              //         cartController
+                                              //             .registerCartItems[i].qty,
+                                              //         cartController
+                                              //             .registerCartItems[i]
+                                              //             .pkcode);
+                                              //   }
+                                              // },
+                                              // incrementFun: () {
+                                              //   incrdcrFun(
+                                              //       "increment",
+                                              //       cartController
+                                              //           .registerCartItems[i].qty,
+                                              //       cartController
+                                              //           .registerCartItems[i]
+                                              //           .pkcode);
+                                              // },
+                                              removeCartOption: true,
+                                              imagePath: cartController
+                                                  .registerCartItems[i].pImage,
+                                              removeFun: () {},
+                                              itemsPrice:
+                                                  "${cartController.registerCartItems[i].symbol} ${cartController.registerCartItems[i].mrp}",
+                                              itemname: cartController
+                                                  .registerCartItems[i].pkname,
+                                              productCode: cartController
+                                                  .registerCartItems[i].pkcode,
+                                              itemCount: cartController
+                                                  .registerCartItems[i].qty,
                                             ),
-                                            Obx(() {
-                                              return cartController
-                                                      .loading.value
-                                                  ? Text(
-                                                      "${cartController.registerCartItems[0].symbol} 0.0")
-                                                  : Text(
-                                                      "${cartController.registerCartItems[0].symbol} ${cartController.totalAmount.value}",
-                                                      style: const TextStyle(
-                                                        fontFamily:
-                                                            "OnestRegular",
-                                                        fontSize: 15,
-                                                      ),
-                                                    );
-                                            }),
+                                            const CommonDivider(),
                                           ],
                                         ),
-                                        const SpaceHeightWidget(height: 10),
-                                        const CommonDivider(),
-                                        const SpaceHeightWidget(height: 5),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                      const SpaceHeightWidget(height: 10),
+                                      if (showProductsSelection)
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10, vertical: 10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              const Text(
+                                                "You qualified to receive an ADD ON products!",
+                                                // textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontFamily: "OnestSemiBold",
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                              const SpaceHeightWidget(
+                                                  height: 10),
+                                              const Text(
+                                                "You are eligible for the following promotion:",
+                                                // textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontFamily: "OnestRegular",
+                                                  fontSize: 13,
+                                                ),
+                                              ),
+                                              const Text(
+                                                "Be sure to select your preferred choice in the given catalogue.",
+                                                // textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontFamily: "OnestRegular",
+                                                  fontSize: 13,
+                                                ),
+                                              ),
+                                              const SpaceHeightWidget(
+                                                  height: 5),
+                                              SizedBox(
+                                                height: 35,
+                                                width: 200,
+                                                child: packageLoading
+                                                    ? loader
+                                                    : CustomElevatedButton(
+                                                        onTapFun: () async {
+                                                          setState(() {
+                                                            loading = false;
+                                                          });
+                                                          await getPackageItemsData();
+                                                          textEControllerList
+                                                              .clear();
+
+                                                          for (int i = 0;
+                                                              i <
+                                                                  cartController
+                                                                      .packPackageDetails
+                                                                      .value
+                                                                      .getPkgItemsRpt
+                                                                      .length;
+                                                              i++) {
+                                                            textEControllerList.add(
+                                                                TextEditingController());
+                                                            if (cartController
+                                                                    .packPackageDetails
+                                                                    .value
+                                                                    .getPkgItemsRpt[
+                                                                        i]
+                                                                    .compulsory ==
+                                                                "True") {
+                                                              textEControllerList[
+                                                                          i]
+                                                                      .text =
+                                                                  cartController
+                                                                      .packPackageDetails
+                                                                      .value
+                                                                      .getPkgItemsRpt[
+                                                                          i]
+                                                                      .qty;
+                                                            }
+                                                          }
+
+                                                          setState(() {
+                                                            packageLoading =
+                                                                false;
+                                                          });
+                                                          Get.dialog(
+                                                              PackageDilog(),
+                                                              barrierDismissible:
+                                                                  false);
+                                                        },
+                                                        title:
+                                                            "Select Products"),
+                                              ),
+                                              const SpaceHeightWidget(
+                                                  height: 15),
+                                              const CommonDivider(),
+                                            ],
+                                          ),
+                                        ),
+                                      const SpaceHeightWidget(height: 15),
+                                      Container(
+                                        width: double.infinity,
+                                        margin: const EdgeInsets.all(10),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 20),
+                                        decoration: BoxDecoration(
+                                            color:
+                                                lightDarKBlue.withOpacity(0.1),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "Estimated Total",
+                                              "Order Summary",
                                               style: TextStyle(
-                                                fontFamily: "OnestSemiBold",
-                                                fontSize: 15,
-                                                color: darkBlue,
+                                                  fontFamily: "OnestBold",
+                                                  fontSize: 17,
+                                                  color: darkBlue),
+                                            ),
+                                            const SpaceHeightWidget(height: 10),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text(
+                                                  "Subtotal",
+                                                  style: TextStyle(
+                                                    fontFamily: "OnestRegular",
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                                Obx(() {
+                                                  return cartController
+                                                          .loading.value
+                                                      ? Text(
+                                                          "${cartController.registerCartItems[0].symbol} 0.0")
+                                                      : Text(
+                                                          "${cartController.registerCartItems[0].symbol} ${cartController.totalAmount.value}",
+                                                          style:
+                                                              const TextStyle(
+                                                            fontFamily:
+                                                                "OnestRegular",
+                                                            fontSize: 15,
+                                                          ),
+                                                        );
+                                                }),
+                                              ],
+                                            ),
+                                            const SpaceHeightWidget(height: 10),
+                                            const CommonDivider(),
+                                            const SpaceHeightWidget(height: 5),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Estimated Total",
+                                                  style: TextStyle(
+                                                    fontFamily: "OnestSemiBold",
+                                                    fontSize: 15,
+                                                    color: darkBlue,
+                                                  ),
+                                                ),
+                                                Obx(() {
+                                                  return cartController
+                                                          .loading.value
+                                                      ? Text(
+                                                          "${cartController.registerCartItems[0].symbol} 0.0")
+                                                      : Text(
+                                                          "${cartController.registerCartItems[0].symbol} ${cartController.totalAmount.value}",
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                "OnestSemiBold",
+                                                            fontSize: 15,
+                                                            color: darkBlue,
+                                                          ),
+                                                        );
+                                                }),
+                                              ],
+                                            ),
+                                            const SpaceHeightWidget(height: 20),
+                                            SizedBox(
+                                              width: 200,
+                                              height: 33,
+                                              child: IconElevatedButton(
+                                                onTapFun: () async {
+                                                  // print("sess...$sessionId");
+                                                  // print(
+                                                  //     "https://showcase.worldunityfoundation.org/checkwebitems.html?countrycode=MY&sprno=${widget.sponsorId}&sessid=$sessionId&uniqId=$uniqId");
+                                                  print(
+                                                      "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
+
+                                                  // Map parameters = {
+                                                  //   "Action": "checkoutitems_MA",
+                                                  //   "Pkid": "0",
+                                                  //   "pid": "0",
+                                                  //   "Quantity": "0",
+                                                  //   "uniqid": uniqId,
+                                                  //   "sessid": sessionId,
+                                                  //   "ipaddress": Constants.prefs
+                                                  //       .getString("ip"),
+                                                  //   "sprno": sponsorController.text,
+                                                  //   "prdtype": "Package"
+                                                  // };
+                                                  // dynamic res = await cartController
+                                                  //     .getCheckOutCart(parameters);
+                                                  // print("res....$res");
+                                                  // if (res['Msg']
+                                                  //         .toString()
+                                                  //         .toLowerCase() ==
+                                                  //     "success") {
+                                                  Get.off(() => CheckOutScreen(
+                                                      redirectUrl:
+                                                          "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&sessid=$sessionId&uniqId=$uniqId"));
+
+                                                  // }
+                                                },
+                                                imagePath:
+                                                    'assets/images/shopping_cart_img.jpg',
+                                                labelColor: whiteColor,
+                                                buttonColor: blackColor,
+                                                titile: "Checkout",
                                               ),
                                             ),
-                                            Obx(() {
-                                              return cartController
-                                                      .loading.value
-                                                  ? Text(
-                                                      "${cartController.registerCartItems[0].symbol} 0.0")
-                                                  : Text(
-                                                      "${cartController.registerCartItems[0].symbol} ${cartController.totalAmount.value}",
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            "OnestSemiBold",
-                                                        fontSize: 15,
-                                                        color: darkBlue,
-                                                      ),
-                                                    );
-                                            }),
                                           ],
                                         ),
-                                        const SpaceHeightWidget(height: 20),
-                                        SizedBox(
-                                          width: 200,
-                                          height: 33,
-                                          child: IconElevatedButton(
-                                            onTapFun: () async {
-                                              // print("sess...$sessionId");
-                                              // print(
-                                              //     "https://showcase.worldunityfoundation.org/checkwebitems.html?countrycode=MY&sprno=${widget.sponsorId}&sessid=$sessionId&uniqId=$uniqId");
-                                              print(
-                                                  "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
-
-                                              // Map parameters = {
-                                              //   "Action": "checkoutitems_MA",
-                                              //   "Pkid": "0",
-                                              //   "pid": "0",
-                                              //   "Quantity": "0",
-                                              //   "uniqid": uniqId,
-                                              //   "sessid": sessionId,
-                                              //   "ipaddress": Constants.prefs
-                                              //       .getString("ip"),
-                                              //   "sprno": sponsorController.text,
-                                              //   "prdtype": "Package"
-                                              // };
-                                              // dynamic res = await cartController
-                                              //     .getCheckOutCart(parameters);
-                                              // print("res....$res");
-                                              // if (res['Msg']
-                                              //         .toString()
-                                              //         .toLowerCase() ==
-                                              //     "success") {
-                                              Get.off(() => CheckOutScreen(
-                                                  redirectUrl:
-                                                      "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&sessid=$sessionId&uniqId=$uniqId"));
-
-                                              // }
-                                            },
-                                            imagePath:
-                                                'assets/images/shopping_cart_img.jpg',
-                                            labelColor: whiteColor,
-                                            buttonColor: blackColor,
-                                            titile: "Checkout",
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                      const SpaceHeightWidget(height: 20),
+                                      // Container(
+                                      //   padding: const EdgeInsets.all(8.0),
+                                      //   alignment: Alignment.center,
+                                      //   width: double.infinity,
+                                      //   child: SizedBox(
+                                      //     width: 200,
+                                      //     height: 35,
+                                      //     child: IconElevatedButton(
+                                      //       onTapFun: () {
+                                      //         Get.offAll(() => const BottomBarScreen(
+                                      //               index: 1,
+                                      //             ));
+                                      //       },
+                                      //       imagePath: 'assets/images/arrow_right.png',
+                                      //       labelColor: whiteColor,
+                                      //       buttonColor: lightDarKBlue,
+                                      //       titile: "Continue Shopping",
+                                      //     ),
+                                      //   ),
+                                      // )
+                                    ],
                                   ),
-                                  const SpaceHeightWidget(height: 20),
-                                  // Container(
-                                  //   padding: const EdgeInsets.all(8.0),
-                                  //   alignment: Alignment.center,
-                                  //   width: double.infinity,
-                                  //   child: SizedBox(
-                                  //     width: 200,
-                                  //     height: 35,
-                                  //     child: IconElevatedButton(
-                                  //       onTapFun: () {
-                                  //         Get.offAll(() => const BottomBarScreen(
-                                  //               index: 1,
-                                  //             ));
-                                  //       },
-                                  //       imagePath: 'assets/images/arrow_right.png',
-                                  //       labelColor: whiteColor,
-                                  //       buttonColor: lightDarKBlue,
-                                  //       titile: "Continue Shopping",
-                                  //     ),
-                                  //   ),
-                                  // )
-                                ],
-                              ),
                         // Container(
                         //   color: lightBlackColor.withOpacity(0.04),
                         //   child: const Row(

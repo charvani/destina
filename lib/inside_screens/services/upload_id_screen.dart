@@ -64,12 +64,13 @@ class _UploadIDScreenState extends State<UploadIDScreen> {
                   });
                 },
                 items: const [
-                  "RATDION CARD",
+                  "RATION CARD",
                   "DRIVING LICENSE",
                   "ADHAR CARD",
                   "VOTER ID",
                   "PASSPORT",
-                  "Government Issued Photo\nIdentification(Id/IC)"
+                  "NRIC",
+                  "GOVERNMENT ISSUED PHOTO\nIDENTIFICATION(ID/IC)"
                 ],
                 validationFun: (val) {
                   if (val == "" || val == null) {

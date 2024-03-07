@@ -513,7 +513,7 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                                       .reviewData.value.avgRating !=
                                   ""
                               ? "${double.parse(packDetailsController.reviewData.value.avgRating).toDouble().toStringAsFixed(1)} out of 5"
-                              : "0 out of 5",
+                              : "0.0 out of 5",
                           size: 14,
                           fontFamily: "OnestRegular",
                           fontColor: lightDarKBlue,

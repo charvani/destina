@@ -38,7 +38,7 @@ class _CountySelectScreenState extends State<CountySelectScreen> {
         body: SingleChildScrollView(
           child: Obx(() {
             return _countryController.loading.value
-                ? loader
+                ? SizedBox(height: 400, child: loader)
                 : _countryController.countriesList.isEmpty
                     ? SizedBox(height: 100, child: notAvailableW)
                     : Container(

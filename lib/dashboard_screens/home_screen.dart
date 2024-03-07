@@ -136,7 +136,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             i < widget.bannerPopUpImages!.length;
                             i++)
                           CommonCachedNetworkImage(
-                              imagePath: widget.bannerPopUpImages![i])
+                            imagePath: widget.bannerPopUpImages![i],
+                            loaderHeight: 600,
+                          )
                       ],
                     ),
                   ),

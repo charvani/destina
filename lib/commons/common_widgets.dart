@@ -833,13 +833,18 @@ class MyOrderItemWidget extends StatelessWidget {
   final String imgPath;
   final VoidCallback shippingFun;
   final VoidCallback invoiceFun;
+  final VoidCallback orderAgainFun;
   final String mrpRate;
   final String date;
   final String ordercode;
   final bool loading;
+  final bool showOrderAgain;
+
   const MyOrderItemWidget(
       {super.key,
       required this.loading,
+      required this.showOrderAgain,
+      required this.orderAgainFun,
       required this.shippingFun,
       required this.itemName,
       required this.imgPath,
@@ -880,13 +885,13 @@ class MyOrderItemWidget extends StatelessWidget {
                               fontSize: 16,
                               color: lightDarKBlue),
                         ),
-                        const Text(
-                          " Buy",
-                          style: TextStyle(
-                            fontFamily: "OnestRegular",
-                            fontSize: 10,
+                        if (showOrderAgain)
+                          SizedBox(
+                            height: 25,
+                            width: 80,
+                            child: CommonOulineTextButton(
+                                onTapFun: orderAgainFun, title: "Order Again"),
                           ),
-                        ),
                         const SpaceHeightWidget(height: 15),
                         SizedBox(
                             height: 25,
@@ -2012,11 +2017,13 @@ class CommonCachedNetworkImage extends StatelessWidget {
   final double? height;
   final double? width;
   final BoxFit? boxfit;
+  final double? loaderHeight;
   const CommonCachedNetworkImage(
       {super.key,
       required this.imagePath,
       this.width,
       this.height,
+      this.loaderHeight,
       this.boxfit});
 
   @override
@@ -2025,8 +2032,11 @@ class CommonCachedNetworkImage extends StatelessWidget {
       imageUrl: imagePath,
       height: height,
       width: width,
-      progressIndicatorBuilder: (context, url, progress) =>
-          SizedBox(width: 80, child: loader),
+      progressIndicatorBuilder: (context, url, progress) => SizedBox(
+        width: 80,
+        height: loaderHeight,
+        child: loader,
+      ),
       fit: boxfit,
       errorWidget: (context, url, error) => Image.asset(
         "assets/images/new_logo.png",
@@ -2426,7 +2436,9 @@ class ProductAmountDetailsWidget extends StatelessWidget {
               ),
               const SpaceWidthWidget(width: 5),
               Text(
-                units,
+                title.toLowerCase().contains("scalarvia")
+                    ? "$units box"
+                    : units,
                 style: TextStyle(
                     fontFamily: "OnestSemiBold",
                     fontSize: 14,
