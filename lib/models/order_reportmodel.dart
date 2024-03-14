@@ -20,6 +20,8 @@ class OrderReportModel {
   String shippingHis;
   String bDate;
   String name;
+  String lbillno;
+  String orderagain;
 
   OrderReportModel({
     required this.orderDate,
@@ -31,6 +33,8 @@ class OrderReportModel {
     required this.shippingHis,
     required this.bDate,
     required this.name,
+    required this.lbillno,
+    required this.orderagain,
   });
 
   factory OrderReportModel.fromJson(Map<String, dynamic> json) =>
@@ -44,6 +48,8 @@ class OrderReportModel {
         shippingHis: json["ShippingHis"],
         bDate: json["BDate"],
         name: json["PackageName"],
+        lbillno: json["Lbillno"],
+        orderagain: json["Orderagain"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -54,6 +60,8 @@ class OrderReportModel {
         "MallType": mallType,
         "Modifypay": modifypay,
         "ShippingHis": shippingHis,
-        "PackageName": bDate
+        "PackageName": bDate,
+        "Lbillno": lbillno,
+        "Orderagain": orderagain,
       };
 }

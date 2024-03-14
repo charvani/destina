@@ -78,6 +78,7 @@ class MainController extends GetxController {
 
   List<SelPackageModel> selPackageItemList = <SelPackageModel>[].obs;
   List<SelPackageModel> relPackageItemList = <SelPackageModel>[].obs;
+  List<String> notificationData = <String>[].obs;
   List<PackCartModel> packCartList = <PackCartModel>[].obs;
   Rx<double> cvVal = 0.0.obs;
   RxList<ProductCategoryItem> productItemList = <ProductCategoryItem>[].obs;
@@ -2662,5 +2663,24 @@ class MainController extends GetxController {
         CommonToast(res['Message']);
       }
     }
+  }
+
+  getNotificationData(Map parameters) async {
+    loading.value = true;
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().dashboard, params: parameters);
+    notificationData.clear();
+    if (res != null) {
+      if (res['Msg'] == "SUCCESS") {
+        if (res['Notificationsrpt'].length > 0) {
+          for (int i = 0; i < res['Notificationsrpt'].length; i++) {
+            notificationData.add(res['Notificationsrpt'][i]['message']);
+          }
+        }
+      }
+    }
+
+    loading.value = false;
+    return res;
   }
 }

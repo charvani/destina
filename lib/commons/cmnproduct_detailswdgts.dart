@@ -1951,8 +1951,12 @@ class RatingBarWidget extends StatelessWidget {
 class ReviewVideoWidget extends StatefulWidget {
   final String videoUrl;
   final double videoImgHeight;
+  final VoidCallback? onTapFun;
   const ReviewVideoWidget(
-      {super.key, required this.videoUrl, required this.videoImgHeight});
+      {super.key,
+      required this.videoUrl,
+      required this.videoImgHeight,
+      this.onTapFun});
 
   @override
   State<ReviewVideoWidget> createState() => _ReviewVideoWidgetState();
@@ -1965,12 +1969,16 @@ class _ReviewVideoWidgetState extends State<ReviewVideoWidget> {
 
   @override
   void initState() {
+    print("vi....${widget.videoUrl}");
     videoId = YoutubePlayer.convertUrlToId(widget.videoUrl)!;
+    print("vi id...$videoId");
     thumbNailImg = YoutubePlayer.getThumbnail(videoId: videoId);
+    print("vi thumbNailImg...$thumbNailImg");
+
     _ycontroller = YoutubePlayerController(
         initialVideoId: videoId,
         flags: const YoutubePlayerFlags(
-            autoPlay: true, mute: false, hideThumbnail: false));
+            autoPlay: false, mute: false, hideThumbnail: false));
     super.initState();
   }
 
@@ -1986,38 +1994,49 @@ class _ReviewVideoWidgetState extends State<ReviewVideoWidget> {
       borderRadius: BorderRadius.circular(20),
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
-        onTap: () {
-          Get.dialog(Dialog(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20))),
-            backgroundColor: whiteColor,
-            insetPadding: const EdgeInsets.all(10),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: whiteColor,
-              ),
-              child: YoutubePlayer(
-                controller: _ycontroller,
-                showVideoProgressIndicator: true,
-              ),
-            ),
-          ));
-        },
+        onTap: widget.onTapFun ??
+            () {
+              Get.dialog(Dialog(
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                backgroundColor: whiteColor,
+                insetPadding: const EdgeInsets.all(10),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: whiteColor,
+                  ),
+                  child: YoutubePlayer(
+                    controller: _ycontroller,
+                    showVideoProgressIndicator: true,
+                  ),
+                ),
+              ));
+            },
         child: Container(
             padding: const EdgeInsets.symmetric(vertical: 3),
             child: Stack(
               alignment: Alignment.center,
               children: [
                 SizedBox(
-                  width: double.infinity,
-                  child: CommonCachedNetworkImage(
-                    imagePath: thumbNailImg,
-                    height: widget.videoImgHeight,
-                    boxfit: BoxFit.fill,
+                  height: widget.videoImgHeight,
+                  child: YoutubePlayer(
+                    bottomActions: const [],
+                    topActions: const [],
+                    controller: _ycontroller,
+                    showVideoProgressIndicator: true,
                   ),
                 ),
+                // SizedBox(
+                //   width: double.infinity,
+                //   child: CommonCachedNetworkImage(
+                //     imagePath: thumbNailImg,
+                //     height: widget.videoImgHeight,
+                //     boxfit: BoxFit.cover,
+                //   ),
+                // ),
                 CircleAvatar(
                   backgroundColor: darkRedColor,
                   radius: 18,

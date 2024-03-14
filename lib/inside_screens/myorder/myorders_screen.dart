@@ -73,20 +73,27 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                           i < _dataController.orderReportData.length;
                           i++)
                         MyOrderItemWidget(
+                          showShippingHis:
+                              _dataController.orderReportData[i].lbillno == "0"
+                                  ? false
+                                  : true,
                           showOrderAgain: _dataController
-                                          .orderReportData[i].mallType ==
-                                      "Sales Mall" ||
-                                  _dataController.orderReportData[i].mallType ==
-                                      "Redemption Mall" ||
-                                  _dataController.orderReportData[i].mallType ==
-                                      "Upgrade Mall" ||
-                                  _dataController.orderReportData[i].mallType
-                                          .toLowerCase() ==
-                                      "dp mall" ||
-                                  _dataController.orderReportData[i].mallType ==
-                                      "Signup Mall" ||
-                                  _dataController.orderReportData[i].mallType ==
-                                      "Membership Mall"
+                                      .orderReportData[i].orderagain ==
+                                  "1"
+                              //  _dataController
+                              //                 .orderReportData[i].mallType ==
+                              //     "Sales Mall" ||
+                              // _dataController.orderReportData[i].mallType ==
+                              //     "Redemption Mall" ||
+                              // _dataController.orderReportData[i].mallType ==
+                              //     "Upgrade Mall" ||
+                              // _dataController.orderReportData[i].mallType
+                              //         .toLowerCase() ==
+                              //     "dp mall" ||
+                              // _dataController.orderReportData[i].mallType ==
+                              //     "Signup Mall" ||
+                              // _dataController.orderReportData[i].mallType ==
+                              //     "Membership Mall"
                               ? true
                               : false,
                           orderAgainFun: () {

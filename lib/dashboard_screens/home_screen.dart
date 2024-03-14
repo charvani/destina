@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../commons/constants.dart';
+import '../inside_screens/notifications_screen.dart';
 import '../inside_screens/productdetails_screen2.dart';
 import '../inside_screens/search/search_categoryscreen.dart';
 import '../inside_screens/services/upload_id_screen.dart';
@@ -278,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: [
               IconButton(
                   onPressed: () {
-                    CommonToast("Coming soon");
+                    Get.to(() => const NotificationScreen());
                   },
                   icon: Icon(
                     Icons.notifications_none,

@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 import '../authentication_screens/login_screen.dart';
 import '../commons/constants.dart';
 import '../controllers/main_controller.dart';
-import '../inside_screens/aboutus_screen.dart';
+import '../inside_screens/about/aboutselection_screen.dart';
 import '../inside_screens/contactus_screen.dart';
 import '../inside_screens/myaccount_screen.dart';
 import '../inside_screens/policy/policyselection_screen.dart';
@@ -360,7 +360,9 @@ class _AccountScreenState extends State<AccountScreen>
               AboutUsScreenWidget(
                 leadingIcon: Icons.info_outline_rounded,
                 onTapFun: () {
-                  Get.to(() => const AboutUsScreen());
+                  Get.to(() =>
+                   
+                      const AboutSelectionScreen());
                 },
                 title: "About Us",
               ),

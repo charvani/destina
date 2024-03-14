@@ -839,11 +839,13 @@ class MyOrderItemWidget extends StatelessWidget {
   final String ordercode;
   final bool loading;
   final bool showOrderAgain;
+  final bool showShippingHis;
 
   const MyOrderItemWidget(
       {super.key,
       required this.loading,
       required this.showOrderAgain,
+      required this.showShippingHis,
       required this.orderAgainFun,
       required this.shippingFun,
       required this.itemName,
@@ -893,6 +895,7 @@ class MyOrderItemWidget extends StatelessWidget {
                                 onTapFun: orderAgainFun, title: "Order Again"),
                           ),
                         const SpaceHeightWidget(height: 15),
+                        if(showShippingHis)
                         SizedBox(
                             height: 25,
                             // width: 120,
@@ -2250,9 +2253,14 @@ class PrivilegeBanner extends StatelessWidget {
 class CustomBulletTextWidget extends StatelessWidget {
   final String data;
   final double? verticalPadding;
+  final double? fontSize;
   final Color? textColor;
   const CustomBulletTextWidget(
-      {super.key, required this.data, this.textColor, this.verticalPadding});
+      {super.key,
+      required this.data,
+      this.textColor,
+      this.verticalPadding,
+      this.fontSize});
 
   @override
   Widget build(BuildContext context) {
@@ -2274,11 +2282,60 @@ class CustomBulletTextWidget extends StatelessWidget {
           Flexible(
               child: Text(
             data,
-            textAlign: TextAlign.start,
+            textAlign: TextAlign.justify,
             style: TextStyle(
                 color: textColor ?? blackColor,
                 height: 1.5,
-                fontSize: 12,
+                fontSize: fontSize ?? 12,
+                fontFamily: "OnestRegular"),
+          ))
+        ],
+      ),
+    );
+  }
+}
+
+class CustomRoundBullet extends StatelessWidget {
+  final String data;
+  final double? verticalPadding;
+  final double? fontSize;
+  final Color? textColor;
+  const CustomRoundBullet(
+      {super.key,
+      required this.data,
+      this.textColor,
+      this.verticalPadding,
+      this.fontSize});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding:
+          EdgeInsets.symmetric(horizontal: 10, vertical: verticalPadding ?? 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Transform.translate(
+            offset: const Offset(0, 6),
+            child: CircleAvatar(
+              radius: 3,
+              backgroundColor: middleBlackColor,
+              child: CircleAvatar(
+                radius: 2,
+                backgroundColor: whiteColor,
+              ),
+            ),
+          ),
+          const SpaceWidthWidget(width: 10),
+          Flexible(
+              child: Text(
+            data,
+            textAlign: TextAlign.justify,
+            style: TextStyle(
+                color: textColor ?? blackColor,
+                height: 1.5,
+                fontSize: fontSize ?? 12,
                 fontFamily: "OnestRegular"),
           ))
         ],

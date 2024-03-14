@@ -41,10 +41,9 @@ class _SplashScreenState extends State<SplashScreen> {
   countyCodeFun() async {
     dynamic countyCodeRes = await MainController().getCountryCode();
     if (countyCodeRes != null) {
-      await Constants.prefs.setString(
-          "open_country",
-          // countyCodeRes['country']
-          "MY");
+      await Constants.prefs.setString("open_country", countyCodeRes['country']
+          // "MY"
+          );
       await Constants.prefs.setString("ip", countyCodeRes['ip']);
     }
   }
