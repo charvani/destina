@@ -895,15 +895,15 @@ class MyOrderItemWidget extends StatelessWidget {
                                 onTapFun: orderAgainFun, title: "Order Again"),
                           ),
                         const SpaceHeightWidget(height: 15),
-                        if(showShippingHis)
-                        SizedBox(
-                            height: 25,
-                            // width: 120,
-                            child: loading
-                                ? loader
-                                : CustomAutoWidthButton(
-                                    onTapFun: shippingFun,
-                                    title: "Shipping History"))
+                        if (showShippingHis)
+                          SizedBox(
+                              height: 25,
+                              // width: 120,
+                              child: loading
+                                  ? loader
+                                  : CustomAutoWidthButton(
+                                      onTapFun: shippingFun,
+                                      title: "Shipping History"))
                       ],
                     ),
                   )
@@ -2790,6 +2790,7 @@ class CartItemWidget extends StatelessWidget {
           CommonCachedNetworkImage(
             imagePath: imagePath,
             height: 90,
+            width: 100,
           ),
           const SpaceWidthWidget(width: 10),
           Expanded(

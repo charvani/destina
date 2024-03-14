@@ -13,7 +13,9 @@ import '../../service_call/api_data.dart';
 import '../checkout_screen.dart';
 
 class DPmallCartScreen extends StatefulWidget {
+  final String from;
   const DPmallCartScreen({
+    required this.from,
     super.key,
   });
 
@@ -478,8 +480,13 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                           height: 30,
                                           child: IconElevatedButton(
                                             onTapFun: () {
-                                              Get.back();
-                                              Get.back(result: [true]);
+                                              if (widget.from == "dp_mall") {
+                                                Get.back(result: [true]);
+                                              } else {
+                                                // Get.back();
+                                                Get.back(result: [true]);
+                                              }
+
                                               // checkingFun();
                                             },
                                             imagePath:

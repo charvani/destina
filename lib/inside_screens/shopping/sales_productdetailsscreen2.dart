@@ -277,7 +277,9 @@ class _SalesProductDetailsScreen2State
                                   });
                                   Timer(const Duration(seconds: 1), () {
                                     Get.back();
-                                    Get.to(() => const SalesmallCartScreen());
+                                    Get.to(() => const SalesmallCartScreen(
+                                          from: "sales_product",
+                                        ));
                                   });
                                 } else {
                                   setState(() {

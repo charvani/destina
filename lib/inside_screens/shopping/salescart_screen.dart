@@ -13,9 +13,8 @@ import '../../service_call/api_data.dart';
 import '../checkout_screen.dart';
 
 class SalesmallCartScreen extends StatefulWidget {
-  const SalesmallCartScreen({
-    super.key,
-  });
+  final String from;
+  const SalesmallCartScreen({super.key, required this.from});
 
   @override
   State<SalesmallCartScreen> createState() => _SalesmallCartScreenState();
@@ -473,8 +472,12 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                           height: 30,
                                           child: IconElevatedButton(
                                             onTapFun: () {
-                                              Get.back();
-                                              Get.back(result: [true]);
+                                              if (widget.from == "sales_mall") {
+                                                Get.back(result: [true]);
+                                              } else {
+                                                // Get.back();
+                                                Get.back(result: [true]);
+                                              }
                                             },
                                             imagePath:
                                                 'assets/images/arrow_right.png',

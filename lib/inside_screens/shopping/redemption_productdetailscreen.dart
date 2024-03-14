@@ -736,7 +736,10 @@ class _RedemptionProductDetailsScreenState
 
                                                     Get.back();
                                                     Get.to(() =>
-                                                        const RedemptionCartScreen());
+                                                        const RedemptionCartScreen(
+                                                          from:
+                                                              "product_details",
+                                                        ));
                                                   });
                                                 } else {
                                                   Timer(

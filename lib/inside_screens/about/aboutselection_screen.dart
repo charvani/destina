@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../aboutus_screen.dart';
+import 'brand_screen.dart';
 import 'd1global_selctionscreen.dart';
 import 'dvideos_screen.dart';
+import 'testimonial_screen.dart';
+import 'weburl_screen.dart';
 
 class AboutSelectionScreen extends StatefulWidget {
   const AboutSelectionScreen({super.key});
@@ -31,14 +34,17 @@ class _AboutSelectionScreenState extends State<AboutSelectionScreen> {
             AboutUsScreenWidget(
               leadingIcon: Icons.newspaper,
               onTapFun: () {
-                // Get.to(() => const TermsAndConditions());
+                Get.to(() => const WebUrlScreen(
+                      redirectUrl: "https://beta.destina1.com/MANews.html#/",
+                      from: "News",
+                    ));
               },
               title: "News",
             ),
             AboutUsScreenWidget(
               leadingIcon: Icons.chat_bubble_outline,
               onTapFun: () {
-                // Get.to(() => const ShippingPolicyScreen());
+                Get.to(() => const TestimonialScreen());
               },
               title: "Testimonials",
             ),
@@ -53,7 +59,7 @@ class _AboutSelectionScreenState extends State<AboutSelectionScreen> {
             AboutUsScreenWidget(
               leadingIcon: Icons.branding_watermark_outlined,
               onTapFun: () {
-                // Get.to(() => const CancellationPolicyScreen());
+                Get.to(() => const BrandSelectionScreen());
               },
               title: "Brands",
             ),

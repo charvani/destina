@@ -267,7 +267,10 @@ class _RedemptionProductDetailsScreen2State
                                   });
                                   Timer(const Duration(seconds: 1), () {
                                     Get.back();
-                                    Get.to(() => const RedemptionCartScreen());
+                                    Get.to(() => const RedemptionCartScreen(
+        from: "product_details",
+
+                                    ));
                                   });
                                 } else {
                                   setState(() {

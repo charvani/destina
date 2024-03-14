@@ -735,7 +735,9 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
 
                                                     Get.back();
                                                     Get.to(() =>
-                                                        const SalesmallCartScreen());
+                                                        const SalesmallCartScreen(
+                                                          from: "sales_product",
+                                                        ));
                                                   });
                                                 } else {
                                                   Timer(

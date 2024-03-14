@@ -23,6 +23,7 @@ import 'package:destina_1_international/models/retailbonus_model.dart';
 import 'package:destina_1_international/models/selpackage_model.dart';
 import 'package:destina_1_international/models/shipping_ordermodel.dart';
 import 'package:destina_1_international/models/special_leadershipmodel.dart';
+import 'package:destina_1_international/models/testimonial_model.dart';
 import 'package:destina_1_international/models/view_profile_model.dart';
 import 'package:destina_1_international/models/withdraw_statusmodel.dart';
 import 'package:destina_1_international/models/withdrawal_infomodel.dart';
@@ -79,6 +80,7 @@ class MainController extends GetxController {
   List<SelPackageModel> selPackageItemList = <SelPackageModel>[].obs;
   List<SelPackageModel> relPackageItemList = <SelPackageModel>[].obs;
   List<String> notificationData = <String>[].obs;
+  List<TestimonialModel> testimonialData = <TestimonialModel>[].obs;
   List<PackCartModel> packCartList = <PackCartModel>[].obs;
   Rx<double> cvVal = 0.0.obs;
   RxList<ProductCategoryItem> productItemList = <ProductCategoryItem>[].obs;
@@ -2171,6 +2173,42 @@ class MainController extends GetxController {
         Get.back();
       });
     }
+
+    if (from == "init") {
+      loading.value = false;
+    }
+    return res;
+  }
+
+  getMallCartItems(String from, Map parameters, String apiName) async {
+    print("in cont...$from");
+    if (from == "init") {
+      loading.value = true;
+    }
+
+    dynamic res = await ApiCall()
+        .saleMallPostMethodFun(methodName: apiName, params: parameters);
+    salesMallCartItems.clear();
+    salesMallTAmount.value = 0.0;
+    print("cart_itmes...${salesMallCartItems.length}");
+    if (res != null) {
+      if (res['SalesPackgeRpt'].length > 0 &&
+          res['SalesPackgeRpt'].toString() != "[]") {
+        for (int i = 0; i < res['SalesPackgeRpt'].length; i++) {
+          salesMallCartItems
+              .add(SalesMallCartItemModel.fromJson(res['SalesPackgeRpt'][i]));
+          salesMallTAmount.value = salesMallTAmount.value +
+              (double.parse(res['SalesPackgeRpt'][i]['mrp']) *
+                  double.parse(res['SalesPackgeRpt'][i]['qty']));
+        }
+      }
+    }
+    // else {
+    //   Timer(const Duration(seconds: 1), () {
+    //     Get.back();
+    //   });
+    // }
+
     if (from == "init") {
       loading.value = false;
     }
@@ -2306,7 +2344,6 @@ class MainController extends GetxController {
     dpMallRMAmount.value = 0.0;
     salesMallCartItems.clear();
 
-    print("cart_itmes...${salesMallCartItems.length}");
     if (res != null) {
       if (res['DPPackageRpt'].length > 0 &&
           res['DPPackageRpt'].toString() != "[]") {
@@ -2335,9 +2372,59 @@ class MainController extends GetxController {
         }
       }
     } else {
-      Get.back();
-      Get.back();
+      Timer(const Duration(seconds: 1), () {
+        Get.back();
+      });
     }
+    print("cart_itmes...${salesMallCartItems.length}");
+
+    if (from == "init") {
+      loading.value = false;
+    }
+    return res;
+  }
+
+  getDpMallLoadCartItems(String from, Map parameters) async {
+    if (from == "init") {
+      loading.value = true;
+    }
+
+    dynamic res = await ApiCall().saleMallPostMethodFun(
+        methodName: ApiData().getdppackages, params: parameters);
+    dpMallDPAmount.value = 0.0;
+    dpMallRMAmount.value = 0.0;
+    salesMallCartItems.clear();
+
+    if (res != null) {
+      if (res['DPPackageRpt'].length > 0 &&
+          res['DPPackageRpt'].toString() != "[]") {
+        for (int i = 0; i < res['DPPackageRpt'].length; i++) {
+          salesMallCartItems
+              .add(SalesMallCartItemModel.fromJson(res['DPPackageRpt'][i]));
+
+          final endIndex = res['DPPackageRpt'][i]['mrp'].indexOf("DP", 0);
+          print(
+              "dp val..${res['DPPackageRpt'][i]['mrp'].substring(0, endIndex)}");
+          String dpval = res['DPPackageRpt'][i]['mrp'].substring(0, endIndex);
+
+          print(
+              "rm val ...${res['DPPackageRpt'][i]['mrp'].substring(res['DPPackageRpt'][i]['mrp'].indexOf("RM"), res['DPPackageRpt'][i]['mrp'].length - 1).replaceAll("RM", "")}");
+          String rmval = res['DPPackageRpt'][i]['mrp']
+              .substring(res['DPPackageRpt'][i]['mrp'].indexOf("RM"),
+                  res['DPPackageRpt'][i]['mrp'].length - 1)
+              .replaceAll("RM", "");
+          dpMallDPAmount.value = dpMallDPAmount.value +
+              (double.parse(dpval) *
+                  double.parse(res['DPPackageRpt'][i]['qty']));
+
+          dpMallRMAmount.value = dpMallRMAmount.value +
+              (double.parse(rmval) *
+                  double.parse(res['DPPackageRpt'][i]['qty']));
+        }
+      }
+    }
+    print("cart_itmes...${salesMallCartItems.length}");
+
     if (from == "init") {
       loading.value = false;
     }
@@ -2682,5 +2769,22 @@ class MainController extends GetxController {
 
     loading.value = false;
     return res;
+  }
+
+  getTestimonials(Map params) async {
+    loading.value = true;
+    testimonialData.clear();
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().getTestimonials, params: params);
+    if (res != null) {
+      print("res...$res");
+      if (res['Message'] == "SUCCESS") {
+        for (int i = 0; i < res['TestimonialsRpt'].length; i++) {
+          testimonialData
+              .add(TestimonialModel.fromJson(res["TestimonialsRpt"][i]));
+        }
+      }
+    }
+    loading.value = false;
   }
 }

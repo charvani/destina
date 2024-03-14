@@ -13,9 +13,9 @@ import '../../service_call/api_data.dart';
 import '../checkout_screen.dart';
 
 class RedemptionCartScreen extends StatefulWidget {
-  const RedemptionCartScreen({
-    super.key,
-  });
+  final String from;
+
+  const RedemptionCartScreen({super.key, required this.from});
 
   @override
   State<RedemptionCartScreen> createState() => _RedemptionCartScreenState();
@@ -455,8 +455,13 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                           height: 30,
                                           child: IconElevatedButton(
                                             onTapFun: () {
-                                              Get.back();
-                                              Get.back(result: [true]);
+                                              if (widget.from ==
+                                                  "redemption_mall") {
+                                                Get.back(result: [true]);
+                                              } else {
+                                                // Get.back();
+                                                Get.back(result: [true]);
+                                              }
                                             },
                                             imagePath:
                                                 'assets/images/arrow_right.png',

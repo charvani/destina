@@ -277,7 +277,10 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
                                     "success") {
                                   Timer(const Duration(seconds: 1), () {
                                     Get.back();
-                                    Get.to(() => const DPmallCartScreen());
+                                    Get.to(() => const DPmallCartScreen(
+                                        from: "dp_product",
+
+                                    ));
                                   });
                                 }
 

@@ -244,7 +244,11 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                                   print("res...$res");
                                   if (res['Msg'] == "SUCCESS") {
                                     Timer(const Duration(seconds: 1), () {
-                                      Get.to(() => const DPmallCartScreen());
+                                      Get.back();
+
+                                      Get.to(() => const DPmallCartScreen(
+                                            from: "dp_product",
+                                          ));
                                     });
                                   } else {
                                     CommonToast(res['Message']);

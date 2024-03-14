@@ -101,11 +101,19 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                 "Mall  ${_dataController.orderReportData[i].mallType}");
                             if (_dataController.orderReportData[i].mallType ==
                                 "Sales Mall") {
-                              Get.to(() => const SalesMallScreen2());
+                              Get.to(() => SalesMallScreen2(
+                                    from: "order_again",
+                                    billno: _dataController
+                                        .orderReportData[i].orderNo,
+                                  ));
                             } else if (_dataController
                                     .orderReportData[i].mallType ==
                                 "Redemption Mall") {
-                              Get.to(() => const RedemptionMallScreen2());
+                              Get.to(() => RedemptionMallScreen2(
+                                    from: "order_again",
+                                    billno: _dataController
+                                        .orderReportData[i].orderNo,
+                                  ));
                             } else if (_dataController
                                     .orderReportData[i].mallType ==
                                 "Upgrade Mall") {
@@ -114,7 +122,11 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                     .orderReportData[i].mallType
                                     .toLowerCase() ==
                                 "dp mall") {
-                              Get.to(() => const DPMallScreen());
+                              Get.to(() => DPMallScreen(
+                                    from: "order_again",
+                                    billno: _dataController
+                                        .orderReportData[i].orderNo,
+                                  ));
                             } else if (_dataController
                                     .orderReportData[i].mallType ==
                                 "Signup Mall") {

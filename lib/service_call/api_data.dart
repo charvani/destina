@@ -140,4 +140,5 @@ class ApiData {
   String uploadReview = "WriteNReview";
   String getReviewsdata = "GetReviewsdata";
   String addHelpful = "AddHelpful";
+  String getTestimonials = "GetTestimonials";
 }
