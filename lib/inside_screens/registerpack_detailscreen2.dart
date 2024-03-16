@@ -329,7 +329,7 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                             currentIndex: carouselIndex,
                           ),
                         const SpaceHeightWidget(height: 30),
-                        // if (widget.fromPack == "Kritalia")
+                        // if (widget.fromPack == "Kritalia & Co")
                         //   Padding(
                         //     padding: const EdgeInsets.only(left: 10, right: 10),
                         //     child: Row(
@@ -368,7 +368,7 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                         ),
                         const PdfWidget(),
 
-                        if (widget.fromPack == "Kritalia")
+                        if (widget.fromPack == "Kritalia & Co")
                           kritaliaWidget(packDetailsController
                               .packageDetailsData.value.pkname),
 

@@ -268,9 +268,8 @@ class _RedemptionProductDetailsScreen2State
                                   Timer(const Duration(seconds: 1), () {
                                     Get.back();
                                     Get.to(() => const RedemptionCartScreen(
-        from: "product_details",
-
-                                    ));
+                                          from: "product_details",
+                                        ));
                                   });
                                 } else {
                                   setState(() {
@@ -358,7 +357,7 @@ class _RedemptionProductDetailsScreen2State
                               .packageDetailsData.value.pkname,
                         ),
                         const PdfWidget(),
-                        if (widget.fromPack == "Kritalia")
+                        if (widget.fromPack == "Kritalia & Co")
                           kritaliaWidget(packDetailsController
                               .packageDetailsData.value.pkname),
                         const SpaceHeightWidget(height: 15),

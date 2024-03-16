@@ -278,9 +278,8 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
                                   Timer(const Duration(seconds: 1), () {
                                     Get.back();
                                     Get.to(() => const DPmallCartScreen(
-                                        from: "dp_product",
-
-                                    ));
+                                          from: "dp_product",
+                                        ));
                                   });
                                 }
 
@@ -336,7 +335,7 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
                               .packageDetailsData.value.pkname,
                         ),
                         const PdfWidget(),
-                        if (widget.fromPack == "Kritalia")
+                        if (widget.fromPack == "Kritalia & Co")
                           kritaliaWidget(packDetailsController
                               .packageDetailsData.value.pkname),
                         const SpaceHeightWidget(height: 15),
@@ -398,7 +397,6 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
                             ],
                           ),
                         ratingReviewWidget(),
-
                         const SpaceHeightWidget(height: 115),
                       ]),
                 );
@@ -406,6 +404,7 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
       ),
     );
   }
+
   dynamic gval = "";
   Widget ratingReviewWidget() {
     return ExpansionTile(

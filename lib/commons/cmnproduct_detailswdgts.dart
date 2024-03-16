@@ -1310,7 +1310,11 @@ kritaliaWidget(String itemName) {
         CommonTitle(
           titleName: itemName == "Kritalia`s Essence of Love"
               ? "An exquisite collection of heart-themed jewelry that perfectly blends elegance and affection. Featured prominently is a captivating large heart pendant, its silhouette outlined with a multitude of meticulously set, dazzling round-cut diamonds that exude an irresistible sparkle"
-              : "This elegant bracelet is a modern twist on the classic charm, offering a sleek and sophisticated design. The highlight of this bracelet is the charming heart-shaped pendant with a smooth enamel finish in a striking shade of turquoise. This pop of color adds a playful yet chic element to the bracelet, making it a standout accessory that will capture attention.",
+              : itemName == "Emerald Verdant Crystal"
+                  ? "Discover elegance with this exquisite jewelry set, featuring vibrant green teardrop gemstones encircled by dazzling crystals, all set in lustrous silver—a luxurious addition to any ensemble."
+                  : itemName == "The Scarlet Crimson"
+                      ? "Unleash the power of timeless elegance with this captivating jewelry set. Radiant red gemstones command attention, set in an intricate dance with glittering crystals, echoing the splendor of a royal treasure. Silver settings enhance the fiery hues, crafting a statement of passion and grandeur. This set is not just an accessory; it's a centerpiece designed to turn heads and elevate any occasion to a celebration of exquisite taste."
+                      : "This elegant bracelet is a modern twist on the classic charm, offering a sleek and sophisticated design. The highlight of this bracelet is the charming heart-shaped pendant with a smooth enamel finish in a striking shade of turquoise. This pop of color adds a playful yet chic element to the bracelet, making it a standout accessory that will capture attention.",
           fontColor: middleBlackColor,
           size: 12,
           fontFamily: "OnestRegular",
@@ -1349,7 +1353,7 @@ List<String> productCtgs = [
   "Health Care",
   // "Hair Care",
   // "Skin Care",
-  "Kritalia"
+  "Kritalia & Co"
 ];
 
 class ProductCatScrollWidget extends StatelessWidget {

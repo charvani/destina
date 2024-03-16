@@ -32,7 +32,8 @@ List<OnboardModel> productsCategories = [
   OnboardModel(image: "assets/images/health_care.png", title: "Health Care"),
   // OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
   // OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
-  OnboardModel(image: "assets/images/a_start_privilege.png", title: "kritalia"),
+  OnboardModel(
+      image: "assets/images/a_start_privilege.png", title: "Kritalia & Co"),
 ];
 List<OnboardModel> promotionItems = [
   OnboardModel(

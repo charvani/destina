@@ -112,7 +112,8 @@ class _DPMallScreen2State extends State<DPMallScreen2> {
                                       crossAxisCount: 2,
                                       childAspectRatio: 1 / 1.2),
                               itemBuilder: (context, i) {
-                                return productCtgs[selectedInd] == "Kritalia"
+                                return productCtgs[selectedInd] ==
+                                        "Kritalia & Co"
                                     ? KritaliaItemWidget(
                                         tapped: krialiaTappedInd == i
                                             ? true

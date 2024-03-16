@@ -5,7 +5,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:destina_1_international/authentication_screens/countryselect_screen.dart';
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
-import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -360,9 +359,7 @@ class _AccountScreenState extends State<AccountScreen>
               AboutUsScreenWidget(
                 leadingIcon: Icons.info_outline_rounded,
                 onTapFun: () {
-                  Get.to(() =>
-                   
-                      const AboutSelectionScreen());
+                  Get.to(() => const AboutSelectionScreen());
                 },
                 title: "About Us",
               ),
@@ -386,7 +383,7 @@ class _AccountScreenState extends State<AccountScreen>
                   return _logoutController.loading.value
                       ? SizedBox(height: 45, child: loader)
                       : AboutUsScreenWidget(
-                          leadingIcon: FeatherIcons.logOut,
+                          leadingIcon: Icons.logout_rounded,
                           onTapFun: () async {
                             Map bdata = {
                               "UserId": Constants.prefs.getString("user_id"),

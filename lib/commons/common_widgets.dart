@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:destina_1_international/authentication_screens/countryselect_screen.dart';
 import 'package:destina_1_international/commons/colors.dart';
-import 'package:feather_icons/feather_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart'
@@ -1039,7 +1038,7 @@ class SearchWidget extends StatelessWidget {
           child: Row(children: [
             const SpaceWidthWidget(width: 10),
             Icon(
-              FeatherIcons.search,
+              Icons.search_rounded,
               size: 18,
               color: blackColor.withOpacity(0.3),
             ),
@@ -3028,7 +3027,7 @@ class CheckOutItemWidget extends StatelessWidget {
                         behavior: HitTestBehavior.translucent,
                         onTap: () {},
                         child: Icon(
-                          FeatherIcons.trash2,
+                          Icons.delete_forever_outlined,
                           size: 16,
                           color: blackColor.withOpacity(0.7),
                         ))

@@ -25,7 +25,8 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
     // OnboardModel(image: "assets/images/sop_wb.png", title: "Skin Care"),
     // OnboardModel(image: "assets/images/body_care_wb.png", title: "Hair Care"),
     OnboardModel(
-        image: "assets/images/a_start_privilege_wb.png", title: "Kritalia"),
+        image: "assets/images/a_start_privilege_wb.png",
+        title: "Kritalia & Co"),
   ];
   final TextEditingController _seachTextController = TextEditingController();
   final MainController _productController = Get.put(MainController());
@@ -170,7 +171,7 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
                       itemBuilder: (context, i) {
                         return _productController
                                     .searchProductItemList[i].category ==
-                                "Kritalia"
+                                "Kritalia & Co"
                             ? KritaliaItemWidget(
                                 tapped: krialiaTappedInd == i ? true : false,
                                 amount:

@@ -24,14 +24,15 @@ List<OnboardModel> productsCategoriesOnTap = [
   OnboardModel(image: "assets/images/health_care.png", title: "Health Care"),
   // OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
   // OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
-  OnboardModel(image: "assets/images/a_start_privilege.png", title: "Kritalia"),
+  OnboardModel(
+      image: "assets/images/a_start_privilege.png", title: "Kritalia & Co"),
 ];
 List<OnboardModel> productsCategories = [
   OnboardModel(image: "assets/images/health_care_wb.png", title: "Health Care"),
   // OnboardModel(image: "assets/images/sop_wb.png", title: "Skin Care"),
   // OnboardModel(image: "assets/images/body_care_wb.png", title: "Hair Care"),
   OnboardModel(
-      image: "assets/images/a_start_privilege_wb.png", title: "Kritalia"),
+      image: "assets/images/a_start_privilege_wb.png", title: "Kritalia & Co"),
 ];
 List<String> topBannerImages = [
   "assets/images/products_baground.png",
@@ -58,7 +59,7 @@ class _ProductsScreen2State extends State<ProductsScreen2> {
             //     : widget.index == 2
             //         ? "Hair Care"
             //         :
-            "Kritalia");
+            "Kritalia & Co");
       } else {
         print("at else");
         dataFun("Health Care");

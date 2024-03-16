@@ -2,7 +2,7 @@ import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../aboutus_screen.dart';
+import 'aboutus_screen.dart';
 import 'brand_screen.dart';
 import 'd1global_selctionscreen.dart';
 import 'dvideos_screen.dart';
@@ -52,7 +52,10 @@ class _AboutSelectionScreenState extends State<AboutSelectionScreen> {
               leadingIcon: Icons.event,
               image: "assets/images/product-return.png",
               onTapFun: () {
-                // Get.to(() => const ReturnPolicyScreen());
+                Get.to(() => const WebUrlScreen(
+                      redirectUrl: "https://beta.destina1.com/MAEvents.html",
+                      from: "Events",
+                    ));
               },
               title: "Events",
             ),

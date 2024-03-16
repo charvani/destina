@@ -364,7 +364,7 @@ class _UpgradeProductDetailsScreen2State
                               .packageDetailsData.value.pkname,
                         ),
                         const PdfWidget(),
-                        if (widget.fromPack == "Kritalia")
+                        if (widget.fromPack == "Kritalia & Co")
                           kritaliaWidget(packDetailsController
                               .packageDetailsData.value.pkname),
                         const SpaceHeightWidget(height: 15),

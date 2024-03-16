@@ -78,17 +78,15 @@ class _DPMallScreenState extends State<DPMallScreen> {
     Map parameters = {
       "action": "addBYDPCartitems",
       "Pkid": "0",
-      "pid": "0",
-      "uniqid": uniqId,
+      "Country": Constants.prefs.getString("country_id"),
+      "Uniqid": uniqId,
       "sessid": sessionId,
       "ipaddress": widget.billno,
       "sprno": Constants.prefs.getString("reg_id"),
-      "prdtype": "Package",
-      "qty": "0",
-      "country": Constants.prefs.getString("country_id"),
+      "Quantity": "0"
     };
     print("add to cart params...$parameters");
-    dynamic res = await MainController().getDPMallAddToCart(parameters);
+    dynamic res = await MainController().getRegPackAddToCart(parameters);
     if (res['Msg'].toString().toLowerCase() == "success") {
       cartItemsFun();
     }

@@ -43,6 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (countyCodeRes != null) {
       await Constants.prefs.setString("open_country", countyCodeRes['country']
           // "MY"
+
           );
       await Constants.prefs.setString("ip", countyCodeRes['ip']);
     }
@@ -129,6 +130,10 @@ class _SplashScreenState extends State<SplashScreen> {
     onboard = Constants.prefs.getBool("onboard") ?? false;
     login = Constants.prefs.getString("user_id") ?? "false";
     versionCheckFun();
+    // countyCodeFun();
+    // Timer(const Duration(seconds: 3), () {
+    //   navgationFun();
+    // });
   }
 
   @override

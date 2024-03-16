@@ -41,7 +41,7 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
     // OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
     // OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
     OnboardModel(
-        image: "assets/images/a_start_privilege.png", title: "Kritalia"),
+        image: "assets/images/a_start_privilege.png", title: "Kritalia & Co"),
   ];
   List<OnboardModel> productsCategories = [
     OnboardModel(
@@ -49,7 +49,8 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
     // OnboardModel(image: "assets/images/sop_wb.png", title: "Skin Care"),
     // OnboardModel(image: "assets/images/body_care_wb.png", title: "Hair Care"),
     OnboardModel(
-        image: "assets/images/a_start_privilege_wb.png", title: "Kritalia"),
+        image: "assets/images/a_start_privilege_wb.png",
+        title: "Kritalia & Co"),
   ];
   List<String> topBannerImages = [
     "assets/images/products_baground.png",

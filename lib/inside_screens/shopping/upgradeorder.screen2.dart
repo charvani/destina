@@ -210,7 +210,8 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
                                       crossAxisCount: 2,
                                       childAspectRatio: 1 / 1.2),
                               itemBuilder: (context, i) {
-                                return productCtgs[selectedInd] == "Kritalia"
+                                return productCtgs[selectedInd] ==
+                                        "Kritalia & Co"
                                     ? KritaliaItemWidget(
                                         tapped: krialiaTappedInd == i
                                             ? true

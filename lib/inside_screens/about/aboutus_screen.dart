@@ -17,7 +17,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
         body: SingleChildScrollView(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Image.asset("assets/images/about-banner.png"),
+            // Image.asset("assets/images/about-banner.png"),
             const SpaceHeightWidget(height: 5),
             Padding(
               padding: const EdgeInsets.all(8.0),

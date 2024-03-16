@@ -393,7 +393,7 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                             currentIndex: carouselIndex,
                           ),
                         const SpaceHeightWidget(height: 30),
-                        // if (widget.fromPack == "Kritalia")
+                        // if (widget.fromPack == "Kritalia & Co")
                         //   Padding(
                         //     padding: const EdgeInsets.only(left: 10, right: 10),
                         //     child: Row(
@@ -437,7 +437,7 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                         const PdfWidget(),
 
                         const SpaceHeightWidget(height: 5),
-                        if (widget.fromPack == "Kritalia")
+                        if (widget.fromPack == "Kritalia & Co")
                           kritaliaWidget(packDetailsController
                               .packageDetailsData.value.pkname),
 
