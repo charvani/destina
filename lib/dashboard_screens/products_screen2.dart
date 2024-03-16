@@ -200,7 +200,7 @@ class _ProductsScreen2State extends State<ProductsScreen2> {
                                             return productsCategories[
                                                             selectedCategoryIndex]
                                                         .title ==
-                                                    "Kriatalia"
+                                                    "Kritalia & Co"
                                                 ? KritaliaItemWidget(
                                                     tapped:
                                                         krialiaTappedInd == i
@@ -233,10 +233,10 @@ class _ProductsScreen2State extends State<ProductsScreen2> {
                                                       });
                                                     },
                                                     imagePath:
-                                                        // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                                        productController
-                                                            .productItemList[i]
-                                                            .image,
+                                                        "https://admin.destina1.com/admin/RetailImages/20151.jpg",
+                                                    // productController
+                                                    //     .productItemList[i]
+                                                    //     .image,
                                                     titile: productController
                                                         .productItemList[i]
                                                         .packageName)

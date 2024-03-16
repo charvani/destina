@@ -439,7 +439,7 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                         const SpaceHeightWidget(height: 5),
                         if (widget.fromPack == "Kritalia & Co")
                           kritaliaWidget(packDetailsController
-                              .packageDetailsData.value.pkname),
+                              .packageDetailsData.value.desc),
 
                         if (packDetailsController
                                     .packageDetailsData.value.pkname ==

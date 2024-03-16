@@ -101,7 +101,7 @@ class _SearchItemsScreenState extends State<SearchItemsScreen> {
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2, childAspectRatio: 1 / 1.1),
                     itemBuilder: (context, i) {
-                      return widget.categoryString == "Kriatalia"
+                      return widget.categoryString == "Kritalia & Co"
                           ? KritaliaItemWidget(
                               tapped: krialiaTappedInd == i ? true : false,
                               amount:

@@ -297,7 +297,10 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
                                               crossAxisCount: 2,
                                               childAspectRatio: 1 / 1.45),
                                       itemBuilder: (context, i) {
-                                        return selectedCategoryIndex == 3
+                                        return productsCategories[
+                                                        selectedCategoryIndex]
+                                                    .title ==
+                                                "Kritalia & Co"
                                             ? KritaliaItemWidget(
                                                 tapped: krialiaTappedInd == i
                                                     ? true
@@ -338,10 +341,10 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
                                                   });
                                                 },
                                                 imagePath:
-                                                    // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                                    packageController
-                                                        .selPackageItemList[i]
-                                                        .pImage,
+                                                    "https://admin.destina1.com/admin/RetailImages/20151.jpg",
+                                                // packageController
+                                                //     .selPackageItemList[i]
+                                                //     .pImage,
                                                 titile: packageController
                                                     .selPackageItemList[i]
                                                     .pkname)

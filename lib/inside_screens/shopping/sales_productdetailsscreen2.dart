@@ -365,7 +365,7 @@ class _SalesProductDetailsScreen2State
                         const PdfWidget(),
                         if (widget.fromPack == "Kritalia & Co")
                           kritaliaWidget(packDetailsController
-                              .packageDetailsData.value.pkname),
+                              .packageDetailsData.value.desc),
                         const SpaceHeightWidget(height: 15),
                         if (packDetailsController
                                     .packageDetailsData.value.pkname ==

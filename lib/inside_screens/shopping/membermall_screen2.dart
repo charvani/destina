@@ -267,9 +267,9 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
                                     });
                                   },
                                   imagePath:
-                                      // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                      _dataController
-                                          .selPackageItemList[i].pImage,
+                                      "https://admin.destina1.com/admin/RetailImages/20151.jpg",
+                                  // _dataController
+                                  //     .selPackageItemList[i].pImage,
                                   titile: _dataController
                                       .selPackageItemList[i].pkname)
                               : CategroyItemWidget(
