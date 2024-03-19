@@ -5,6 +5,7 @@ import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -26,6 +27,7 @@ class DashBoardScreen extends StatefulWidget {
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
   final MainController _dashboardController = Get.put(MainController());
+  final TextEditingController refferalLinkTController = TextEditingController();
 
   List<String> downlineList = ["Left", "Right"];
   int downlistSelectedInd = 0;
@@ -55,11 +57,16 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   String? promhourVal;
   String? promminVal;
   String? promsecVal;
+  dynamic userId;
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      userId = Constants.prefs.getString("user_id");
+
       dataFun();
+      refferalLinkTController.text =
+          "https://beta.destina1.com/GetSponsor.html?sponsor=${userId.toString().toUpperCase()}";
 
       // print("da....${widget.data}");
       // if (widget.bannerPopUpImages!.isNotEmpty) {
@@ -249,7 +256,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   dataFun() async {
     Map bdata = {
-      "UserId": Constants.prefs.getString("user_id"),
+      "UserId": userId,
       "Pwd": Constants.prefs.getString("password"),
     };
     dynamic res = await _dashboardController.getDashboard(bdata);
@@ -711,7 +718,48 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                                       "Personal Details"
                                                   ? personalWidget()
                                                   : const SizedBox.shrink()),
-                  const SpaceHeightWidget(height: 150)
+                  const SpaceHeightWidget(height: 10),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        CommonTitle(
+                          titleName: "Referral Link",
+                          size: 14,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: AccountTextField(
+                      readOnly: true,
+                      backgroundColor: lightDarKBlue.withOpacity(0.1),
+                      onchangeFun: (val) {},
+                      outsideFun: (val) async {},
+                      textInputType: TextInputType.name,
+                      hintText: "",
+                      controller: refferalLinkTController,
+                      validation: (val) {
+                        return null;
+
+                        // return null;
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: CustomAutoWidthButton(
+                        onTapFun: () async {
+                          await Clipboard.setData(ClipboardData(
+                              text: refferalLinkTController.text));
+                          CommonToastTrue(
+                              "Copied the text: ${refferalLinkTController.text}");
+                        },
+                        title: "Copy Referral Link"),
+                  ),
+                  const SpaceHeightWidget(height: 150),
                 ]),
               );
       }),
@@ -786,7 +834,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   )
                 ],
               ),
-            )
+            ),
         ],
       ),
     );
