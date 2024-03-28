@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:destina_1_international/authentication_screens/countryselect_screen.dart';
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:flutter/material.dart';
@@ -207,7 +206,7 @@ class _AccountScreenState extends State<AccountScreen>
               GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
-                  Get.to(() => const CountySelectScreen());
+                  Get.to(() => const LoginScreen());
                 },
                 child: Stack(
                   // alignment: Alignment.topRight,
@@ -233,7 +232,7 @@ class _AccountScreenState extends State<AccountScreen>
                       ),
                     ),
                     Positioned(
-                        top: 40,
+                        top: 15,
                         // bottom: 5,
                         left: 20,
                         child: Row(
@@ -242,49 +241,59 @@ class _AccountScreenState extends State<AccountScreen>
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Join Destina 1 family",
-                                  style: TextStyle(
-                                      fontFamily: "OnestRegular",
-                                      fontSize: 12,
-                                      color: whiteColor),
+                                Column(
+                                  children: [
+                                    const SpaceHeightWidget(height: 16),
+                                    AnimatedBuilder(
+                                        animation: _animation,
+                                        builder: (context, child) {
+                                          return Text(
+                                            'Join Destina 1 family',
+                                            style: TextStyle(
+                                                fontSize: _animation.value,
+                                                color: lightYellow),
+                                          );
+                                        }),
+                                  ],
                                 ),
-                                Text(
-                                  "Starting at only",
-                                  style: TextStyle(
-                                      fontFamily: "OnestSemiBold",
-                                      fontSize: 14,
-                                      color: whiteColor),
-                                ),
-                                const SpaceHeightWidget(height: 10),
-                                if (Constants.prefs.getString("user_id") ==
-                                        null ||
-                                    Constants.prefs.getString("user_id") ==
-                                        "false")
-                                  CustomFixedElevatedButton(
-                                    onTapFun: () {
-                                      Get.to(() => const LoginScreen());
-                                    },
-                                    title: "Sign Up / Sign in",
-                                  ),
+                                // Text(
+                                //   "Join Destina 1 family",
+                                //   style: TextStyle(
+                                //       fontFamily: "OnestRegular",
+                                //       fontSize: 12,
+                                //       color: whiteColor),
+                                // ),
+                                // Text(
+                                //   "Starting at only",
+                                //   style: TextStyle(
+                                //       fontFamily: "OnestSemiBold",
+                                //       fontSize: 14,
+                                //       color: whiteColor),
+                                // ),
                               ],
                             ),
                             // const SpaceWidthWidget(width: 5),
-                            Column(
-                              children: [
-                                const SpaceHeightWidget(height: 16),
-                                AnimatedBuilder(
-                                    animation: _animation,
-                                    builder: (context, child) {
-                                      return Text(
-                                        'RM 100',
-                                        style: TextStyle(
-                                            fontSize: _animation.value,
-                                            color: lightYellow),
-                                      );
-                                    }),
-                              ],
+                          ],
+                        )),
+                    Positioned(
+                        bottom: 20,
+                        child: Column(
+                          children: [
+                            const SpaceHeightWidget(
+                              height: 10,
                             ),
+                            if (Constants.prefs.getString("user_id") == null ||
+                                Constants.prefs.getString("user_id") == "false")
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(bottom: 10, left: 25),
+                                child: CustomFixedElevatedButton(
+                                  onTapFun: () {
+                                    Get.to(() => const LoginScreen());
+                                  },
+                                  title: "Sign Up / Sign in",
+                                ),
+                              ),
                           ],
                         ))
                   ],
@@ -296,7 +305,7 @@ class _AccountScreenState extends State<AccountScreen>
                 margin: const EdgeInsets.all(10),
 
                 child: Text(
-                  "Destina 1 member promotions",
+                  "Destina 1 member premier picks",
                   style: TextStyle(
                       fontFamily: "OnestBold", fontSize: 13, color: blackColor),
                 ),

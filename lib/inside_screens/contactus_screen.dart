@@ -23,8 +23,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              commonContactWidget(
-                  "Destina1 International World HQ", "(989308-X) (AJL 932060)"),
+              commonContactWidget("Destina 1 International World HQ",
+                  "(989308-X) (AJL 932060)"),
               const SpaceHeightWidget(height: 15),
               commonContactWidget(
                   "D1 Global International - Support Centre", ""),

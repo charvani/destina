@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       },
       child: GetMaterialApp(
         initialBinding: NetworkBinding(),
-        title: 'Destina1 International',
+        title: 'Destina 1 International',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           iconTheme: IconThemeData(color: darkBlue),

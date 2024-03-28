@@ -490,8 +490,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           amount:
                               "\n${_dashboardController.dashboardData.value.prepaidECard}",
                           amountType: "RM",
-                          textColor: blackColor,
-                          backgroundColor: whiteColor,
+                          // textColor: blackColor,
+                          // backgroundColor: whiteColor,
                         ),
                       ),
                       if (Constants.prefs.getString("user_type") !=
@@ -505,8 +505,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             amount: _dashboardController
                                 .dashboardData.value.redmptionEMny,
                             amountType: "RP",
-                            textColor: blackColor,
-                            backgroundColor: whiteColor,
+                            // textColor: blackColor,
+                            // backgroundColor: whiteColor,
                           ),
                         ),
                       if (Constants.prefs.getString("user_type") !=
@@ -520,8 +520,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             amount:
                                 _dashboardController.dashboardData.value.dpPts,
                             amountType: "",
-                            textColor: blackColor,
-                            backgroundColor: whiteColor,
+                            // textColor: blackColor,
+                            // backgroundColor: whiteColor,
                           ),
                         ),
                     ],

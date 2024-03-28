@@ -500,8 +500,8 @@ class _MemberScreenState extends State<MemberScreen> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
                                       ddcTap || pcTap
-                                          ? "I Want to shop Destina1 products and become a distributor later"
-                                          : "I want to start my Destina1 business now",
+                                          ? "I Want to shop Destina 1 products and become a distributor later"
+                                          : "I want to start my Destina 1 business now",
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                           fontFamily: "OnestBold",

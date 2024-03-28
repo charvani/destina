@@ -14,7 +14,7 @@ package="com.example.destina_1_international">
     <uses-permission  android:name="android.permission.BLUETOOTH"  />
 
     <application
-        android:label="Destina1 International"
+        android:label="Destina 1 International"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
         android:allowBackup="false">

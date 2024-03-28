@@ -154,7 +154,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                         : blackColor.withOpacity(0.8),
                     height: 24,
                   ),
-                  label: "Promotion"),
+                  label: "Premier Picks"),
               BottomNavigationBarItem(
                   icon: selectedIndex == 4
                       ? Image.asset(

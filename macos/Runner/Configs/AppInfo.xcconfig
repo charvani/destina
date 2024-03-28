@@ -5,7 +5,7 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = Destina1 International
+PRODUCT_NAME = Destina 1 International
 
 // The application's bundle identifier
 PRODUCT_BUNDLE_IDENTIFIER = com.destina1.international

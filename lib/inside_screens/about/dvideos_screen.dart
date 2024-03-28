@@ -34,7 +34,7 @@ class _D1VideosScreenState extends State<D1VideosScreen> {
           viTitle: "Global Recognition for Destina 1 International"),
       VideoList(
           viUrl: "https://www.youtube.com/watch?v=yzE0QPeom-U",
-          viTitle: "Welcome to Destina1 International Sdn Bhd"),
+          viTitle: "Welcome to Destina 1 International Sdn Bhd"),
       VideoList(
           viUrl: "https://www.youtube.com/watch?v=kSBBoN2_gnA",
           viTitle: "Philippines Business Tour & Leaders meeting"),

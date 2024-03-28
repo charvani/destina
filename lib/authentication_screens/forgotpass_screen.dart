@@ -32,7 +32,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 const SpaceHeightWidget(height: 25),
                 Image.asset(
                   "assets/images/logo_voucher.png",
-                  height: 80,
+                  // height: 80,
+                  width: 250,
                 ),
                 const SpaceHeightWidget(height: 15),
                 Container(

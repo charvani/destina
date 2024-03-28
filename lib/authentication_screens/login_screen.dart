@@ -327,7 +327,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     imagePath: 'assets/images/shopping_cart_img.jpg',
                     labelColor: whiteColor,
                     buttonColor: blackColor,
-                    titile: "Shopp Now",
+                    titile: "Shop Now",
                   ),
                 ),
               )

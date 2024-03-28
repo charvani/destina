@@ -1360,23 +1360,29 @@ class CommonTitle extends StatelessWidget {
   final double? size;
   final Color? fontColor;
   final TextAlign? textAlign;
+  final TextOverflow? textoverFlow;
+  final int? maxLines;
   const CommonTitle(
       {super.key,
       required this.titleName,
       this.fontFamily,
       this.textAlign,
       this.size,
-      this.fontColor});
+      this.fontColor,
+      this.maxLines,
+      this.textoverFlow});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       titleName,
       textAlign: textAlign ?? TextAlign.left,
+      maxLines: maxLines,
       style: TextStyle(
           fontFamily: fontFamily ?? "OnestSemiBold",
           fontSize: size ?? 18,
-          color: fontColor),
+          color: fontColor,
+          overflow: textoverFlow),
     );
   }
 }
@@ -1491,7 +1497,7 @@ class SeeNewAllProductsBanner extends StatelessWidget {
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(
-              "See all new product details.",
+              "See all product details.",
               style: TextStyle(
                   fontFamily: "OnestMedium",
                   fontSize: 12,
@@ -2431,16 +2437,12 @@ class ProductAmountDetailsWidget extends StatelessWidget {
             TextSpan(
               text: "Product Code: ",
               style: TextStyle(
-                  fontFamily: "OnestSemiBold",
-                  fontSize: 14,
-                  color: blackColor.withOpacity(0.4)),
+                  fontFamily: "OnestSemiBold", fontSize: 14, color: darkBlue),
             ),
             TextSpan(
               text: productCode,
               style: TextStyle(
-                  fontFamily: "OnestSemiBold",
-                  fontSize: 14,
-                  color: blackColor.withOpacity(0.4)),
+                  fontFamily: "OnestSemiBold", fontSize: 14, color: darkBlue),
             )
           ])),
           const SpaceHeightWidget(height: 10),
@@ -2450,16 +2452,12 @@ class ProductAmountDetailsWidget extends StatelessWidget {
               TextSpan(
                 text: "CV: ",
                 style: TextStyle(
-                    fontFamily: "OnestSemiBold",
-                    fontSize: 14,
-                    color: blackColor.withOpacity(0.4)),
+                    fontFamily: "OnestSemiBold", fontSize: 14, color: darkBlue),
               ),
               TextSpan(
                 text: cv,
                 style: TextStyle(
-                    fontFamily: "OnestSemiBold",
-                    fontSize: 14,
-                    color: blackColor.withOpacity(0.4)),
+                    fontFamily: "OnestSemiBold", fontSize: 14, color: darkBlue),
               )
             ])),
           // Row(
@@ -2486,9 +2484,7 @@ class ProductAmountDetailsWidget extends StatelessWidget {
               Text(
                 "Units: ",
                 style: TextStyle(
-                    fontFamily: "OnestSemiBold",
-                    fontSize: 14,
-                    color: blackColor.withOpacity(0.4)),
+                    fontFamily: "OnestSemiBold", fontSize: 14, color: darkBlue),
               ),
               const SpaceWidthWidget(width: 5),
               Text(
@@ -2496,9 +2492,7 @@ class ProductAmountDetailsWidget extends StatelessWidget {
                     ? "$units box"
                     : units,
                 style: TextStyle(
-                    fontFamily: "OnestSemiBold",
-                    fontSize: 14,
-                    color: blackColor.withOpacity(0.4)),
+                    fontFamily: "OnestSemiBold", fontSize: 14, color: darkBlue),
               ),
             ],
           ),
@@ -2513,7 +2507,7 @@ class ProductAmountDetailsWidget extends StatelessWidget {
                       style: TextStyle(
                           fontFamily: "OnestSemiBold",
                           fontSize: 14,
-                          color: blackColor.withOpacity(0.4)),
+                          color: darkBlue),
                     ),
                     const SpaceWidthWidget(width: 5),
                     Text(
@@ -5153,6 +5147,20 @@ class TimerWidget extends StatelessWidget {
   }
 }
 
+Widget smallMandalBullet() {
+  return Image.asset(
+    "assets/images/product_icon_mandal.png",
+    height: 15,
+  );
+}
+
+Widget smallleafBullet() {
+  return Image.asset(
+    "assets/images/leaf.png",
+    height: 20,
+  );
+}
+
 class UniwaveProductDetails extends StatelessWidget {
   final String dataText;
   const UniwaveProductDetails({super.key, required this.dataText});
@@ -5161,24 +5169,54 @@ class UniwaveProductDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          Image.asset(
-            "assets/images/leaf.png",
-            height: 30,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              smallMandalBullet(),
+              const SpaceWidthWidget(width: 3),
+              Expanded(
+                child: CommonTitle(
+                  titleName: dataText,
+                  size: 12.5,
+                  fontFamily: "OnestRegular",
+                ),
+              )
+            ],
           ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 6),
-              child: CommonTitle(
-                titleName: dataText,
-                size: 12.5,
-                fontFamily: "OnestRegular",
-              ),
-            ),
-          )
+          const SpaceHeightWidget(height: 2),
+        ],
+      ),
+    );
+  }
+}
+
+class ScalarviaProductDetails extends StatelessWidget {
+  final String dataText;
+  const ScalarviaProductDetails({super.key, required this.dataText});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              smallleafBullet(),
+              const SpaceWidthWidget(width: 3),
+              Expanded(
+                child: CommonTitle(
+                  titleName: dataText,
+                  size: 12.5,
+                  fontFamily: "OnestRegular",
+                ),
+              )
+            ],
+          ),
+          const SpaceHeightWidget(height: 2),
         ],
       ),
     );

@@ -56,7 +56,7 @@ class _PromotionsScreenState extends State<PromotionsScreen> {
           centerTitle: true,
           leading: const SizedBox.shrink(),
           title: Text(
-            "Promotion",
+            "Premier Picks",
             style: TextStyle(
                 fontFamily: "OnestSemiBold", fontSize: 20, color: whiteColor),
           ),
@@ -68,7 +68,7 @@ class _PromotionsScreenState extends State<PromotionsScreen> {
                   borderColor: whiteColor.withOpacity(0.1),
                   textColor: darkBlue,
                   onTapFun: () {},
-                  title: "Destina 1 International Promotion")),
+                  title: "Destina 1 International Premier Picks")),
         ),
         body: SingleChildScrollView(
           child: Column(

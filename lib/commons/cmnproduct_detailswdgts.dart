@@ -19,21 +19,26 @@ import 'colors.dart';
 import 'common_widgets.dart';
 import 'videodisplay_screen.dart';
 
+Widget productBulletImg() {
+  return Row(
+    children: [
+      const SpaceWidthWidget(width: 10),
+      Image.asset(
+        "assets/images/product_icon_mandal.png",
+        height: 45,
+      ),
+    ],
+  );
+}
+
 Widget pendentWidget() {
   return Column(
     children: [
       Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          productBulletImg(),
           Expanded(
-            flex: 1,
-            child: Image.asset(
-              "assets/images/leaf.png",
-              // height: 55,
-            ),
-          ),
-          Expanded(
-            flex: 7,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -180,12 +185,15 @@ Widget flaskWidget() {
       Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
-            "assets/images/leaf.png",
-            height: 55,
-          ),
+          productBulletImg(),
+          const SpaceWidthWidget(width: 5),
+
+          // Image.asset(
+          //   "assets/images/leaf.png",
+          //   height: 55,
+          // ),
           Padding(
-            padding: const EdgeInsets.only(top: 15),
+            padding: const EdgeInsets.only(top: 5),
             child: Column(
               children: [
                 CommonTitle(
@@ -635,7 +643,7 @@ Widget scalarviaWidget() {
       ),
       const SpaceHeightWidget(height: 8),
       for (int i = 0; i < scalarviaInfoData.length; i++)
-        UniwaveProductDetails(
+        ScalarviaProductDetails(
           dataText: scalarviaInfoData[i],
         ),
       const SpaceHeightWidget(height: 18),
@@ -646,7 +654,7 @@ Widget scalarviaWidget() {
       ),
       const SpaceHeightWidget(height: 10),
       for (int i = 0; i < scalarviaBenfitsData.length; i++)
-        UniwaveProductDetails(
+        ScalarviaProductDetails(
           dataText: scalarviaBenfitsData[i],
         ),
       const SpaceHeightWidget(height: 10),
@@ -754,7 +762,7 @@ Widget scalarviaWidget() {
       ),
       const SpaceHeightWidget(height: 8),
       for (int i = 0; i < 3; i++)
-        UniwaveProductDetails(
+        ScalarviaProductDetails(
           dataText: i == 0
               ? "Provide Optimum Energy for Healthy Lifestyle"
               : i == 1
@@ -796,11 +804,12 @@ Widget coffeeWidget() {
         Row(
           children: [
             Transform.translate(
-              offset: const Offset(20, -10),
-              child: Image.asset(
-                "assets/images/leaf.png",
-                height: 55,
-              ),
+              offset: const Offset(0, -10),
+              child: productBulletImg(),
+              // Image.asset(
+              //   "assets/images/leaf.png",
+              //   height: 55,
+              // ),
             ),
             Flexible(
               child: CommonTitle(
@@ -1000,10 +1009,12 @@ Widget biomatrixWidget() {
           children: [
             Transform.translate(
               offset: const Offset(10, -10),
-              child: Image.asset(
-                "assets/images/leaf.png",
-                height: 55,
-              ),
+              child: productBulletImg(),
+
+              //  Image.asset(
+              //   "assets/images/leaf.png",
+              //   height: 55,
+              // ),
             ),
             Flexible(
               child: CommonTitle(

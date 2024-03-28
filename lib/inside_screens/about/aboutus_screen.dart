@@ -26,13 +26,13 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                 children: [
                   const CommonTitle(
                       textAlign: TextAlign.justify,
-                      titleName: "DESTINA1 BUSINESS",
+                      titleName: "DESTINA 1 BUSINESS",
                       size: 15),
                   const SpaceHeightWidget(height: 3),
                   CommonTitle(
                     textAlign: TextAlign.justify,
                     titleName:
-                        "Destina1 is the world's fastest-growing direct-selling company. We manufacture and distribute health, beauty, hair and personal care products exclusively sold in over 80 countries through D1 Independent Representatives.",
+                        "Destina 1 is the world's fastest-growing direct-selling company. We manufacture and distribute health, beauty, hair and personal care products exclusively sold in over 80 countries through D1 Independent Representatives.",
                     size: 14,
                     fontFamily: "OnestRegular",
                     fontColor: middleBlackColor,
@@ -46,7 +46,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                   CommonTitle(
                     textAlign: TextAlign.justify,
                     titleName:
-                        "Destina1 holds more than 50 patents. In the past 12 years, we have invested \$10M in the region's new manufacturing and R&D facilities.",
+                        "Destina 1 holds more than 50 patents. In the past 12 years, we have invested \$10M in the region's new manufacturing and R&D facilities.",
                     size: 14,
                     fontFamily: "OnestRegular",
                     fontColor: middleBlackColor,
@@ -69,7 +69,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                   CommonTitle(
                     textAlign: TextAlign.justify,
                     titleName:
-                        "Destina 1 International adopted the Blue Ocean Strategy for its business growth. The company is successful & committed to building powerful networks. Destina1 creates opportunities globally for members through its DIRECT SELLING system and advanced technology. Its products result from comprehensive R&D in Uniwave Energy by Quantes Technology.",
+                        "Destina 1 International adopted the Blue Ocean Strategy for its business growth. The company is successful & committed to building powerful networks. Destina 1 creates opportunities globally for members through its DIRECT SELLING system and advanced technology. Its products result from comprehensive R&D in Uniwave Energy by Quantes Technology.",
                     size: 14,
                     fontFamily: "OnestRegular",
                     fontColor: middleBlackColor,

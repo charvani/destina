@@ -265,14 +265,14 @@ class _FTARegistrationFormScreenState extends State<FTARegistrationFormScreen> {
                       const SpaceHeightWidget(height: 10),
                       const CommonTitle(
                         titleName:
-                            "I have never attended any destina1 Dream builder (D1DB) presentation before. this is my frist attendance\nI am currently not Destina1 international (D1) member and i have never join Destina1 international as a member before.",
+                            "I have never attended any destina 1 Dream builder (D1DB) presentation before. this is my frist attendance\nI am currently not Destina 1 International (D1) member and i have never join Destina 1 International as a member before.",
                         size: 12,
                         fontFamily: "OnestRegular",
                       ),
                       const SpaceHeightWidget(height: 10),
                       const CommonTitle(
                         titleName:
-                            "In the event that the above declaration is untrue or incorrect, i agree to indemnify Destina1 international (D1) for the price of the product/gift/prize that was redeemed by me as a lucky draw gift. i further authorize D1 to deduct the said amount from my D1 account E-wallet (if have any) in event of non-payment by me due to my false declaration/representation.",
+                            "In the event that the above declaration is untrue or incorrect, i agree to indemnify Destina 1 International (D1) for the price of the product/gift/prize that was redeemed by me as a lucky draw gift. i further authorize D1 to deduct the said amount from my D1 account E-wallet (if have any) in event of non-payment by me due to my false declaration/representation.",
                         size: 12,
                         fontFamily: "OnestRegular",
                       ),

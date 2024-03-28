@@ -13,15 +13,17 @@ class UpdationReportScreen extends StatefulWidget {
 }
 
 final MainController _litsOfReqController = Get.put(MainController());
+dynamic userid, username;
 
 class _UpdationReportScreenState extends State<UpdationReportScreen> {
   final ScrollController _scrollController = ScrollController();
   DataTableSource tSource = MyData();
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      userid = Constants.prefs.getString("user_id");
+      username = Constants.prefs.getString("user_name");
       dataFun();
     });
   }
@@ -251,7 +253,7 @@ Dialog memberProfile() {
                                         color: lightDarKBlue.withOpacity(0.1),
                                       ),
                                     ),
-                                    rowTextWidget("DESTINA1")
+                                    rowTextWidget(username ?? "")
                                   ],
                                 ),
                               ),
@@ -269,7 +271,8 @@ Dialog memberProfile() {
                                         color: lightDarKBlue.withOpacity(0.1),
                                       ),
                                     ),
-                                    rowTextWidget("DESTINA1INT")
+                                    rowTextWidget(
+                                        userid.toString().toUpperCase())
                                   ],
                                 ),
                               ),

@@ -8,6 +8,7 @@ import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:destina_1_international/dashboard_screens/bottombar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../commons/constants.dart';
 import '../inside_screens/notifications_screen.dart';
@@ -28,6 +29,7 @@ class HomeScreen extends StatefulWidget {
 int carouselIndex = 0;
 int promotionCarouselIndex = 0;
 int sopCarouselIndex = 0;
+
 List<OnboardModel> productsCategories = [
   OnboardModel(image: "assets/images/health_care.png", title: "Health Care"),
   // OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
@@ -70,6 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
 
   MainController productController = Get.put(MainController());
+  List<String> brandImags = ["brand_u", "brand_q", "brand_s", "brand_k"];
+
   @override
   void initState() {
     super.initState();
@@ -278,6 +282,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontSize: 17, fontFamily: "OnestSemiBold", color: whiteColor),
             ),
             actions: [
+              if (Constants.prefs.getString("user_id") == null ||
+                  Constants.prefs.getString("user_id") == "false")
+                CustomFixedElevatedButton(
+                  onTapFun: () {
+                    Get.to(() => const LoginScreen());
+                  },
+                  title: "Sign Up / Sign in",
+                ),
               IconButton(
                   onPressed: () {
                     Get.to(() => const NotificationScreen());
@@ -321,45 +333,46 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 12),
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(18),
-                            child: Stack(
-                              alignment: Alignment.bottomLeft,
-                              children: [
-                                Image.asset(
-                                  "assets/images/home_signup_slider.png",
-                                  height: 140,
-                                  width: double.infinity,
-                                  fit: BoxFit.fill,
-                                ),
-                                if (Constants.prefs.getString("user_id") ==
-                                        null ||
-                                    Constants.prefs.getString("user_id") ==
-                                        "false")
-                                  Container(
-                                    margin: const EdgeInsets.only(
-                                        bottom: 8, left: 12, top: 0),
-                                    height: 28,
-                                    width: 148,
-                                    child: CustomAutoWidthButton(
-                                      onTapFun: () {
-                                        Get.to(() => const LoginScreen());
-                                      },
-                                      title: "Sign Up / Sign in",
-                                    ),
-                                  )
-                              ],
-                            )),
-                      ),
-                      const FreeDeliveryBanner(
-                        amount: "699",
-                      ),
                       const SpaceHeightWidget(height: 15),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(
+                      //       horizontal: 8, vertical: 12),
+                      //   child: ClipRRect(
+                      //       borderRadius: BorderRadius.circular(18),
+                      //       child: Stack(
+                      //         alignment: Alignment.bottomLeft,
+                      //         children: [
+                      //           // Image.asset(
+                      //           //   "assets/images/home_signup_slider.png",
+                      //           //   height: 140,
+                      //           //   width: double.infinity,
+                      //           //   fit: BoxFit.fill,
+                      //           // ),
+                      //           if (Constants.prefs.getString("user_id") ==
+                      //                   null ||
+                      //               Constants.prefs.getString("user_id") ==
+                      //                   "false")
+                      //             Container(
+                      //               margin: const EdgeInsets.only(
+                      //                   bottom: 8, left: 12, top: 0),
+                      //               height: 28,
+                      //               width: 148,
+                      //               child: CustomAutoWidthButton(
+                      //                 onTapFun: () {
+                      //                   Get.to(() => const LoginScreen());
+                      //                 },
+                      //                 title: "Sign Up / Sign in",
+                      //               ),
+                      //             )
+                      //         ],
+                      //       )),
+                      // ),
+                      // const FreeDeliveryBanner(
+                      //   amount: "699",
+                      // ),
+                      // const SpaceHeightWidget(height: 15),
                       SizedBox(
-                        height: 100,
+                        height: 110,
                         width: 500,
                         child: CarouselSlider.builder(
                             itemCount: 5,
@@ -368,7 +381,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                             options: CarouselOptions(
                                 viewportFraction: 0.95,
-                                autoPlay: false,
+                                autoPlay: true,
                                 enlargeCenterPage: true,
                                 autoPlayInterval: const Duration(seconds: 2),
                                 onPageChanged: (index, reason) {
@@ -398,7 +411,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CommonTitle(
-                              titleName: "Promotion",
+                              titleName: "Premier Picks",
                               fontColor: lightDarKBlue,
                             ),
                             SizedBox(
@@ -488,7 +501,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: CommonTitle(
-                              titleName: "New Arrival",
+                              titleName: "Best Sellers",
                               fontColor: lightDarKBlue,
                             ),
                           ),
@@ -510,7 +523,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ? const SizedBox(
                                     height: 100,
                                     child: NotAvailableText(
-                                      text: "New arrival not available",
+                                      text: "Best Sellers not available",
                                     ))
                                 : CarouselSlider.builder(
                                     itemCount: productController
@@ -519,7 +532,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       return HomeScreenNewArrivalItemWidget(
                                         onTapFun: () {
                                           Get.to(() => ProductDetailsScreen2(
-                                                from: "newarrival",
+                                                from: "Best Sellers",
                                                 packageCode: productController
                                                     .productItemList[i]
                                                     .packagecode,
@@ -558,90 +571,165 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       const SpaceHeightWidget(height: 13),
-                      Stack(
-                        alignment: Alignment.bottomCenter,
+                      // Stack(
+                      //   alignment: Alignment.bottomCenter,
+                      //   children: [
+                      //     const SopWidget(),
+                      //     Column(
+                      //       children: [
+                      //         CarouselSlider.builder(
+                      //             itemCount: 2,
+                      //             itemBuilder: (context, i, rindex) {
+                      //               return Padding(
+                      //                 padding: const EdgeInsets.only(right: 8),
+                      //                 child: i == 0
+                      //                     ? SopCarouselWidget(
+                      //                         imagePath:
+                      //                             "assets/images/woman_shopping.png",
+                      //                         amount: "6000",
+                      //                         imageContainerColor:
+                      //                             lightAppthemeColor
+                      //                                 .withOpacity(0.3),
+                      //                         twelvthPurchaseDiscount: "90",
+                      //                         sixthPurchaseDiscount: "50",
+                      //                         elevatedButton:
+                      //                             IconElevatedButton(
+                      //                           onTapFun: () {},
+                      //                           imagePath:
+                      //                               'assets/images/gift.png',
+                      //                           labelColor: whiteColor,
+                      //                           buttonColor: woodColor,
+                      //                           titile: "Beyond",
+                      //                         ),
+                      //                       )
+                      //                     : SopCarouselWidget(
+                      //                         imagePath:
+                      //                             "assets/images/bag.png",
+                      //                         amount: "2500",
+                      //                         imageContainerColor: biscutColor,
+                      //                         twelvthPurchaseDiscount: "50",
+                      //                         sixthPurchaseDiscount: "50",
+                      //                         elevatedButton:
+                      //                             IconElevatedButton(
+                      //                           onTapFun: () {},
+                      //                           imagePath:
+                      //                               'assets/images/gift.png',
+                      //                           labelColor: greenColor,
+                      //                           buttonColor: lightAmberColor,
+                      //                           titile: "Basic",
+                      //                         ),
+                      //                       ),
+                      //               );
+                      //             },
+                      //             options: CarouselOptions(
+                      //                 // height: 250,
+                      //                 aspectRatio: 16 / 10,
+                      //                 viewportFraction: 0.94,
+                      //                 autoPlay: false,
+                      //                 enableInfiniteScroll: false,
+                      //                 // enlargeCenterPage: true,
+                      //                 // enlargeFactor: 0.3,
+                      //                 autoPlayInterval:
+                      //                     const Duration(seconds: 2),
+                      //                 onPageChanged: (index, i) {
+                      //                   setState(() {
+                      //                     sopCarouselIndex = index;
+                      //                   });
+                      //                 })),
+                      //         const SpaceHeightWidget(height: 10),
+                      //         Container(
+                      //           width: double.infinity,
+                      //           alignment: Alignment.center,
+                      //           child: Row(
+                      //             mainAxisAlignment: MainAxisAlignment.center,
+                      //             mainAxisSize: MainAxisSize.max,
+                      //             children: [
+                      //               for (int i = 0; i < 2; i++)
+                      //                 (i == sopCarouselIndex)
+                      //                     ? ActiveDot(
+                      //                         fillColor: lightDarKBlue,
+                      //                       )
+                      //                     : const SopInactiveDot(),
+                      //             ],
+                      //           ),
+                      //         ),
+                      //         const SpaceHeightWidget(height: 13),
+                      //       ],
+                      //     ),
+                      //   ],
+                      // ),
+                      const SpaceHeightWidget(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const SopWidget(),
-                          Column(
-                            children: [
-                              CarouselSlider.builder(
-                                  itemCount: 2,
-                                  itemBuilder: (context, i, rindex) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(right: 8),
-                                      child: i == 0
-                                          ? SopCarouselWidget(
-                                              imagePath:
-                                                  "assets/images/woman_shopping.png",
-                                              amount: "6000",
-                                              imageContainerColor:
-                                                  lightAppthemeColor
-                                                      .withOpacity(0.3),
-                                              twelvthPurchaseDiscount: "90",
-                                              sixthPurchaseDiscount: "50",
-                                              elevatedButton:
-                                                  IconElevatedButton(
-                                                onTapFun: () {},
-                                                imagePath:
-                                                    'assets/images/gift.png',
-                                                labelColor: whiteColor,
-                                                buttonColor: woodColor,
-                                                titile: "Beyond",
-                                              ),
-                                            )
-                                          : SopCarouselWidget(
-                                              imagePath:
-                                                  "assets/images/bag.png",
-                                              amount: "2500",
-                                              imageContainerColor: biscutColor,
-                                              twelvthPurchaseDiscount: "50",
-                                              sixthPurchaseDiscount: "50",
-                                              elevatedButton:
-                                                  IconElevatedButton(
-                                                onTapFun: () {},
-                                                imagePath:
-                                                    'assets/images/gift.png',
-                                                labelColor: greenColor,
-                                                buttonColor: lightAmberColor,
-                                                titile: "Basic",
-                                              ),
-                                            ),
-                                    );
-                                  },
-                                  options: CarouselOptions(
-                                      // height: 250,
-                                      aspectRatio: 16 / 10,
-                                      viewportFraction: 0.94,
-                                      autoPlay: false,
-                                      enableInfiniteScroll: false,
-                                      // enlargeCenterPage: true,
-                                      // enlargeFactor: 0.3,
-                                      autoPlayInterval:
-                                          const Duration(seconds: 2),
-                                      onPageChanged: (index, i) {
-                                        setState(() {
-                                          sopCarouselIndex = index;
-                                        });
-                                      })),
-                              const SpaceHeightWidget(height: 10),
-                              Container(
-                                width: double.infinity,
-                                alignment: Alignment.center,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    for (int i = 0; i < 2; i++)
-                                      (i == sopCarouselIndex)
-                                          ? ActiveDot(
-                                              fillColor: lightDarKBlue,
-                                            )
-                                          : const SopInactiveDot(),
-                                  ],
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CommonTitle(
+                              titleName: "News",
+                              fontColor: darkBlue,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 200,
+                        child: CarouselSlider.builder(
+                            itemCount: 4,
+                            itemBuilder: (context, i, rindex) {
+                              return GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  // Get.to(() => const WebUrlScreen(
+                                  //       from: "",
+                                  //       redirectUrl: "",
+                                  //     ));
+                                },
+                                child: SizedBox(
+                                  width: 250,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const CommonCachedNetworkImage(
+                                        imagePath: "dd",
+                                        height: 150,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8),
+                                        child: CommonTitle(
+                                          titleName:
+                                              "News from destina to customer for reference to take products ans beliefe",
+                                          fontFamily: "OnestRegular",
+                                          size: 14,
+                                          fontColor: middleBlackColor,
+                                          textoverFlow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              const SpaceHeightWidget(height: 13),
-                            ],
+                              );
+                            },
+                            options: CarouselOptions(
+                                viewportFraction: 0.65,
+                                autoPlay: true,
+                                enlargeCenterPage: false,
+                                autoPlayInterval: const Duration(seconds: 2),
+                                onPageChanged: (index, reason) {})),
+                      ),
+
+                      const SpaceHeightWidget(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CommonTitle(
+                              titleName: "Announcements",
+                              fontColor: darkBlue,
+                            ),
                           ),
                         ],
                       ),
@@ -652,7 +740,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: CommonTitle(
-                              titleName: "Recommended for you",
+                              titleName: "Featured Products",
                               fontColor: darkBlue,
                             ),
                           ),
@@ -664,7 +752,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ? const SizedBox(
                                   height: 100,
                                   child: NotAvailableText(
-                                    text: "Recommended products not available",
+                                    text: "Featured products not available",
                                   ))
                               : SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
@@ -682,7 +770,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             onTapFun: () {
                                               Get.to(() =>
                                                   ProductDetailsScreen2(
-                                                    from: "recommended_for_you",
+                                                    from: "Featured",
                                                     packageCode:
                                                         productController
                                                             .productItemList[i]
@@ -760,64 +848,317 @@ class _HomeScreenState extends State<HomeScreen> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: CommonTitle(
-                              titleName: "Best Seller",
+                              titleName: "Featured Brands",
                               fontColor: darkBlue,
                             ),
                           ),
                         ],
                       ),
-                      productController.loading.value
-                          ? loader
-                          : productController.productItemList.isEmpty
-                              ? const SizedBox(
-                                  height: 100,
-                                  child: NotAvailableText(
-                                    text: "Best seller products not available",
-                                  ))
-                              : SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    children: [
-                                      for (int i = 0;
-                                          i <
-                                              productController
-                                                  .productItemList.length;
-                                          i++)
-                                        SizedBox(
-                                          width: 150,
-                                          height: 190,
-                                          child: PromotionItemWidget(
-                                            onTapFun: () {
-                                              Get.to(() =>
-                                                  ProductDetailsScreen2(
-                                                    from: "Best_seller",
-                                                    packageCode:
-                                                        productController
-                                                            .productItemList[i]
-                                                            .packagecode,
-                                                    fromPack: "Health care",
-                                                  ));
-                                            },
-                                            amountColor: darkBlue,
-                                            imagePath: productController
-                                                .productItemList[i].image,
-                                            itemName: productController
-                                                .productItemList[i]
-                                                .packageName
-                                                .capitalizeFirst
-                                                .toString(),
-                                            amount: productController
-                                                        .productItemList[i]
-                                                        .dp !=
-                                                    0.0
-                                                ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
-                                                : "",
-                                            exclusiveProduct: false,
-                                          ),
-                                        )
-                                    ],
-                                  ),
+                      SizedBox(
+                        height: 100,
+                        width: 500,
+                        child: CarouselSlider.builder(
+                            itemCount: 4,
+                            itemBuilder: (context, i, rindex) {
+                              return Image.asset(
+                                "assets/images/${brandImags[i]}.png",
+                                fit: BoxFit.fill,
+                              );
+                            },
+                            options: CarouselOptions(
+                                autoPlayCurve: Curves.easeInToLinear,
+                                viewportFraction: 0.6,
+                                autoPlay: true,
+                                enlargeCenterPage: false,
+                                autoPlayInterval: const Duration(seconds: 2),
+                                onPageChanged: (index, reason) {})),
+                      ),
+                      const SpaceHeightWidget(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CommonTitle(
+                              titleName: "Trending On Socialmedia #Destina1",
+                              fontColor: darkBlue,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const SpaceWidthWidget(width: 10),
+                          GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () {},
+                            child: CircleAvatar(
+                              backgroundColor: const Color(0XFF285AEB),
+                              child: Image.asset(
+                                "assets/images/facebook1.png",
+                                color: whiteColor,
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () {},
+                            child: CircleAvatar(
+                              radius: 28,
+                              child: Image.asset(
+                                "assets/images/instagram2.png",
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () {},
+                            child: CircleAvatar(
+                              backgroundColor: blackColor,
+                              child: Image.asset(
+                                "assets/images/tiktock1.png",
+                                color: whiteColor,
+                                height: 28,
+                              ),
+                            ),
+                          ),
+                          const SpaceWidthWidget(width: 5),
+                          GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () {},
+                            child: CircleAvatar(
+                              radius: 22,
+                              backgroundColor: whiteColor,
+                              child: Image.asset(
+                                "assets/images/youtube2.png",
+                                // color: whiteColor,
+                                // height: 45,
+                              ),
+                            ),
+                          ),
+
+                          // Expanded(
+                          //   child: Container(
+                          //     decoration: const BoxDecoration(
+                          //       color: Color(0XFF285AEB),
+                          //     ),
+                          //     child: Center(
+                          //       child: Image.asset(
+                          //         "assets/images/facebook1.png",
+                          //         color: whiteColor,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // Expanded(
+                          //   child: Container(
+                          //     decoration: const BoxDecoration(
+                          //         gradient: LinearGradient(colors: [
+                          //       Color(0XFFfdf497),
+                          //       Color(0XFFfdf497),
+                          //       Color(0XFFfd5949),
+                          //       Color(0XFFd6249f),
+                          //       Color(0XFF285AEB),
+                          //     ])),
+                          //     child: Center(
+                          //       child: Image.asset(
+                          //         height: 25,
+                          //         color: whiteColor,
+                          //         "assets/images/instagram1.png",
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // Expanded(
+                          //   child: Container(
+                          //     decoration:
+                          //         const BoxDecoration(color: Colors.black),
+                          //     child: Center(
+                          //       child: Image.asset(
+                          //         height: 25,
+                          //         "assets/images/tiktock1.png",
+                          //         color: whiteColor,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // Expanded(
+                          //   child: Container(
+                          //     decoration:
+                          //         const BoxDecoration(color: Colors.red),
+                          //     child: Center(
+                          //       child: Image.asset(
+                          //         // height: 25,
+                          //         "assets/images/youtube2.jpg",
+                          //         // color: whiteColor,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // )
+                          // Expanded(
+                          //   child: Container(
+                          //     decoration: const BoxDecoration(
+                          //       color: Color(0XFF285AEB),
+                          //     ),
+                          //     child: Center(
+                          //       child: Image.asset(
+                          //         "assets/images/facebook1.png",
+                          //         color: whiteColor,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // Expanded(
+                          //   child: Container(
+                          //     decoration: const BoxDecoration(
+                          //         gradient: LinearGradient(colors: [
+                          //       Color(0XFFfdf497),
+                          //       Color(0XFFfdf497),
+                          //       Color(0XFFfd5949),
+                          //       Color(0XFFd6249f),
+                          //       Color(0XFF285AEB),
+                          //     ])),
+                          //     child: Center(
+                          //       child: Image.asset(
+                          //         height: 25,
+                          //         color: whiteColor,
+                          //         "assets/images/instagram1.png",
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // Expanded(
+                          //   child: Container(
+                          //     decoration:
+                          //         const BoxDecoration(color: Colors.black),
+                          //     child: Center(
+                          //       child: Image.asset(
+                          //         height: 25,
+                          //         "assets/images/tiktock1.png",
+                          //         color: whiteColor,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // Expanded(
+                          //   child: Container(
+                          //     decoration:
+                          //         const BoxDecoration(color: Colors.red),
+                          //     child: Center(
+                          //       child: Image.asset(
+                          //         // height: 25,
+                          //         "assets/images/youtube2.jpg",
+                          //         // color: whiteColor,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 200,
+                        child: CarouselSlider.builder(
+                            itemCount: trendingData.length,
+                            itemBuilder: (context, i, rindex) {
+                              return GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  // Get.to(() => const WebUrlScreen(
+                                  //       from: "",
+                                  //       redirectUrl: "",
+                                  //     ));
+                                },
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  onTap: () async {
+                                    final Uri url =
+                                        Uri.parse(trendingData[i]['click_url']);
+                                    if (!await launchUrl(url)) {
+                                      throw Exception('Could not launch $url');
+                                    }
+                                  },
+                                  child: SizedBox(
+                                      width: 300,
+                                      child: trendingData[i]['type'] == "image"
+                                          ? CommonCachedNetworkImage(
+                                              imagePath: trendingData[i]
+                                                  ['thumbnail_img'],
+                                              height: 200,
+                                            )
+                                          : Stack(
+                                              children: [
+                                                CommonCachedNetworkImage(
+                                                  imagePath: trendingData[i]
+                                                      ['thumbnail_img'],
+                                                  height: 200,
+                                                ),
+                                                const Icon(
+                                                    Icons.play_arrow_rounded)
+                                              ],
+                                            )),
                                 ),
+                              );
+                            },
+                            options: CarouselOptions(
+                                viewportFraction: 0.64,
+                                autoPlay: true,
+                                enlargeCenterPage: false,
+                                autoPlayInterval: const Duration(seconds: 2),
+                                onPageChanged: (index, reason) {})),
+                      ),
+                      const SpaceHeightWidget(height: 10),
+                      // productController.loading.value
+                      //     ? loader
+                      //     : productController.productItemList.isEmpty
+                      //         ? const SizedBox(
+                      //             height: 100,
+                      //             child: NotAvailableText(
+                      //               text: "Best seller products not available",
+                      //             ))
+                      //         : SingleChildScrollView(
+                      //             scrollDirection: Axis.horizontal,
+                      //             child: Row(
+                      //               children: [
+                      //                 for (int i = 0;
+                      //                     i <
+                      //                         productController
+                      //                             .productItemList.length;
+                      //                     i++)
+                      //                   SizedBox(
+                      //                     width: 150,
+                      //                     height: 190,
+                      //                     child: PromotionItemWidget(
+                      //                       onTapFun: () {
+                      //                         Get.to(() =>
+                      //                             ProductDetailsScreen2(
+                      //                               from: "Best_seller",
+                      //                               packageCode:
+                      //                                   productController
+                      //                                       .productItemList[i]
+                      //                                       .packagecode,
+                      //                               fromPack: "Health care",
+                      //                             ));
+                      //                       },
+                      //                       amountColor: darkBlue,
+                      //                       imagePath: productController
+                      //                           .productItemList[i].image,
+                      //                       itemName: productController
+                      //                           .productItemList[i]
+                      //                           .packageName
+                      //                           .capitalizeFirst
+                      //                           .toString(),
+                      //                       amount: productController
+                      //                                   .productItemList[i]
+                      //                                   .dp !=
+                      //                               0.0
+                      //                           ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
+                      //                           : "",
+                      //                       exclusiveProduct: false,
+                      //                     ),
+                      //                   )
+                      //               ],
+                      //             ),
+                      //           ),
                       const SpaceHeightWidget(height: 40)
                     ],
                   ),
@@ -859,4 +1200,37 @@ class _HomeScreenState extends State<HomeScreen> {
           )),
     );
   }
+
+  trendingSocialMFun() {
+    // type of data - video or image, clicking url, and thumbnail image.
+  }
+  List trendingData = [
+    {
+      "type": "video",
+      "click_url":
+          "https://www.facebook.com/Destina1int/videos/1033698247756287",
+      "thumbnail_img":
+          "https://www.facebook.com/Destina1int/videos/1033698247756287"
+    },
+    {
+      "type": "image",
+      "click_url":
+          "https://www.facebook.com/photo/?fbid=823679919801413&set=pb.100064782363963.-2207520000",
+      "thumbnail_img": "https://beta.destina1.com/images/fb-event04.jpg"
+    },
+    {
+      "type": "video",
+      "click_url":
+          "https://www.facebook.com/Destina1int/videos/7662481057114753",
+      "thumbnail_img":
+          "https://www.facebook.com/Destina1int/videos/7662481057114753"
+    },
+    {
+      "type": "video",
+      "click_url":
+          "https://www.facebook.com/Destina1int/videos/1254033921930559/",
+      "thumbnail_img":
+          "https://www.facebook.com/Destina1int/videos/1254033921930559/"
+    },
+  ];
 }
