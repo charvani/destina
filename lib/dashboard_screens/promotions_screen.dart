@@ -1,9 +1,11 @@
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
-import 'package:destina_1_international/models/promotions_model.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-import '../models/onboarding_model.dart';
+import '../commons/constants.dart';
+import '../controllers/main_controller.dart';
 
 class PromotionsScreen extends StatefulWidget {
   const PromotionsScreen({super.key});
@@ -13,40 +15,52 @@ class PromotionsScreen extends StatefulWidget {
 }
 
 class _PromotionsScreenState extends State<PromotionsScreen> {
-  List<OnboardModel> products = [
-    OnboardModel(image: "assets/images/health.jpg", title: "Health Care"),
-    OnboardModel(image: "assets/images/hair.jpg", title: "Hair Care"),
-    OnboardModel(image: "assets/images/skin.jpg", title: "Skin Care"),
-    OnboardModel(image: "assets/images/hair.jpg", title: "Personal Care"),
-  ];
-
-  List<PromotionsModel> promotions = [
-    PromotionsModel(
-        image: "assets/images/promotion1.png",
-        title: "Power play promotion",
-        date: "02/11/23 09:00",
-        isBigPromotion: false),
-    PromotionsModel(
-        image: "assets/images/promotion2.png",
-        title: "Power play promotion",
-        date: "02/11/23 09:00",
-        isBigPromotion: false),
-    PromotionsModel(
-        image: "assets/images/promotion3.png",
-        title: "Power play promotion",
-        date: "02/11/23 09:00",
-        isBigPromotion: false),
-    PromotionsModel(
-        image: "assets/images/promotion4.png",
-        title: "Power play promotion",
-        date: "02/11/23 09:00",
-        isBigPromotion: false),
-    PromotionsModel(
-        image: "assets/images/promotion5.png",
-        title: "Power play promotion",
-        date: "02/11/23 09:00",
-        isBigPromotion: true),
-  ];
+  // List<PromotionsModel> promotions = [
+  //   PromotionsModel(
+  //       image: "assets/images/promotion1.png",
+  //       title: "Power play promotion",
+  //       date: "02/11/23 09:00",
+  //       isBigPromotion: false),
+  //   PromotionsModel(
+  //       image: "assets/images/promotion2.png",
+  //       title: "Power play promotion",
+  //       date: "02/11/23 09:00",
+  //       isBigPromotion: false),
+  //   PromotionsModel(
+  //       image: "assets/images/promotion3.png",
+  //       title: "Power play promotion",
+  //       date: "02/11/23 09:00",
+  //       isBigPromotion: false),
+  //   PromotionsModel(
+  //       image: "assets/images/promotion4.png",
+  //       title: "Power play promotion",
+  //       date: "02/11/23 09:00",
+  //       isBigPromotion: false),
+  //   PromotionsModel(
+  //       image: "assets/images/promotion5.png",
+  //       title: "Power play promotion",
+  //       date: "02/11/23 09:00",
+  //       isBigPromotion: true),
+  // ];
+  final MainController _dataController = Get.put(MainController());
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Map params = {
+        "action": "GetPromotion",
+        "category": "all",
+        "Title": "0",
+        "Imgpath": "0",
+        "Descr": "0",
+        "url": "0",
+        "Countryid": "0",
+        "sesuer": "0",
+        "Sesid": "0"
+      };
+      _dataController.getPromotions(params);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,28 +84,55 @@ class _PromotionsScreenState extends State<PromotionsScreen> {
                   onTapFun: () {},
                   title: "Destina 1 International Premier Picks")),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Wrap(
-                children: [
-                  for (int i = 0; i < promotions.length; i++)
-                    GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onTap: () {
-                        CommonToast("Coming soon");
-                      },
-                      child: PromotionScreenWidget(
-                          imagePath: promotions[i].image,
-                          titile: promotions[i].title,
-                          date: promotions[i].date,
-                          isBigPromotion: promotions[i].isBigPromotion),
-                    )
-                ],
-              ),
-              const SpaceHeightWidget(height: 40)
-            ],
-          ),
-        ));
+        body: Obx(() {
+          return _dataController.loading.value
+              ? SizedBox(
+                  height: 400,
+                  child: loader,
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _dataController.promotionsData.isNotEmpty
+                          ? Wrap(
+                              children: [
+                                for (int i = 0;
+                                    i < _dataController.promotionsData.length;
+                                    i++)
+                                  GestureDetector(
+                                    behavior: HitTestBehavior.translucent,
+                                    onTap: () async {
+                                      if (_dataController
+                                              .promotionsData[i].redirecturl !=
+                                          "") {
+                                        final Uri url = Uri.parse(
+                                            _dataController
+                                                .testimonialData[i].videoUrl);
+                                        if (!await launchUrl(url)) {
+                                          throw Exception(
+                                              'Could not launch $url');
+                                        }
+                                      } else {
+                                        CommonToast("Coming soon");
+                                      }
+                                    },
+                                    child: PromotionScreenWidget(
+                                        imagePath: _dataController
+                                            .promotionsData[i].imgurl,
+                                        titile: "",
+                                        date: "",
+                                        isBigPromotion: false),
+                                  )
+                              ],
+                            )
+                          : const SizedBox(
+                              height: 400,
+                              child: NotAvailableText(
+                                  text: "Premier Picks not available")),
+                      const SpaceHeightWidget(height: 40)
+                    ],
+                  ),
+                );
+        }));
   }
 }

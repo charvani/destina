@@ -6,11 +6,13 @@ import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:destina_1_international/dashboard_screens/bottombar_screen.dart';
+import 'package:destina_1_international/inside_screens/about/newsdetails_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../commons/constants.dart';
+import '../inside_screens/about/weburl_screen.dart';
 import '../inside_screens/notifications_screen.dart';
 import '../inside_screens/productdetails_screen2.dart';
 import '../inside_screens/search/search_categoryscreen.dart';
@@ -269,6 +271,24 @@ class _HomeScreenState extends State<HomeScreen> {
     if (mounted) {
       setState(() {});
     }
+    newsFun();
+    trendingData("1");
+    promotionsFun();
+  }
+
+  newsFun() {
+    Map params = {
+      "action": "GetOpendispMA",
+      "category": "all",
+      "Title": "News",
+      "Imgpath": "0",
+      "Descr": "0",
+      "url": "0",
+      "Countryid": "0",
+      "sesuer": "0",
+      "Sesid": "all"
+    };
+    productController.getHomeNews(params);
   }
 
   @override
@@ -428,23 +448,37 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-                      CarouselSlider.builder(
-                          itemCount: 5,
-                          itemBuilder: (context, i, rindex) {
-                            return promotionWidget(i + 1);
-                          },
-                          options: CarouselOptions(
-                              // aspectRatio: 2.9 / 4.2,
-                              // aspectRatio: 2.5 / 4,
-                              viewportFraction: 0.95,
-                              enlargeCenterPage: true,
-                              // autoPlay: true,
-                              autoPlayInterval: const Duration(seconds: 2),
-                              onPageChanged: (index, reason) {
-                                setState(() {
-                                  promotionCarouselIndex = index;
-                                });
-                              })),
+                      Obx(() {
+                        return _homeController.loading.value
+                            ? SizedBox(height: 100, child: loader)
+                            : _homeController.promotionsData.isEmpty
+                                ? const SizedBox(
+                                    height: 100,
+                                    child: NotAvailableText(
+                                        text: "Premier Picks not available"))
+                                : CarouselSlider.builder(
+                                    itemCount: 5,
+                                    itemBuilder: (context, i, rindex) {
+                                      return promotionWidget(
+                                          _homeController
+                                              .promotionsData[i].imgurl,
+                                          _homeController
+                                              .promotionsData[i].redirecturl);
+                                    },
+                                    options: CarouselOptions(
+                                        // aspectRatio: 2.9 / 4.2,
+                                        // aspectRatio: 2.5 / 4,
+                                        viewportFraction: 0.7,
+                                        enlargeCenterPage: true,
+                                        // autoPlay: true,
+                                        autoPlayInterval:
+                                            const Duration(seconds: 2),
+                                        onPageChanged: (index, reason) {
+                                          setState(() {
+                                            promotionCarouselIndex = index;
+                                          });
+                                        }));
+                      }),
                       const SpaceHeightWidget(height: 10),
                       Container(
                         width: double.infinity,
@@ -453,7 +487,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: [
-                            for (int i = 0; i < 5; i++)
+                            for (int i = 0;
+                                i < _homeController.promotionsData.length;
+                                i++)
                               (i == promotionCarouselIndex)
                                   ? const ActiveDot()
                                   : const InactiveDot(),
@@ -515,7 +551,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         decoration: const BoxDecoration(
                             image: DecorationImage(
                                 image: AssetImage(
-                                    "assets/images/newtag_banner.png"),
+                                    "assets/images/newtag_banner.jpg"),
                                 fit: BoxFit.cover)),
                         child: productController.loading.value
                             ? loader
@@ -659,66 +695,89 @@ class _HomeScreenState extends State<HomeScreen> {
                       //   ],
                       // ),
                       const SpaceHeightWidget(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CommonTitle(
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CommonTitle(
                               titleName: "News",
                               fontColor: darkBlue,
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              height: 25,
+                              width: 93,
+                              child: CustomAutoWidthButton(
+                                  onTapFun: () {
+                                    Get.to(() => const WebUrlScreen(
+                                          redirectUrl:
+                                              "https://beta.destina1.com/MANews.html#/",
+                                          from: "News",
+                                        ));
+                                  },
+                                  title: "See all"),
+                            ),
+                          ],
+                        ),
                       ),
-                      SizedBox(
-                        height: 200,
-                        child: CarouselSlider.builder(
-                            itemCount: 4,
-                            itemBuilder: (context, i, rindex) {
-                              return GestureDetector(
-                                behavior: HitTestBehavior.translucent,
-                                onTap: () {
-                                  // Get.to(() => const WebUrlScreen(
-                                  //       from: "",
-                                  //       redirectUrl: "",
-                                  //     ));
-                                },
-                                child: SizedBox(
-                                  width: 250,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      const CommonCachedNetworkImage(
-                                        imagePath: "dd",
-                                        height: 150,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8),
-                                        child: CommonTitle(
-                                          titleName:
-                                              "News from destina to customer for reference to take products ans beliefe",
-                                          fontFamily: "OnestRegular",
-                                          size: 14,
-                                          fontColor: middleBlackColor,
-                                          textoverFlow: TextOverflow.ellipsis,
-                                          maxLines: 2,
-                                          textAlign: TextAlign.center,
+                      Obx(() {
+                        return _homeController.newsData.isEmpty
+                            ? const NotAvailableText(text: "News not available")
+                            : SizedBox(
+                                height: 200,
+                                child: CarouselSlider.builder(
+                                    itemCount: _homeController.newsData.length,
+                                    itemBuilder: (context, i, rindex) {
+                                      return GestureDetector(
+                                        behavior: HitTestBehavior.translucent,
+                                        onTap: () {
+                                          Get.to(() => NewsDetailsScreen(
+                                                newsno: _homeController
+                                                    .newsData[i].sno
+                                                    .toString(),
+                                              ));
+                                        },
+                                        child: SizedBox(
+                                          width: 250,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              CommonCachedNetworkImage(
+                                                imagePath: _homeController
+                                                    .newsData[i].imagename,
+                                                height: 150,
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8),
+                                                child: CommonTitle(
+                                                  titleName: _homeController
+                                                      .newsData[i].title,
+                                                  fontFamily: "OnestRegular",
+                                                  size: 14,
+                                                  fontColor: middleBlackColor,
+                                                  textoverFlow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 2,
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                      );
+                                    },
+                                    options: CarouselOptions(
+                                        viewportFraction: 0.65,
+                                        autoPlay: true,
+                                        enlargeCenterPage: false,
+                                        autoPlayInterval:
+                                            const Duration(seconds: 2),
+                                        onPageChanged: (index, reason) {})),
                               );
-                            },
-                            options: CarouselOptions(
-                                viewportFraction: 0.65,
-                                autoPlay: true,
-                                enlargeCenterPage: false,
-                                autoPlayInterval: const Duration(seconds: 2),
-                                onPageChanged: (index, reason) {})),
-                      ),
+                      }),
 
                       const SpaceHeightWidget(height: 10),
                       Row(
@@ -732,6 +791,57 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ],
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            for (int i = 0; i < 3; i++)
+                              GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  // Get.to(() => const WebUrlScreen(
+                                  //       from: "",
+                                  //       redirectUrl: "",
+                                  //     ));
+                                },
+                                child: SizedBox(
+                                  width: 250,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Image.asset(
+                                        i == 0
+                                            ? "assets/images/WHATS-NEW.jpg"
+                                            : i == 1
+                                                ? "assets/images/DISCONTINUED-EDITION.jpg"
+                                                : "assets/images/public-holiday.jpg",
+                                        height: 150,
+                                      ),
+                                      const SpaceHeightWidget(height: 3),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8),
+                                        child: CommonTitle(
+                                          titleName: i == 0
+                                              ? "What's New"
+                                              : i == 1
+                                                  ? "Discontinued Editions"
+                                                  : "Public Holiday Shop Clouser",
+                                          fontFamily: "OnestRegular",
+                                          size: 14,
+                                          fontColor: middleBlackColor,
+                                          textoverFlow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
                       ),
                       const SpaceHeightWidget(height: 20),
                       Row(
@@ -891,7 +1001,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SpaceWidthWidget(width: 10),
                           GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            onTap: () {},
+                            onTap: () {
+                              trendingData("1");
+                            },
                             child: CircleAvatar(
                               backgroundColor: const Color(0XFF285AEB),
                               child: Image.asset(
@@ -902,7 +1014,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            onTap: () {},
+                            onTap: () {
+                              trendingData("2");
+                            },
                             child: CircleAvatar(
                               radius: 28,
                               child: Image.asset(
@@ -912,7 +1026,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            onTap: () {},
+                            onTap: () {
+                              trendingData("3");
+                            },
                             child: CircleAvatar(
                               backgroundColor: blackColor,
                               child: Image.asset(
@@ -925,7 +1041,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SpaceWidthWidget(width: 5),
                           GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            onTap: () {},
+                            onTap: () {
+                              trendingData("4");
+                            },
                             child: CircleAvatar(
                               radius: 22,
                               backgroundColor: whiteColor,
@@ -1055,57 +1173,76 @@ class _HomeScreenState extends State<HomeScreen> {
                           // )
                         ],
                       ),
-                      SizedBox(
-                        height: 200,
-                        child: CarouselSlider.builder(
-                            itemCount: trendingData.length,
-                            itemBuilder: (context, i, rindex) {
-                              return GestureDetector(
-                                behavior: HitTestBehavior.translucent,
-                                onTap: () {
-                                  // Get.to(() => const WebUrlScreen(
-                                  //       from: "",
-                                  //       redirectUrl: "",
-                                  //     ));
-                                },
-                                child: GestureDetector(
-                                  behavior: HitTestBehavior.translucent,
-                                  onTap: () async {
-                                    final Uri url =
-                                        Uri.parse(trendingData[i]['click_url']);
-                                    if (!await launchUrl(url)) {
-                                      throw Exception('Could not launch $url');
-                                    }
-                                  },
-                                  child: SizedBox(
-                                      width: 300,
-                                      child: trendingData[i]['type'] == "image"
-                                          ? CommonCachedNetworkImage(
-                                              imagePath: trendingData[i]
-                                                  ['thumbnail_img'],
-                                              height: 200,
-                                            )
-                                          : Stack(
-                                              children: [
-                                                CommonCachedNetworkImage(
-                                                  imagePath: trendingData[i]
-                                                      ['thumbnail_img'],
-                                                  height: 200,
-                                                ),
-                                                const Icon(
-                                                    Icons.play_arrow_rounded)
-                                              ],
-                                            )),
-                                ),
-                              );
-                            },
-                            options: CarouselOptions(
-                                viewportFraction: 0.64,
-                                autoPlay: true,
-                                enlargeCenterPage: false,
-                                autoPlayInterval: const Duration(seconds: 2),
-                                onPageChanged: (index, reason) {})),
-                      ),
+                      Obx(() {
+                        return _homeController.socialMedialoading.value
+                            ? SizedBox(
+                                height: 100,
+                                child: loader,
+                              )
+                            : _homeController.socialMediaData.isNotEmpty
+                                ? SizedBox(
+                                    height: 200,
+                                    child: CarouselSlider.builder(
+                                        itemCount: _homeController
+                                            .socialMediaData.length,
+                                        itemBuilder: (context, i, rindex) {
+                                          return GestureDetector(
+                                            behavior:
+                                                HitTestBehavior.translucent,
+                                            onTap: () async {
+                                              final Uri url = Uri.parse(
+                                                  _homeController
+                                                      .socialMediaData[i]
+                                                      .redirecturl);
+                                              if (!await launchUrl(url)) {
+                                                throw Exception(
+                                                    'Could not launch $url');
+                                              }
+                                            },
+                                            child: SizedBox(
+                                                width: 300,
+                                                child: Stack(
+                                                  alignment: Alignment.center,
+                                                  children: [
+                                                    CommonCachedNetworkImage(
+                                                      imagePath: _homeController
+                                                          .socialMediaData[i]
+                                                          .imgurl,
+                                                      height: 200,
+                                                      width: 200,
+                                                      boxfit: BoxFit.fill,
+                                                    ),
+                                                    _homeController
+                                                                .socialMediaData[
+                                                                    i]
+                                                                .stype !=
+                                                            "Image"
+                                                        ? Icon(
+                                                            Icons
+                                                                .play_arrow_rounded,
+                                                            color: whiteColor,
+                                                            size: 40,
+                                                          )
+                                                        : const SizedBox
+                                                            .shrink()
+                                                  ],
+                                                )),
+                                          );
+                                        },
+                                        options: CarouselOptions(
+                                            viewportFraction: 0.64,
+                                            autoPlay: true,
+                                            enlargeCenterPage: false,
+                                            autoPlayInterval:
+                                                const Duration(seconds: 2),
+                                            onPageChanged: (index, reason) {})),
+                                  )
+                                : const SizedBox(
+                                    height: 50,
+                                    child: NotAvailableText(
+                                        text: "Currently no items to show"),
+                                  );
+                      }),
                       const SpaceHeightWidget(height: 10),
                       // productController.loading.value
                       //     ? loader
@@ -1178,59 +1315,65 @@ class _HomeScreenState extends State<HomeScreen> {
         ));
   }
 
-  Widget promotionWidget(int i) {
+  Widget promotionWidget(imagePath, redirectUrl) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () {
-        Get.offAll(() => const BottomBarScreen(
-              index: 3,
-            ));
+      onTap: () async {
+        if (redirectUrl != "") {
+          final Uri url = Uri.parse(redirectUrl);
+          if (!await launchUrl(url)) {
+            throw Exception('Could not launch $url');
+          }
+        } else {
+          CommonToast("Coming soon");
+        }
       },
       child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Container(
-            alignment: Alignment.bottomCenter,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(
-                    "assets/images/promotion$i.png",
-                  ),
-                  fit: BoxFit.fill),
-            ),
-          )),
+        borderRadius: BorderRadius.circular(10),
+        child: CommonCachedNetworkImage(imagePath: imagePath),
+      ),
+      // ClipRRect(
+      //     borderRadius: BorderRadius.circular(10),
+      //     child: Container(
+      //       alignment: Alignment.bottomCenter,
+      //       decoration: BoxDecoration(
+      //         image: DecorationImage(
+      //             image: AssetImage(
+      //               "assets/images/promotion$i.png",
+      //             ),
+      //             fit: BoxFit.fill),
+      //       ),
+      //     )),
     );
   }
 
-  trendingSocialMFun() {
-    // type of data - video or image, clicking url, and thumbnail image.
+  trendingData(String sno) {
+    Map params = {
+      "action": "GetTrendingSM",
+      "category": "all",
+      "Title": "News",
+      "Imgpath": "0",
+      "Descr": "0",
+      "url": "0",
+      "Countryid": sno,
+      "sesuer": "0",
+      "Sesid": Constants.prefs.getString("country")
+    };
+    _homeController.getHomeTrending(params);
   }
-  List trendingData = [
-    {
-      "type": "video",
-      "click_url":
-          "https://www.facebook.com/Destina1int/videos/1033698247756287",
-      "thumbnail_img":
-          "https://www.facebook.com/Destina1int/videos/1033698247756287"
-    },
-    {
-      "type": "image",
-      "click_url":
-          "https://www.facebook.com/photo/?fbid=823679919801413&set=pb.100064782363963.-2207520000",
-      "thumbnail_img": "https://beta.destina1.com/images/fb-event04.jpg"
-    },
-    {
-      "type": "video",
-      "click_url":
-          "https://www.facebook.com/Destina1int/videos/7662481057114753",
-      "thumbnail_img":
-          "https://www.facebook.com/Destina1int/videos/7662481057114753"
-    },
-    {
-      "type": "video",
-      "click_url":
-          "https://www.facebook.com/Destina1int/videos/1254033921930559/",
-      "thumbnail_img":
-          "https://www.facebook.com/Destina1int/videos/1254033921930559/"
-    },
-  ];
+
+  promotionsFun() {
+    Map params = {
+      "action": "GetPromotion",
+      "category": "all",
+      "Title": "0",
+      "Imgpath": "0",
+      "Descr": "0",
+      "url": "0",
+      "Countryid": "0",
+      "sesuer": "0",
+      "Sesid": "0"
+    };
+    _homeController.getPromotions(params);
+  }
 }

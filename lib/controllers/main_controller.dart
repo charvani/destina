@@ -47,6 +47,8 @@ import '../models/maintanenceCV_model.dart';
 import '../models/maintenancelist_model.dart';
 import '../models/member_productdetail_model.dart';
 import '../models/myteam_viewmodel.dart';
+import '../models/news_model.dart';
+import '../models/newsdetails_model.dart';
 import '../models/ordermall_model.dart';
 import '../models/packageitems_model.dart';
 import '../models/packcart_model.dart';
@@ -62,6 +64,7 @@ import '../models/salesproductDet_model.dart';
 import '../models/serviceslist_model.dart';
 import '../models/signupLoad_model.dart';
 import '../models/teambuilder_model.dart';
+import '../models/trendingSM_model.dart';
 import '../models/upgradeList_model.dart';
 import '../models/upgrade_cartItem_model.dart';
 import '../models/upgrade_promotion_model.dart';
@@ -69,6 +72,7 @@ import '../service_call/api_data.dart';
 
 class MainController extends GetxController {
   RxBool loading = false.obs;
+  RxBool socialMedialoading = false.obs;
   RxBool listOfMemberLoading = false.obs;
   RxBool genealogyLoading = false.obs;
   Rx<dynamic> imeiNum = "".obs;
@@ -81,6 +85,7 @@ class MainController extends GetxController {
   List<SelPackageModel> relPackageItemList = <SelPackageModel>[].obs;
   List<String> notificationData = <String>[].obs;
   List<TestimonialModel> testimonialData = <TestimonialModel>[].obs;
+  List<NewsModel> newsData = <NewsModel>[].obs;
   List<PackCartModel> packCartList = <PackCartModel>[].obs;
   Rx<double> cvVal = 0.0.obs;
   RxList<ProductCategoryItem> productItemList = <ProductCategoryItem>[].obs;
@@ -843,6 +848,13 @@ class MainController extends GetxController {
           avgRating: "",
           totalRating: "")
       .obs;
+  Rx<NewsDetailsModel> singleNewsDetails = NewsDetailsModel(
+          newsRpt: [], newsImagesRpt: [], msg: "", message: "", found: false)
+      .obs;
+  RxList<TrendingOnSocialMModel> socialMediaData =
+      <TrendingOnSocialMModel>[].obs;
+  RxList<TrendingOnSocialMModel> promotionsData =
+      <TrendingOnSocialMModel>[].obs;
 // *********************** *********************************************************************
   getCountryCode() async {
     dynamic res = await ApiCall().getMethodFun(url: ApiData().countryUrl);
@@ -2783,6 +2795,64 @@ class MainController extends GetxController {
           testimonialData
               .add(TestimonialModel.fromJson(res["TestimonialsRpt"][i]));
         }
+      }
+    }
+    loading.value = false;
+  }
+
+  getHomeNews(Map parameters) async {
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().getNewsEvents, params: parameters);
+    newsData.clear();
+    if (res != null) {
+      if (res['newsdataRpt'].length > 0) {
+        for (int i = 0; i < 10; i++) {
+          newsData.add(NewsModel.fromJson(res['newsdataRpt'][i]));
+        }
+      }
+    }
+    return res;
+  }
+
+  getHomeNewsDetails(Map parameters) async {
+    loading.value = true;
+
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().getNewsdata, params: parameters);
+    if (res != null) {
+      singleNewsDetails.value = NewsDetailsModel.fromJson(res);
+    }
+    loading.value = false;
+  }
+
+  getHomeTrending(Map parameters) async {
+    socialMedialoading.value = true;
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().getSMTrending, params: parameters);
+    socialMediaData.clear();
+    if (res != null) {
+      print("res...$res");
+      for (int i = 0; i < res['SMdataRpt'].length; i++) {
+        socialMediaData
+            .add(TrendingOnSocialMModel.fromJson(res['SMdataRpt'][i]));
+      }
+    }
+    socialMedialoading.value = false;
+  }
+
+  getPromotions(Map parameters) async {
+    loading.value = true;
+
+    dynamic res = await ApiCall()
+        .postMethodFun(methodName: ApiData().getPromotions, params: parameters);
+    promotionsData.clear();
+
+    if (res != null) {
+      print("res...$res");
+
+      for (int i = 0; i < res['SMdataRpt'].length; i++) {
+        promotionsData
+            .add(TrendingOnSocialMModel.fromJson(res['SMdataRpt'][i]));
       }
     }
     loading.value = false;

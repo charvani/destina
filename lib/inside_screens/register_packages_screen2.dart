@@ -341,10 +341,10 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
                                                   });
                                                 },
                                                 imagePath:
-                                                    "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                                // packageController
-                                                //     .selPackageItemList[i]
-                                                //     .pImage,
+                                                    // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
+                                                    packageController
+                                                        .selPackageItemList[i]
+                                                        .pImage,
                                                 titile: packageController
                                                     .selPackageItemList[i]
                                                     .pkname)

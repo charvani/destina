@@ -141,4 +141,8 @@ class ApiData {
   String getReviewsdata = "GetReviewsdata";
   String addHelpful = "AddHelpful";
   String getTestimonials = "GetTestimonials";
+  String getNewsEvents = "GetNewsEvents";
+  String getNewsdata = "GetNewsdata";
+  String getSMTrending = "GetSMTrending";
+  String getPromotions = "GetSMTrending";
 }

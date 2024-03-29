@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:destina_1_international/authentication_screens/countryselect_screen.dart';
 import 'package:destina_1_international/commons/colors.dart';
+import 'package:destina_1_international/inside_screens/myEmoney/ecard_reqreport_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart'
@@ -2040,6 +2041,10 @@ class CommonCachedNetworkImage extends StatelessWidget {
       imageUrl: imagePath,
       height: height,
       width: width,
+      // memCacheWidth: 45,
+      // memCacheHeight: ,
+      // maxHeightDiskCache: 60,
+      // maxWidthDiskCache: 45,
       progressIndicatorBuilder: (context, url, progress) => SizedBox(
         width: 80,
         height: loaderHeight,
@@ -2070,52 +2075,38 @@ class PromotionScreenWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(4),
-      height: isBigPromotion
-          ? MediaQuery.of(context).size.height * 0.45
-          : MediaQuery.of(context).size.height * 0.3,
-      width: isBigPromotion
-          ? double.infinity
-          : MediaQuery.of(context).size.width * 0.5,
+      // height: 180,
+      width: MediaQuery.of(context).size.width * 0.5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: isBigPromotion
-                ? MediaQuery.of(context).size.height * 0.35
-                : MediaQuery.of(context).size.height * 0.2,
-            width: isBigPromotion
-                ? double.infinity
-                : MediaQuery.of(context).size.height * 0.25,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage(imagePath),
-                )),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: CommonCachedNetworkImage(imagePath: imagePath),
           ),
           const SpaceHeightWidget(height: 5),
-          Text(
-            titile,
-            style: TextStyle(
-                fontFamily: "OnestSemiBold", fontSize: 14, color: blackColor),
-          ),
-          const SpaceHeightWidget(height: 5),
-          Row(
-            children: [
-              Icon(
-                Icons.timer_outlined,
-                size: 10,
-                color: blackColor.withOpacity(0.4),
-              ),
-              Text(
-                "Start $date",
-                style: TextStyle(
-                    fontFamily: "OnestRegular",
-                    fontSize: 12,
-                    color: blackColor.withOpacity(0.4)),
-              ),
-            ],
-          ),
+          // Text(
+          //   titile,
+          //   style: TextStyle(
+          //       fontFamily: "OnestSemiBold", fontSize: 14, color: blackColor),
+          // ),
+          // const SpaceHeightWidget(height: 5),
+          // Row(
+          //   children: [
+          //     Icon(
+          //       Icons.timer_outlined,
+          //       size: 10,
+          //       color: blackColor.withOpacity(0.4),
+          //     ),
+          //     Text(
+          //       "Start $date",
+          //       style: TextStyle(
+          //           fontFamily: "OnestRegular",
+          //           fontSize: 12,
+          //           color: blackColor.withOpacity(0.4)),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );
@@ -2532,9 +2523,11 @@ class CommonCarousel extends StatelessWidget {
   final List<String> images;
   final bool? autoPlay;
   final VoidCallback? onTapFun;
+  final EdgeInsetsGeometry? padding;
   final Function(int, CarouselPageChangedReason)? onchangedFun;
   const CommonCarousel(
       {super.key,
+      this.padding,
       required this.onchangedFun,
       required this.currentIndex,
       this.autoPlay,
@@ -2549,7 +2542,7 @@ class CommonCarousel extends StatelessWidget {
             itemCount: images.length,
             itemBuilder: (context, i, rindex) {
               return Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: padding ?? const EdgeInsets.all(8.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: GestureDetector(
@@ -5470,6 +5463,95 @@ class OrderSummaryWidget extends StatelessWidget {
               )
             ],
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class WhatsNewWidget extends StatelessWidget {
+  final String title;
+  final String image;
+  final String description;
+  final String popupImage;
+
+  const WhatsNewWidget({
+    super.key,
+    required this.title,
+    required this.image,
+    required this.description,
+    required this.popupImage,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const CommonCachedNetworkImage(
+            imagePath: "",
+            height: 300,
+          ),
+          const SpaceHeightWidget(height: 10),
+
+          Text(
+            title,
+            style: TextStyle(
+                fontFamily: "OnestSemiBold", fontSize: 18, color: darkBlue),
+          ),
+          htmlDataWidget(description),
+          const SpaceHeightWidget(height: 3),
+
+          SizedBox(
+            height: 28,
+            child: CustomAutoWidthButton(
+                onTapFun: () async {
+                  // final Uri url = Uri.parse(popupImage);
+                  // if (!await launchUrl(url)) {
+                  //   throw Exception('Could not launch $url');
+                  // }
+                  Get.dialog(
+                      // barrierDismissible: false,
+                      AlertDialog(
+                          insetPadding: const EdgeInsets.symmetric(
+                              horizontal: 30, vertical: 53),
+                          titlePadding: EdgeInsets.zero,
+                          contentPadding: const EdgeInsets.only(
+                              top: 18, left: 3, right: 3, bottom: 18),
+                          content: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  CommonCachedNetworkImage(
+                                    imagePath: popupImage,
+                                    loaderHeight: 600,
+                                  )
+                                ],
+                              ),
+                            ),
+                          )));
+                },
+                title: "View"),
+          )
+          // RichText(
+          //     text: TextSpan(children: [
+          //   TextSpan(
+          //     text: "Product",
+          //     style: TextStyle(
+          //         fontFamily: "OnestSemiBold", fontSize: 14, color: darkBlue),
+          //   ),
+          //   TextSpan(
+          //     text: productCode,
+          //     style: TextStyle(
+          //         fontFamily: "OnestSemiBold", fontSize: 14, color: darkBlue),
+          //   )
+          // ])),
+          // const SpaceHeightWidget(height: 10),
         ],
       ),
     );
