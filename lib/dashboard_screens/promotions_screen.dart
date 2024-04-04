@@ -2,10 +2,10 @@ import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../commons/constants.dart';
 import '../controllers/main_controller.dart';
+import '../inside_screens/about/weburl_screen.dart';
 
 class PromotionsScreen extends StatefulWidget {
   const PromotionsScreen({super.key});
@@ -105,13 +105,11 @@ class _PromotionsScreenState extends State<PromotionsScreen> {
                                       if (_dataController
                                               .promotionsData[i].redirecturl !=
                                           "") {
-                                        final Uri url = Uri.parse(
-                                            _dataController
-                                                .testimonialData[i].videoUrl);
-                                        if (!await launchUrl(url)) {
-                                          throw Exception(
-                                              'Could not launch $url');
-                                        }
+                                        Get.to(() => WebUrlScreen(
+                                            from: "",
+                                            redirectUrl: _dataController
+                                                .promotionsData[i]
+                                                .redirecturl));
                                       } else {
                                         CommonToast("Coming soon");
                                       }

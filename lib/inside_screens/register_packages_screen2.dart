@@ -120,30 +120,61 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
 
   dialogFun() {
     Get.dialog(Dialog(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              for (int i = 0; i < packageController.packCartList.length; i++)
-                CartItemWidget(
-                    showQuantity: true,
-                    removeFun: () {
-                      Get.back();
-                      cartcountFun("DeleteSignupItem",
-                          packageController.packCartList[i].pkid);
-                    },
-                    imagePath: packageController.packCartList[i].pImage,
-                    itemname: packageController.packCartList[i].pkname,
-                    itemsPrice:
-                        "${packageController.packCartList[i].symbol} ${packageController.packCartList[i].mrp}",
-                    productCode: packageController.packCartList[i].pkcode,
-                    itemCount: packageController.packCartList[i].qty)
-            ],
-          ),
-        ),
-      ),
+      child: Obx(() {
+        return packageController.loading.value
+            ? loader
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      for (int i = 0;
+                          i < packageController.packCartList.length;
+                          i++)
+                        CartItemWidget(
+                            showTotals:
+                                packageController.packCartList.length - i == 1
+                                    ? true
+                                    : false,
+                            totalCV: packageController.cvVal.value.toString(),
+                            totalPrice:
+                                packageController.priceVal.value.toString(),
+                            cv: packageController.packCartList[i].cv,
+                            decrementFun: () {
+                              if (int.parse(
+                                      packageController.packCartList[i].qty) >
+                                  1) {
+                                incrdcrFun(
+                                    "decrement",
+                                    packageController.packCartList[i].qty,
+                                    packageController.packCartList[i].pkcode);
+                              }
+                            },
+                            incrementFun: () {
+                              incrdcrFun(
+                                  "increment",
+                                  packageController.packCartList[i].qty,
+                                  packageController.packCartList[i].pkcode);
+                            },
+                            showQuantity: false,
+                            removeFun: () {
+                              Get.back();
+                              cartcountFun("DeleteSignupItem",
+                                  packageController.packCartList[i].pkid);
+                            },
+                            imagePath: packageController.packCartList[i].pImage,
+                            itemname: packageController.packCartList[i].pkname,
+                            itemsPrice:
+                                "${packageController.packCartList[i].symbol} ${packageController.packCartList[i].mrp}",
+                            productCode:
+                                packageController.packCartList[i].pkcode,
+                            itemCount: packageController.packCartList[i].qty)
+                    ],
+                  ),
+                ),
+              );
+      }),
     ));
   }
 
@@ -465,6 +496,27 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
         ],
       ),
     );
+  }
+
+  incrdcrFun(String from, String itemcount, String packCode) async {
+    print("add to car fun");
+    Map parameters = {
+      "action": "addSGCartitems",
+      "Pkid": packCode,
+      "Country": Constants.prefs.getString("country_id"),
+      "Uniqid": uniqId,
+      "sessid": sessionId,
+      "ipaddress": Constants.prefs.getString("ip"),
+      "sprno": "0",
+      "Quantity": from == "increment"
+          ? "${int.parse(itemcount) + 1}"
+          : "${int.parse(itemcount) - 1}"
+    };
+    print("add to cart params...$parameters");
+    dynamic res = await MainController().getRegPackAddToCart(parameters);
+    if (res['Msg'].toString().toLowerCase() == "success") {
+      cartcountFun("GetSignCartData", "");
+    }
   }
 }
 

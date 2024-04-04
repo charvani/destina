@@ -307,7 +307,30 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
                   i < _dataController.salesMallCartItems.length;
                   i++)
                 CartItemWidget(
-                    showQuantity: true,
+                    showTotals:
+                        _dataController.salesMallCartItems.length - i == 1
+                            ? true
+                            : false,
+                    totalCV: _dataController.cvVal.value.toString(),
+                    totalPrice:
+                        _dataController.salesMallTAmount.value.toString(),
+                    cv: _dataController.salesMallCartItems[i].mrp,
+                    decrementFun: () {
+                      if (int.parse(_dataController.salesMallCartItems[i].qty) >
+                          1) {
+                        incrdcrFun(
+                            "decrement",
+                            _dataController.salesMallCartItems[i].qty,
+                            _dataController.salesMallCartItems[i].pkcode);
+                      }
+                    },
+                    incrementFun: () {
+                      incrdcrFun(
+                          "increment",
+                          _dataController.salesMallCartItems[i].qty,
+                          _dataController.salesMallCartItems[i].pkcode);
+                    },
+                    showQuantity: false,
                     removeFun: () async {
                       Get.back();
                       Map params = {
@@ -342,6 +365,30 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
       Get.to(() => const SalesmallCartScreen(
             from: "sales_mall",
           ));
+    }
+  }
+
+  incrdcrFun(String from, String itemcount, String packCode) async {
+    print("add to car fun");
+    Map parameters = {
+      "action": "addSACartitems",
+      // "addSGCartitems",
+      "Pkid": packCode,
+      "Country": Constants.prefs.getString("country_id"),
+      "Uniqid": uniqId,
+      "sessid": sessionId,
+      "ipaddress": Constants.prefs.getString("ip"),
+      "sprno": Constants.prefs.getString("reg_id"),
+      // "0",
+      "Quantity": from == "increment"
+          ? "${int.parse(itemcount) + 1}"
+          : "${int.parse(itemcount) - 1}"
+    };
+    print("add to cart params...$parameters");
+    dynamic res = await MainController().getRegPackAddToCart(parameters);
+
+    if (res['Msg'].toString().toLowerCase() == "success") {
+      cartItemsFun();
     }
   }
 }

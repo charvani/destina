@@ -840,7 +840,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       "StateID": stateId,
       "CountryID": widget.countryId,
       "LoginID": userNameTController.text,
-      "SessionID": Constants.prefs.get("ss_id")
+      "SessionID": Constants.prefs.get("ss_id"),
+      "Area": zipcodeTController.text
     };
     print("signup params...$params");
     dynamic res = await registerController.getRegister(params);

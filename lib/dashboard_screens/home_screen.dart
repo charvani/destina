@@ -800,10 +800,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               GestureDetector(
                                 behavior: HitTestBehavior.translucent,
                                 onTap: () {
-                                  // Get.to(() => const WebUrlScreen(
-                                  //       from: "",
-                                  //       redirectUrl: "",
-                                  //     ));
+                                  Get.to(() => WebUrlScreen(
+                                        from: "",
+                                        redirectUrl: i == 0
+                                            ? "https://beta.destina1.com/MATNP.html"
+                                            : i == 1
+                                                ? "https://beta.destina1.com/MANLA.html#/"
+                                                : "https://beta.destina1.com/MAPHA.html",
+                                      ));
                                 },
                                 child: SizedBox(
                                   width: 250,
@@ -1320,10 +1324,11 @@ class _HomeScreenState extends State<HomeScreen> {
       behavior: HitTestBehavior.translucent,
       onTap: () async {
         if (redirectUrl != "") {
-          final Uri url = Uri.parse(redirectUrl);
-          if (!await launchUrl(url)) {
-            throw Exception('Could not launch $url');
-          }
+          // final Uri url = Uri.parse(redirectUrl);
+          // if (!await launchUrl(url)) {
+          //   throw Exception('Could not launch $url');
+          // }
+          Get.to(() => WebUrlScreen(from: "", redirectUrl: redirectUrl));
         } else {
           CommonToast("Coming soon");
         }

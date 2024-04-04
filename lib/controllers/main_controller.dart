@@ -86,8 +86,9 @@ class MainController extends GetxController {
   List<String> notificationData = <String>[].obs;
   List<TestimonialModel> testimonialData = <TestimonialModel>[].obs;
   List<NewsModel> newsData = <NewsModel>[].obs;
-  List<PackCartModel> packCartList = <PackCartModel>[].obs;
+  RxList<PackCartModel> packCartList = <PackCartModel>[].obs;
   Rx<double> cvVal = 0.0.obs;
+  Rx<double> priceVal = 0.0.obs;
   RxList<ProductCategoryItem> productItemList = <ProductCategoryItem>[].obs;
   RxList<ProductCategoryItem> searchProductItemList =
       <ProductCategoryItem>[].obs;
@@ -2674,11 +2675,15 @@ class MainController extends GetxController {
         .postMethodFun(methodName: ApiData().nSGCartItems, params: params);
     packCartList.clear();
     cvVal.value = 0.0;
+    priceVal.value = 0.0;
     if (res != null) {
       for (int i = 0; i < res['SGCartItemRpt'].length; i++) {
         packCartList.add(PackCartModel.fromJson(res['SGCartItemRpt'][i]));
         cvVal.value = cvVal.value +
             (double.parse(res['SGCartItemRpt'][i]['CV']) *
+                double.parse(res['SGCartItemRpt'][i]['Qty']));
+        priceVal.value = priceVal.value +
+            (double.parse(res['SGCartItemRpt'][i]['mrp']) *
                 double.parse(res['SGCartItemRpt'][i]['Qty']));
       }
     }

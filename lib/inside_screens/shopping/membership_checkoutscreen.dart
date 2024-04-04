@@ -56,8 +56,8 @@ class _MemberShipCheckOutScreenState extends State<MemberShipCheckOutScreen> {
             title: "Checkout",
             onTapFun: () async {
               Map bodyData = {
-                "idno": Constants.prefs.getString("user_id"),
-                "Pwd": Constants.prefs.getString("password"),
+                "idno": Constants.prefs.getString("user_id").toString().trim(),
+                "Pwd": Constants.prefs.getString("password").toString().trim(),
                 "FcmId": "1233455",
                 "IMEI": _loginController.imeiNum.value,
                 "MOBINFO": _loginController.mobileInfo.value,

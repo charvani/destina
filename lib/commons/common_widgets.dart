@@ -2082,7 +2082,10 @@ class PromotionScreenWidget extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: CommonCachedNetworkImage(imagePath: imagePath),
+            child: CommonCachedNetworkImage(
+              imagePath: imagePath,
+              loaderHeight: 100,
+            ),
           ),
           const SpaceHeightWidget(height: 5),
           // Text(
@@ -2746,10 +2749,14 @@ class CartItemWidget extends StatelessWidget {
   final String itemsPrice;
   final bool? removeCartOption;
   final String? dp;
+  final String? cv;
+  final String? totalPrice;
+  final String? totalCV;
   final VoidCallback? incrementFun;
   final VoidCallback? decrementFun;
   final String? indecrCount;
   final bool? showQuantity;
+  final bool? showTotals;
 
   const CartItemWidget(
       {super.key,
@@ -2760,7 +2767,11 @@ class CartItemWidget extends StatelessWidget {
       required this.itemsPrice,
       required this.productCode,
       this.showQuantity,
+      this.showTotals,
       this.dp,
+      this.cv,
+      this.totalCV,
+      this.totalPrice,
       this.indecrCount,
       this.incrementFun,
       this.decrementFun,
@@ -2770,155 +2781,128 @@ class CartItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         children: [
-          CommonCachedNetworkImage(
-            imagePath: imagePath,
-            height: 90,
-            width: 100,
-          ),
-          const SpaceWidthWidget(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  itemname,
-                  maxLines: 3,
-                  style: TextStyle(
-                      fontFamily: "OnestRegular",
-                      fontSize: 11,
-                      color: blackColor),
-                ),
-                const SpaceHeightWidget(height: 5),
-                RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                    text: "Product Code: ",
-                    style: TextStyle(
-                        fontFamily: "OnestRegular",
-                        fontSize: 12,
-                        color: blackColor.withOpacity(0.7)),
-                  ),
-                  TextSpan(
-                      text: productCode,
-                      style: TextStyle(
-                          fontFamily: "OnestRegular",
-                          fontSize: 12,
-                          color: blackColor.withOpacity(0.5)))
-                ])),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CommonCachedNetworkImage(
+                imagePath: imagePath,
+                height: 90,
+                width: 100,
+              ),
+              const SpaceWidthWidget(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+                    Text(
+                      itemname,
+                      maxLines: 3,
+                      style: TextStyle(
+                          fontFamily: "OnestSemiBold",
+                          fontSize: 11,
+                          color: darkBlue),
+                    ),
+                    const SpaceHeightWidget(height: 5),
                     RichText(
                         text: TextSpan(children: [
                       TextSpan(
-                        text: "MRP: ",
+                        text: "Product Code: ",
                         style: TextStyle(
                             fontFamily: "OnestRegular",
                             fontSize: 12,
-                            color: blackColor.withOpacity(0.7)),
+                            color: darkBlue),
                       ),
                       TextSpan(
-                          text: itemsPrice,
+                          text: productCode,
                           style: TextStyle(
                               fontFamily: "OnestRegular",
                               fontSize: 12,
-                              color: blackColor.withOpacity(0.5)))
+                              color: darkBlue))
                     ])),
-                  ],
-                ),
-                // const SpaceHeightWidget(height: 5),
-                if (dp != null && dp != "")
-                  RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                      text: "DP: ",
-                      style: TextStyle(
-                          fontFamily: "OnestRegular",
-                          fontSize: 12,
-                          color: blackColor.withOpacity(0.7)),
-                    ),
-                    TextSpan(
-                        text: dp,
-                        style: TextStyle(
-                            fontFamily: "OnestRegular",
-                            fontSize: 12,
-                            color: blackColor.withOpacity(0.5)))
-                  ])),
-                (showQuantity == true)
-                    ? Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            children: [
-                              // const SpaceHeightWidget(height: 5),
-                              RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                  text: "Quantity: ",
-                                  style: TextStyle(
-                                      fontFamily: "OnestRegular",
-                                      fontSize: 12,
-                                      color: blackColor.withOpacity(0.7)),
-                                ),
-                                TextSpan(
-                                    text: itemCount,
-                                    style: TextStyle(
-                                        fontFamily: "OnestRegular",
-                                        fontSize: 12,
-                                        color: blackColor.withOpacity(0.5)))
-                              ])),
-                            ],
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                            text: "MRP: ",
+                            style: TextStyle(
+                                fontFamily: "OnestRegular",
+                                fontSize: 12,
+                                color: darkBlue),
                           ),
-                          if (removeCartOption != true)
-                            GestureDetector(
-                                onTap: removeFun,
-                                child: CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor: darkRedColor,
-                                  child: Icon(
-                                    Icons.delete_forever,
-                                    color: whiteColor,
-                                    size: 17,
-                                  ),
-                                ))
-                        ],
-                      )
-                    : Column(
-                        children: [
-                          const SpaceHeightWidget(height: 3),
-                          Row(
+                          TextSpan(
+                              text: itemsPrice,
+                              style: TextStyle(
+                                  fontFamily: "OnestRegular",
+                                  fontSize: 12,
+                                  color: darkBlue))
+                        ])),
+                      ],
+                    ),
+                    // const SpaceHeightWidget(height: 5),
+                    if (dp != null && dp != "")
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                          text: "DP: ",
+                          style: TextStyle(
+                              fontFamily: "OnestRegular",
+                              fontSize: 12,
+                              color: darkBlue),
+                        ),
+                        TextSpan(
+                            text: dp,
+                            style: TextStyle(
+                                fontFamily: "OnestRegular",
+                                fontSize: 12,
+                                color: darkBlue))
+                      ])),
+                    if (cv != null && cv != "")
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                          text: "CV: ",
+                          style: TextStyle(
+                              fontFamily: "OnestRegular",
+                              fontSize: 12,
+                              color: darkBlue),
+                        ),
+                        TextSpan(
+                            text:
+                                double.parse(cv!).toStringAsFixed(2).toString(),
+                            style: TextStyle(
+                                fontFamily: "OnestRegular",
+                                fontSize: 12,
+                                color: darkBlue))
+                      ])),
+                    (showQuantity == true)
+                        ? Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
+                              Column(
                                 children: [
-                                  InkWell(
-                                    onTap: decrementFun,
-                                    child: const CircleAvatar(
-                                      radius: 11,
-                                      child: Icon(
-                                        Icons.remove,
-                                        size: 13,
-                                      ),
+                                  // const SpaceHeightWidget(height: 5),
+                                  RichText(
+                                      text: TextSpan(children: [
+                                    TextSpan(
+                                      text: "Quantity: ",
+                                      style: TextStyle(
+                                          fontFamily: "OnestRegular",
+                                          fontSize: 12,
+                                          color: darkBlue),
                                     ),
-                                  ),
-                                  const SpaceWidthWidget(width: 8),
-                                  SideTitle(title: indecrCount ?? itemCount),
-                                  const SpaceWidthWidget(width: 8),
-                                  InkWell(
-                                    onTap: incrementFun,
-                                    child: const CircleAvatar(
-                                      radius: 11,
-                                      child: Icon(
-                                        Icons.add,
-                                        size: 13,
-                                      ),
-                                    ),
-                                  ),
+                                    TextSpan(
+                                        text: itemCount,
+                                        style: TextStyle(
+                                            fontFamily: "OnestRegular",
+                                            fontSize: 12,
+                                            color: darkBlue))
+                                  ])),
                                 ],
                               ),
                               if (removeCartOption != true)
@@ -2934,12 +2918,99 @@ class CartItemWidget extends StatelessWidget {
                                       ),
                                     ))
                             ],
-                          ),
-                        ],
-                      )
+                          )
+                        : Column(
+                            children: [
+                              const SpaceHeightWidget(height: 3),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      InkWell(
+                                        onTap: decrementFun,
+                                        child: const CircleAvatar(
+                                          radius: 11,
+                                          child: Icon(
+                                            Icons.remove,
+                                            size: 13,
+                                          ),
+                                        ),
+                                      ),
+                                      const SpaceWidthWidget(width: 8),
+                                      SideTitle(
+                                          title: indecrCount ?? itemCount),
+                                      const SpaceWidthWidget(width: 8),
+                                      InkWell(
+                                        onTap: incrementFun,
+                                        child: const CircleAvatar(
+                                          radius: 11,
+                                          child: Icon(
+                                            Icons.add,
+                                            size: 13,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  if (removeCartOption != true)
+                                    GestureDetector(
+                                        onTap: removeFun,
+                                        child: CircleAvatar(
+                                          radius: 15,
+                                          backgroundColor: darkRedColor,
+                                          child: Icon(
+                                            Icons.delete_forever,
+                                            color: whiteColor,
+                                            size: 17,
+                                          ),
+                                        ))
+                                ],
+                              ),
+                            ],
+                          )
+                  ],
+                ),
+              )
+            ],
+          ),
+          if (showTotals == true)
+            Column(
+              children: [
+                const SpaceHeightWidget(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Total Price",
+                        style: TextStyle(
+                            fontFamily: "OnestSemiBold",
+                            fontSize: 12,
+                            color: darkBlue)),
+                    Text(totalPrice ?? "",
+                        style: TextStyle(
+                            fontFamily: "OnestSemiBold",
+                            fontSize: 12,
+                            color: darkBlue)),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Total CV",
+                        style: TextStyle(
+                            fontFamily: "OnestSemiBold",
+                            fontSize: 12,
+                            color: darkBlue)),
+                    Text(totalCV ?? "",
+                        style: TextStyle(
+                            fontFamily: "OnestSemiBold",
+                            fontSize: 12,
+                            color: darkBlue)),
+                  ],
+                ),
               ],
-            ),
-          )
+            )
         ],
       ),
     );
