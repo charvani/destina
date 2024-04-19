@@ -426,7 +426,7 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
                                                       .spaceBetween,
                                               children: [
                                                 const Text(
-                                                  "Subtotal",
+                                                  "Order Subtotal",
                                                   style: TextStyle(
                                                     fontFamily: "OnestRegular",
                                                     fontSize: 15,
@@ -458,7 +458,7 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  "Estimated Total",
+                                                  "Total Amount",
                                                   style: TextStyle(
                                                     fontFamily: "OnestSemiBold",
                                                     fontSize: 15,

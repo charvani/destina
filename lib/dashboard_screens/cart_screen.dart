@@ -269,6 +269,23 @@ class _CartScreenState extends State<CartScreen> {
                                     Column(
                                       children: [
                                         CartItemWidget(
+                                          showTotals: true,
+                                          totalPrice: (double.parse(
+                                                      cartController
+                                                          .cartItemsList[i]
+                                                          .packMrp) *
+                                                  double.parse(cartController
+                                                      .cartItemsList[i]
+                                                      .packQuantity))
+                                              .toString(),
+                                          totalCV: (double.parse(cartController
+                                                      .cartItemsList[i].cv) *
+                                                  double.parse(cartController
+                                                      .cartItemsList[i]
+                                                      .packQuantity))
+                                              .toString(),
+                                          cv: cartController
+                                              .cartItemsList[i].cv,
                                           decrementFun: () {
                                             if (int.parse(cartController
                                                     .cartItemsList[i]
@@ -390,6 +407,11 @@ class _CartScreenState extends State<CartScreen> {
 
                                   const SpaceHeightWidget(height: 10),
                                   OrderSummaryWidget(
+                                      itemsCount: cartController
+                                          .cartItemsList.length
+                                          .toString(),
+                                      cvT: cartController.totalCV.value
+                                          .toString(),
                                       estimatedT: cartController
                                           .totalAmount.value
                                           .toString(),

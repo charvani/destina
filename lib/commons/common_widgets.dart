@@ -2872,8 +2872,7 @@ class CartItemWidget extends StatelessWidget {
                               color: darkBlue),
                         ),
                         TextSpan(
-                            text:
-                                double.parse(cv!).toStringAsFixed(2).toString(),
+                            text: double.parse(cv!).toStringAsFixed(0),
                             style: TextStyle(
                                 fontFamily: "OnestRegular",
                                 fontSize: 12,
@@ -2987,7 +2986,10 @@ class CartItemWidget extends StatelessWidget {
                             fontFamily: "OnestSemiBold",
                             fontSize: 12,
                             color: darkBlue)),
-                    Text(totalPrice ?? "",
+                    Text(
+                        totalPrice!.contains("DP") == true
+                            ? totalPrice!
+                            : double.parse(totalPrice!).toStringAsFixed(2),
                         style: TextStyle(
                             fontFamily: "OnestSemiBold",
                             fontSize: 12,
@@ -3002,7 +3004,7 @@ class CartItemWidget extends StatelessWidget {
                             fontFamily: "OnestSemiBold",
                             fontSize: 12,
                             color: darkBlue)),
-                    Text(totalCV ?? "",
+                    Text(double.parse(totalCV!).toStringAsFixed(0),
                         style: TextStyle(
                             fontFamily: "OnestSemiBold",
                             fontSize: 12,
@@ -3480,7 +3482,7 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Subtotal",
+                "Order Subtotal",
                 style: TextStyle(
                     fontFamily: "OnestRegular",
                     color: blackColor.withOpacity(0.6),
@@ -3526,7 +3528,7 @@ class CheckoutOrderSummaryWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Estimated Total",
+                "Total Amount",
                 style: TextStyle(
                     fontFamily: "OnestSemiBold",
                     color: blackColor.withOpacity(0.8),
@@ -4542,20 +4544,24 @@ class ViewProfileWidget extends StatelessWidget {
       padding: const EdgeInsets.all(3.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Flexible(
+          Expanded(
             child: Text(
               title,
               style: TextStyle(
                   fontFamily: fontfamily ?? "OnestRegular", fontSize: 14),
             ),
           ),
-          Text(
-            info,
-            style: TextStyle(
-                fontFamily: fontfamily ?? "OnestSemiBold",
-                fontSize: 14,
-                color: infoColor),
+          Flexible(
+            child: Text(
+              info,
+              maxLines: 4,
+              style: TextStyle(
+                  fontFamily: fontfamily ?? "OnestSemiBold",
+                  fontSize: 14,
+                  color: infoColor),
+            ),
           ),
         ],
       ),
@@ -5464,12 +5470,14 @@ class KristaliaTileWidget extends StatelessWidget {
 }
 
 class OrderSummaryWidget extends StatelessWidget {
-  final String symbol, estimatedT, subT;
+  final String symbol, estimatedT, subT, cvT, itemsCount;
 
   const OrderSummaryWidget(
       {super.key,
       required this.estimatedT,
       required this.subT,
+      required this.cvT,
+      required this.itemsCount,
       required this.symbol});
 
   @override
@@ -5495,14 +5503,34 @@ class OrderSummaryWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                "Subtotal",
+                "Total Items",
                 style: TextStyle(
                   fontFamily: "OnestRegular",
                   fontSize: 15,
                 ),
               ),
               Text(
-                "$symbol $subT",
+                itemsCount,
+                style: const TextStyle(
+                  fontFamily: "OnestRegular",
+                  fontSize: 15,
+                ),
+              )
+            ],
+          ),
+          const SpaceHeightWidget(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Order Subtotal",
+                style: TextStyle(
+                  fontFamily: "OnestRegular",
+                  fontSize: 15,
+                ),
+              ),
+              Text(
+                "$symbol ${double.parse(subT).toStringAsFixed(2)}",
                 style: const TextStyle(
                   fontFamily: "OnestRegular",
                   fontSize: 15,
@@ -5517,7 +5545,7 @@ class OrderSummaryWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Estimated Total",
+                "Total Amount",
                 style: TextStyle(
                   fontFamily: "OnestSemiBold",
                   fontSize: 15,
@@ -5525,7 +5553,31 @@ class OrderSummaryWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                "$symbol $estimatedT",
+                "$symbol ${double.parse(estimatedT).toStringAsFixed(2)}",
+                style: TextStyle(
+                  fontFamily: "OnestSemiBold",
+                  fontSize: 15,
+                  color: darkBlue,
+                ),
+              )
+            ],
+          ),
+          const SpaceHeightWidget(height: 10),
+          const CommonDivider(),
+          const SpaceHeightWidget(height: 5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Total CV",
+                style: TextStyle(
+                  fontFamily: "OnestSemiBold",
+                  fontSize: 15,
+                  color: darkBlue,
+                ),
+              ),
+              Text(
+                double.parse(cvT).toStringAsFixed(0),
                 style: TextStyle(
                   fontFamily: "OnestSemiBold",
                   fontSize: 15,

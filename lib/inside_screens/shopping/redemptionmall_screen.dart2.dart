@@ -297,43 +297,79 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
 
   dialogFun() {
     Get.dialog(Dialog(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              for (int i = 0;
-                  i < _dataController.salesMallCartItems.length;
-                  i++)
-                CartItemWidget(
-                    showQuantity: true,
-                    removeFun: () async {
-                      Get.back();
-                      Map params = {
-                        "Regid": _dataController.salesMallCartItems[i].sno,
-                      };
-                      dynamic res = await ApiCall().postMethodFun(
-                          methodName: ApiData().removeRedemProduct,
-                          params: params);
-                      if (res != null) {
-                        if (res['Msg'] == "SUCCESS") {
-                          cartItemsFun();
-                        } else {
-                          CommonToast(res['Message']);
-                        }
-                      }
-                    },
-                    imagePath: _dataController.salesMallCartItems[i].pimage,
-                    itemname: _dataController.salesMallCartItems[i].pkname,
-                    itemsPrice:
-                        "${_dataController.salesMallCartItems[i].symbol} ${_dataController.salesMallCartItems[i].mrp}",
-                    productCode: _dataController.salesMallCartItems[i].pkcode,
-                    itemCount: _dataController.salesMallCartItems[i].qty)
-            ],
-          ),
-        ),
-      ),
+      child: Obx(() {
+        return _dataController.loading.value
+            ? loader
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      for (int i = 0;
+                          i < _dataController.salesMallCartItems.length;
+                          i++)
+                        CartItemWidget(
+                            showTotals:
+                                _dataController.salesMallCartItems.length - i ==
+                                        1
+                                    ? true
+                                    : false,
+                            totalCV:
+                                _dataController.salesMallTCV.value.toString(),
+                            totalPrice: _dataController.salesMallTAmount.value
+                                .toString(),
+                            cv: _dataController.salesMallCartItems[i].cv,
+                            decrementFun: () {
+                              if (int.parse(_dataController
+                                      .salesMallCartItems[i].qty) >
+                                  1) {
+                                incrdcrFun(
+                                    "decrement",
+                                    _dataController.salesMallCartItems[i].qty,
+                                    _dataController
+                                        .salesMallCartItems[i].pkcode);
+                              }
+                            },
+                            incrementFun: () {
+                              incrdcrFun(
+                                  "increment",
+                                  _dataController.salesMallCartItems[i].qty,
+                                  _dataController.salesMallCartItems[i].pkcode);
+                            },
+                            showQuantity: false,
+                            removeFun: () async {
+                              Get.back();
+                              Map params = {
+                                "Regid":
+                                    _dataController.salesMallCartItems[i].sno,
+                              };
+                              dynamic res = await ApiCall().postMethodFun(
+                                  methodName: ApiData().removeRedemProduct,
+                                  params: params);
+                              if (res != null) {
+                                if (res['Msg'] == "SUCCESS") {
+                                  cartItemsFun();
+                                } else {
+                                  CommonToast(res['Message']);
+                                }
+                              }
+                            },
+                            imagePath:
+                                _dataController.salesMallCartItems[i].pimage,
+                            itemname:
+                                _dataController.salesMallCartItems[i].pkname,
+                            itemsPrice:
+                                "${_dataController.salesMallCartItems[i].symbol} ${_dataController.salesMallCartItems[i].mrp}",
+                            productCode:
+                                _dataController.salesMallCartItems[i].pkcode,
+                            itemCount:
+                                _dataController.salesMallCartItems[i].qty)
+                    ],
+                  ),
+                ),
+              );
+      }),
     ));
   }
 
@@ -358,5 +394,28 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
     print("cart params...$cartParams");
     dynamic res = await _dataController.getMallCartItems(
         "Redemption mall load", cartParams, ApiData().getRedemPackages);
+  }
+
+  incrdcrFun(String from, String itemcount, String packCode) async {
+    print("add to car fun");
+    Map parameters = {
+      "action": "addRDCartitems",
+      "Pkid": packCode,
+      "Country": Constants.prefs.getString("country_id"),
+      "Uniqid": uniqId,
+      "sessid": sessionId,
+      "ipaddress": Constants.prefs.getString("ip"),
+      "sprno": Constants.prefs.getString("reg_id"),
+      // "0",
+      "Quantity": from == "increment"
+          ? "${int.parse(itemcount) + 1}"
+          : "${int.parse(itemcount) - 1}"
+    };
+    print("add to cart params...$parameters");
+    dynamic res = await MainController().getRegPackAddToCart(parameters);
+
+    if (res['Msg'].toString().toLowerCase() == "success") {
+      cartItemsFun();
+    }
   }
 }

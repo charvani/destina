@@ -95,7 +95,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
         iconRelatedWidget(Icons.access_time, "Open From", "Monday to Friday"),
         const SpaceHeightWidget(height: 4),
         iconRelatedWidget(
-            Icons.access_time, "Operating Hours", "10:30 AM - 08:00 PM"),
+            Icons.access_time, "Operating Hours", "9:00 AM - 7:00 PM"),
       ],
     );
   }

@@ -18,6 +18,7 @@ class SalesMallCartItemModel {
   String qty;
   String symbol;
   dynamic sno;
+  String cv;
 
   SalesMallCartItemModel({
     required this.pkname,
@@ -27,6 +28,7 @@ class SalesMallCartItemModel {
     required this.qty,
     required this.sno,
     required this.symbol,
+    required this.cv,
   });
 
   factory SalesMallCartItemModel.fromJson(Map<String, dynamic> json) =>
@@ -37,6 +39,7 @@ class SalesMallCartItemModel {
         mrp: json["mrp"],
         qty: json["qty"],
         sno: json["sno"],
+        cv: json["CV"] ?? "",
         symbol: json["Symbol"] ?? "",
       );
 

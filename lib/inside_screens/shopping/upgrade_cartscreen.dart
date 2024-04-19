@@ -271,7 +271,7 @@ class _UpgradeCartScreenState extends State<UpgradeCartScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             const Text(
-                                              "Subtotal",
+                                              "Order Subtotal",
                                               style: TextStyle(
                                                 fontFamily: "OnestRegular",
                                                 fontSize: 15,
@@ -303,7 +303,7 @@ class _UpgradeCartScreenState extends State<UpgradeCartScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              "Estimated Total",
+                                              "Total Amount",
                                               style: TextStyle(
                                                 fontFamily: "OnestSemiBold",
                                                 fontSize: 15,
@@ -335,8 +335,6 @@ class _UpgradeCartScreenState extends State<UpgradeCartScreen> {
                                           height: 35,
                                           child: IconElevatedButton(
                                             onTapFun: () async {
-                                              
-
                                               Get.off(() => CheckOutScreen(
                                                   redirectUrl:
                                                       "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/UpgradeCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId"));

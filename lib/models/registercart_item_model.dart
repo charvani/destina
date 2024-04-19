@@ -18,6 +18,7 @@ class RegisterCartItemsModel {
   String pImage;
   String symbol;
   String qty;
+  String cv;
 
   RegisterCartItemsModel({
     required this.pkid,
@@ -27,6 +28,7 @@ class RegisterCartItemsModel {
     required this.pImage,
     required this.symbol,
     required this.qty,
+    required this.cv,
   });
 
   factory RegisterCartItemsModel.fromJson(Map<String, dynamic> json) =>
@@ -38,6 +40,7 @@ class RegisterCartItemsModel {
         pImage: json["PImage"],
         symbol: json["symbol"],
         qty: json["Qty"],
+        cv: json["CV"]??"0",
       );
 
   Map<String, dynamic> toJson() => {

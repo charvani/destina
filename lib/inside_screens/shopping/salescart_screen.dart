@@ -153,6 +153,28 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                         Column(
                                           children: [
                                             CartItemWidget(
+                                              showTotals: true,
+                                              totalPrice: (double.parse(
+                                                          cartController
+                                                              .salesMallCartItems[
+                                                                  i]
+                                                              .mrp) *
+                                                      double.parse(cartController
+                                                          .salesMallCartItems[i]
+                                                          .qty))
+                                                  .toString(),
+                                              totalCV: (double.parse(
+                                                          cartController
+                                                              .salesMallCartItems[
+                                                                  i]
+                                                              .cv) *
+                                                      double.parse(cartController
+                                                          .salesMallCartItems[i]
+                                                          .qty))
+                                                  .toString(),
+                                              cv: cartController
+                                                  .salesMallCartItems[i].cv,
+
                                               // removeCartOption: true,
                                               decrementFun: () {
                                                 if (int.parse(cartController
@@ -332,94 +354,146 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                           ),
                                         ),
                                       const SpaceHeightWidget(height: 15),
-                                      Container(
-                                        width: double.infinity,
-                                        margin: const EdgeInsets.all(10),
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15, vertical: 20),
-                                        decoration: BoxDecoration(
-                                            color:
-                                                lightDarKBlue.withOpacity(0.1),
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Text(
-                                              "Order Summary",
-                                              style: TextStyle(
-                                                fontFamily: "OnestBold",
-                                                fontSize: 17,
-                                              ),
-                                            ),
-                                            const SpaceHeightWidget(height: 10),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                const Text(
-                                                  "Subtotal",
-                                                  style: TextStyle(
-                                                    fontFamily: "OnestRegular",
-                                                    fontSize: 15,
-                                                  ),
-                                                ),
-                                                Obx(() {
-                                                  return cartController
-                                                          .loading.value
-                                                      ? Text(
-                                                          "${cartController.salesMallCartItems[0].symbol} 0.0")
-                                                      : Text(
-                                                          "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallTAmount.value}",
-                                                          style:
-                                                              const TextStyle(
-                                                            fontFamily:
-                                                                "OnestRegular",
-                                                            fontSize: 15,
-                                                          ),
-                                                        );
-                                                }),
-                                              ],
-                                            ),
-                                            const SpaceHeightWidget(height: 10),
-                                            const CommonDivider(),
-                                            const SpaceHeightWidget(height: 5),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  "Estimated Total",
-                                                  style: TextStyle(
-                                                    fontFamily: "OnestSemiBold",
-                                                    fontSize: 15,
-                                                    color: darkBlue,
-                                                  ),
-                                                ),
-                                                Obx(() {
-                                                  return cartController
-                                                          .loading.value
-                                                      ? Text(
-                                                          "${cartController.salesMallCartItems[0].symbol} 0.0")
-                                                      : Text(
-                                                          "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallTAmount.value}",
-                                                          style: TextStyle(
-                                                            fontFamily:
-                                                                "OnestSemiBold",
-                                                            fontSize: 15,
-                                                            color: darkBlue,
-                                                          ),
-                                                        );
-                                                }),
-                                              ],
-                                            ),
-                                            const SpaceHeightWidget(height: 20),
-                                          ],
-                                        ),
-                                      ),
+                                      Obx(() {
+                                        return cartController.loading.value
+                                            ? loader
+                                            : OrderSummaryWidget(
+                                                itemsCount: cartController
+                                                    .salesMallCartItems.length
+                                                    .toString(),
+                                                cvT: cartController
+                                                    .salesMallTCV.value
+                                                    .toString(),
+                                                estimatedT: cartController
+                                                    .salesMallTAmount.value
+                                                    .toString(),
+                                                subT: cartController
+                                                    .salesMallTAmount.value
+                                                    .toString(),
+                                                symbol: cartController
+                                                    .salesMallCartItems[0]
+                                                    .symbol);
+                                      }),
+                                      // Container(
+                                      //   width: double.infinity,
+                                      //   margin: const EdgeInsets.all(10),
+                                      //   padding: const EdgeInsets.symmetric(
+                                      //       horizontal: 15, vertical: 20),
+                                      //   decoration: BoxDecoration(
+                                      //       color:
+                                      //           lightDarKBlue.withOpacity(0.1),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(10)),
+                                      //   child: Column(
+                                      //     crossAxisAlignment:
+                                      //         CrossAxisAlignment.start,
+                                      //     children: [
+                                      //       const Text(
+                                      //         "Order Summary",
+                                      //         style: TextStyle(
+                                      //           fontFamily: "OnestBold",
+                                      //           fontSize: 17,
+                                      //         ),
+                                      //       ),
+                                      //       const SpaceHeightWidget(height: 10),
+
+                                      //       Row(
+                                      //         mainAxisAlignment:
+                                      //             MainAxisAlignment
+                                      //                 .spaceBetween,
+                                      //         children: [
+                                      //           const Text(
+                                      //             "Order Subtotal",
+                                      //             style: TextStyle(
+                                      //               fontFamily: "OnestRegular",
+                                      //               fontSize: 15,
+                                      //             ),
+                                      //           ),
+                                      //           Obx(() {
+                                      //             return cartController
+                                      //                     .loading.value
+                                      //                 ? Text(
+                                      //                     "${cartController.salesMallCartItems[0].symbol} 0.0")
+                                      //                 : Text(
+                                      //                     "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallTAmount.value}",
+                                      //                     style:
+                                      //                         const TextStyle(
+                                      //                       fontFamily:
+                                      //                           "OnestRegular",
+                                      //                       fontSize: 15,
+                                      //                     ),
+                                      //                   );
+                                      //           }),
+                                      //         ],
+                                      //       ),
+                                      //       const SpaceHeightWidget(height: 10),
+                                      //       const CommonDivider(),
+                                      //       const SpaceHeightWidget(height: 5),
+                                      //       Row(
+                                      //         mainAxisAlignment:
+                                      //             MainAxisAlignment
+                                      //                 .spaceBetween,
+                                      //         children: [
+                                      //           Text(
+                                      //             "Total Amount",
+                                      //             style: TextStyle(
+                                      //               fontFamily: "OnestSemiBold",
+                                      //               fontSize: 15,
+                                      //               color: darkBlue,
+                                      //             ),
+                                      //           ),
+                                      //           Obx(() {
+                                      //             return cartController
+                                      //                     .loading.value
+                                      //                 ? Text(
+                                      //                     "${cartController.salesMallCartItems[0].symbol} 0.0")
+                                      //                 : Text(
+                                      //                     "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallTAmount.value}",
+                                      //                     style: TextStyle(
+                                      //                       fontFamily:
+                                      //                           "OnestSemiBold",
+                                      //                       fontSize: 15,
+                                      //                       color: darkBlue,
+                                      //                     ),
+                                      //                   );
+                                      //           }),
+                                      //         ],
+                                      //       ),
+                                      //       const SpaceHeightWidget(height: 10),
+                                      //       // const CommonDivider(),
+                                      //       // const SpaceHeightWidget(height: 5),
+                                      //       // Row(
+                                      //       //   mainAxisAlignment:
+                                      //       //       MainAxisAlignment
+                                      //       //           .spaceBetween,
+                                      //       //   children: [
+                                      //       //     Text(
+                                      //       //       "Total CV",
+                                      //       //       style: TextStyle(
+                                      //       //         fontFamily: "OnestSemiBold",
+                                      //       //         fontSize: 15,
+                                      //       //         color: darkBlue,
+                                      //       //       ),
+                                      //       //     ),
+                                      //       //     Obx(() {
+                                      //       //       return cartController
+                                      //       //               .loading.value
+                                      //       //           ? const Text("0.0")
+                                      //       //           : Text(
+                                      //       //               "${cartController.salesMallTCV.value}",
+                                      //       //               style: TextStyle(
+                                      //       //                 fontFamily:
+                                      //       //                     "OnestSemiBold",
+                                      //       //                 fontSize: 15,
+                                      //       //                 color: darkBlue,
+                                      //       //               ),
+                                      //       //             );
+                                      //       //     }),
+                                      //       //   ],
+                                      //       // ),
+                                      //     ],
+                                      //   ),
+                                      // ),
                                       const SpaceHeightWidget(height: 20),
                                       // Container(
                                       //   padding: const EdgeInsets.all(8.0),

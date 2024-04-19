@@ -381,7 +381,7 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                                       .spaceBetween,
                                               children: [
                                                 const Text(
-                                                  "Subtotal",
+                                                  "Order Subtotal",
                                                   style: TextStyle(
                                                     fontFamily: "OnestRegular",
                                                     fontSize: 15,
@@ -413,7 +413,7 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  "Estimated Total",
+                                                  "Total Amount",
                                                   style: TextStyle(
                                                     fontFamily: "OnestSemiBold",
                                                     fontSize: 15,

@@ -207,7 +207,7 @@ class _PromoCartScreenState extends State<PromoCartScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    "Subtotal",
+                    "Order Subtotal",
                     style: TextStyle(
                       fontFamily: "OnestRegular",
                       fontSize: 15,
@@ -233,7 +233,7 @@ class _PromoCartScreenState extends State<PromoCartScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Estimated Total",
+                    "Total Amount",
                     style: TextStyle(
                       fontFamily: "OnestSemiBold",
                       fontSize: 15,
@@ -260,7 +260,6 @@ class _PromoCartScreenState extends State<PromoCartScreen> {
                 height: 35,
                 child: IconElevatedButton(
                   onTapFun: () async {
-                    
                     Get.off(() => CheckOutScreen(
                         redirectUrl: widget.pkMallNum == "3"
                             ? "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/PromoCheckoutParam.html?RegId=$regId&sessid=$sessionId&uniqId=$uniqId"

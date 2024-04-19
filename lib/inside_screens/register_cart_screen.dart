@@ -9,8 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../commons/colors.dart';
-import '../service_call/api_data.dart';
-import 'checkout_screen.dart';
 
 class RegisterCartScreen extends StatefulWidget {
   final String packageCode;
@@ -119,8 +117,8 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
               color: whiteColor,
             ),
             onPressed: () {
-              // getData("init");
-              Get.back();
+              getData("init");
+              // Get.back();-----> enable after check
 
               // setState(() {
               //   packageLoading = false;
@@ -261,6 +259,8 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                         Column(
                                           children: [
                                             CartItemWidget(
+                                              cv: cartController
+                                                  .registerCartItems[i].cv,
                                               showQuantity: true,
                                               // decrementFun: () {
                                               //   if (int.parse(cartController
@@ -399,137 +399,150 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                           ),
                                         ),
                                       const SpaceHeightWidget(height: 15),
-                                      Container(
-                                        width: double.infinity,
-                                        margin: const EdgeInsets.all(10),
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 15, vertical: 20),
-                                        decoration: BoxDecoration(
-                                            color:
-                                                lightDarKBlue.withOpacity(0.1),
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Order Summary",
-                                              style: TextStyle(
-                                                  fontFamily: "OnestBold",
-                                                  fontSize: 17,
-                                                  color: darkBlue),
-                                            ),
-                                            const SpaceHeightWidget(height: 10),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                const Text(
-                                                  "Subtotal",
-                                                  style: TextStyle(
-                                                    fontFamily: "OnestRegular",
-                                                    fontSize: 15,
-                                                  ),
-                                                ),
-                                                Obx(() {
-                                                  return cartController
-                                                          .loading.value
-                                                      ? Text(
-                                                          "${cartController.registerCartItems[0].symbol} 0.0")
-                                                      : Text(
-                                                          "${cartController.registerCartItems[0].symbol} ${cartController.totalAmount.value}",
-                                                          style:
-                                                              const TextStyle(
-                                                            fontFamily:
-                                                                "OnestRegular",
-                                                            fontSize: 15,
-                                                          ),
-                                                        );
-                                                }),
-                                              ],
-                                            ),
-                                            const SpaceHeightWidget(height: 10),
-                                            const CommonDivider(),
-                                            const SpaceHeightWidget(height: 5),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  "Estimated Total",
-                                                  style: TextStyle(
-                                                    fontFamily: "OnestSemiBold",
-                                                    fontSize: 15,
-                                                    color: darkBlue,
-                                                  ),
-                                                ),
-                                                Obx(() {
-                                                  return cartController
-                                                          .loading.value
-                                                      ? Text(
-                                                          "${cartController.registerCartItems[0].symbol} 0.0")
-                                                      : Text(
-                                                          "${cartController.registerCartItems[0].symbol} ${cartController.totalAmount.value}",
-                                                          style: TextStyle(
-                                                            fontFamily:
-                                                                "OnestSemiBold",
-                                                            fontSize: 15,
-                                                            color: darkBlue,
-                                                          ),
-                                                        );
-                                                }),
-                                              ],
-                                            ),
-                                            const SpaceHeightWidget(height: 20),
-                                            SizedBox(
-                                              width: 200,
-                                              height: 33,
-                                              child: IconElevatedButton(
-                                                onTapFun: () async {
-                                                  // print("sess...$sessionId");
-                                                  // print(
-                                                  //     "https://showcase.worldunityfoundation.org/checkwebitems.html?countrycode=MY&sprno=${widget.sponsorId}&sessid=$sessionId&uniqId=$uniqId");
-                                                  print(
-                                                      "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
+                                      OrderSummaryWidget(
+                                          itemsCount: cartController
+                                              .registerCartItems.length
+                                              .toString(),
+                                          cvT: cartController.totalCV.value
+                                              .toString(),
+                                          estimatedT: cartController
+                                              .totalAmount.value
+                                              .toString(),
+                                          subT: cartController.totalAmount.value
+                                              .toString(),
+                                          symbol: cartController
+                                              .registerCartItems[0].symbol),
+                                      // Container(
+                                      //   width: double.infinity,
+                                      //   margin: const EdgeInsets.all(10),
+                                      //   padding: const EdgeInsets.symmetric(
+                                      //       horizontal: 15, vertical: 20),
+                                      //   decoration: BoxDecoration(
+                                      //       color:
+                                      //           lightDarKBlue.withOpacity(0.1),
+                                      //       borderRadius:
+                                      //           BorderRadius.circular(10)),
+                                      //   child: Column(
+                                      //     crossAxisAlignment:
+                                      //         CrossAxisAlignment.start,
+                                      //     children: [
+                                      //       Text(
+                                      //         "Order Summary",
+                                      //         style: TextStyle(
+                                      //             fontFamily: "OnestBold",
+                                      //             fontSize: 17,
+                                      //             color: darkBlue),
+                                      //       ),
+                                      //       const SpaceHeightWidget(height: 10),
+                                      //       Row(
+                                      //         mainAxisAlignment:
+                                      //             MainAxisAlignment
+                                      //                 .spaceBetween,
+                                      //         children: [
+                                      //           const Text(
+                                      //             "Order Subtotal",
+                                      //             style: TextStyle(
+                                      //               fontFamily: "OnestRegular",
+                                      //               fontSize: 15,
+                                      //             ),
+                                      //           ),
+                                      //           Obx(() {
+                                      //             return cartController
+                                      //                     .loading.value
+                                      //                 ? Text(
+                                      //                     "${cartController.registerCartItems[0].symbol} 0.0")
+                                      //                 : Text(
+                                      //                     "${cartController.registerCartItems[0].symbol} ${cartController.totalAmount.value}",
+                                      //                     style:
+                                      //                         const TextStyle(
+                                      //                       fontFamily:
+                                      //                           "OnestRegular",
+                                      //                       fontSize: 15,
+                                      //                     ),
+                                      //                   );
+                                      //           }),
+                                      //         ],
+                                      //       ),
+                                      //       const SpaceHeightWidget(height: 10),
+                                      //       const CommonDivider(),
+                                      //       const SpaceHeightWidget(height: 5),
+                                      //       Row(
+                                      //         mainAxisAlignment:
+                                      //             MainAxisAlignment
+                                      //                 .spaceBetween,
+                                      //         children: [
+                                      //           Text(
+                                      //             "Total Amount",
+                                      //             style: TextStyle(
+                                      //               fontFamily: "OnestSemiBold",
+                                      //               fontSize: 15,
+                                      //               color: darkBlue,
+                                      //             ),
+                                      //           ),
+                                      //           Obx(() {
+                                      //             return cartController
+                                      //                     .loading.value
+                                      //                 ? Text(
+                                      //                     "${cartController.registerCartItems[0].symbol} 0.0")
+                                      //                 : Text(
+                                      //                     "${cartController.registerCartItems[0].symbol} ${cartController.totalAmount.value}",
+                                      //                     style: TextStyle(
+                                      //                       fontFamily:
+                                      //                           "OnestSemiBold",
+                                      //                       fontSize: 15,
+                                      //                       color: darkBlue,
+                                      //                     ),
+                                      //                   );
+                                      //           }),
+                                      //         ],
+                                      //       ),
+                                      //       const SpaceHeightWidget(height: 20),
+                                      //       SizedBox(
+                                      //         width: 200,
+                                      //         height: 33,
+                                      //         child: IconElevatedButton(
+                                      //           onTapFun: () async {
+                                      //             // print("sess...$sessionId");
+                                      //             // print(
+                                      //             //     "https://showcase.worldunityfoundation.org/checkwebitems.html?countrycode=MY&sprno=${widget.sponsorId}&sessid=$sessionId&uniqId=$uniqId");
+                                      //             print(
+                                      //                 "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
 
-                                                  // Map parameters = {
-                                                  //   "Action": "checkoutitems_MA",
-                                                  //   "Pkid": "0",
-                                                  //   "pid": "0",
-                                                  //   "Quantity": "0",
-                                                  //   "uniqid": uniqId,
-                                                  //   "sessid": sessionId,
-                                                  //   "ipaddress": Constants.prefs
-                                                  //       .getString("ip"),
-                                                  //   "sprno": sponsorController.text,
-                                                  //   "prdtype": "Package"
-                                                  // };
-                                                  // dynamic res = await cartController
-                                                  //     .getCheckOutCart(parameters);
-                                                  // print("res....$res");
-                                                  // if (res['Msg']
-                                                  //         .toString()
-                                                  //         .toLowerCase() ==
-                                                  //     "success") {
-                                                  Get.off(() => CheckOutScreen(
-                                                      redirectUrl:
-                                                          "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&sessid=$sessionId&uniqId=$uniqId"));
+                                      //             // Map parameters = {
+                                      //             //   "Action": "checkoutitems_MA",
+                                      //             //   "Pkid": "0",
+                                      //             //   "pid": "0",
+                                      //             //   "Quantity": "0",
+                                      //             //   "uniqid": uniqId,
+                                      //             //   "sessid": sessionId,
+                                      //             //   "ipaddress": Constants.prefs
+                                      //             //       .getString("ip"),
+                                      //             //   "sprno": sponsorController.text,
+                                      //             //   "prdtype": "Package"
+                                      //             // };
+                                      //             // dynamic res = await cartController
+                                      //             //     .getCheckOutCart(parameters);
+                                      //             // print("res....$res");
+                                      //             // if (res['Msg']
+                                      //             //         .toString()
+                                      //             //         .toLowerCase() ==
+                                      //             //     "success") {
+                                      //             Get.off(() => CheckOutScreen(
+                                      //                 redirectUrl:
+                                      //                     "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&sessid=$sessionId&uniqId=$uniqId"));
 
-                                                  // }
-                                                },
-                                                imagePath:
-                                                    'assets/images/shopping_cart_img.jpg',
-                                                labelColor: whiteColor,
-                                                buttonColor: blackColor,
-                                                titile: "Checkout",
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                      //             // }
+                                      //           },
+                                      //           imagePath:
+                                      //               'assets/images/shopping_cart_img.jpg',
+                                      //           labelColor: whiteColor,
+                                      //           buttonColor: blackColor,
+                                      //           titile: "Checkout",
+                                      //         ),
+                                      //       ),
+                                      //     ],
+                                      //   ),
+                                      // ),
                                       const SpaceHeightWidget(height: 20),
                                       // Container(
                                       //   padding: const EdgeInsets.all(8.0),

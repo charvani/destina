@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -235,44 +233,46 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2, childAspectRatio: 1 / 1.2),
                         itemBuilder: (context, i) {
-                          return productCtgs[selectedInd] == "Kritalia & Co"
-                              ? KritaliaItemWidget(
-                                  tapped: krialiaTappedInd == i ? true : false,
-                                  amount:
-                                      _dataController.selPackageItemList[i].mrp,
-                                  onTapFun: () {
-                                    setState(() {
-                                      krialiaTappedInd = i;
-                                    });
+                          return
+                              // productCtgs[selectedInd] == "Kritalia & Co"
+                              //     ? KritaliaItemWidget(
+                              //         tapped: krialiaTappedInd == i ? true : false,
+                              //         amount:
+                              //             _dataController.selPackageItemList[i].mrp,
+                              //         onTapFun: () {
+                              //           setState(() {
+                              //             krialiaTappedInd = i;
+                              //           });
 
-                                    Timer(const Duration(seconds: 1), () async {
-                                      dynamic res = await Get.to(() =>
-                                          MemberProductDetailsScreen2(
-                                            // packageCode: _dataController
-                                            //     .salesOrdersList[i].pkcode,
-                                            from: 'membership',
-                                            packageCode: _dataController
-                                                .selPackageItemList[i].pkcode,
-                                            fromPack: productCtgs[selectedInd],
-                                          ));
+                              //           Timer(const Duration(seconds: 1), () async {
+                              //             dynamic res = await Get.to(() =>
+                              //                 MemberProductDetailsScreen2(
+                              //                   // packageCode: _dataController
+                              //                   //     .salesOrdersList[i].pkcode,
+                              //                   from: 'membership',
+                              //                   packageCode: _dataController
+                              //                       .selPackageItemList[i].pkcode,
+                              //                   fromPack: productCtgs[selectedInd],
+                              //                 ));
 
-                                      if (res != null) {
-                                        if (res[0] == true) {
-                                          getCartData();
-                                          // _dataController.memberMallCartCount
-                                          //     .value = res[1].toString() ?? "0";
-                                          setState(() {});
-                                        }
-                                      }
-                                    });
-                                  },
-                                  imagePath:
-                                      // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                      _dataController
-                                          .selPackageItemList[i].pImage,
-                                  titile: _dataController
-                                      .selPackageItemList[i].pkname)
-                              : CategroyItemWidget(
+                              //             if (res != null) {
+                              //               if (res[0] == true) {
+                              //                 getCartData();
+                              //                 // _dataController.memberMallCartCount
+                              //                 //     .value = res[1].toString() ?? "0";
+                              //                 setState(() {});
+                              //               }
+                              //             }
+                              //           });
+                              //         },
+                              //         imagePath:
+                              //             // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
+                              //             _dataController
+                              //                 .selPackageItemList[i].pImage,
+                              //         titile: _dataController
+                              //             .selPackageItemList[i].pkname)
+                              //     :
+                              CategroyItemWidget(
                                   amount:
                                       _dataController.selPackageItemList[i].mrp,
                                   onTapFun: () async {
@@ -351,43 +351,101 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
 
   dialogFun() {
     Get.dialog(Dialog(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              for (int i = 0;
-                  i < _dataController.salesMallCartItems.length;
-                  i++)
-                CartItemWidget(
-                    showQuantity: true,
-                    removeFun: () async {
-                      Get.back();
-                      Map params = {
-                        "Regid": _dataController.salesMallCartItems[i].sno,
-                      };
-                      dynamic res = await ApiCall().postMethodFun(
-                          methodName: ApiData().removeMemberProduct,
-                          params: params);
-                      if (res != null) {
-                        if (res['Msg'] == "SUCCESS") {
-                          getCartData();
-                        } else {
-                          CommonToast(res['Message']);
-                        }
-                      }
-                    },
-                    imagePath: _dataController.salesMallCartItems[i].pimage,
-                    itemname: _dataController.salesMallCartItems[i].pkname,
-                    itemsPrice:
-                        "${_dataController.salesMallCartItems[i].symbol} ${_dataController.salesMallCartItems[i].mrp}",
-                    productCode: _dataController.salesMallCartItems[i].pkcode,
-                    itemCount: _dataController.salesMallCartItems[i].qty)
-            ],
-          ),
-        ),
-      ),
+      child: Obx(() {
+        return _dataController.loading.value
+            ? loader
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      for (int i = 0;
+                          i < _dataController.salesMallCartItems.length;
+                          i++)
+                        CartItemWidget(
+                            showTotals:
+                                _dataController.salesMallCartItems.length - i ==
+                                        1
+                                    ? true
+                                    : false,
+                            totalCV:
+                                _dataController.salesMallTCV.value.toString(),
+                            totalPrice: _dataController.salesMallTAmount.value
+                                .toString(),
+                            cv: _dataController.salesMallCartItems[i].cv,
+                            decrementFun: () {
+                              if (int.parse(_dataController
+                                      .salesMallCartItems[i].qty) >
+                                  1) {
+                                incrdcrFun(
+                                    "decrement",
+                                    _dataController.salesMallCartItems[i].qty,
+                                    _dataController
+                                        .salesMallCartItems[i].pkcode);
+                              }
+                            },
+                            incrementFun: () {
+                              incrdcrFun(
+                                  "increment",
+                                  _dataController.salesMallCartItems[i].qty,
+                                  _dataController.salesMallCartItems[i].pkcode);
+                            },
+                            showQuantity: false,
+                            removeFun: () async {
+                              Get.back();
+                              Map params = {
+                                "Regid":
+                                    _dataController.salesMallCartItems[i].sno,
+                              };
+                              dynamic res = await ApiCall().postMethodFun(
+                                  methodName: ApiData().removeMemberProduct,
+                                  params: params);
+                              if (res != null) {
+                                if (res['Msg'] == "SUCCESS") {
+                                  getCartData();
+                                } else {
+                                  CommonToast(res['Message']);
+                                }
+                              }
+                            },
+                            imagePath:
+                                _dataController.salesMallCartItems[i].pimage,
+                            itemname:
+                                _dataController.salesMallCartItems[i].pkname,
+                            itemsPrice:
+                                "${_dataController.salesMallCartItems[i].symbol} ${_dataController.salesMallCartItems[i].mrp}",
+                            productCode:
+                                _dataController.salesMallCartItems[i].pkcode,
+                            itemCount:
+                                _dataController.salesMallCartItems[i].qty)
+                    ],
+                  ),
+                ),
+              );
+      }),
     ));
+  }
+
+  incrdcrFun(String from, String itemcount, String packCode) async {
+    print("add to car fun");
+    Map parameters = {
+      "action": "addMECartitems",
+      // "addSGCartitems",
+      "Pkid": packCode,
+      "Country": Constants.prefs.getString("country_id"),
+      "Uniqid": uniqId,
+      "sessid": sessionId,
+      "ipaddress": Constants.prefs.getString("ip"),
+      "sprno": Constants.prefs.get("reg_id"),
+      "Quantity": from == "increment"
+          ? "${int.parse(itemcount) + 1}"
+          : "${int.parse(itemcount) - 1}"
+    };
+    print("add to cart params...$parameters");
+    dynamic res = await MainController().getRegPackAddToCart(parameters);
+    if (res['Msg'].toString().toLowerCase() == "success") {
+      getCartData();
+    }
   }
 }

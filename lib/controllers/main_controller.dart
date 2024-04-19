@@ -193,6 +193,7 @@ class MainController extends GetxController {
   RxList<RegisterCartItemsModel> registerCartItems =
       <RegisterCartItemsModel>[].obs;
   RxDouble totalAmount = 0.0.obs;
+  RxDouble totalCV = 0.0.obs;
   RxList<String> bannerPopUp = <String>[].obs;
   Rx<DashboardModel> dashboardData = DashboardModel(
           myIncome: [],
@@ -749,6 +750,7 @@ class MainController extends GetxController {
   RxList<SalesMallCartItemModel> salesMallCartItems =
       <SalesMallCartItemModel>[].obs;
   RxDouble salesMallTAmount = 0.0.obs;
+  RxDouble salesMallTCV = 0.0.obs;
 
   Rx<DpProdccutModel> dpProductdata = DpProdccutModel(
           msg: "",
@@ -770,6 +772,7 @@ class MainController extends GetxController {
       .obs;
   RxDouble dpMallDPAmount = 0.0.obs;
   RxDouble dpMallRMAmount = 0.0.obs;
+  RxDouble dpMallCV = 0.0.obs;
 
   Rx<MemberProductModel> memberProductData = MemberProductModel(
           overviewRpt: [],
@@ -968,6 +971,7 @@ class MainController extends GetxController {
         methodName: ApiData().cartItemsMethod, params: parameters);
     cartItemsList.clear();
     totalAmount.value = 0.0;
+    totalCV.value = 0.0;
 
     print("cart_itmes...${cartItemsList.length}");
     if (res['packageDataRpt'].length > 0) {
@@ -975,6 +979,9 @@ class MainController extends GetxController {
         cartItemsList.add(CartItemModel.fromJson(res['packageDataRpt'][i]));
         totalAmount.value = totalAmount.value +
             (double.parse(res['packageDataRpt'][i]['packMrp']) *
+                int.parse(res['packageDataRpt'][i]['packQuantity']));
+        totalCV.value = totalCV.value +
+            (double.parse(res['packageDataRpt'][i]['CV']) *
                 int.parse(res['packageDataRpt'][i]['packQuantity']));
       }
     }
@@ -1135,12 +1142,16 @@ class MainController extends GetxController {
         .postMethodFun(methodName: ApiData().registerCart, params: parameters);
     registerCartItems.clear();
     totalAmount.value = 0.0;
+    totalCV.value = 0.0;
     print("cart_itmes...${registerCartItems.length}");
     if (res['SGCartItemRpt'].length > 0) {
       for (int i = 0; i < res['SGCartItemRpt'].length; i++) {
         registerCartItems
             .add(RegisterCartItemsModel.fromJson(res['SGCartItemRpt'][i]));
         totalAmount.value = totalAmount.value +
+            (double.parse(res['SGCartItemRpt'][i]['mrp']) *
+                int.parse(res['SGCartItemRpt'][i]['Qty']));
+        totalCV.value = totalCV.value +
             (double.parse(res['SGCartItemRpt'][i]['mrp']) *
                 int.parse(res['SGCartItemRpt'][i]['Qty']));
       }
@@ -2169,6 +2180,7 @@ class MainController extends GetxController {
         methodName: ApiData().checkOutSalesCartItems, params: parameters);
     salesMallCartItems.clear();
     salesMallTAmount.value = 0.0;
+    salesMallTCV.value = 0.0;
     print("cart_itmes...${salesMallCartItems.length}");
     if (res != null) {
       if (res['SalesPackgeRpt'].length > 0 &&
@@ -2178,6 +2190,9 @@ class MainController extends GetxController {
               .add(SalesMallCartItemModel.fromJson(res['SalesPackgeRpt'][i]));
           salesMallTAmount.value = salesMallTAmount.value +
               (double.parse(res['SalesPackgeRpt'][i]['mrp']) *
+                  double.parse(res['SalesPackgeRpt'][i]['qty']));
+          salesMallTCV.value = salesMallTCV.value +
+              (double.parse(res['SalesPackgeRpt'][i]['CV']) *
                   double.parse(res['SalesPackgeRpt'][i]['qty']));
         }
       }
@@ -2203,6 +2218,7 @@ class MainController extends GetxController {
         .saleMallPostMethodFun(methodName: apiName, params: parameters);
     salesMallCartItems.clear();
     salesMallTAmount.value = 0.0;
+    salesMallTCV.value = 0.0;
     print("cart_itmes...${salesMallCartItems.length}");
     if (res != null) {
       if (res['SalesPackgeRpt'].length > 0 &&
@@ -2212,6 +2228,9 @@ class MainController extends GetxController {
               .add(SalesMallCartItemModel.fromJson(res['SalesPackgeRpt'][i]));
           salesMallTAmount.value = salesMallTAmount.value +
               (double.parse(res['SalesPackgeRpt'][i]['mrp']) *
+                  double.parse(res['SalesPackgeRpt'][i]['qty']));
+          salesMallTCV.value = salesMallTCV.value +
+              (double.parse(res['SalesPackgeRpt'][i]['CV']) *
                   double.parse(res['SalesPackgeRpt'][i]['qty']));
         }
       }
@@ -2283,6 +2302,8 @@ class MainController extends GetxController {
         methodName: ApiData().getRedemPackages, params: parameters);
     salesMallCartItems.clear();
     salesMallTAmount.value = 0.0;
+    salesMallTCV.value = 0.0;
+
     print("cart_itmes...${salesMallCartItems.length}");
     if (res != null) {
       if (res['SalesPackgeRpt'].length > 0 &&
@@ -2292,6 +2313,9 @@ class MainController extends GetxController {
               .add(SalesMallCartItemModel.fromJson(res['SalesPackgeRpt'][i]));
           salesMallTAmount.value = salesMallTAmount.value +
               (double.parse(res['SalesPackgeRpt'][i]['mrp']) *
+                  double.parse(res['SalesPackgeRpt'][i]['qty']));
+          salesMallTCV.value = salesMallTCV.value +
+              (double.parse(res['SalesPackgeRpt'][i]['CV']) *
                   double.parse(res['SalesPackgeRpt'][i]['qty']));
         }
       }
@@ -2355,6 +2379,7 @@ class MainController extends GetxController {
         .postMethodFun(methodName: ApiData().getdppackages, params: parameters);
     dpMallDPAmount.value = 0.0;
     dpMallRMAmount.value = 0.0;
+    dpMallCV.value = 0.0;
     salesMallCartItems.clear();
 
     if (res != null) {
@@ -2381,6 +2406,9 @@ class MainController extends GetxController {
 
           dpMallRMAmount.value = dpMallRMAmount.value +
               (double.parse(rmval) *
+                  double.parse(res['DPPackageRpt'][i]['qty']));
+          dpMallCV.value = dpMallCV.value +
+              (double.parse(res['DPPackageRpt'][i]['CV']) *
                   double.parse(res['DPPackageRpt'][i]['qty']));
         }
       }
@@ -2406,6 +2434,7 @@ class MainController extends GetxController {
         methodName: ApiData().getdppackages, params: parameters);
     dpMallDPAmount.value = 0.0;
     dpMallRMAmount.value = 0.0;
+    dpMallCV.value = 0.0;
     salesMallCartItems.clear();
 
     if (res != null) {
@@ -2432,6 +2461,9 @@ class MainController extends GetxController {
 
           dpMallRMAmount.value = dpMallRMAmount.value +
               (double.parse(rmval) *
+                  double.parse(res['DPPackageRpt'][i]['qty']));
+          dpMallCV.value = dpMallCV.value +
+              (double.parse(res['DPPackageRpt'][i]['CV']) *
                   double.parse(res['DPPackageRpt'][i]['qty']));
         }
       }
@@ -2492,6 +2524,7 @@ class MainController extends GetxController {
         methodName: ApiData().getMemberPackages, params: parameters);
     salesMallCartItems.clear();
     salesMallTAmount.value = 0.0;
+    salesMallTCV.value = 0.0;
     memberMallCartCount.value = "0";
     print("cart_itmes...${salesMallCartItems.length}");
     if (res != null) {
@@ -2502,6 +2535,9 @@ class MainController extends GetxController {
               .add(SalesMallCartItemModel.fromJson(res['SalesPackgeRpt'][i]));
           salesMallTAmount.value = salesMallTAmount.value +
               (double.parse(res['SalesPackgeRpt'][i]['mrp']) *
+                  double.parse(res['SalesPackgeRpt'][i]['qty']));
+          salesMallTCV.value = salesMallTCV.value +
+              (double.parse(res['SalesPackgeRpt'][i]['CV']) *
                   double.parse(res['SalesPackgeRpt'][i]['qty']));
         }
       }

@@ -164,6 +164,8 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                           children: [
                                             CartItemWidget(
                                               // removeCartOption: true,
+                                              cv: cartController
+                                                  .salesMallCartItems[i].cv,
                                               decrementFun: () {
                                                 if (int.parse(cartController
                                                         .salesMallCartItems[i]
@@ -340,6 +342,7 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                           ),
                                         ),
                                       const SpaceHeightWidget(height: 15),
+
                                       Container(
                                         width: double.infinity,
                                         margin: const EdgeInsets.all(10),
@@ -368,7 +371,31 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                                       .spaceBetween,
                                               children: [
                                                 const Text(
-                                                  "Subtotal",
+                                                  "Total Items",
+                                                  style: TextStyle(
+                                                    fontFamily: "OnestRegular",
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  cartController
+                                                      .salesMallCartItems.length
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                    fontFamily: "OnestRegular",
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SpaceHeightWidget(height: 5),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text(
+                                                  "Order Subtotal",
                                                   style: TextStyle(
                                                     fontFamily: "OnestRegular",
                                                     fontSize: 14,
@@ -400,7 +427,7 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                                       .spaceBetween,
                                               children: [
                                                 Text(
-                                                  "Estimated Total",
+                                                  "Total Amount",
                                                   style: TextStyle(
                                                     fontFamily: "OnestSemiBold",
                                                     fontSize: 14,
@@ -414,6 +441,42 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                                           "DP 0.0 + RM 0.0")
                                                       : Text(
                                                           "DP ${cartController.dpMallDPAmount.value} + RM ${cartController.dpMallRMAmount.value}",
+                                                          style: TextStyle(
+                                                            fontFamily:
+                                                                "OnestSemiBold",
+                                                            fontSize: 14,
+                                                            color: darkBlue,
+                                                          ),
+                                                        );
+                                                }),
+                                              ],
+                                            ),
+                                            const SpaceHeightWidget(height: 10),
+                                            const CommonDivider(),
+                                            const SpaceHeightWidget(height: 5),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Total CV",
+                                                  style: TextStyle(
+                                                    fontFamily: "OnestSemiBold",
+                                                    fontSize: 14,
+                                                    color: darkBlue,
+                                                  ),
+                                                ),
+                                                Obx(() {
+                                                  return cartController
+                                                          .loading.value
+                                                      ? const Text("")
+                                                      : Text(
+                                                          cartController
+                                                              .dpMallCV.value
+                                                              .toStringAsFixed(
+                                                                  0)
+                                                              .toString(),
                                                           style: TextStyle(
                                                             fontFamily:
                                                                 "OnestSemiBold",

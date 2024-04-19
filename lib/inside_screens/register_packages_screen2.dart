@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:flutter/material.dart';
@@ -328,58 +326,60 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
                                               crossAxisCount: 2,
                                               childAspectRatio: 1 / 1.45),
                                       itemBuilder: (context, i) {
-                                        return productsCategories[
-                                                        selectedCategoryIndex]
-                                                    .title ==
-                                                "Kritalia & Co"
-                                            ? KritaliaItemWidget(
-                                                tapped: krialiaTappedInd == i
-                                                    ? true
-                                                    : false,
-                                                amount: packageController
-                                                    .selPackageItemList[i].mrp,
-                                                onTapFun: () {
-                                                  setState(() {
-                                                    krialiaTappedInd = i;
-                                                  });
+                                        return
+                                            // productsCategories[
+                                            //                 selectedCategoryIndex]
+                                            //             .title ==
+                                            //         "Kritalia & Co"
+                                            //     ? KritaliaItemWidget(
+                                            //         tapped: krialiaTappedInd == i
+                                            //             ? true
+                                            //             : false,
+                                            //         amount: packageController
+                                            //             .selPackageItemList[i].mrp,
+                                            //         onTapFun: () {
+                                            //           setState(() {
+                                            //             krialiaTappedInd = i;
+                                            //           });
 
-                                                  Timer(
-                                                      const Duration(
-                                                          seconds: 1),
-                                                      () async {
-                                                    dynamic res = await Get.to(() =>
-                                                        RegisterPackDetailsScreen(
-                                                          fromPack:
-                                                              productsCategories[
-                                                                      selectedCategoryIndex]
-                                                                  .title,
-                                                          from: "register",
-                                                          packageCode:
-                                                              packageController
-                                                                  .selPackageItemList[
-                                                                      i]
-                                                                  .pkcode,
-                                                          countryid:
-                                                              widget.countryId,
-                                                        ));
-                                                    if (res != null) {
-                                                      if (res[0] == true) {
-                                                        cartcountFun(
-                                                            "GetSignCartData",
-                                                            "");
-                                                      }
-                                                    }
-                                                  });
-                                                },
-                                                imagePath:
-                                                    // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                                    packageController
-                                                        .selPackageItemList[i]
-                                                        .pImage,
-                                                titile: packageController
-                                                    .selPackageItemList[i]
-                                                    .pkname)
-                                            : CategroyItemWidget(
+                                            //           Timer(
+                                            //               const Duration(
+                                            //                   seconds: 1),
+                                            //               () async {
+                                            //             dynamic res = await Get.to(() =>
+                                            //                 RegisterPackDetailsScreen(
+                                            //                   fromPack:
+                                            //                       productsCategories[
+                                            //                               selectedCategoryIndex]
+                                            //                           .title,
+                                            //                   from: "register",
+                                            //                   packageCode:
+                                            //                       packageController
+                                            //                           .selPackageItemList[
+                                            //                               i]
+                                            //                           .pkcode,
+                                            //                   countryid:
+                                            //                       widget.countryId,
+                                            //                 ));
+                                            //             if (res != null) {
+                                            //               if (res[0] == true) {
+                                            //                 cartcountFun(
+                                            //                     "GetSignCartData",
+                                            //                     "");
+                                            //               }
+                                            //             }
+                                            //           });
+                                            //         },
+                                            //         imagePath:
+                                            //             // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
+                                            //             packageController
+                                            //                 .selPackageItemList[i]
+                                            //                 .pImage,
+                                            //         titile: packageController
+                                            //             .selPackageItemList[i]
+                                            //             .pkname)
+                                            // :
+                                            CategroyItemWidget(
                                                 amount: packageController
                                                     .selPackageItemList[i].mrp,
                                                 onTapFun: () async {

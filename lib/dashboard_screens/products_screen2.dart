@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
 import 'package:flutter/material.dart';
@@ -197,50 +195,53 @@ class _ProductsScreen2State extends State<ProductsScreen2> {
                                                   crossAxisCount: 2,
                                                   childAspectRatio: 1 / 1.5),
                                           itemBuilder: (context, i) {
-                                            return productsCategories[
-                                                            selectedCategoryIndex]
-                                                        .title ==
-                                                    "Kritalia & Co"
-                                                ? KritaliaItemWidget(
-                                                    tapped:
-                                                        krialiaTappedInd == i
-                                                            ? true
-                                                            : false,
-                                                    amount:
-                                                        "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}",
-                                                    onTapFun: () {
-                                                      setState(() {
-                                                        krialiaTappedInd = i;
-                                                      });
+                                            return
+                                                //  productsCategories[
+                                                //                 selectedCategoryIndex]
+                                                //             .title ==
+                                                //         "Kritalia & Co"
+                                                //     ? KritaliaItemWidget(
+                                                //         tapped:
+                                                //             krialiaTappedInd == i
+                                                //                 ? true
+                                                //                 : false,
+                                                //         amount:
+                                                //             "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}",
+                                                //         onTapFun: () {
+                                                //           setState(() {
+                                                //             krialiaTappedInd = i;
+                                                //           });
 
-                                                      Timer(
-                                                          const Duration(
-                                                              seconds: 1),
-                                                          () async {
-                                                        Get.to(() =>
-                                                            ProductDetailsScreen2(
-                                                              from: widget.from,
-                                                              packageCode:
-                                                                  productController
-                                                                      .productItemList[
-                                                                          i]
-                                                                      .packagecode,
-                                                              fromPack:
-                                                                  productsCategories[
-                                                                          selectedCategoryIndex]
-                                                                      .title,
-                                                            ));
-                                                      });
-                                                    },
-                                                    imagePath:
-                                                        // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                                        productController
-                                                            .productItemList[i]
-                                                            .image,
-                                                    titile: productController
-                                                        .productItemList[i]
-                                                        .packageName)
-                                                : CategroyItemWidget(
+                                                //           Timer(
+                                                //               const Duration(
+                                                //                   seconds: 1),
+                                                //               () async {
+                                                //             Get.to(() =>
+                                                //                 ProductDetailsScreen2(
+                                                //                   from: widget.from,
+                                                //                   packageCode:
+                                                //                       productController
+                                                //                           .productItemList[
+                                                //                               i]
+                                                //                           .packagecode,
+                                                //                   fromPack:
+                                                //                       productsCategories[
+                                                //                               selectedCategoryIndex]
+                                                //                           .title,
+                                                //                 ));
+                                                //           });
+                                                //         },
+                                                //         imagePath:
+                                                //             // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
+                                                //             productController
+                                                //                 .productItemList[i]
+                                                //                 .image,
+                                                //         titile: productController
+                                                //             .productItemList[i]
+                                                //             .packageName)
+                                                //     :
+
+                                                CategroyItemWidget(
                                                     amount: productController
                                                                 .productItemList[
                                                                     i]

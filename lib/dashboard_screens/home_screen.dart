@@ -302,22 +302,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontSize: 17, fontFamily: "OnestSemiBold", color: whiteColor),
             ),
             actions: [
-              if (Constants.prefs.getString("user_id") == null ||
-                  Constants.prefs.getString("user_id") == "false")
-                CustomFixedElevatedButton(
-                  onTapFun: () {
-                    Get.to(() => const LoginScreen());
-                  },
-                  title: "Sign Up / Sign in",
-                ),
-              IconButton(
-                  onPressed: () {
-                    Get.to(() => const NotificationScreen());
-                  },
-                  icon: Icon(
-                    Icons.notifications_none,
-                    color: whiteColor,
-                  ))
+              (Constants.prefs.getString("user_id") == null ||
+                      Constants.prefs.getString("user_id") == "false")
+                  ? CustomFixedElevatedButton(
+                      onTapFun: () {
+                        Get.to(() => const LoginScreen());
+                      },
+                      title: "Sign Up / Sign in",
+                    )
+                  : IconButton(
+                      onPressed: () {
+                        Get.to(() => const NotificationScreen());
+                      },
+                      icon: Icon(
+                        Icons.notifications_none,
+                        color: whiteColor,
+                      )),
+              const SpaceWidthWidget(width: 10)
             ]),
         body: SingleChildScrollView(
           child: Stack(

@@ -232,59 +232,25 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
                                     crossAxisCount: 2,
                                     childAspectRatio: 1 / 1.2),
                             itemBuilder: (context, i) {
-                              return productCtgs[selectedInd] == "Kritalia & Co"
-                                  ? KritaliaItemWidget(
-                                      tapped:
-                                          krialiaTappedInd == i ? true : false,
-                                      amount: _dataController
-                                          .selPackageItemList[i].mrp,
-                                      onTapFun: () {
-                                        setState(() {
-                                          krialiaTappedInd = i;
-                                        });
-
-                                        Timer(const Duration(seconds: 1),
-                                            () async {
-                                          Get.to(() =>
-                                              SalesProductDetailsScreen2(
-                                                from: 'salesmall',
-                                                packageCode: _dataController
-                                                    .selPackageItemList[i]
-                                                    .pkcode,
-                                                fromPack:
-                                                    productCtgs[selectedInd],
-                                              ));
-                                        });
-                                      },
-                                      imagePath:
-                                          // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                          _dataController
-                                              .selPackageItemList[i].pImage,
-                                      titile: _dataController
-                                          .selPackageItemList[i].pkname)
-                                  : CategroyItemWidget(
-                                      amount: _dataController
-                                          .selPackageItemList[i].mrp,
-                                      onTapFun: () async {
-                                        Timer(const Duration(seconds: 1),
-                                            () async {
-                                          Get.to(() =>
-                                              SalesProductDetailsScreen2(
-                                                from: 'salesmall',
-                                                packageCode: _dataController
-                                                    .selPackageItemList[i]
-                                                    .pkcode,
-                                                fromPack:
-                                                    productCtgs[selectedInd],
-                                              ));
-                                        });
-                                      },
-                                      imagePath:
-                                          // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                          _dataController
-                                              .selPackageItemList[i].pImage,
-                                      titile: _dataController
-                                          .selPackageItemList[i].pkname);
+                              return CategroyItemWidget(
+                                  amount:
+                                      _dataController.selPackageItemList[i].mrp,
+                                  onTapFun: () async {
+                                    Timer(const Duration(seconds: 1), () async {
+                                      Get.to(() => SalesProductDetailsScreen2(
+                                            from: 'salesmall',
+                                            packageCode: _dataController
+                                                .selPackageItemList[i].pkcode,
+                                            fromPack: productCtgs[selectedInd],
+                                          ));
+                                    });
+                                  },
+                                  imagePath:
+                                      // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
+                                      _dataController
+                                          .selPackageItemList[i].pImage,
+                                  titile: _dataController
+                                      .selPackageItemList[i].pkname);
                             },
                             itemCount:
                                 _dataController.selPackageItemList.length),
@@ -297,66 +263,79 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
 
   dialogFun() {
     Get.dialog(Dialog(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              for (int i = 0;
-                  i < _dataController.salesMallCartItems.length;
-                  i++)
-                CartItemWidget(
-                    showTotals:
-                        _dataController.salesMallCartItems.length - i == 1
-                            ? true
-                            : false,
-                    totalCV: _dataController.cvVal.value.toString(),
-                    totalPrice:
-                        _dataController.salesMallTAmount.value.toString(),
-                    cv: _dataController.salesMallCartItems[i].mrp,
-                    decrementFun: () {
-                      if (int.parse(_dataController.salesMallCartItems[i].qty) >
-                          1) {
-                        incrdcrFun(
-                            "decrement",
-                            _dataController.salesMallCartItems[i].qty,
-                            _dataController.salesMallCartItems[i].pkcode);
-                      }
-                    },
-                    incrementFun: () {
-                      incrdcrFun(
-                          "increment",
-                          _dataController.salesMallCartItems[i].qty,
-                          _dataController.salesMallCartItems[i].pkcode);
-                    },
-                    showQuantity: false,
-                    removeFun: () async {
-                      Get.back();
-                      Map params = {
-                        "Regid": _dataController.salesMallCartItems[i].sno,
-                      };
-                      dynamic res = await ApiCall().postMethodFun(
-                          methodName: ApiData().removeSalesProduct,
-                          params: params);
-                      if (res != null) {
-                        if (res['Msg'] == "SUCCESS") {
-                          cartItemsFun();
-                        } else {
-                          CommonToast(res['Message']);
-                        }
-                      }
-                    },
-                    imagePath: _dataController.salesMallCartItems[i].pimage,
-                    itemname: _dataController.salesMallCartItems[i].pkname,
-                    itemsPrice:
-                        "${_dataController.salesMallCartItems[i].symbol} ${_dataController.salesMallCartItems[i].mrp}",
-                    productCode: _dataController.salesMallCartItems[i].pkcode,
-                    itemCount: _dataController.salesMallCartItems[i].qty)
-            ],
-          ),
-        ),
-      ),
+      child: Obx(() {
+        return _dataController.loading.value
+            ? loader
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      for (int i = 0;
+                          i < _dataController.salesMallCartItems.length;
+                          i++)
+                        CartItemWidget(
+                            showTotals:
+                                _dataController.salesMallCartItems.length - i ==
+                                        1
+                                    ? true
+                                    : false,
+                            totalCV:
+                                _dataController.salesMallTCV.value.toString(),
+                            totalPrice: _dataController.salesMallTAmount.value
+                                .toString(),
+                            cv: _dataController.salesMallCartItems[i].cv,
+                            decrementFun: () {
+                              if (int.parse(_dataController
+                                      .salesMallCartItems[i].qty) >
+                                  1) {
+                                incrdcrFun(
+                                    "decrement",
+                                    _dataController.salesMallCartItems[i].qty,
+                                    _dataController
+                                        .salesMallCartItems[i].pkcode);
+                              }
+                            },
+                            incrementFun: () {
+                              incrdcrFun(
+                                  "increment",
+                                  _dataController.salesMallCartItems[i].qty,
+                                  _dataController.salesMallCartItems[i].pkcode);
+                            },
+                            showQuantity: false,
+                            removeFun: () async {
+                              Get.back();
+                              Map params = {
+                                "Regid":
+                                    _dataController.salesMallCartItems[i].sno,
+                              };
+                              dynamic res = await ApiCall().postMethodFun(
+                                  methodName: ApiData().removeSalesProduct,
+                                  params: params);
+                              if (res != null) {
+                                if (res['Msg'] == "SUCCESS") {
+                                  cartItemsFun();
+                                } else {
+                                  CommonToast(res['Message']);
+                                }
+                              }
+                            },
+                            imagePath:
+                                _dataController.salesMallCartItems[i].pimage,
+                            itemname:
+                                _dataController.salesMallCartItems[i].pkname,
+                            itemsPrice:
+                                "${_dataController.salesMallCartItems[i].symbol} ${_dataController.salesMallCartItems[i].mrp}",
+                            productCode:
+                                _dataController.salesMallCartItems[i].pkcode,
+                            itemCount:
+                                _dataController.salesMallCartItems[i].qty)
+                    ],
+                  ),
+                ),
+              );
+      }),
     ));
   }
 
