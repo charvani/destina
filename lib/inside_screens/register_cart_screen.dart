@@ -117,8 +117,8 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
               color: whiteColor,
             ),
             onPressed: () {
-              getData("init");
-              // Get.back();-----> enable after check
+              // getData("init");
+              Get.back();
 
               // setState(() {
               //   packageLoading = false;

@@ -17,7 +17,7 @@ class ProductCategoryItem {
   dynamic packagecode;
   String category;
   String slugUrl;
-  double dp;
+  dynamic dp;
   dynamic currency;
 
   ProductCategoryItem({
@@ -39,7 +39,7 @@ class ProductCategoryItem {
         packagecode: json["packagecode"],
         category: json["category"],
         slugUrl: json["slugUrl"],
-        dp: json["DP"]?.toDouble(),
+        dp: double.parse(json["DP"].toString()).toStringAsFixed(2),
         currency: json["currency"],
       );
 

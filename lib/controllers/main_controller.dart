@@ -1152,7 +1152,7 @@ class MainController extends GetxController {
             (double.parse(res['SGCartItemRpt'][i]['mrp']) *
                 int.parse(res['SGCartItemRpt'][i]['Qty']));
         totalCV.value = totalCV.value +
-            (double.parse(res['SGCartItemRpt'][i]['mrp']) *
+            (double.parse(res['SGCartItemRpt'][i]['CV']) *
                 int.parse(res['SGCartItemRpt'][i]['Qty']));
       }
     }

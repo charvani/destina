@@ -242,10 +242,11 @@ class _ProductsScreen2State extends State<ProductsScreen2> {
                                                 //     :
 
                                                 CategroyItemWidget(
-                                                    amount: productController
-                                                                .productItemList[
-                                                                    i]
-                                                                .dp >
+                                                    amount: double.parse(
+                                                                productController
+                                                                    .productItemList[
+                                                                        i]
+                                                                    .dp) >
                                                             0
                                                         ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
                                                         : "",
