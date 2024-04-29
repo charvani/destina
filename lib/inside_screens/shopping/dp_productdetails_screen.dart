@@ -338,7 +338,7 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                               "D1DP STICK ASE" ||
                           _dataController.dpProductdata.value.pkname ==
                               "UNIWAVE FILTER")
-                        flaskWidget(),
+                        flaskWidget(_dataController.dpProductdata.value.pkname),
                       if (_dataController.dpProductdata.value.pkname ==
                           "D1DP SCALARVIA ASE")
                         scalarviaWidget(),

@@ -44,7 +44,7 @@ Widget pendentWidget() {
               children: [
                 const SpaceHeightWidget(height: 5),
                 CommonTitle(
-                  titleName: "Our Discovery of Uniwave Pendent",
+                  titleName: "Our Discovery of Uniwave Pendant",
                   fontColor: greenColor,
                   textAlign: TextAlign.center,
                 ),
@@ -89,7 +89,7 @@ Widget pendentWidget() {
               height: 150,
             ),
             const CommonTitle(
-              titleName: "Before using Uniwave Pendent by Quantes Technology",
+              titleName: "Before using Uniwave Pendant by Quantes Technology",
               size: 12,
               fontFamily: "OnestRegular",
               textAlign: TextAlign.center,
@@ -107,7 +107,7 @@ Widget pendentWidget() {
             ),
             const CommonTitle(
               titleName:
-                  "30 minutes after using Uniwave Pendent by Quantes Technology",
+                  "30 minutes after using Uniwave Pendant by Quantes Technology",
               textAlign: TextAlign.center,
               size: 12,
               fontFamily: "OnestRegular",
@@ -135,7 +135,7 @@ Widget pendentWidget() {
             const SpaceHeightWidget(height: 5),
             const CommonTitle(
               titleName:
-                  '3. A proprietary "energisation" process technology based on the principles of Quantum Physics.',
+                  '3. A proprietary "energization" process technology based on the principles of Quantum Physics.',
               size: 12,
               fontFamily: "OnestRegular",
             ),
@@ -172,14 +172,14 @@ List<String> pendentResultData = [
   "Rejuvenation of cells.",
   "Increase Energy Levels.",
   "Improve focus and concentration.",
-  "Neutralize harmful manmade and natural frequencies transmitted into beneficial energies.",
+  "Neutralize harmful manmade and natural frequencies transmitted into beneficial energizes.",
   "Boost endurance, strength and vitality.",
   "Enhance the body's flexibility.",
   "Strengthen the body's immune system .",
   "Trigger the production of stem cells for new cell formation.",
   "Provide optimum energy for the healthy lifestyle.",
 ];
-Widget flaskWidget() {
+Widget flaskWidget(String itemName) {
   return Column(
     children: [
       Row(
@@ -197,7 +197,7 @@ Widget flaskWidget() {
             child: Column(
               children: [
                 CommonTitle(
-                  titleName: "What is the Uniwave Flask",
+                  titleName: "What is the $itemName",
                   fontColor: greenColor,
                   textAlign: TextAlign.center,
                 ),
@@ -228,8 +228,8 @@ Widget flaskWidget() {
                   : " Provide optimum energy for the healthy lifestyle",
         ),
       const SpaceHeightWidget(height: 18),
-      const CommonTitle(
-        titleName: "Benefits of Uniwave Flask",
+      CommonTitle(
+        titleName: "Benefits of $itemName",
         fontFamily: "OnestSemiBold",
         size: 15.5,
       ),
@@ -241,7 +241,11 @@ Widget flaskWidget() {
       const SpaceHeightWidget(height: 15),
       Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Image.asset("assets/images/uniwave_flask.jpg"),
+        child: Image.asset(itemName.toLowerCase() == "uniwave flask"
+            ? "assets/images/uniwave_flask.jpg"
+            : itemName.toLowerCase() == "uniwave stick"
+                ? "assets/images/stick1.jpg"
+                : "assets/images/filter1.jpg"),
       ),
       const SpaceHeightWidget(height: 15),
       Container(
@@ -280,13 +284,13 @@ Widget flaskWidget() {
               fontColor: limeColor,
             ),
             const CommonTitle(
-              titleName: "Energised Water(10 min)",
+              titleName: "Energized Water(10 min)",
               fontFamily: "OnestSemiBold",
               size: 14,
             ),
             const CommonTitle(
               titleName:
-                  "Same distilled water energised by Uniwave Alkaline Water Flask & Water Stick by Quantes Technology",
+                  "Same distilled water energized by Uniwave Alkaline Water Flask & Water Stick by Quantes Technology",
               fontFamily: "OnestRegular",
               size: 12,
               textAlign: TextAlign.center,
@@ -302,7 +306,7 @@ Widget flaskWidget() {
             const UniwaveRitchTextWidget(
                 boldText: "1. Living Water Transformation:",
                 plainText:
-                    'Transforms regular water into "living Water" for improved blood circulation, enhances the body\'s energy level, reduces inflammation and gives us anti-ageing effects'),
+                    'Transforms regular water into "living Water" for improved blood circulation, enhances the body\'s energy level, reduces inflammation and gives us anti-aging effects'),
             const SpaceHeightWidget(height: 5),
             const UniwaveRitchTextWidget(
                 boldText: "2. Alkaline Balance :",
@@ -355,8 +359,17 @@ Widget flaskWidget() {
       //   ),
       // ),
       const SpaceHeightWidget(height: 15),
+      // Image.asset(
+      // "assets/images/uniwave_flask2.jpg",
+
+      //   height: 170,
+      // ),
       Image.asset(
-        "assets/images/uniwave_flask2.jpg",
+        itemName.toLowerCase() == "uniwave flask"
+            ? "assets/images/uniwave_flask.jpg"
+            : itemName.toLowerCase() == "uniwave stick"
+                ? "assets/images/stick1.jpg"
+                : "assets/images/filter1.jpg",
         height: 170,
       ),
       Container(
@@ -588,10 +601,8 @@ List<String> flaskBenfitsData = [
 ];
 
 List<String> flaskResultData = [
-  "Energises water to enhance nutritional uptake",
-  "Reduce letharpy",
-  "Aids in detoxification of cells",
-  "Reduce the acidity in the body",
+  "Energizes water to enhance nutritional uptake",
+  "Reduce lethargy",
   "Aids in detoxification of cells",
   "Reduce the acidity in the body",
   "Maintain pH level",
@@ -1006,43 +1017,74 @@ Widget biomatrixWidget() {
     child: Column(
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Transform.translate(
-              offset: const Offset(10, -10),
-              child: productBulletImg(),
-
-              //  Image.asset(
-              //   "assets/images/leaf.png",
-              //   height: 55,
-              // ),
-            ),
-            Flexible(
-              child: CommonTitle(
-                titleName: "What is the Uniwave Biomatrix Sheild",
-                fontColor: greenColor,
-                textAlign: TextAlign.center,
+            productBulletImg(),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SpaceHeightWidget(height: 5),
+                  CommonTitle(
+                    titleName: "What is the Uniwave Biomatrix Sheild",
+                    fontColor: greenColor,
+                    textAlign: TextAlign.center,
+                  ),
+                  CommonTitle(
+                    titleName: "by",
+                    fontColor: blackColor,
+                    fontFamily: "OnestRegular",
+                    textAlign: TextAlign.center,
+                  ),
+                  CommonTitle(
+                    titleName: "Quantes Technology",
+                    fontColor: darkBlue,
+                    fontFamily: "OnestSemiBold",
+                    textAlign: TextAlign.center,
+                  )
+                ],
               ),
-            ),
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SpaceHeightWidget(height: 5),
-            CommonTitle(
-              titleName: "by",
-              fontColor: blackColor,
-              fontFamily: "OnestRegular",
-              textAlign: TextAlign.center,
-            ),
-            CommonTitle(
-              titleName: "Quantes Technology",
-              fontColor: darkBlue,
-              fontFamily: "OnestSemiBold",
-              textAlign: TextAlign.center,
             )
           ],
         ),
+        // Row(
+        //   children: [
+        //     Transform.translate(
+        //       offset: const Offset(10, -10),
+        //       child: productBulletImg(),
+
+        //       //  Image.asset(
+        //       //   "assets/images/leaf.png",
+        //       //   height: 55,
+        //       // ),
+        //     ),
+        //     Flexible(
+        //       child: CommonTitle(
+        //         titleName: "What is the Uniwave Biomatrix Sheild",
+        //         fontColor: greenColor,
+        //         textAlign: TextAlign.center,
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // Column(
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   children: [
+        //     const SpaceHeightWidget(height: 5),
+        //     CommonTitle(
+        //       titleName: "by",
+        //       fontColor: blackColor,
+        //       fontFamily: "OnestRegular",
+        //       textAlign: TextAlign.center,
+        //     ),
+        //     CommonTitle(
+        //       titleName: "Quantes Technology",
+        //       fontColor: darkBlue,
+        //       fontFamily: "OnestSemiBold",
+        //       textAlign: TextAlign.center,
+        //     )
+        //   ],
+        // ),
         const SpaceHeightWidget(height: 15),
         CommonTitle(
           titleName:
@@ -1190,7 +1232,8 @@ Widget biomatrixWidget() {
         const SpaceHeightWidget(height: 10),
         CommonTitle(
           titleName:
-              "Dr Om Gandhi (University of Utah) shows how radiation penetrates the skull 5year old children absorb 10 times more EMR & EMF radiation than an adult.",
+              "Dr Om Gandhi (University of Utah) shows how radiation that penetrates the skull of 5-year-old children absorbs 10 times more EMR & EMF radiation than an adult.",
+          // "Dr Om Gandhi (University of Utah) shows how radiation penetrates the skull 5year old children absorb 10 times more EMR & EMF radiation than an adult.",
           fontFamily: "OnestRegular",
           size: 12.5,
           fontColor: middleBlackColor,
@@ -1212,7 +1255,7 @@ List<BiomatrixImageData> bimatrixImageData = [
   BiomatrixImageData(
       imageName: "phone",
       title1: "Mobile Phone",
-      title2: "1 BMS centered on the center of the back cover of the phone",
+      title2: "1 BMS centered on the back cover of the phone",
       count: "1"),
   BiomatrixImageData(
       imageName: "cordless_phone",
@@ -1246,7 +1289,7 @@ List<BiomatrixImageData> bimatrixImageData = [
   ),
   BiomatrixImageData(
     title1: "Toaster",
-    title2: "1 BMS on front(Centerd)",
+    title2: "1 BMS on front(Centered)",
     count: "1",
     imageName: "toaster",
   ),
@@ -1289,8 +1332,8 @@ List<BiomatrixImageData> bimatrixImageData = [
     imageName: "microwave",
   ),
   BiomatrixImageData(
-    title1: "Hair Drye",
-    title2: "1 BMS on any flat surfaceof dryer",
+    title1: "Hair Dryer",
+    title2: "1 BMS on any flat surface of dryer",
     count: "1",
     imageName: "hair_dryer",
   ),

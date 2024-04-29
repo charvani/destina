@@ -388,7 +388,8 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                             packDetailsController
                                     .packageDetailsData.value.pkname ==
                                 "UNIWAVE FILTER")
-                          flaskWidget(),
+                          flaskWidget(packDetailsController
+                              .packageDetailsData.value.pkname),
                         if (packDetailsController
                                 .packageDetailsData.value.pkname ==
                             "UNIWAVE SCALARVIA")

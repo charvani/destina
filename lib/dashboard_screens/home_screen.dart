@@ -458,7 +458,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: NotAvailableText(
                                         text: "Premier Picks not available"))
                                 : CarouselSlider.builder(
-                                    itemCount: 5,
+                                    itemCount:
+                                        _homeController.promotionsData.length,
                                     itemBuilder: (context, i, rindex) {
                                       return promotionWidget(
                                           _homeController
@@ -725,7 +726,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         return _homeController.newsData.isEmpty
                             ? const NotAvailableText(text: "News not available")
                             : SizedBox(
-                                height: 200,
                                 child: CarouselSlider.builder(
                                     itemCount: _homeController.newsData.length,
                                     itemBuilder: (context, i, rindex) {
@@ -772,6 +772,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     },
                                     options: CarouselOptions(
                                         viewportFraction: 0.65,
+                                        aspectRatio: 16 / 8.5,
                                         autoPlay: true,
                                         enlargeCenterPage: false,
                                         autoPlayInterval:
@@ -832,7 +833,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ? "What's New"
                                               : i == 1
                                                   ? "Discontinued Editions"
-                                                  : "Public Holiday Shop Clouser",
+                                                  : "Public Holiday Shop Closure",
                                           fontFamily: "OnestRegular",
                                           size: 14,
                                           fontColor: middleBlackColor,
@@ -1214,7 +1215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           .socialMediaData[i]
                                                           .imgurl,
                                                       height: 200,
-                                                      width: 200,
+                                                      width: 225,
                                                       boxfit: BoxFit.fill,
                                                     ),
                                                     _homeController
@@ -1235,7 +1236,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           );
                                         },
                                         options: CarouselOptions(
-                                            viewportFraction: 0.64,
+                                            viewportFraction: 0.65,
+                                            aspectRatio: 16 / 8.5,
                                             autoPlay: true,
                                             enlargeCenterPage: false,
                                             autoPlayInterval:

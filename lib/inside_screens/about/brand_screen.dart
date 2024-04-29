@@ -27,7 +27,8 @@ class _BrandSelectionScreenState extends State<BrandSelectionScreen> {
               onTap: () {
                 Get.to(() => const WebUrlScreen(
                       redirectUrl:
-                          "https://beta.destina1.com/MAquantes-technology.html#/",
+                          // "https://beta.destina1.com/MAquantes-technology.html#/",
+                          "https://www.destina1.com/MAquantes-technology.html#/",
                       from: "Quantes Technology",
                     ));
               },
@@ -43,7 +44,8 @@ class _BrandSelectionScreenState extends State<BrandSelectionScreen> {
               onTap: () {
                 Get.to(() => const WebUrlScreen(
                       redirectUrl:
-                          "https://beta.destina1.com/MAuniwave-scalarvia.html",
+                          "https://www.destina1.com/MAuniwave-scalarvia.html",
+                      // "https://beta.destina1.com/MAuniwave-scalarvia.html",
                       from: "Uniwave Scalarvia",
                     ));
               },
@@ -59,7 +61,8 @@ class _BrandSelectionScreenState extends State<BrandSelectionScreen> {
               onTap: () {
                 Get.to(() => const WebUrlScreen(
                       redirectUrl:
-                          "https://beta.destina1.com/MAkritaliaCo.html#/",
+                          "https://www.destina1.com/MAkritaliaCo.html#/",
+                      // "https://beta.destina1.com/MAkritaliaCo.html#/",
                       from: "Kritalia & CO",
                     ));
               },

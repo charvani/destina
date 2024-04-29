@@ -382,7 +382,8 @@ class _UpgradeProductDetailsScreen2State
                             packDetailsController
                                     .packageDetailsData.value.pkname ==
                                 "UNIWAVE FILTER")
-                          flaskWidget(),
+                          flaskWidget(packDetailsController
+                              .packageDetailsData.value.pkname),
                         if (packDetailsController
                                 .packageDetailsData.value.pkname ==
                             "UNIWAVE SCALARVIA")

@@ -353,7 +353,8 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
                             packDetailsController
                                     .packageDetailsData.value.pkname ==
                                 "UNIWAVE FILTER")
-                          flaskWidget(),
+                          flaskWidget(packDetailsController
+                              .packageDetailsData.value.pkname),
                         if (packDetailsController
                                 .packageDetailsData.value.pkname ==
                             "UNIWAVE SCALARVIA")

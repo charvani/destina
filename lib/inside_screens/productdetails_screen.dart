@@ -1057,7 +1057,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               const SpaceHeightWidget(height: 5),
               const CommonTitle(
                 titleName:
-                    '3. A proprietary "energisation" process technology based on the principles of Quantum Physics.',
+                    '3. A proprietary "energization" process technology based on the principles of Quantum Physics.',
                 size: 12,
                 fontFamily: "OnestRegular",
               ),
