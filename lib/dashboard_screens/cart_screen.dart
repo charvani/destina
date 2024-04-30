@@ -270,14 +270,10 @@ class _CartScreenState extends State<CartScreen> {
                                       children: [
                                         CartItemWidget(
                                           showTotals: true,
-                                          totalPrice: (double.parse(
-                                                      cartController
-                                                          .cartItemsList[i]
-                                                          .packMrp) *
-                                                  double.parse(cartController
-                                                      .cartItemsList[i]
-                                                      .packQuantity))
-                                              .toString(),
+                                          symbol: cartController
+                                              .cartItemsList[0].symbol,
+                                          totalPrice:
+                                              "${((double.parse(cartController.cartItemsList[i].packMrp) * double.parse(cartController.cartItemsList[i].packQuantity)))}",
                                           totalCV: (double.parse(cartController
                                                       .cartItemsList[i].cv) *
                                                   double.parse(cartController
@@ -407,9 +403,8 @@ class _CartScreenState extends State<CartScreen> {
 
                                   const SpaceHeightWidget(height: 10),
                                   OrderSummaryWidget(
-                                      itemsCount: cartController
-                                          .cartItemsList.length
-                                          .toString(),
+                                      itemsCount:
+                                          cartController.totalItems.toString(),
                                       cvT: cartController.totalCV.value
                                           .toString(),
                                       estimatedT: cartController

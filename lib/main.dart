@@ -3,13 +3,12 @@ import 'dart:io';
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/network_connectivity/network_binding.dart';
-import 'package:destina_1_international/inside_screens/announcements/whatsnew_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'authentication_screens/splash_screen.dart';
+import 'inside_screens/kritalia_screens/k_homescreen.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -67,7 +66,7 @@ class MyApp extends StatelessWidget {
         //   countryid: "1",
         //   packageCode: "MYJD02",
         // )
-        home: const SplashScreen(),
+        home: const KritaliaHomeScreen(),
         // home: const WhatsNewScreen(),
       ),
     );

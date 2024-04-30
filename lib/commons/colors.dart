@@ -30,3 +30,4 @@ Color brownColor = const Color.fromARGB(255, 110, 55, 35);
 Color darkNaviBlueColor = const Color(0xFF0b4d5d);
 Color darkRedColor = const Color.fromARGB(228, 171, 43, 33);
 Color pinkColor = const Color(0xFFa50a4a);
+Color kriColor = const Color(0XFFcb8161);

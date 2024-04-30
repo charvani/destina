@@ -803,12 +803,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 behavior: HitTestBehavior.translucent,
                                 onTap: () {
                                   Get.to(() => WebUrlScreen(
-                                        from: "",
-                                        redirectUrl: i == 0
-                                            ? "https://beta.destina1.com/MATNP.html"
-                                            : i == 1
-                                                ? "https://beta.destina1.com/MANLA.html#/"
-                                                : "https://beta.destina1.com/MAPHA.html",
+                                      from: "",
+                                      redirectUrl: i == 0
+                                          ? "https://beta.destina1.com/MATNP.html"
+                                          : i == 1
+                                              ? "https://beta.destina1.com/MANLA.html#/"
+                                              : "https://www.destina1.com/MAPHC.html"
+                                      //  "https://beta.destina1.com/MAPHA.html",
                                       ));
                                 },
                                 child: SizedBox(

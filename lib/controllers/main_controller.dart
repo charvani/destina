@@ -194,6 +194,7 @@ class MainController extends GetxController {
       <RegisterCartItemsModel>[].obs;
   RxDouble totalAmount = 0.0.obs;
   RxDouble totalCV = 0.0.obs;
+  RxInt totalItems = 0.obs;
   RxList<String> bannerPopUp = <String>[].obs;
   Rx<DashboardModel> dashboardData = DashboardModel(
           myIncome: [],
@@ -972,6 +973,7 @@ class MainController extends GetxController {
     cartItemsList.clear();
     totalAmount.value = 0.0;
     totalCV.value = 0.0;
+    totalItems.value = 0;
 
     print("cart_itmes...${cartItemsList.length}");
     if (res['packageDataRpt'].length > 0) {
@@ -983,6 +985,8 @@ class MainController extends GetxController {
         totalCV.value = totalCV.value +
             (double.parse(res['packageDataRpt'][i]['CV']) *
                 int.parse(res['packageDataRpt'][i]['packQuantity']));
+        totalItems.value = totalItems.value +
+            int.parse(res['packageDataRpt'][i]['packQuantity']);
       }
     }
     print(cartItemsList.length);

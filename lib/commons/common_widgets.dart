@@ -2757,9 +2757,11 @@ class CartItemWidget extends StatelessWidget {
   final String? indecrCount;
   final bool? showQuantity;
   final bool? showTotals;
+  final String? symbol;
 
   const CartItemWidget(
       {super.key,
+      this.symbol,
       this.removeCartOption,
       required this.removeFun,
       required this.imagePath,
@@ -2988,8 +2990,11 @@ class CartItemWidget extends StatelessWidget {
                             color: darkBlue)),
                     Text(
                         totalPrice!.contains("DP") == true
-                            ? totalPrice!
-                            : double.parse(totalPrice!).toStringAsFixed(2),
+                            ? "$totalPrice!"
+                            : symbol != null
+                                ? "$symbol "
+                                    "${double.parse(totalPrice!).toStringAsFixed(2)}"
+                                : double.parse(totalPrice!).toStringAsFixed(2),
                         style: TextStyle(
                             fontFamily: "OnestSemiBold",
                             fontSize: 12,
