@@ -1338,10 +1338,12 @@ class HomeScreenProductCategory extends StatelessWidget {
           Card(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(80)),
-            child: Image.asset(
-              imagePath,
-              // height: 80,
-            ),
+            child: imagePath.contains("assets")
+                ? Image.asset(
+                    imagePath,
+                    // height: 80,
+                  )
+                : CommonCachedNetworkImage(imagePath: imagePath),
           ),
           Text(
             productName,

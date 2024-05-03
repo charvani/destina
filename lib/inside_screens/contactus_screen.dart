@@ -90,7 +90,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
             "Whatsapp/Telegram Support", "+6011 1026 1789"),
         const SpaceHeightWidget(height: 4),
         iconRelatedWidget(Icons.location_on_outlined, "Address",
-            "Suite: F-3-3 & F-3A-3, Setiawalk, Persiaran Wawasan, Pusat Bandar Puchong, 47160 Puchong, Selangor, Darul Ehsan, Malaysia"),
+            "Suite: F-3-3 & F-3A-3, Setiawalk, Persiaran Wawasan, Pusat Bandar Puchong, 47160 Puchong, Selangor Darul Ehsan, Malaysia"),
         const SpaceHeightWidget(height: 4),
         iconRelatedWidget(Icons.access_time, "Open From", "Monday to Friday"),
         const SpaceHeightWidget(height: 4),

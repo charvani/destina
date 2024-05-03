@@ -877,6 +877,33 @@ class MainController extends GetxController {
     Map parameters = {
       "action": productType,
       "pcode": key ?? "0",
+
+      // "action": "MAGetKproducts",
+      // "pcode": "Jewellery sets",
+      "country": Constants.prefs.getString("open_country")
+    };
+    dynamic res = await ApiCall().postMethodFun(
+        methodName: ApiData().productCategoryMethod, params: parameters);
+    productItemList.clear();
+    if (res != null) {
+      if (res['productRpt'].length > 0) {
+        for (int i = 0; i < res['productRpt'].length; i++) {
+          productItemList
+              .add(ProductCategoryItem.fromJson(res['productRpt'][i]));
+        }
+      }
+    }
+
+    print(productItemList.length);
+    loading.value = false;
+    return res;
+  }
+
+  getKritaliaProducts(String selectedType) async {
+    loading.value = true;
+    Map parameters = {
+      "action": "MAGetKproducts",
+      "pcode": selectedType.toString().capitalizeFirst,
       "country": Constants.prefs.getString("open_country")
     };
     dynamic res = await ApiCall().postMethodFun(

@@ -584,9 +584,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             .packageName
                                             .capitalizeFirst
                                             .toString(),
-                                        amount: productController
-                                                    .productItemList[i].dp !=
-                                                0.0
+                                        amount: double.parse(productController
+                                                    .productItemList[i].dp) >
+                                                0
                                             ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
                                             : "",
                                       );
@@ -903,10 +903,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 .packageName
                                                 .capitalizeFirst
                                                 .toString(),
-                                            amount: productController
-                                                        .productItemList[i]
-                                                        .dp !=
-                                                    0.0
+                                            amount: double.parse(
+                                                        productController
+                                                            .productItemList[i]
+                                                            .dp) >
+                                                    0
                                                 ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
                                                 : "",
                                             exclusiveProduct: false,

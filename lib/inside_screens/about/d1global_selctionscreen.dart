@@ -44,7 +44,9 @@ class _D1GlobalScreenState extends State<D1GlobalScreen> {
               leadingIcon: Icons.facebook,
               image: "assets/images/twitter.png",
               onTapFun: () async {
-                final Uri url = Uri.parse("https://twitter.com/destina1world");
+                final Uri url = Uri.parse(
+                    // "https://twitter.com/destina1world"
+                    "https://twitter.com/Destina1Main");
                 if (!await launchUrl(url)) {
                   throw Exception('Could not launch $url');
                 }
@@ -79,6 +81,7 @@ class _D1GlobalScreenState extends State<D1GlobalScreen> {
               leadingIcon: Icons.link_rounded,
               image: "assets/images/tiktok.png",
               onTapFun: () async {
+                
                 final Uri url =
                     Uri.parse("https://www.tiktok.com/@d1globalcorp");
                 if (!await launchUrl(url)) {
