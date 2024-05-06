@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../kritalia_screens/k_homescreen.dart';
+import '../qunates_screens/q_homescreen.dart';
 import 'weburl_screen.dart';
 
 class BrandSelectionScreen extends StatefulWidget {
@@ -26,11 +27,11 @@ class _BrandSelectionScreenState extends State<BrandSelectionScreen> {
             GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () {
-                Get.to(() => const WebUrlScreen(
-                      redirectUrl:
-                          // "https://beta.destina1.com/MAquantes-technology.html#/",
-                          "https://www.destina1.com/MAquantes-technology.html#/",
-                      from: "Quantes Technology",
+                Get.to(() => const QHomeScreen(
+                    // redirectUrl:
+                    //     // "https://beta.destina1.com/MAquantes-technology.html#/",
+                    //     "https://www.destina1.com/MAquantes-technology.html#/",
+                    // from: "Quantes Technology",
                     ));
               },
               child: Image.asset(
