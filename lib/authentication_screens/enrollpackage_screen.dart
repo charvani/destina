@@ -1,4 +1,3 @@
-import 'package:destina_1_international/authentication_screens/register_screen.dart';
 import 'package:destina_1_international/authentication_screens/sponsor_check_screen.dart';
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';

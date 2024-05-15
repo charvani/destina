@@ -276,8 +276,9 @@ class _SponsorCheckScreenState extends State<SponsorCheckScreen> {
                       if (formKey.currentState!.validate()) {
                         if (groupVal != "") {
                           Get.to(() => RegisterScreen(
-                                placementId: palcementNameTController.text,
-                                sponsorId: sponsorNameTController.text,
+                                placementId: placementIdTController.text,
+                                sponsorId: sponsorIdTController.text,
+                                checkoutSponsorId: sponsorIdTController.text,
                                 countryId: widget.countryId,
                                 packageCode: widget.packageCode,
                                 groupVal: groupVal == "Left" ? "0" : "1",

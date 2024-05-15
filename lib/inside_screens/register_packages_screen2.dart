@@ -35,7 +35,8 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
   int selectedCategoryIndex = 0;
   dynamic krialiaTappedInd;
   List<OnboardModel> productsCategoriesOnTap = [
-    OnboardModel(image: "assets/images/health_care.png", title: "Health Care"),
+    OnboardModel(
+        image: "assets/images/health_care.png", title: "Wellness Care"),
     // OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
     // OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
     OnboardModel(
@@ -43,7 +44,7 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
   ];
   List<OnboardModel> productsCategories = [
     OnboardModel(
-        image: "assets/images/health_care_wb.png", title: "Health Care"),
+        image: "assets/images/health_care_wb.png", title: "Wellness Care"),
     // OnboardModel(image: "assets/images/sop_wb.png", title: "Skin Care"),
     // OnboardModel(image: "assets/images/body_care_wb.png", title: "Hair Care"),
     OnboardModel(
@@ -105,11 +106,11 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
             "assets/images/products_baground.png",
           ];
           // jadePackageVal = "18";
-          // jadePackageVal = "Health Care";
+          // jadePackageVal = "Wellness Care";
         });
         dataFun("DIRECT CUSTOMER");
       } else {
-        dataFun("Health Care");
+        dataFun("Wellness Care");
       }
       packageController.packCartList.clear();
     });

@@ -17,12 +17,14 @@ class RegisterScreen extends StatefulWidget {
   final String groupVal;
   final String placementId;
   final String sponsorId;
+  final String checkoutSponsorId;
   const RegisterScreen(
       {super.key,
       required this.placementId,
       required this.sponsorId,
       required this.countryId,
       required this.packageCode,
+      required this.checkoutSponsorId,
       required this.groupVal});
 
   @override
@@ -853,7 +855,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       // ).show(context);
       Get.back();
       Get.off(() => RegisterCartScreen(
-            sponsorId: sponsorIdTController.text.removeAllWhitespace,
+            sponsorId: widget.checkoutSponsorId.removeAllWhitespace,
             packageCode: widget.packageCode,
             countryId: widget.countryId,
           ));

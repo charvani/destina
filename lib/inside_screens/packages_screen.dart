@@ -101,7 +101,7 @@ class _PackageScreenState extends State<PackageScreen> {
 
       // //after
       // if (widget.from == "DDC") {
-      //   dataFun("Health Care");
+      //   dataFun("Wellness Care");
       // } else {
       //   dataFun(jadePackageVal);
       // }

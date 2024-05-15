@@ -13,10 +13,12 @@ import 'promo_cartscreen.dart';
 
 class PromoDashboardScreen extends StatefulWidget {
   final String pkMallNum;
+  final String pkCode;
 
   const PromoDashboardScreen({
     super.key,
     required this.pkMallNum,
+    required this.pkCode,
   });
 
   @override
@@ -31,11 +33,12 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
   @override
   void initState() {
     super.initState();
-    if (widget.pkMallNum == "3") {
-      packCode = "MYJD02";
-    } else {
-      packCode = "MYPLU01";
-    }
+    packCode = widget.pkCode;
+    // if (widget.pkMallNum == "3") {
+    //   packCode = "MYJD02";
+    // } else {
+    //   packCode = "MYPLU01";
+    // }
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       if (Constants.prefs.getString("uniq_id") == null) {
         uniqId = generateRandomString(10);

@@ -121,6 +121,7 @@ class _KContactUsScreenState extends State<KContactUsScreen> {
                     titleName: faqs[i]['ans'],
                     fontFamily: "OnestRegular",
                     size: 14,
+                    textAlign: TextAlign.justify,
                   ),
                 ],
               )),

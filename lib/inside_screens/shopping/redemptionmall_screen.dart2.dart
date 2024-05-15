@@ -28,7 +28,7 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
   int selectedInd = 0;
   dynamic krialiaTappedInd;
   List<String> productCatgs = [
-    "Health Care",
+    "Wellness Care",
     // "Hair Care",
     // "Skin Care",
     "Redemption"
@@ -54,7 +54,7 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
       } else {
         sessionId = Constants.prefs.getString("ss_id");
       }
-      dataFun("Health Care");
+      dataFun("Wellness Care");
     });
   }
 

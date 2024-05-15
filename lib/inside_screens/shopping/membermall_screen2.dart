@@ -43,7 +43,7 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
       await Constants.prefs.setString("uniq_id", uniqId);
       sessionId = generateTimeStamp();
       await Constants.prefs.setString("ss_id", sessionId);
-      dataFun("Health Care");
+      dataFun("Wellness Care");
     });
   }
 

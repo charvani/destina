@@ -39,7 +39,7 @@ class _DPMallScreen2State extends State<DPMallScreen2> {
       } else {
         uniqId = Constants.prefs.getString("uniq_id");
       }
-      dataFun("Health Care");
+      dataFun("Wellness Care");
     });
   }
 

@@ -74,6 +74,7 @@ class DashboardModel {
   String nupgdate;
   String pkgUpgrade;
   String endDate;
+  String pkCode;
 
   DashboardModel({
     required this.myIncome,
@@ -140,6 +141,7 @@ class DashboardModel {
     required this.nupgdate,
     required this.pkgUpgrade,
     required this.endDate,
+    required this.pkCode,
   });
 
   factory DashboardModel.fromJson(Map<String, dynamic> json) => DashboardModel(
@@ -152,6 +154,7 @@ class DashboardModel {
         msg: json["Msg"],
         message: json["Message"],
         pdName: json["PDName"],
+        pkCode: json["Pkcode"],
         pdSponsorId: json["PDSponsorId"],
         pdJoinDate: json["PDJoinDate"],
         pdStatus: json["PDStatus"],

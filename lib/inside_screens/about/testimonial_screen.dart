@@ -77,6 +77,7 @@ class _TestimonialScreenState extends State<TestimonialScreen> {
                                         .testimonialData[i].descr,
                                     size: 14,
                                     fontFamily: "OnestRegular",
+                                    textAlign: TextAlign.justify  ,
                                   )
                                 ],
                               ),

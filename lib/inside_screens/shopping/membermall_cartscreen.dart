@@ -9,6 +9,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../commons/colors.dart';
+import '../../service_call/api_data.dart';
+import 'membership_checkoutscreen.dart';
 
 class MembermallCartScreen extends StatefulWidget {
   final String? from;
@@ -477,25 +479,29 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                       //         ],
                                       //       ),
                                       //       const SpaceHeightWidget(height: 20),
-                                      //       SizedBox(
-                                      //         width: 200,
-                                      //         height: 35,
-                                      //         child: IconElevatedButton(
-                                      //           onTapFun: () async {
-                                      //             Get.off(() =>
-                                      //                 MemberShipCheckOutScreen(
-                                      //                     redirectUrl:
-                                      //                         "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/MembershipCheckoutParam.html?RegId=$regId&UpgMember=$upgradeMemVal&sessid=$sessionId&uniqId=$uniqId"));
-                                      //           },
-                                      //           imagePath:
-                                      //               'assets/images/shopping_cart_img.jpg',
-                                      //           labelColor: whiteColor,
-                                      //           buttonColor: lightDarKBlue,
-                                      //           titile: "Checkout",
-                                      //         ),
-                                      //       ),
-                                      //     ],
-                                      //   ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8),
+                                        child: SizedBox(
+                                          width: 200,
+                                          height: 35,
+                                          child: IconElevatedButton(
+                                            onTapFun: () async {
+                                              Get.off(() =>
+                                                  MemberShipCheckOutScreen(
+                                                      redirectUrl:
+                                                          "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/MembershipCheckoutParam.html?RegId=$regId&UpgMember=$upgradeMemVal&sessid=$sessionId&uniqId=$uniqId"));
+                                            },
+                                            imagePath:
+                                                'assets/images/shopping_cart_img.jpg',
+                                            labelColor: whiteColor,
+                                            buttonColor: lightDarKBlue,
+                                            titile: "Checkout",
+                                          ),
+                                        ),
+                                      ),
+                                      //   ],
+                                      // ),
                                       // ),
                                       const SpaceHeightWidget(height: 20),
                                       // Container(

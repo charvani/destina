@@ -404,10 +404,10 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                                 Obx(() {
                                                   return cartController
                                                           .loading.value
-                                                      ? const Text(
-                                                          "DP 0.0 + RM 0.0")
+                                                      ? Text(
+                                                          "DP 0.0 + ${cartController.salesMallCartItems[0].symbol} 0.0")
                                                       : Text(
-                                                          "DP ${cartController.dpMallDPAmount.value} + RM ${cartController.dpMallRMAmount.value}",
+                                                          "DP ${cartController.dpMallDPAmount.value} + ${cartController.salesMallCartItems[0].symbol} ${cartController.dpMallRMAmount.value}",
                                                           style:
                                                               const TextStyle(
                                                             fontFamily:
@@ -437,10 +437,10 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                                 Obx(() {
                                                   return cartController
                                                           .loading.value
-                                                      ? const Text(
-                                                          "DP 0.0 + RM 0.0")
+                                                      ? Text(
+                                                          "DP 0.0 + ${cartController.salesMallCartItems[0].symbol} 0.0")
                                                       : Text(
-                                                          "DP ${cartController.dpMallDPAmount.value} + RM ${cartController.dpMallRMAmount.value}",
+                                                          "DP ${cartController.dpMallDPAmount.value} + ${cartController.salesMallCartItems[0].symbol} ${cartController.dpMallRMAmount.value}",
                                                           style: TextStyle(
                                                             fontFamily:
                                                                 "OnestSemiBold",

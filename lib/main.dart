@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:destina_1_international/authentication_screens/splash_screen.dart';
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/network_connectivity/network_binding.dart';
@@ -9,7 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'inside_screens/qunates_screens/q_homescreen.dart';
+import 'authentication_screens/splash_screen.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override

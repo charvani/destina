@@ -36,7 +36,7 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       uniqId = generateRandomString(10);
       await Constants.prefs.setString("uniq_id", uniqId);
-      dataFun("Health Care");
+      dataFun("Wellness Care");
       _dataController.packCartList.clear();
     });
   }

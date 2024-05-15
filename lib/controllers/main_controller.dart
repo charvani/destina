@@ -197,6 +197,7 @@ class MainController extends GetxController {
   RxInt totalItems = 0.obs;
   RxList<String> bannerPopUp = <String>[].obs;
   Rx<DashboardModel> dashboardData = DashboardModel(
+          pkCode: "",
           myIncome: [],
           myDownlineLRpt: [],
           myDownlineRRpt: [],
@@ -2424,19 +2425,17 @@ class MainController extends GetxController {
           print(
               "dp val..${res['DPPackageRpt'][i]['mrp'].substring(0, endIndex)}");
           String dpval = res['DPPackageRpt'][i]['mrp'].substring(0, endIndex);
+          List<dynamic> split1 =
+              res['DPPackageRpt'][i]['mrp'].toString().split('+');
 
-          print(
-              "rm val ...${res['DPPackageRpt'][i]['mrp'].substring(res['DPPackageRpt'][i]['mrp'].indexOf("RM"), res['DPPackageRpt'][i]['mrp'].length - 1).replaceAll("RM", "")}");
-          String rmval = res['DPPackageRpt'][i]['mrp']
-              .substring(res['DPPackageRpt'][i]['mrp'].indexOf("RM"),
-                  res['DPPackageRpt'][i]['mrp'].length - 1)
-              .replaceAll("RM", "");
+          List<dynamic> split2 = split1[1].toString().trim().split(' ');
+
           dpMallDPAmount.value = dpMallDPAmount.value +
               (double.parse(dpval) *
                   double.parse(res['DPPackageRpt'][i]['qty']));
 
           dpMallRMAmount.value = dpMallRMAmount.value +
-              (double.parse(rmval) *
+              (double.parse(split2[1]) *
                   double.parse(res['DPPackageRpt'][i]['qty']));
           dpMallCV.value = dpMallCV.value +
               (double.parse(res['DPPackageRpt'][i]['CV']) *

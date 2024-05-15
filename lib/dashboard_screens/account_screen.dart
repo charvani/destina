@@ -206,7 +206,10 @@ class _AccountScreenState extends State<AccountScreen>
               GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
-                  Get.to(() => const LoginScreen());
+                  if (Constants.prefs.getString("user_id") == null ||
+                      Constants.prefs.getString("user_id") == "false") {
+                    Get.to(() => const LoginScreen());
+                  }
                 },
                 child: Stack(
                   // alignment: Alignment.topRight,

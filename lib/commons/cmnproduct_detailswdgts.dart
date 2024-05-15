@@ -1408,7 +1408,7 @@ kritaliaWidget(String itemName) {
 }
 
 List<String> productCtgs = [
-  "Health Care",
+  "Wellness Care",
   // "Hair Care",
   // "Skin Care",
   "Kritalia & Co"

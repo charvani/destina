@@ -19,13 +19,14 @@ class ProductsScreen extends StatefulWidget {
 int selectedCategoryIndex = 0;
 
 List<OnboardModel> productsCategoriesOnTap = [
-  OnboardModel(image: "assets/images/health_care.png", title: "Health Care"),
+  OnboardModel(image: "assets/images/health_care.png", title: "Wellness Care"),
   OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
   OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
   OnboardModel(image: "assets/images/beauty.png", title: "Personal Care"),
 ];
 List<OnboardModel> productsCategories = [
-  OnboardModel(image: "assets/images/health_care_wb.png", title: "Health Care"),
+  OnboardModel(
+      image: "assets/images/health_care_wb.png", title: "Wellness Care"),
   OnboardModel(image: "assets/images/sop_wb.png", title: "Skin Care"),
   OnboardModel(image: "assets/images/body_care_wb.png", title: "Hair Care"),
   OnboardModel(image: "assets/images/beauty_wb.png", title: "Personal Care"),
@@ -48,7 +49,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
           selectedCategoryIndex = widget.index!;
         });
         dataFun(widget.index == 0
-            ? "Health Care"
+            ? "Wellness Care"
             : widget.index == 1
                 ? "Skin Care"
                 : widget.index == 2
@@ -56,7 +57,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     : "Personal Care");
       } else {
         print("at else");
-        dataFun("Health Care");
+        dataFun("Wellness Care");
       }
       // dataFun("All");
     });
@@ -106,7 +107,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
                                 selectedCategoryIndex = i;
                               });
                               dataFun(selectedCategoryIndex == 0
-                                  ? "Health Care"
+                                  ? "Wellness Care"
                                   : selectedCategoryIndex == 1
                                       ? "Skin Care"
                                       : selectedCategoryIndex == 2

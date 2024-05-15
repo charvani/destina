@@ -21,7 +21,7 @@ class SearchCategoryScreen extends StatefulWidget {
 class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
   List<OnboardModel> productsCategories = [
     OnboardModel(
-        image: "assets/images/health_care_wb.png", title: "Health Care"),
+        image: "assets/images/health_care_wb.png", title: "Wellness Care"),
     // OnboardModel(image: "assets/images/sop_wb.png", title: "Skin Care"),
     // OnboardModel(image: "assets/images/body_care_wb.png", title: "Hair Care"),
     OnboardModel(
@@ -199,8 +199,8 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
                                 titile: _productController
                                     .searchProductItemList[i].packageName)
                             : CategroyItemWidget(
-                                amount: _productController
-                                            .searchProductItemList[i].dp >
+                                amount: double.parse(_productController
+                                            .searchProductItemList[i].dp) >
                                         0
                                     ? "${_productController.searchProductItemList[i].currency} ${_productController.searchProductItemList[i].dp}"
                                     : "",

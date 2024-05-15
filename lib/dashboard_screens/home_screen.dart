@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../authentication_screens/popup_encrollscreen.dart';
 import '../commons/constants.dart';
 import '../inside_screens/about/weburl_screen.dart';
 import '../inside_screens/notifications_screen.dart';
@@ -33,7 +34,7 @@ int promotionCarouselIndex = 0;
 int sopCarouselIndex = 0;
 
 List<OnboardModel> productsCategories = [
-  OnboardModel(image: "assets/images/health_care.png", title: "Health Care"),
+  OnboardModel(image: "assets/images/health_care.png", title: "Wellness Care"),
   // OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
   // OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
   OnboardModel(
@@ -225,44 +226,197 @@ class _HomeScreenState extends State<HomeScreen> {
                   )));
         }
       });
+      // Timer(const Duration(microseconds: 700), () {
+      //   if (widget.data['RenewaAlert'] != "No") {
+      //     Get.dialog(
+      //         barrierDismissible: false,
+      //         AlertDialog(
+      //             insetPadding: const EdgeInsets.symmetric(horizontal: 10),
+      //             titlePadding: EdgeInsets.zero,
+      //             title: Container(
+      //               width: double.maxFinite,
+      //               alignment: Alignment.topRight,
+      //               child: IconButton(
+      //                   onPressed: () {
+      //                     Get.back();
+      //                   },
+      //                   icon: Icon(
+      //                     Icons.cancel_outlined,
+      //                     color: redColor,
+      //                   )),
+      //             ),
+      //             contentPadding: const EdgeInsets.only(
+      //                 top: 0, left: 3, right: 3, bottom: 18),
+      //             content: SingleChildScrollView(
+      //               child: Column(
+      //                 mainAxisSize: MainAxisSize.min,
+      //                 children: [
+      //                   CommonTitle(
+      //                     titleName: "Destina 1 International alerts!!!!",
+      //                     fontColor: darkRedColor,
+      //                   ),
+      //                   const SpaceHeightWidget(height: 15),
+      //                   SideTitle(title: widget.data['RenNotifyMsg'])
+      //                 ],
+      //               ),
+      //             )));
+      //   }
+      // });
+      // Timer(const Duration(microseconds: 800), () {
+      //   // if (widget.data['RenewaAlert'] != "No") {
+      //   //able to close
+      //   if ("mm" != "No") {
+      //     Get.dialog(
+      //         barrierDismissible: false,
+      //         AlertDialog(
+      //           insetPadding: const EdgeInsets.symmetric(horizontal: 10),
+      //           titlePadding: EdgeInsets.zero,
+      //           title: Container(
+      //             width: double.maxFinite,
+      //             alignment: Alignment.topRight,
+      //             child: IconButton(
+      //                 onPressed: () {
+      //                   Get.back();
+      //                 },
+      //                 icon: Icon(
+      //                   Icons.cancel_outlined,
+      //                   color: redColor,
+      //                 )),
+      //           ),
+      //           contentPadding: const EdgeInsets.only(
+      //               top: 0, left: 3, right: 3, bottom: 18),
+      //           content: SingleChildScrollView(
+      //             child: Column(
+      //               mainAxisSize: MainAxisSize.min,
+      //               children: [
+      //                 CommonTitle(
+      //                   titleName: "Destina1.com alerts!!!!",
+      //                   fontColor: darkRedColor,
+      //                 ),
+      //                 const SpaceHeightWidget(height: 15),
+      //                 const SideTitle(
+      //                     title:
+      //                         "Your Account Will Expire On 11 May 2024 It is time to renew your Destina 1 Virtual Business Office subscription . It is important for your success as a Distributor. As a Distributor affiliated with Destina 1 International, you have invested time and effort in building a successful business. You have created the beginning of a legacy for future generations. Whatever your experience so far, whatever your achievement level, you have created the foundation for the future which you can build with continuous activity, as long as you renew")
+      //               ],
+      //             ),
+      //           ),
+      //           actions: [
+      //             CustomAutoWidthButton(
+      //                 onTapFun: () {
+      //                   Get.to(() => PopupEnrollPackageScreen(
+      //                         countyId: widget.data['CountryID'],
+      //                       ));
+      //                 },
+      //                 title: "Click Here To Unlock Your Account")
+      //           ],
+      //         ));
+
+      //   }
+      // });
+
       Timer(const Duration(microseconds: 700), () {
-        if (widget.data['RenewaAlert'] != "No") {
+        if (widget.data['RenewalComp'] == "Yes") {
+          //not able to close at all the popup
+          // if ("mm" != "No") {
           Get.dialog(
               barrierDismissible: false,
-              AlertDialog(
+              PopScope(
+                canPop: false,
+                child: AlertDialog(
                   insetPadding: const EdgeInsets.symmetric(horizontal: 10),
                   titlePadding: EdgeInsets.zero,
-                  title: Container(
-                    width: double.maxFinite,
-                    alignment: Alignment.topRight,
-                    child: IconButton(
-                        onPressed: () {
-                          Get.back();
-                        },
-                        icon: Icon(
-                          Icons.cancel_outlined,
-                          color: redColor,
-                        )),
-                  ),
                   contentPadding: const EdgeInsets.only(
                       top: 0, left: 3, right: 3, bottom: 18),
                   content: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        const SpaceHeightWidget(height: 10),
                         CommonTitle(
-                          titleName: "Destina 1 International alerts!!!!",
+                          titleName: "Account Locked !!!",
                           fontColor: darkRedColor,
                         ),
                         const SpaceHeightWidget(height: 15),
-                        SideTitle(title: widget.data['RenNotifyMsg'])
+                        const Row(
+                          children: [
+                            Expanded(
+                              child: CommonCachedNetworkImage(
+                                  imagePath:
+                                      "https://www.destina1.com/images/renew_membership_btn.png"),
+                            ),
+                            Expanded(
+                              child: CommonCachedNetworkImage(
+                                  imagePath:
+                                      "https://www.destina1.com/images/group-img.jpg"),
+                            )
+                          ],
+                        ),
+                        const SideTitle(
+                            title:
+                                "Your Virtual Business Office has expired. To Continue utilizing the services of Destina 1, including D1 Virtual Bussiness Office, renew for your Virtual Bussiness Office Subscription. Renew Of D1 Virtual Bussiness Office has to be done within 60 Days from the expiry. Non renewal of D1 Virtual Bussiness Office within the said period, your unused CV CANNOT BE EXTENDED and will be fortified automatically.\n\nContact our Customer Support or click the below button to unlock your account!!!"),
                       ],
                     ),
-                  )));
+                  ),
+                  actions: [
+                    CustomAutoWidthButton(
+                        onTapFun: () {
+                          Get.to(() => PopupEnrollPackageScreen(
+                                countyId: widget.data['CountryID'],
+                              ));
+                        },
+                        title: "Click Here To Unlock Your Account")
+                  ],
+                ),
+              ));
+        } else if (widget.data['RenewaAlert'] == "Yes") {
+          Get.dialog(
+              barrierDismissible: false,
+              AlertDialog(
+                insetPadding: const EdgeInsets.symmetric(horizontal: 10),
+                titlePadding: EdgeInsets.zero,
+                title: Container(
+                  width: double.maxFinite,
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                      onPressed: () {
+                        Get.back();
+                      },
+                      icon: Icon(
+                        Icons.cancel_outlined,
+                        color: redColor,
+                      )),
+                ),
+                contentPadding: const EdgeInsets.only(
+                    top: 0, left: 3, right: 3, bottom: 18),
+                content: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CommonTitle(
+                        titleName: "Destina1.com alerts!!!!",
+                        fontColor: darkRedColor,
+                      ),
+                      const SpaceHeightWidget(height: 15),
+                      SideTitle(
+                          title:
+                              "Your Account Will Expire On ${widget.data['Edate']} It is time to renew your Destina 1 Virtual Business Office subscription . It is important for your success as a Distributor. As a Distributor affiliated with Destina 1 International, you have invested time and effort in building a successful business. You have created the beginning of a legacy for future generations. Whatever your experience so far, whatever your achievement level, you have created the foundation for the future which you can build with continuous activity, as long as you renew")
+                    ],
+                  ),
+                ),
+                actions: [
+                  CustomAutoWidthButton(
+                      onTapFun: () {
+                        Get.to(() => PopupEnrollPackageScreen(
+                              countyId: widget.data['CountryID'],
+                            ));
+                      },
+                      title: "Click Here To Unlock Your Account")
+                ],
+              ));
         }
       });
     }
-    dataFun("Health Care");
+    promotionsFun();
   }
 
   dataFun(String category) async {
@@ -273,7 +427,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     newsFun();
     trendingData("1");
-    promotionsFun();
   }
 
   newsFun() {
@@ -574,7 +727,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 packageCode: productController
                                                     .productItemList[i]
                                                     .packagecode,
-                                                fromPack: 'Health Care',
+                                                fromPack: 'Wellness Care',
                                               ));
                                         },
                                         imagePath: productController
@@ -713,7 +866,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTapFun: () {
                                     Get.to(() => const WebUrlScreen(
                                           redirectUrl:
-                                              "https://beta.destina1.com/MANews.html#/",
+                                              "https://destina1.com/MANews.html#/",
                                           from: "News",
                                         ));
                                   },
@@ -805,9 +958,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Get.to(() => WebUrlScreen(
                                       from: "",
                                       redirectUrl: i == 0
-                                          ? "https://beta.destina1.com/MATNP.html"
+                                          ? "https://www.destina1.com/MATNP.html"
                                           : i == 1
-                                              ? "https://beta.destina1.com/MANLA.html#/"
+                                              ? "https://www.destina1.com/MANLA.html#/"
                                               : "https://www.destina1.com/MAPHC.html"
                                       //  "https://beta.destina1.com/MAPHA.html",
                                       ));
@@ -892,7 +1045,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         productController
                                                             .productItemList[i]
                                                             .packagecode,
-                                                    fromPack: "Health care",
+                                                    fromPack: "Wellness Care",
                                                   ));
                                             },
                                             amountColor: darkBlue,
@@ -1062,7 +1215,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-
+                          const SpaceWidthWidget(width: 5),
+                          GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () {
+                              trendingData("5");
+                            },
+                            child: CircleAvatar(
+                                radius: 20,
+                                backgroundColor: blueColor,
+                                child: CommonTitle(
+                                  titleName: "in",
+                                  fontColor: whiteColor,
+                                  size: 20,
+                                  fontFamily: "PoppinsBold",
+                                )),
+                          ),
                           // Expanded(
                           //   child: Container(
                           //     decoration: const BoxDecoration(
@@ -1282,7 +1450,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       //                                   productController
                       //                                       .productItemList[i]
                       //                                       .packagecode,
-                      //                               fromPack: "Health care",
+                      //                               fromPack: "Wellness Care",
                       //                             ));
                       //                       },
                       //                       amountColor: darkBlue,
@@ -1372,7 +1540,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _homeController.getHomeTrending(params);
   }
 
-  promotionsFun() {
+  promotionsFun() async {
     Map params = {
       "action": "GetPromotion",
       "category": "all",
@@ -1384,6 +1552,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "sesuer": "0",
       "Sesid": "0"
     };
-    _homeController.getPromotions(params);
+    await _homeController.getPromotions(params);
+    dataFun("Wellness Care");
   }
 }

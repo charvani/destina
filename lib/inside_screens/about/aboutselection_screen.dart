@@ -35,7 +35,7 @@ class _AboutSelectionScreenState extends State<AboutSelectionScreen> {
               leadingIcon: Icons.newspaper,
               onTapFun: () {
                 Get.to(() => const WebUrlScreen(
-                      redirectUrl: "https://beta.destina1.com/MANews.html#/",
+                      redirectUrl: "https://destina1.com/MANews.html#/",
                       from: "News",
                     ));
               },

@@ -66,7 +66,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
       dataFun();
       refferalLinkTController.text =
-          "https://beta.destina1.com/GetSponsor.html?sponsor=${userId.toString().toUpperCase()}";
+          "https://www.destina1.com/GetSponsor.html?sponsor=${userId.toString().toUpperCase()}";
 
       // print("da....${widget.data}");
       // if (widget.bannerPopUpImages!.isNotEmpty) {
@@ -430,8 +430,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               child: CustomAutoWidthButton(
                                   onTapFun: () {
                                     Get.to(() => PromoDashboardScreen(
-                                        pkMallNum: _dashboardController
-                                            .dashboardData.value.pkmall));
+                                          pkMallNum: _dashboardController
+                                              .dashboardData.value.pkmall,
+                                          pkCode: _dashboardController
+                                              .dashboardData.value.pkCode,
+                                        ));
                                   },
                                   title: _dashboardController
                                               .dashboardData.value.pkmall ==

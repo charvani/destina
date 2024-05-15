@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../commons/colors.dart';
 import '../about/aboutus_screen.dart';
 import '../about/testimonial_screen.dart';
+import 'q_productscreen.dart';
 
 class QHomeScreen extends StatefulWidget {
   const QHomeScreen({super.key});
@@ -48,7 +49,13 @@ class _QHomeScreenState extends State<QHomeScreen> {
               textAlign: TextAlign.justify,
             ),
           ),
-          CustomAutoWidthButton(onTapFun: () {}, title: "DISCOVER"),
+          CustomAutoWidthButton(
+              onTapFun: () {
+                Get.to(() => const QProductsScreen(
+                  from: "qunates",
+                ));
+              },
+              title: "DISCOVER"),
           const SpaceHeightWidget(height: 20),
           CommonTitle(
             titleName: "HEALTH KEY JOURNEY",

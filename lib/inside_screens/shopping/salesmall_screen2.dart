@@ -49,7 +49,7 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
         sessionId = Constants.prefs.getString("ss_id");
       }
       // dataFun();
-      dataFun("Health Care");
+      dataFun("Wellness Care");
     });
   }
 

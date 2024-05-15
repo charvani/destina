@@ -19,14 +19,15 @@ class ProductsScreen2 extends StatefulWidget {
 int selectedCategoryIndex = 0;
 
 List<OnboardModel> productsCategoriesOnTap = [
-  OnboardModel(image: "assets/images/health_care.png", title: "Health Care"),
+  OnboardModel(image: "assets/images/health_care.png", title: "Wellness Care"),
   // OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
   // OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
   OnboardModel(
       image: "assets/images/a_start_privilege.png", title: "Kritalia & Co"),
 ];
 List<OnboardModel> productsCategories = [
-  OnboardModel(image: "assets/images/health_care_wb.png", title: "Health Care"),
+  OnboardModel(
+      image: "assets/images/health_care_wb.png", title: "Wellness Care"),
   // OnboardModel(image: "assets/images/sop_wb.png", title: "Skin Care"),
   // OnboardModel(image: "assets/images/body_care_wb.png", title: "Hair Care"),
   OnboardModel(
@@ -50,7 +51,7 @@ class _ProductsScreen2State extends State<ProductsScreen2> {
           selectedCategoryIndex = widget.index!;
         });
         dataFun(widget.index == 0
-            ? "Health Care"
+            ? "Wellness Care"
             :
             // : widget.index == 1
             //     ? "Skin Care"
@@ -60,7 +61,7 @@ class _ProductsScreen2State extends State<ProductsScreen2> {
             "Kritalia & Co");
       } else {
         print("at else");
-        dataFun("Health Care");
+        dataFun("Wellness Care");
       }
       // dataFun("All");
     });
