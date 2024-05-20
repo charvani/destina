@@ -223,6 +223,7 @@ class _PackageScreenState extends State<PackageScreen> {
                                                                 i]
                                                             .pkcode,
                                                     countryid: widget.countryId,
+                                                    customerType: widget.from,
                                                   ));
                                             },
                                             imagePath:
@@ -271,6 +272,8 @@ class _PackageScreenState extends State<PackageScreen> {
                                                     onTapFun: () {
                                                       Get.to(() =>
                                                           PackageDetailsScreen(
+                                                            customerType:
+                                                                widget.from,
                                                             from: "register",
                                                             packageCode:
                                                                 packageController

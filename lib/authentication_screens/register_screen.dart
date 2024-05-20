@@ -18,11 +18,13 @@ class RegisterScreen extends StatefulWidget {
   final String placementId;
   final String sponsorId;
   final String checkoutSponsorId;
+  final String cusType;
   const RegisterScreen(
       {super.key,
       required this.placementId,
       required this.sponsorId,
       required this.countryId,
+      required this.cusType,
       required this.packageCode,
       required this.checkoutSponsorId,
       required this.groupVal});
@@ -858,6 +860,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             sponsorId: widget.checkoutSponsorId.removeAllWhitespace,
             packageCode: widget.packageCode,
             countryId: widget.countryId,
+            customerType: widget.cusType,
           ));
     } else {
       CommonToast(res['Message']);

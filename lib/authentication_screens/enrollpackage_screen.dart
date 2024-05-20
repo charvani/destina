@@ -9,7 +9,13 @@ import 'package:get/get.dart';
 class EnrollPackageScreen extends StatefulWidget {
   final String countyId;
   final String packageCoded;
-  const EnrollPackageScreen({super.key, required this.countyId, required this.packageCoded});
+  final String cusType;
+  const EnrollPackageScreen({
+    super.key,
+    required this.countyId,
+    required this.packageCoded,
+    required this.cusType,
+  });
 
   @override
   State<EnrollPackageScreen> createState() => _EnrollPackageScreenState();
@@ -105,8 +111,9 @@ class _EnrollPackageScreenState extends State<EnrollPackageScreen> {
                     child: CustomElevatedButton(
                         onTapFun: () {
                           Get.to(() => SponsorCheckScreen(
-                              packageCode: widget.packageCoded,
-                              countryId: widget.countyId
+                                packageCode: widget.packageCoded,
+                                countryId: widget.countyId,
+                                customerType: widget.cusType,
                               ));
                         },
                         title: "Submit"),

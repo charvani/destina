@@ -363,7 +363,9 @@ class _UpgradeProductDetailsScreen2State
                           title: packDetailsController
                               .packageDetailsData.value.pkname,
                         ),
-                        const PdfWidget(),
+                         PdfWidget(
+                          category: widget.fromPack,
+                        ),
                         if (widget.fromPack == "Kritalia & Co")
                           kritaliaWidget(packDetailsController
                               .packageDetailsData.value.pkname),

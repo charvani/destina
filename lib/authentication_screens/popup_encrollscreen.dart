@@ -2,15 +2,18 @@ import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
+import 'package:destina_1_international/inside_screens/about/weburl_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PopupEnrollPackageScreen extends StatefulWidget {
   final String countyId;
+  final String regId;
 
   const PopupEnrollPackageScreen({
     super.key,
     required this.countyId,
+    required this.regId,
   });
 
   @override
@@ -110,7 +113,10 @@ class _PopupEnrollPackageScreenState extends State<PopupEnrollPackageScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: CustomElevatedButton(
                         onTapFun: () {
-                          print("url come here");
+                          Get.to(() => WebUrlScreen(
+                              from: "",
+                              redirectUrl:
+                                  "https://destina1.com/MobileAppCheckout/RenewPaymentCheckoutParam.html?RegId=${widget.regId}&Country=${widget.countyId}"));
                         },
                         title: "Submit"),
                   ),

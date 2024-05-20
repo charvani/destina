@@ -1,6 +1,7 @@
 import 'package:destina_1_international/commons/cmnproduct_detailswdgts.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/commons/constants.dart';
+import 'package:destina_1_international/inside_screens/myEmoney/ecard_reqreport_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -72,13 +73,15 @@ class _TestimonialScreenState extends State<TestimonialScreen> {
                                         .testimonialData[i].title,
                                     size: 16,
                                   ),
-                                  CommonTitle(
-                                    titleName: _dataController
-                                        .testimonialData[i].descr,
-                                    size: 14,
-                                    fontFamily: "OnestRegular",
-                                    textAlign: TextAlign.justify  ,
-                                  )
+                                  htmlDataWidget(
+                                      _dataController.testimonialData[i].descr)
+                                  // CommonTitle(
+                                  //   titleName: _dataController
+                                  //       .testimonialData[i].descr,
+                                  //   size: 14,
+                                  //   fontFamily: "OnestRegular",
+                                  //   textAlign: TextAlign.justify  ,
+                                  // )
                                 ],
                               ),
                             ),

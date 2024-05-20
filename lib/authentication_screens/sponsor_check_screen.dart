@@ -8,9 +8,14 @@ import '../controllers/main_controller.dart';
 
 class SponsorCheckScreen extends StatefulWidget {
   final String packageCode;
+  final String customerType;
   final String countryId;
-  const SponsorCheckScreen(
-      {super.key, required this.countryId, required this.packageCode});
+  const SponsorCheckScreen({
+    super.key,
+    required this.countryId,
+    required this.packageCode,
+    required this.customerType,
+  });
 
   @override
   State<SponsorCheckScreen> createState() => _SponsorCheckScreenState();
@@ -282,6 +287,7 @@ class _SponsorCheckScreenState extends State<SponsorCheckScreen> {
                                 countryId: widget.countryId,
                                 packageCode: widget.packageCode,
                                 groupVal: groupVal == "Left" ? "0" : "1",
+                                cusType: widget.customerType,
                               ));
                         } else {
                           CommonToast("Select placement Left or Right");

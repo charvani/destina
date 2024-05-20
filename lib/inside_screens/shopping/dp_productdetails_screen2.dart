@@ -334,7 +334,9 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
                           title: packDetailsController
                               .packageDetailsData.value.pkname,
                         ),
-                        const PdfWidget(),
+                         PdfWidget(
+                          category: widget.fromPack,
+                        ),
                         if (widget.fromPack == "Kritalia & Co")
                           kritaliaWidget(packDetailsController
                               .packageDetailsData.value.pkname),

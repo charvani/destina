@@ -302,7 +302,9 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                         productCode: _dataController.dpProductdata.value.pkcode,
                         title: _dataController.dpProductdata.value.pkname,
                       ),
-                      const PdfWidget(),
+                      PdfWidget(
+                          category: "",
+                        ),
                       const SpaceHeightWidget(height: 10),
                       const CommonDivider(),
                       const SpaceHeightWidget(height: 15),

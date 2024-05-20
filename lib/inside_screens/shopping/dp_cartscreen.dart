@@ -407,7 +407,7 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                                       ? Text(
                                                           "DP 0.0 + ${cartController.salesMallCartItems[0].symbol} 0.0")
                                                       : Text(
-                                                          "DP ${cartController.dpMallDPAmount.value} + ${cartController.salesMallCartItems[0].symbol} ${cartController.dpMallRMAmount.value}",
+                                                          "DP ${cartController.dpMallDPAmount.value.toStringAsFixed(0)} + ${cartController.salesMallCartItems[0].symbol} ${cartController.dpMallRMAmount.value.toStringAsFixed(2)}",
                                                           style:
                                                               const TextStyle(
                                                             fontFamily:
@@ -440,7 +440,7 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                                       ? Text(
                                                           "DP 0.0 + ${cartController.salesMallCartItems[0].symbol} 0.0")
                                                       : Text(
-                                                          "DP ${cartController.dpMallDPAmount.value} + ${cartController.salesMallCartItems[0].symbol} ${cartController.dpMallRMAmount.value}",
+                                                          "DP ${cartController.dpMallDPAmount.value.toStringAsFixed(0)} + ${cartController.salesMallCartItems[0].symbol} ${cartController.dpMallRMAmount.value.toStringAsFixed(2)}",
                                                           style: TextStyle(
                                                             fontFamily:
                                                                 "OnestSemiBold",

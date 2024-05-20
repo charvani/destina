@@ -8,6 +8,7 @@ class ApiData {
   String baseUrl = "https://admin.destina1.com/MobileAPI/api/MobileApp/";
   // String checkOutUrlDomain = "beta.destina1.com";
   String checkOutUrlDomain = "destina1.com";
+
   String productCategoryMethod = "GetProductsdata";
   String productDetailsMethod = "GetSingleProduct";
   String packageItemsMethod = "GetPkgItems";

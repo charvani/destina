@@ -18,9 +18,10 @@ class ReviewListScreen extends StatefulWidget {
   final String productImage;
   final String productName;
   const ReviewListScreen(
-      {super.key, required this.pid, required this.productImage,
-      required this.productName
-      });
+      {super.key,
+      required this.pid,
+      required this.productImage,
+      required this.productName});
 
   @override
   State<ReviewListScreen> createState() => _ReviewListScreenState();
@@ -356,8 +357,11 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
                             review: _reviewDataController
                                 .reviewData.value.reviewReport1[i].review,
                             reviewVideoData: _reviewDataController.reviewData
-                                        .value.reviewReport1[i].video !=
-                                    ""
+                                            .value.reviewReport1[i].video !=
+                                        "" &&
+                                    _reviewDataController.reviewData.value
+                                            .reviewReport1[i].video !=
+                                        "0"
                                 ? _reviewDataController
                                     .reviewData.value.reviewReport1[i].videoUrl
                                 : "",

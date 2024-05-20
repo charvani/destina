@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
-import 'package:destina_1_international/commons/constants.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -313,21 +312,23 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Obx(() {
-                          return _reviewController.loading.value
-                              ? loader
-                              : SizedBox(
-                                  height: 35,
-                                  child: CustomAutoWidthButton(
-                                      onTapFun: () {
-                                        if (_fomkey.currentState!.validate()) {
-                                          FocusManager.instance.primaryFocus
-                                              ?.unfocus();
-                                          submitFun();
-                                        }
-                                      },
-                                      title: "Submit"));
-                        }),
+                        // Obx(() {
+                        //   return _reviewController.loading.value
+                        //       ? loader
+                        //       :
+                        SizedBox(
+                            height: 35,
+                            child: CustomAutoWidthButton(
+                                onTapFun: () {
+                                  if (_fomkey.currentState!.validate()) {
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                    submitFun();
+                                  }
+                                },
+                                title: "Submit"))
+                        //               ;
+                        // }),
                       ],
                     ),
                     const SpaceHeightWidget(height: 10),
@@ -451,7 +452,8 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
       "Video": null,
       "Session": null
     };
-    dynamic res = await _reviewController.getReviewUpload(bdata, reviewDataParams);
+    dynamic res =
+        await _reviewController.getReviewUpload(bdata, reviewDataParams);
     if (res != null) {
       print("get...$res");
       if (res['Msg'] == "SUCCESS") {

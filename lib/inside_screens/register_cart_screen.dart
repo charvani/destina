@@ -16,9 +16,11 @@ class RegisterCartScreen extends StatefulWidget {
   final String packageCode;
   final String sponsorId;
   final String countryId;
+  final String customerType;
   const RegisterCartScreen(
       {super.key,
       required this.packageCode,
+      required this.customerType,
       required this.sponsorId,
       required this.countryId});
 
@@ -536,7 +538,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
 
                                               Get.off(() => CheckOutScreen(
                                                   redirectUrl:
-                                                      "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&SprIDNo=${widget.sponsorId}&sessid=$sessionId&uniqId=$uniqId"));
+                                                      "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&SprIDNo=${widget.sponsorId}&sessid=$sessionId&uniqId=$uniqId&RegType=${widget.customerType}"));
 
                                               // }
                                             },

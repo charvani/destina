@@ -362,6 +362,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTapFun: () {
                           Get.to(() => PopupEnrollPackageScreen(
                                 countyId: widget.data['CountryID'],
+                                regId: widget.data['RegId'],
                               ));
                         },
                         title: "Click Here To Unlock Your Account")
@@ -408,6 +409,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTapFun: () {
                         Get.to(() => PopupEnrollPackageScreen(
                               countyId: widget.data['CountryID'],
+                              regId: widget.data['RegId'],
                             ));
                       },
                       title: "Click Here To Unlock Your Account")

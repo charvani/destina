@@ -154,6 +154,8 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                           children: [
                                             CartItemWidget(
                                               showTotals: true,
+                                              symbol: cartController
+                                                  .salesMallCartItems[0].symbol,
                                               totalPrice: (double.parse(
                                                           cartController
                                                               .salesMallCartItems[

@@ -22,9 +22,11 @@ class RegisterPackDetailsScreen extends StatefulWidget {
   final String packageCode;
   final String? countryid;
   final String fromPack;
+  final String customerType;
   const RegisterPackDetailsScreen(
       {super.key,
       required this.from,
+      required this.customerType,
       required this.packageCode,
       required this.fromPack,
       this.countryid});
@@ -366,7 +368,9 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                           title: packDetailsController
                               .packageDetailsData.value.pkname,
                         ),
-                        const PdfWidget(),
+                        PdfWidget(
+                          category: widget.fromPack,
+                        ),
 
                         if (widget.fromPack == "Kritalia & Co")
                           kritaliaWidget(packDetailsController
@@ -455,11 +459,13 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
       Get.off(() => EnrollPackageScreen(
             packageCoded: widget.packageCode,
             countyId: widget.countryid!,
+            cusType: widget.customerType,
           ));
     } else {
       Get.off(() => SponsorCheckScreen(
             packageCode: widget.packageCode,
             countryId: widget.countryid!,
+            customerType: widget.customerType,
           ));
     }
   }

@@ -17,9 +17,11 @@ class PackageDetailsScreen extends StatefulWidget {
   final String from;
   final String packageCode;
   final String? countryid;
+  final String customerType;
   const PackageDetailsScreen(
       {super.key,
       required this.from,
+      required this.customerType,
       required this.packageCode,
       this.countryid});
   @override
@@ -729,6 +731,8 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                                                 .packageCode,
                                                             countyId: widget
                                                                 .countryid!,
+                                                            cusType: widget
+                                                                .customerType,
                                                           ));
                                                     } else {
                                                       Get.off(() =>
@@ -737,6 +741,8 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                                                 .packageCode,
                                                             countryId: widget
                                                                 .countryid!,
+                                                            customerType: widget
+                                                                .customerType,
                                                           ));
                                                     }
                                                   } else {

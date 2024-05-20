@@ -1645,21 +1645,21 @@ class ViewRatingWidget extends StatelessWidget {
                         if (reviewVideoData != "") {
                           await Share.shareXFiles([XFile(path)],
                               text:
-                                  "Product Name: $productName \nReview: $review \nVideo Review: $reviewVideoData \nApp link(Android): https://showcase.worldunityfoundation.org/");
+                                  "Product Name: $productName \nReview: $review \nVideo Review: $reviewVideoData \nApp link(Android): https://www.destina1.com");
                         } else {
                           await Share.shareXFiles([XFile(path)],
                               text:
-                                  "Product Name: $productName \nReview: $review \nApp link(Android): https://showcase.worldunityfoundation.org/");
+                                  "Product Name: $productName \nReview: $review \nApp link(Android): https://www.destina1.com");
                         }
                       } else {
                         if (reviewVideoData != "") {
                           await Share.shareXFiles([],
                               text:
-                                  "Product Name: $productName \nReview: $review \nVideo Review: $reviewVideoData \nApp link(Android): https://showcase.worldunityfoundation.org/");
+                                  "Product Name: $productName \nReview: $review \nVideo Review: $reviewVideoData \nApp link(Android): https://www.destina1.com");
                         } else {
                           await Share.shareXFiles([],
                               text:
-                                  "Product Name: $productName \nReview: $review \nApp link(Android): https://showcase.worldunityfoundation.org/");
+                                  "Product Name: $productName \nReview: $review \nApp link(Android): https://www.destina1.com");
                         }
                       }
                     },
@@ -1878,7 +1878,8 @@ class ReviewFilter extends StatelessWidget {
 }
 
 class PdfWidget extends StatefulWidget {
-  const PdfWidget({super.key});
+  final String category;
+  const PdfWidget({super.key, required this.category});
 
   @override
   State<PdfWidget> createState() => _PdfWidgetState();
@@ -1889,77 +1890,80 @@ class _PdfWidgetState extends State<PdfWidget> {
   bool progressbar = false;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CommonTitle(
-                titleName: "Download Broucher:",
-                fontColor: darkBlue,
-                size: 16,
-              ),
-              SizedBox(
-                // width: 130,
-                height: 30,
-                child: IconElevatedButton(
-                  onTapFun: () {
-                    if (progressbar == false) {
-                      FileDownloader.downloadFile(
-                          url:
-                              "https://admin.destina1.com/Resources/Mini%20Book%20web.pdf",
-                          // url:
-                          //     "https://admin.destina1.com/MemberDownloads/GoProChapter_12.mp3",
-                          name:
-                              "https://admin.destina1.com/Resources/Mini%20Book%20web.pdf"
-                                  .split('MemberDownloads/')
-                                  .last, //(optional)
-                          onProgress: (String? name, double? onProgress) {
-                            setState(() {
-                              progressbar = true;
-                              progressVal = onProgress;
-                              if (progressVal == 100.0) {
-                                progressbar = false;
-                              }
-                            });
-
-                            print('FILE fileName HAS PROGRESS $onProgress');
-                          },
-                          onDownloadCompleted: (String path) {
-                            print('FILE DOWNLOADED TO PATH: $path');
-                            CommonToastTrue("Successfully donwloaded");
-                          },
-                          onDownloadError: (String error) {
-                            print('DOWNLOAD ERROR: $error');
-                            CommonToast(error);
-                          });
-                    }
-                  },
-                  idata: Icons.picture_as_pdf_outlined,
-                  imagePath: '',
-                  labelColor: whiteColor,
-                  buttonColor: blackColor,
-                  titile: "Download",
-                ),
-              ),
-            ],
-          ),
-          if (progressbar)
-            Column(
+    return widget.category == "Kritalia & Co"
+        ? const SizedBox.shrink()
+        : Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+            child: Column(
               children: [
-                const SpaceHeightWidget(height: 10),
-                LinearProgressIndicator(
-                  borderRadius: BorderRadius.circular(10),
-                  value: progressVal! / 100.00,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CommonTitle(
+                      titleName: "Download Broucher:",
+                      fontColor: darkBlue,
+                      size: 16,
+                    ),
+                    SizedBox(
+                      // width: 130,
+                      height: 30,
+                      child: IconElevatedButton(
+                        onTapFun: () {
+                          if (progressbar == false) {
+                            FileDownloader.downloadFile(
+                                url:
+                                    "https://admin.destina1.com/Resources/Mini%20Book%20web.pdf",
+                                // url:
+                                //     "https://admin.destina1.com/MemberDownloads/GoProChapter_12.mp3",
+                                name:
+                                    "https://admin.destina1.com/Resources/Mini%20Book%20web.pdf"
+                                        .split('MemberDownloads/')
+                                        .last, //(optional)
+                                onProgress: (String? name, double? onProgress) {
+                                  setState(() {
+                                    progressbar = true;
+                                    progressVal = onProgress;
+                                    if (progressVal == 100.0) {
+                                      progressbar = false;
+                                    }
+                                  });
+
+                                  print(
+                                      'FILE fileName HAS PROGRESS $onProgress');
+                                },
+                                onDownloadCompleted: (String path) {
+                                  print('FILE DOWNLOADED TO PATH: $path');
+                                  CommonToastTrue("Successfully donwloaded");
+                                },
+                                onDownloadError: (String error) {
+                                  print('DOWNLOAD ERROR: $error');
+                                  CommonToast(error);
+                                });
+                          }
+                        },
+                        idata: Icons.picture_as_pdf_outlined,
+                        imagePath: '',
+                        labelColor: whiteColor,
+                        buttonColor: blackColor,
+                        titile: "Download",
+                      ),
+                    ),
+                  ],
                 ),
-                const SpaceHeightWidget(height: 10)
+                if (progressbar)
+                  Column(
+                    children: [
+                      const SpaceHeightWidget(height: 10),
+                      LinearProgressIndicator(
+                        borderRadius: BorderRadius.circular(10),
+                        value: progressVal! / 100.00,
+                      ),
+                      const SpaceHeightWidget(height: 10)
+                    ],
+                  ),
               ],
             ),
-        ],
-      ),
-    );
+          );
   }
 }
 

@@ -386,6 +386,7 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
                                                 onTapFun: () async {
                                                   dynamic res = await Get.to(() =>
                                                       RegisterPackDetailsScreen(
+                                                        customerType: widget.from,
                                                         fromPack:
                                                             productsCategories[
                                                                     selectedCategoryIndex]
@@ -456,6 +457,9 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
                                                       List<dynamic> res =
                                                           await Get.to(() =>
                                                               RegisterPackDetailsScreen(
+                                                        customerType:
+                                                                    widget.from,
+
                                                                 fromPack:
                                                                     productsCategories[
                                                                             selectedCategoryIndex]
@@ -519,88 +523,92 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
       cartcountFun("GetSignCartData", "");
     }
   }
-}
 
-checkOutFun() async {
-  Map bData = {
-    "rpt": "Signup",
-    "Uniqid": Constants.prefs.getString("uniq_id"),
-    "sessid": Constants.prefs.getString("ss_id"),
-    "countryid": Constants.prefs.getString("country_id"),
-    "cv": packageController.cvVal.value
-  };
-  dynamic resss = await packageController.getCheckoutCheck(bData);
-  if (resss != null) {
-    if (resss['result'] != "Fail") {
-      Map params = {
-        "rpt": "EnrollDetails",
-        "Cid": Constants.prefs.getString("country_id"),
-        "mid": "0"
-      };
+  checkOutFun() async {
+    Map bData = {
+      "rpt": "Signup",
+      "Uniqid": Constants.prefs.getString("uniq_id"),
+      "sessid": Constants.prefs.getString("ss_id"),
+      "countryid": Constants.prefs.getString("country_id"),
+      "cv": packageController.cvVal.value
+    };
+    dynamic resss = await packageController.getCheckoutCheck(bData);
+    if (resss != null) {
+      if (resss['result'] != "Fail") {
+        Map params = {
+          "rpt": "EnrollDetails",
+          "Cid": Constants.prefs.getString("country_id"),
+          "mid": "0"
+        };
 
-      dynamic res = await packageController.getEnrollPack(params);
-      print("enroll res..$res");
-      print("***********${double.parse(res['EnrollPackageRpt'][0]['RenFee'])}");
+        dynamic res = await packageController.getEnrollPack(params);
+        print("enroll res..$res");
+        print(
+            "***********${double.parse(res['EnrollPackageRpt'][0]['RenFee'])}");
 
-      Get.back();
-      if (double.parse(res['EnrollPackageRpt'][0]['RenFee']) > 0) {
-        Get.off(() => EnrollPackageScreen(
-              packageCoded: resss['Pkcode'],
-              //  widget
-              //     .packageCode,
-              countyId: Constants.prefs.getString("country_id") ?? "",
-            ));
+        Get.back();
+        if (double.parse(res['EnrollPackageRpt'][0]['RenFee']) > 0) {
+          Get.off(() => EnrollPackageScreen(
+                cusType: widget.from,
+                packageCoded: resss['Pkcode'],
+                //  widget
+                //     .packageCode,
+                countyId: Constants.prefs.getString("country_id") ?? "",
+              ));
+        } else {
+          Get.off(() => SponsorCheckScreen(
+                customerType: widget.from,
+                packageCode: resss['Pkcode'],
+                countryId: Constants.prefs.getString("country_id") ?? "",
+              ));
+        }
       } else {
-        Get.off(() => SponsorCheckScreen(
-              packageCode: resss['Pkcode'],
-              countryId: Constants.prefs.getString("country_id") ?? "",
-            ));
+        CommonToast(
+            "Please Select Some Products To Qualify For Package Signup");
       }
-    } else {
-      CommonToast("Please Select Some Products To Qualify For Package Signup");
     }
   }
-}
 
-packItemWidget({
-  required VoidCallback onTapFun,
-  required String imagePath,
-  required String title,
-}) {
-  return GestureDetector(
-    behavior: HitTestBehavior.translucent,
-    onTap: onTapFun,
-    child: Card(
-      color: whiteColor,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
-        decoration: BoxDecoration(
-            border: Border.all(color: lightBlackColor, width: 0.2),
-            color: whiteColor,
-            borderRadius: BorderRadius.circular(15)),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CachedNetworkImage(
-                imageUrl: imagePath,
-                height: 100,
-                progressIndicatorBuilder: (context, url, progress) => loader,
-                errorWidget: (context, url, error) => Image.asset(
-                  "assets/images/new_logo.png",
+  packItemWidget({
+    required VoidCallback onTapFun,
+    required String imagePath,
+    required String title,
+  }) {
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: onTapFun,
+      child: Card(
+        color: whiteColor,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
+          decoration: BoxDecoration(
+              border: Border.all(color: lightBlackColor, width: 0.2),
+              color: whiteColor,
+              borderRadius: BorderRadius.circular(15)),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CachedNetworkImage(
+                  imageUrl: imagePath,
                   height: 100,
+                  progressIndicatorBuilder: (context, url, progress) => loader,
+                  errorWidget: (context, url, error) => Image.asset(
+                    "assets/images/new_logo.png",
+                    height: 100,
+                  ),
                 ),
-              ),
-              Text(
-                title.capitalizeFirst.toString().replaceAll("d1", "D1"),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                    fontFamily: "OnestSemiBold",
-                    fontSize: 14,
-                    color: blackColor),
-              )
-            ]),
+                Text(
+                  title.capitalizeFirst.toString().replaceAll("d1", "D1"),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      fontFamily: "OnestSemiBold",
+                      fontSize: 14,
+                      color: blackColor),
+                )
+              ]),
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
