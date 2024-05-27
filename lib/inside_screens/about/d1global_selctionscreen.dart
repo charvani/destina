@@ -81,9 +81,9 @@ class _D1GlobalScreenState extends State<D1GlobalScreen> {
               leadingIcon: Icons.link_rounded,
               image: "assets/images/tiktok.png",
               onTapFun: () async {
-                
-                final Uri url =
-                    Uri.parse("https://www.tiktok.com/@d1globalcorp");
+                final Uri url = Uri.parse(
+                    // "https://www.tiktok.com/@d1globalcorp"
+                    "https://www.tiktok.com/@d1global");
                 if (!await launchUrl(url)) {
                   throw Exception('Could not launch $url');
                 }

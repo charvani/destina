@@ -4,9 +4,11 @@ class ApiData {
 // staging//
   // String baseUrl = "https://worldunityfoundation.org/MobileAPI/api/MobileApp/";
   // String checkOutUrlDomain = "showcase.worldunityfoundation.org";
-//live//
+// live//
   String baseUrl = "https://admin.destina1.com/MobileAPI/api/MobileApp/";
+  // demo
   // String checkOutUrlDomain = "beta.destina1.com";
+  // live
   String checkOutUrlDomain = "destina1.com";
 
   String productCategoryMethod = "GetProductsdata";

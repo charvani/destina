@@ -961,6 +961,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       from: "",
                                       redirectUrl: i == 0
                                           ? "https://www.destina1.com/MATNP.html"
+                                          // "https://www.destina1.com/nutricellz.html"
                                           : i == 1
                                               ? "https://www.destina1.com/MANLA.html#/"
                                               : "https://www.destina1.com/MAPHC.html"

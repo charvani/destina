@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:video_player/video_player.dart';
 
+import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
 
 class WriteReviewScreen extends StatefulWidget {
@@ -312,23 +313,22 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Obx(() {
-                        //   return _reviewController.loading.value
-                        //       ? loader
-                        //       :
-                        SizedBox(
-                            height: 35,
-                            child: CustomAutoWidthButton(
-                                onTapFun: () {
-                                  if (_fomkey.currentState!.validate()) {
-                                    FocusManager.instance.primaryFocus
-                                        ?.unfocus();
-                                    submitFun();
-                                  }
-                                },
-                                title: "Submit"))
-                        //               ;
-                        // }),
+                        Obx(() {
+                          return _reviewController.loading.value
+                              ? loader
+                              : SizedBox(
+                                  height: 35,
+                                  child: CustomAutoWidthButton(
+                                      onTapFun: () {
+                                        if (_fomkey.currentState!.validate()) {
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+                                          submitFun();
+                                        }
+                                      },
+                                      title: "Submit"));
+                          //               ;
+                        })
                       ],
                     ),
                     const SpaceHeightWidget(height: 10),
@@ -420,8 +420,15 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
     dynamic video64;
     print("my viiiiiii....$videoFile");
     if (videoFile != null) {
-      final vbytes = File(videoFile!.path).readAsBytesSync();
-      video64 = base64Encode(vbytes);
+      // final vbytes = File(videoFile!.path).readAsBytesSync();
+      // video64 = base64Encode(vbytes);
+      // Uint8List videoBytes = await videoFile!.readAsBytes();
+
+      // // Encode the bytes to a Base64 string
+      // video64 = base64Encode(videoBytes);
+
+      List<int> videoBytes = await videoFile!.readAsBytes();
+      video64 = base64Encode(videoBytes);
     }
 
     Map bdata = {
@@ -430,18 +437,19 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
       "Name": nameController.text,
       "Review": reviewController.text,
       "Rating": ratingVal.toString(),
+      "ImgFiles": finalImagesList!.isEmpty ? "" : imgExtensionsList!.join(","),
+      "VidFiles": videoExtension ?? "",
+      "Session": reviewSession,
       "Images": finalImagesList!.isEmpty ? "" : finalImagesList!.join(","),
       "Video": video64 ?? "",
       // "Images": "",
       // "Video": "",
-      "ImgFiles": finalImagesList!.isEmpty ? "" : imgExtensionsList!.join(","),
-      "VidFiles": videoExtension ?? "",
-      "Session": reviewSession
     };
     print("b data...$bdata");
-    print("video...$video64");
+    print("video>>>>>$video64");
     print("videoExtension...$videoExtension");
     print("imgExtensionsList...$imgExtensionsList");
+    print("image is...${finalImagesList!.join(",")}");
     Map reviewDataParams = {
       "action": "Report",
       "Pid": widget.pid,

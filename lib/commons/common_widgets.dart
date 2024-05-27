@@ -4726,7 +4726,8 @@ class ImageOptionsDialog extends StatelessWidget {
 imagePickFun(String from) async {
   final ImagePicker picker = ImagePicker();
   final XFile? image = await picker.pickImage(
-      source: from == "gallery" ? ImageSource.gallery : ImageSource.camera);
+      source: from == "gallery" ? ImageSource.gallery : ImageSource.camera,
+      imageQuality: 60);
   return image;
 }
 

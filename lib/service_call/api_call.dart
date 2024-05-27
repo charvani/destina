@@ -141,10 +141,14 @@ class ApiCall {
         .post(Uri.parse("${ApiData().baseUrl}WriteNReview"), body: bData);
 
     print("cherry.....${response.body}");
-    dynamic convertedData = convert.jsonDecode(response.body);
+
     if (response.statusCode == 200) {
+      dynamic convertedData = convert.jsonDecode(response.body);
+
       return convertedData;
     } else {
+      dynamic convertedData = convert.jsonDecode(response.body);
+
       print("get error....${convertedData['Message']}");
       CommonToast(convertedData['Message']);
     }
