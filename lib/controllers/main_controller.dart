@@ -932,16 +932,17 @@ class MainController extends GetxController {
       "country": Constants.prefs.getString("open_country")
     };
     searchProductItemList.clear();
-
     dynamic res = await ApiCall().postMethodFun(
         methodName: ApiData().productCategoryMethod, params: parameters);
+    searchProductItemList.clear();
+
     if (res['productRpt'].length > 0) {
       for (int i = 0; i < res['productRpt'].length; i++) {
         searchProductItemList
             .add(ProductCategoryItem.fromJson(res['productRpt'][i]));
       }
     }
-    print(searchProductItemList.length);
+    print("searchProductItemList.length.....${searchProductItemList.length}");
     genealogyLoading.value = false;
     return res;
   }
@@ -2787,10 +2788,22 @@ class MainController extends GetxController {
 
   getReviewUpload(Map bdata, reviewDataParams) async {
     loading.value = true;
-    dynamic res = await ApiCall().uploadReview(bData: bdata);
+    dynamic res =
+        await ApiCall().uploadReview(bData: bdata, apiEndPoint: "WriteNReview");
     print("ressss....$res");
     loading.value = false;
     getReviewData(reviewDataParams, "init");
+    return res;
+  }
+
+  getReviewVideoUpload(
+    Map bdata,
+  ) async {
+    loading.value = true;
+    dynamic res =
+        await ApiCall().uploadReview(bData: bdata, apiEndPoint: "UploadVideo");
+    print("ressss....$res");
+    loading.value = false;
     return res;
   }
 

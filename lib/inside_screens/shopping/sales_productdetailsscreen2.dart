@@ -599,7 +599,7 @@ class _SalesProductDetailsScreen2State
       "Action": "AddHelp",
       "Pid": pid,
       "Name": "",
-      "Session": "",
+      "Session": sessionId,
     };
 
     Map reviewDataParams = {

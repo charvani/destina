@@ -11,7 +11,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:video_player/video_player.dart';
 
-import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
 
 class WriteReviewScreen extends StatefulWidget {
@@ -136,6 +135,11 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                       titleName: "Share photos",
                       size: 14,
                     ),
+                    CommonTitle(
+                      titleName: "Note: Images size should not exceed 1.0MB",
+                      size: 12,
+                      fontColor: darkRedColor,
+                    ),
                     const SpaceHeightWidget(height: 5),
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
@@ -166,6 +170,10 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                                         behavior: HitTestBehavior.translucent,
                                         onTap: () {
                                           setState(() {
+                                            imageBytesCount = imageBytesCount -
+                                                File(imagesList![i].path)
+                                                    .readAsBytesSync()
+                                                    .lengthInBytes;
                                             imagesList!.remove(imagesList![i]);
                                             finalImagesList!
                                                 .remove(finalImagesList![i]);
@@ -214,6 +222,11 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                     const CommonTitle(
                       titleName: "Share a video(single)",
                       size: 14,
+                    ),
+                    CommonTitle(
+                      titleName: "Note: Video size should not exceed 1.0MB",
+                      size: 12,
+                      fontColor: darkRedColor,
                     ),
                     _controller.value.isInitialized && videoFile != null
                         ? Stack(
@@ -313,22 +326,56 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Obx(() {
-                          return _reviewController.loading.value
-                              ? loader
-                              : SizedBox(
-                                  height: 35,
-                                  child: CustomAutoWidthButton(
-                                      onTapFun: () {
-                                        if (_fomkey.currentState!.validate()) {
-                                          FocusManager.instance.primaryFocus
-                                              ?.unfocus();
-                                          submitFun();
-                                        }
-                                      },
-                                      title: "Submit"));
-                          //               ;
-                        })
+                        // Obx(() {
+                        //   return _reviewController.loading.value
+                        //       ? loader
+                        //       :
+                        SizedBox(
+                            height: 35,
+                            child: CustomAutoWidthButton(
+                                onTapFun: () {
+                                  if (_fomkey.currentState!.validate()) {
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+
+                                    videosubmitFun();
+                                  }
+                                },
+                                title: "Upload Video"))
+                        // ;
+                        // })
+                      ],
+                    ),
+                    const SpaceHeightWidget(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Obx(() {
+                        //   return _reviewController.loading.value
+                        //       ? loader
+                        //       :
+                        SizedBox(
+                            height: 35,
+                            child: CustomAutoWidthButton(
+                                onTapFun: () {
+                                  if (_fomkey.currentState!.validate()) {
+                                    FocusManager.instance.primaryFocus
+                                        ?.unfocus();
+                                    print(
+                                        "imageBytesCount.....$imageBytesCount");
+                                    if (imageBytesCount > 0 &&
+                                        imageBytesCount > 1000000) {
+                                      Get.dialog(const OkDialog(
+                                          title:
+                                              "Images size should not exceed 1.0MB"));
+                                    } else {
+                                      submitFun();
+                                    }
+                                  }
+                                },
+                                title: "Submit"))
+                        // ;
+                        // })
                       ],
                     ),
                     const SpaceHeightWidget(height: 10),
@@ -343,6 +390,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
   }
 
   dynamic img64;
+  int imageBytesCount = 0;
   imageSelctionFun() {
     Get.dialog(ImageOptionsDialog(
       cameraFun: () async {
@@ -357,6 +405,8 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
           imagesList!.add(imageFile);
           finalImagesList!.add(img64);
           imgExtensionsList!.add(extension);
+          imageBytesCount = imageBytesCount +
+              File(imageFile.path).readAsBytesSync().lengthInBytes;
         });
       },
       galleryFun: () async {
@@ -371,6 +421,8 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
           imagesList!.add(imageFile);
           finalImagesList!.add(img64);
           imgExtensionsList!.add(extension);
+          imageBytesCount = imageBytesCount +
+              File(imageFile.path).readAsBytesSync().lengthInBytes;
         });
       },
     ));
@@ -416,21 +468,91 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
     ));
   }
 
-  submitFun() async {
-    dynamic video64;
+  dynamic video64;
+  videosubmitFun() async {
     print("my viiiiiii....$videoFile");
     if (videoFile != null) {
-      // final vbytes = File(videoFile!.path).readAsBytesSync();
-      // video64 = base64Encode(vbytes);
-      // Uint8List videoBytes = await videoFile!.readAsBytes();
-
-      // // Encode the bytes to a Base64 string
-      // video64 = base64Encode(videoBytes);
-
-      List<int> videoBytes = await videoFile!.readAsBytes();
-      video64 = base64Encode(videoBytes);
+      int videoBytesCount =
+          File(videoFile!.path).readAsBytesSync().lengthInBytes;
+      print("video filesize....$videoBytesCount");
+      print("vi + img  filesize....${videoBytesCount + imageBytesCount}");
+      if (videoBytesCount > 1000000) {
+        print("at toast");
+        Get.dialog(const OkDialog(title: "Video size should not exceed 1.0MB"));
+      } else {
+        List<int> videoBytes = await videoFile!.readAsBytes();
+        setState(() {
+          video64 = base64Encode(videoBytes);
+        });
+        videoapiFun();
+      }
     }
+  }
 
+  videoapiFun() async {
+    Map bdata = {"VidFiles": videoExtension ?? "", "Video": video64 ?? ""};
+    print("video bdata...$bdata");
+    dynamic res = await _reviewController.getReviewVideoUpload(
+      bdata,
+    );
+    if (res != null) {
+      print("get...$res");
+      if (res['Msg'] == "SUCCESS") {
+        Get.back();
+        CommonToastTrue(res['Message']);
+      } else {
+        CommonToast(res['Message']);
+      }
+    }
+  }
+
+  submitFun() async {
+    print("my viiiiiii....$videoFile");
+    if (videoFile != null) {
+      // MediaInfo? mediaInfo = await VideoCompress.compressVideo(
+      //   videoFile!.path,
+      //   quality: VideoQuality.LowQuality,
+      //   deleteOrigin: false,
+      // );
+      // setState(() {
+      //   videoFile = XFile(mediaInfo!.file!.path);
+      // });
+      // print("media info....${mediaInfo!.file}");
+      // print("video filesize....${mediaInfo.filesize}");
+      // // print("vi + img  filesize....${mediaInfo.filesize! + imageBytesCount}");
+      // // if (mediaInfo.filesize! > 1000000) {
+      int videoBytesCount =
+          File(videoFile!.path).readAsBytesSync().lengthInBytes;
+      print("video filesize....$videoBytesCount");
+      print("vi + img  filesize....${videoBytesCount + imageBytesCount}");
+
+      // if (videoBytesCount > 1000000) {
+      //   print("at toast");
+      //   Get.dialog(const OkDialog(title: "Video size should not exceed 1.0MB"));
+      // } else {
+      // MediaInfo? mediaInfo = await VideoCompress.compressVideo(
+      //   videoFile!.path,
+      //   quality: VideoQuality.LowQuality,
+      //   deleteOrigin: false,
+      // );
+      // print("video filesize....${mediaInfo!.filesize}");
+
+      // setState(() {
+      //   videoFile = XFile(mediaInfo.file!.path);
+      // });
+      List<int> videoBytes = await videoFile!.readAsBytes();
+      // print("video bytes data...$videoBytes");
+      setState(() {
+        video64 = base64Encode(videoBytes);
+      });
+      apicallFun();
+      // }
+    } else {
+      apicallFun();
+    }
+  }
+
+  apicallFun() async {
     Map bdata = {
       "Action": "Insert",
       "Pid": widget.pid,
@@ -441,7 +563,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
       "VidFiles": videoExtension ?? "",
       "Session": reviewSession,
       "Images": finalImagesList!.isEmpty ? "" : finalImagesList!.join(","),
-      "Video": video64 ?? "",
+      "Video": video64 ?? ""
       // "Images": "",
       // "Video": "",
     };

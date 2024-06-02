@@ -363,7 +363,7 @@ class _UpgradeProductDetailsScreen2State
                           title: packDetailsController
                               .packageDetailsData.value.pkname,
                         ),
-                         PdfWidget(
+                        PdfWidget(
                           category: widget.fromPack,
                         ),
                         if (widget.fromPack == "Kritalia & Co")
@@ -600,7 +600,7 @@ class _UpgradeProductDetailsScreen2State
       "Action": "AddHelp",
       "Pid": pid,
       "Name": "",
-      "Session": "",
+      "Session": sessionId,
     };
 
     Map reviewDataParams = {

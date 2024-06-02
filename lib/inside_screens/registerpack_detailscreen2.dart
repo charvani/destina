@@ -633,7 +633,7 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
       "Action": "AddHelp",
       "Pid": pid,
       "Name": "",
-      "Session": "",
+      "Session": sessionId,
     };
 
     Map reviewDataParams = {

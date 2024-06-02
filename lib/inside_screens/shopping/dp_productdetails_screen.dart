@@ -146,16 +146,20 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                     children: [
                       InkWell(
                         onTap: () {
-                          setState(() {
-                            firstQtyController.text =
-                                (int.parse(firstQtyController.text) + 1)
-                                    .toString();
-                          });
+                          // print(
+                          //     "${double.parse(productDetailsController.productDetails.value.price.replaceAll(productDetailsController.productDetails.value.currency, "")) * int.parse(firstQtyController.text)}");
+                          if (int.parse(firstQtyController.text) > 1) {
+                            setState(() {
+                              firstQtyController.text =
+                                  (int.parse(firstQtyController.text) - 1)
+                                      .toString();
+                            });
+                          }
                         },
                         child: const CircleAvatar(
                           radius: 15,
                           child: Icon(
-                            Icons.add,
+                            Icons.remove,
                             size: 18,
                           ),
                         ),
@@ -188,20 +192,16 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                       const SpaceWidthWidget(width: 3),
                       InkWell(
                         onTap: () {
-                          // print(
-                          //     "${double.parse(productDetailsController.productDetails.value.price.replaceAll(productDetailsController.productDetails.value.currency, "")) * int.parse(firstQtyController.text)}");
-                          if (int.parse(firstQtyController.text) > 1) {
-                            setState(() {
-                              firstQtyController.text =
-                                  (int.parse(firstQtyController.text) - 1)
-                                      .toString();
-                            });
-                          }
+                          setState(() {
+                            firstQtyController.text =
+                                (int.parse(firstQtyController.text) + 1)
+                                    .toString();
+                          });
                         },
                         child: const CircleAvatar(
                           radius: 15,
                           child: Icon(
-                            Icons.remove,
+                            Icons.add,
                             size: 18,
                           ),
                         ),
@@ -302,9 +302,9 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                         productCode: _dataController.dpProductdata.value.pkcode,
                         title: _dataController.dpProductdata.value.pkname,
                       ),
-                      PdfWidget(
-                          category: "",
-                        ),
+                      const PdfWidget(
+                        category: "",
+                      ),
                       const SpaceHeightWidget(height: 10),
                       const CommonDivider(),
                       const SpaceHeightWidget(height: 15),
@@ -548,7 +548,7 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
       "Action": "AddHelp",
       "Pid": pid,
       "Name": "",
-      "Session": "",
+     "Session": sessionId,
     };
 
     Map reviewDataParams = {

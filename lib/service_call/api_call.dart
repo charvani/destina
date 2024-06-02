@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/service_call/encryption.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../commons/common_widgets.dart';
@@ -133,24 +134,32 @@ class ApiCall {
     }
   }
 
-  uploadReview({
-    required bData,
-  }) async {
-    print("getting url...${"${ApiData().baseUrl}WriteNReview"}");
-    http.Response response = await http
-        .post(Uri.parse("${ApiData().baseUrl}WriteNReview"), body: bData);
+  uploadReview({required bData, required apiEndPoint}) async {
+    print("getting url...${"${ApiData().baseUrl}$apiEndPoint"}");
 
-    print("cherry.....${response.body}");
+    try {
+      http.Response response = await http.post(
+        Uri.parse("${ApiData().baseUrl}WriteNReview"),
+        body: bData,
+      );
 
-    if (response.statusCode == 200) {
-      dynamic convertedData = convert.jsonDecode(response.body);
+      print("cherry.....${response.body}");
+      print("response.statusCode.....${response.statusCode}");
+      print("response.reasonPhrase.....${response.reasonPhrase}");
 
-      return convertedData;
-    } else {
-      dynamic convertedData = convert.jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        dynamic convertedData = convert.jsonDecode(response.body);
 
-      print("get error....${convertedData['Message']}");
-      CommonToast(convertedData['Message']);
+        return convertedData;
+      } else {
+        dynamic convertedData = convert.jsonDecode(response.body);
+
+        print("get error....${convertedData['Message']}");
+        CommonToast(convertedData['Message']);
+      }
+    } catch (e) {
+      print("getting error....$e");
+      Get.dialog(OkDialog(title: e.toString()));
     }
   }
 

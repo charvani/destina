@@ -568,7 +568,7 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
       "Action": "AddHelp",
       "Pid": pid,
       "Name": "",
-      "Session": "",
+      "Session": sessionId,
     };
 
     Map reviewDataParams = {

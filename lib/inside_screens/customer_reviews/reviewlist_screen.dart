@@ -51,8 +51,14 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       dataFun();
+      if (Constants.prefs.getString("ss_id") == null) {
+        sessionId = generateTimeStamp();
+        await Constants.prefs.setString("ss_id", sessionId);
+      } else {
+        sessionId = Constants.prefs.getString("ss_id");
+      }
     });
   }
 
@@ -392,12 +398,14 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
     );
   }
 
+  dynamic sessionId;
+
   helpfunFun(pid) {
     Map bdata = {
       "Action": "AddHelp",
       "Pid": pid,
       "Name": "",
-      "Session": "",
+      "Session": sessionId,
     };
 
     Map reviewDataParams = {

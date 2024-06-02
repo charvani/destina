@@ -501,54 +501,61 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                       //         ],
                                       //       ),
                                       const SpaceHeightWidget(height: 10),
-                                      SizedBox(
-                                        width: 200,
-                                        // height: 33,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: IconElevatedButton(
-                                            onTapFun: () async {
-                                              // print("sess...$sessionId");
-                                              // print(
-                                              //     "https://showcase.worldunityfoundation.org/checkwebitems.html?countrycode=MY&sprno=${widget.sponsorId}&sessid=$sessionId&uniqId=$uniqId");
-                                              // print(
-                                              //     "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            width: 200,
+                                            // height: 33,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: IconElevatedButton(
+                                                onTapFun: () async {
+                                                  // print("sess...$sessionId");
+                                                  // print(
+                                                  //     "https://showcase.worldunityfoundation.org/checkwebitems.html?countrycode=MY&sprno=${widget.sponsorId}&sessid=$sessionId&uniqId=$uniqId");
+                                                  // print(
+                                                  //     "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
 
-                                              // Map parameters = {
-                                              //   "Action": "checkoutitems_MA",
-                                              //   "Pkid": "0",
-                                              //   "pid": "0",
-                                              //   "Quantity": "0",
-                                              //   "uniqid": uniqId,
-                                              //   "sessid": sessionId,
-                                              //   "ipaddress": Constants.prefs
-                                              //       .getString("ip"),
-                                              //   "sprno": sponsorController.text,
-                                              //   "prdtype": "Package"
-                                              // };
-                                              // dynamic res = await cartController
-                                              //     .getCheckOutCart(parameters);
-                                              // print("res....$res");
-                                              // if (res['Msg']
-                                              //         .toString()
-                                              //         .toLowerCase() ==
-                                              //     "success") {
-                                              print(
-                                                  "jjjj...${widget.sponsorId}");
+                                                  // Map parameters = {
+                                                  //   "Action": "checkoutitems_MA",
+                                                  //   "Pkid": "0",
+                                                  //   "pid": "0",
+                                                  //   "Quantity": "0",
+                                                  //   "uniqid": uniqId,
+                                                  //   "sessid": sessionId,
+                                                  //   "ipaddress": Constants.prefs
+                                                  //       .getString("ip"),
+                                                  //   "sprno": sponsorController.text,
+                                                  //   "prdtype": "Package"
+                                                  // };
+                                                  // dynamic res = await cartController
+                                                  //     .getCheckOutCart(parameters);
+                                                  // print("res....$res");
+                                                  // if (res['Msg']
+                                                  //         .toString()
+                                                  //         .toLowerCase() ==
+                                                  //     "success") {
+                                                  print(
+                                                      "jjjj...${widget.sponsorId}");
 
-                                              Get.off(() => CheckOutScreen(
-                                                  redirectUrl:
-                                                      "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&SprIDNo=${widget.sponsorId}&sessid=$sessionId&uniqId=$uniqId&RegType=${widget.customerType}"));
+                                                  Get.off(() => CheckOutScreen(
+                                                      redirectUrl:
+                                                          "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&SprIDNo=${widget.sponsorId}&sessid=$sessionId&uniqId=$uniqId&RegType=${widget.customerType}"));
 
-                                              // }
-                                            },
-                                            imagePath:
-                                                'assets/images/shopping_cart_img.jpg',
-                                            labelColor: whiteColor,
-                                            buttonColor: blackColor,
-                                            titile: "Checkout",
+                                                  // }
+                                                },
+                                                imagePath:
+                                                    'assets/images/shopping_cart_img.jpg',
+                                                labelColor: whiteColor,
+                                                buttonColor: blackColor,
+                                                titile: "Checkout",
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
                                       //     ],
                                       //   ),

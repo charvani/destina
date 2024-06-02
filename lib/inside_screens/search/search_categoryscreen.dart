@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -86,7 +84,7 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
 
                   setState(() {});
                   if (key.length > 2) {
-                    itemsFun(key);
+                    itemsFun(key.trim());
                   }
                   if (key == "") {
                     _productController.searchProductItemList.clear();
@@ -163,42 +161,45 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
                     )
                   : GridView.builder(
                       padding: const EdgeInsets.all(10),
-                      physics: const NeverScrollableScrollPhysics(),
+                      // physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2, childAspectRatio: 1 / 1.1),
                       itemBuilder: (context, i) {
-                        return _productController
-                                    .searchProductItemList[i].category ==
-                                "Kritalia & Co"
-                            ? KritaliaItemWidget(
-                                tapped: krialiaTappedInd == i ? true : false,
-                                amount:
-                                    "${_productController.searchProductItemList[i].currency} ${_productController.searchProductItemList[i].dp}",
-                                onTapFun: () {
-                                  setState(() {
-                                    krialiaTappedInd = i;
-                                  });
+                        return
+                            //  _productController
+                            //             .searchProductItemList[i].category ==
+                            //         "Kritalia & Co"
+                            //     ? KritaliaItemWidget(
+                            //         tapped: krialiaTappedInd == i ? true : false,
+                            //         amount:
+                            //             "${_productController.searchProductItemList[i].currency} ${_productController.searchProductItemList[i].dp}",
+                            //         onTapFun: () {
+                            //           setState(() {
+                            //             krialiaTappedInd = i;
+                            //           });
 
-                                  Timer(const Duration(seconds: 1), () async {
-                                    Get.to(() => ProductDetailsScreen2(
-                                        from: "search",
-                                        packageCode: _productController
-                                            .searchProductItemList[i]
-                                            .packagecode,
-                                        fromPack: _productController
-                                            .searchProductItemList[i]
-                                            .category));
-                                  });
-                                },
-                                imagePath:
-                                    // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                    _productController
-                                        .searchProductItemList[i].image,
-                                titile: _productController
-                                    .searchProductItemList[i].packageName)
-                            : CategroyItemWidget(
+                            //           Timer(const Duration(seconds: 1), () async {
+                            //             Get.to(() => ProductDetailsScreen2(
+                            //                 from: "search",
+                            //                 packageCode: _productController
+                            //                     .searchProductItemList[i]
+                            //                     .packagecode,
+                            //                 fromPack: _productController
+                            //                     .searchProductItemList[i]
+                            //                     .category));
+                            //           });
+                            //         },
+                            //         imagePath:
+                            //             // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
+                            //             _productController
+                            //                 .searchProductItemList[i].image,
+                            //         titile: _productController
+                            //             .searchProductItemList[i].packageName)
+                            //     :
+
+                            CategroyItemWidget(
                                 amount: double.parse(_productController
                                             .searchProductItemList[i].dp) >
                                         0

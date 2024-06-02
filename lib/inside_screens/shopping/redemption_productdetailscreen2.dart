@@ -593,7 +593,7 @@ class _RedemptionProductDetailsScreen2State
       "Action": "AddHelp",
       "Pid": pid,
       "Name": "",
-      "Session": "",
+      "Session": sessionId,
     };
 
     Map reviewDataParams = {

@@ -674,7 +674,7 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
       "Action": "AddHelp",
       "Pid": pid,
       "Name": "",
-      "Session": "",
+      "Session": sessionId,
     };
 
     Map reviewDataParams = {

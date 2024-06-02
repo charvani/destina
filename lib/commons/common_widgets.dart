@@ -3970,6 +3970,48 @@ class ConfrimationDialog extends StatelessWidget {
   }
 }
 
+class OkDialog extends StatelessWidget {
+  final String title;
+  const OkDialog({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(title,
+                style:
+                    const TextStyle(fontFamily: "OnestSemiBold", fontSize: 15)),
+            const SpaceHeightWidget(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // SizedBox(
+                //     width: 80,
+                //     height: 35,
+                //     child:
+                //         CustomElevatedButton(onTapFun: onTapFun, title: "Yes")),
+                const SpaceWidthWidget(width: 10),
+                SizedBox(
+                    width: 80,
+                    height: 35,
+                    child: CustomElevatedButton(
+                        onTapFun: () {
+                          Get.back();
+                        },
+                        title: "OK"))
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 CommonToast(String text) {
   return Fluttertoast.showToast(
       msg: text,
@@ -4726,8 +4768,8 @@ class ImageOptionsDialog extends StatelessWidget {
 imagePickFun(String from) async {
   final ImagePicker picker = ImagePicker();
   final XFile? image = await picker.pickImage(
-      source: from == "gallery" ? ImageSource.gallery : ImageSource.camera,
-      imageQuality: 60);
+    source: from == "gallery" ? ImageSource.gallery : ImageSource.camera,
+  );
   return image;
 }
 

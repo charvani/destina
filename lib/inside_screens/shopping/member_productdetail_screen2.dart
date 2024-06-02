@@ -598,7 +598,7 @@ class _MemberProductDetailsScreen2State
       "Action": "AddHelp",
       "Pid": pid,
       "Name": "",
-      "Session": "",
+      "Session": sessionId,
     };
 
     Map reviewDataParams = {
