@@ -50,28 +50,14 @@ class _AccountScreenState extends State<AccountScreen>
       ),
     );
 
-    // Run the animation
     _controller.repeat(reverse: true);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // if (widget.bannerPopUpImages!.isNotEmpty) {
-      //   _scaffoldKey.currentState!.openDrawer();
-      //   Get.to(
-      //     () => DashBoardScreen(
-      //         // data: widget.data,
-      //         // bannerPopUpImages: widget.bannerPopUpImages,
-      //         ),
-      //   );
-      // }
     });
 
-    // Timer(const Duration(seconds: 1), () {
-    //   widget.bannerPopUpImages!.clear();
-    // });
   }
 
   @override
   void dispose() {
-    // Dispose your TickerControllers here
     _controller.dispose();
     super.dispose();
   }
@@ -83,13 +69,9 @@ class _AccountScreenState extends State<AccountScreen>
 
     return Scaffold(
         key: _scaffoldKey,
-        // drawerScrimColor: whiteColor,
         drawer: const Drawer(
           child:
-              //  drawerWidget()
               MyAccountScreen(
-                  // data: widget.data,
-                  // bannerPopUpImages: widget.bannerPopUpImages,
                   ),
         ),
         body: SingleChildScrollView(
@@ -105,11 +87,6 @@ class _AccountScreenState extends State<AccountScreen>
                         width: double.infinity,
                         color: darkBlue,
                       ),
-                      // SizedBox(
-                      //     height: 200,
-                      //     width: double.infinity,
-                      //     child: SvgPicture.asset("assets/svg/grey_banner.svg",
-                      //         fit: BoxFit.cover)),
                       if (Constants.prefs.getString("user_id") != null &&
                           Constants.prefs.getString("user_id") != "false")
                         Padding(
@@ -125,7 +102,6 @@ class _AccountScreenState extends State<AccountScreen>
                   SafeArea(
                     child: Container(
                         margin: const EdgeInsets.all(15),
-                        // height: 110,
                         decoration: BoxDecoration(
                             border: Border.all(width: 3, color: whiteColor),
                             borderRadius: BorderRadius.circular(15),
@@ -212,7 +188,6 @@ class _AccountScreenState extends State<AccountScreen>
                   }
                 },
                 child: Stack(
-                  // alignment: Alignment.topRight,
                   children: [
                     Container(
                       height: 130,
@@ -236,7 +211,6 @@ class _AccountScreenState extends State<AccountScreen>
                     ),
                     Positioned(
                         top: 15,
-                        // bottom: 5,
                         left: 20,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -259,23 +233,8 @@ class _AccountScreenState extends State<AccountScreen>
                                         }),
                                   ],
                                 ),
-                                // Text(
-                                //   "Join Destina 1 family",
-                                //   style: TextStyle(
-                                //       fontFamily: "OnestRegular",
-                                //       fontSize: 12,
-                                //       color: whiteColor),
-                                // ),
-                                // Text(
-                                //   "Starting at only",
-                                //   style: TextStyle(
-                                //       fontFamily: "OnestSemiBold",
-                                //       fontSize: 14,
-                                //       color: whiteColor),
-                                // ),
                               ],
                             ),
-                            // const SpaceWidthWidget(width: 5),
                           ],
                         )),
                     Positioned(
@@ -303,7 +262,6 @@ class _AccountScreenState extends State<AccountScreen>
                 ),
               ),
               Container(
-                // height: 40,
                 width: double.infinity,
                 margin: const EdgeInsets.all(10),
 
@@ -382,13 +340,6 @@ class _AccountScreenState extends State<AccountScreen>
                 },
                 title: "Contact Us",
               ),
-              // AboutUsScreenWidget(
-              //   leadingIcon: FeatherIcons.fileText,
-              //   onTapFun: () {
-              //     Get.to(() => const PrivacyPolicyScreen());
-              //   },
-              //   title: "Privacy Policy",
-              // ),
               if (Constants.prefs.getString("user_id") != null &&
                   Constants.prefs.getString("user_id") != "false")
                 Obx(() {

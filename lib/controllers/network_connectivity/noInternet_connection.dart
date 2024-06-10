@@ -42,7 +42,6 @@ class _NoInternetConnectionState extends State<NoInternetConnection> {
     super.initState();
 
     // callbackmethod();
-    print(" at nointernet page");
   }
 
   @override
@@ -55,7 +54,6 @@ class _NoInternetConnectionState extends State<NoInternetConnection> {
     return PopScope(
       canPop: false,
       onPopInvoked: (pop) {
-        print("pop...$pop");
         if (!pop) {
           onWillPop();
         }
@@ -79,11 +77,7 @@ class _NoInternetConnectionState extends State<NoInternetConnection> {
                       width: 200,
                       height: 200,
                       fit: BoxFit.fill,
-                    )
-                        //  Image(
-                        //   image: AssetImage("assets/images/noInternet.jpg"),
-                        // )
-                        ),
+                    )),
                   ),
                   Container(
                       margin: const EdgeInsets.only(top: 15),

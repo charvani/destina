@@ -40,7 +40,6 @@ class _EcardTransferScreenState extends State<EcardTransferScreen> {
   void initState() {
     super.initState();
     userId = Constants.prefs.getString("user_id");
-    // passwordTController.text = widget.transPass;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       moneyTypeFun();
     });
@@ -210,7 +209,6 @@ class _EcardTransferScreenState extends State<EcardTransferScreen> {
                               "Remarks": remarksController.text,
                               "TransPassword": passwordTController.text,
                             };
-                            print("checking bdata...$bdata");
                             dynamic res = await _dataController
                                 .getEcardTransferMoney(bdata);
                             if (res != null) {

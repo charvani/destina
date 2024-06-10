@@ -18,17 +18,10 @@ class _HeroAnimationScreenState extends State<HeroAnimationScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("charvani");
 
-    print(",,,,${widget.tagData}");
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // setState(() {});
-      // Timer(const Duration(milliseconds: 300), () {
-      //   setState(() {
-      //     loading = false;
-      //   });
-      // });
+      
     });
   }
 
@@ -38,20 +31,17 @@ class _HeroAnimationScreenState extends State<HeroAnimationScreen> {
       appBar: commonAppBar(backNavigation: true, title: ""),
       body: Center(
           child:
-              //  img != ""
-              //     ?
+          
               InteractiveViewer(
         maxScale: 5,
         child: Container(
           decoration: BoxDecoration(
               border: Border.all(color: middleBlackColor, width: 0.25)),
           child: CommonCachedNetworkImage(
-              // height: loading ? 50 : 350,
               imagePath: widget.tagData,
               boxfit: BoxFit.fill),
         ),
       )
-          // : const NotAvailableText(text: "Unable to zoom"),
           ),
     );
   }

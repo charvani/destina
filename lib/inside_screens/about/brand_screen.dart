@@ -28,10 +28,7 @@ class _BrandSelectionScreenState extends State<BrandSelectionScreen> {
               behavior: HitTestBehavior.translucent,
               onTap: () {
                 Get.to(() => const QHomeScreen(
-                    // redirectUrl:
-                    //     // "https://beta.destina1.com/MAquantes-technology.html#/",
-                    //     "https://www.destina1.com/MAquantes-technology.html#/",
-                    // from: "Quantes Technology",
+                   
                     ));
               },
               child: Image.asset(
@@ -45,12 +42,7 @@ class _BrandSelectionScreenState extends State<BrandSelectionScreen> {
               behavior: HitTestBehavior.translucent,
               onTap: () {
                 Get.to(() => const SHomeScreen()
-                    // const WebUrlScreen(
-                    //       redirectUrl:
-                    //           "https://www.destina1.com/MAuniwave-scalarvia.html",
-                    //       // "https://beta.destina1.com/MAuniwave-scalarvia.html",
-                    //       from: "Uniwave Scalarvia",
-                    //     )
+                   
                     );
               },
               child: Image.asset(
@@ -64,12 +56,7 @@ class _BrandSelectionScreenState extends State<BrandSelectionScreen> {
               behavior: HitTestBehavior.translucent,
               onTap: () {
                 Get.to(() => const KritaliaHomeScreen());
-                // Get.to(() => const WebUrlScreen(
-                //       redirectUrl:
-                //           "https://www.destina1.com/MAkritaliaCo.html#/",
-                //       // "https://beta.destina1.com/MAkritaliaCo.html#/",
-                //       from: "Kritalia & CO",
-                //     ));
+               
               },
               child: Image.asset(
                 "assets/images/brand_k.png",

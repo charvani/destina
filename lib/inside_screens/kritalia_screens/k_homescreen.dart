@@ -38,8 +38,6 @@ class _KritaliaHomeScreenState extends State<KritaliaHomeScreen> {
   }
 
   void _playNextVideo() {
-    // Here, you can load the next video URL and play it
-    // For simplicity, I'm just restarting the current video
     controller.seekTo(Duration.zero);
     controller.play();
   }
@@ -209,10 +207,7 @@ class _KritaliaHomeScreenState extends State<KritaliaHomeScreen> {
             ColorFiltered(
               colorFilter: ColorFilter.mode(
                   Colors.grey.withOpacity(0.65), BlendMode.saturation),
-              // child: Image.asset(
-              //   "assets/images/kritalia2.jpg",
-              //   height: 250,
-              // ),
+             
               child: CachedNetworkImage(
                 imageUrl:
                     "https://www.destina1.com/images/new-arrival-image.jpg",
@@ -337,11 +332,7 @@ class _KritaliaHomeScreenState extends State<KritaliaHomeScreen> {
             ],
           ),
         ),
-        // Obx(() {
-        //   return
-        //  _homeController.newsData.isEmpty
-        //     ? const NotAvailableText(text: "News not available")
-        //     :
+        
         SizedBox(
           child: CarouselSlider.builder(
               itemCount: shopCategories.length,
@@ -424,11 +415,7 @@ class _KritaliaHomeScreenState extends State<KritaliaHomeScreen> {
             ),
           ],
         ),
-        // Obx(() {
-        //   return
-        //  _homeController.newsData.isEmpty
-        //     ? const NotAvailableText(text: "News not available")
-        //     :
+        
         const SpaceHeightWidget(height: 5),
         SizedBox(
           child: CarouselSlider.builder(
@@ -519,11 +506,7 @@ class _KritaliaHomeScreenState extends State<KritaliaHomeScreen> {
             ),
           ],
         ),
-        // Obx(() {
-        //   return
-        //  _homeController.newsData.isEmpty
-        //     ? const NotAvailableText(text: "News not available")
-        //     :
+        
         const SpaceHeightWidget(height: 5),
         SizedBox(
           child: CarouselSlider.builder(

@@ -28,7 +28,6 @@ class _TrainingToolsViewScreenState extends State<TrainingToolsViewScreen> {
   @override
   void initState() {
     super.initState();
-    print("url is...${widget.downloadlink}");
   }
 
   @override
@@ -93,18 +92,14 @@ class _TrainingToolsViewScreenState extends State<TrainingToolsViewScreen> {
                               progressbar = false;
                             }
                           });
-
-                          print('FILE fileName HAS PROGRESS $onProgress');
                         },
                         onDownloadCompleted: (String path) {
-                          print('FILE DOWNLOADED TO PATH: $path');
                           CommonToastTrue("Successfully donwloaded");
                           Timer(const Duration(seconds: 1), () {
                             Get.back();
                           });
                         },
                         onDownloadError: (String error) {
-                          print('DOWNLOAD ERROR: $error');
                           CommonToast(error);
                         });
                   }

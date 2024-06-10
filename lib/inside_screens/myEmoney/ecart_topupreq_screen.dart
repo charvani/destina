@@ -349,8 +349,6 @@ class _EcardTopupRequestScreenState extends State<EcardTopupRequestScreen> {
                                           selectedFile = file;
                                         });
                                       } else {
-                                        print("dfsf");
-                                        // User canceled the picker
                                       }
                                     },
                                     title: selectedFile != null

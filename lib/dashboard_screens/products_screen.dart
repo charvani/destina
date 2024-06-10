@@ -56,26 +56,20 @@ class _ProductsScreenState extends State<ProductsScreen> {
                     ? "Hair Care"
                     : "Personal Care");
       } else {
-        print("at else");
         dataFun("Wellness Care");
       }
-      // dataFun("All");
     });
   }
 
   dataFun(String category) async {
     dynamic data = await productController.getProducts(category, null);
-    print("product screen data...$data");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          // shape: const RoundedRectangleBorder(
-          //     borderRadius: BorderRadius.only(
-          //         bottomLeft: Radius.circular(30),
-          //         bottomRight: Radius.circular(30))),
+        
           backgroundColor: darkBlue,
           leading: const SizedBox.shrink(),
           leadingWidth: 0,

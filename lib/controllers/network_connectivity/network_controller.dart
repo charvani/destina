@@ -13,12 +13,10 @@ class NetworkController extends GetxController {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     initConnetvity();
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
-    print("at connetivity");
   }
 
   Future<void> initConnetvity() async {
@@ -27,16 +25,13 @@ class NetworkController extends GetxController {
     try {
       result = await _connectivity.checkConnectivity();
     } on PlatformException catch (e) {
-      print(e.toString());
     }
 
     return _updateConnectionStatus(result);
   }
 
   _updateConnectionStatus(ConnectivityResult result) {
-    print("getting res...$result");
-    // print("getting res...${ConnectivityResult.mobile}");
-    // print("getting res...${ConnectivityResult.none}");
+   
     switch (result) {
       case ConnectivityResult.wifi:
         connectionStatus.value = 1;
@@ -54,7 +49,6 @@ class NetworkController extends GetxController {
     }
 
     if (connectionStatus.value == 0) {
-      print("at goooo");
       Get.to(() => const NoInternetConnection());
     }
   }

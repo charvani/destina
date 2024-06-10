@@ -61,11 +61,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void initState() {
     super.initState();
-    print("register screen countryId...${widget.countryId}");
-    print("register screen packageCode...${widget.packageCode}");
-    print("register screen groupVal...${widget.groupVal}");
-    print("register screen sponsorId...${widget.sponsorId}");
-    print("register screen placementId...${widget.placementId}");
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       stateDataFun();
@@ -78,7 +73,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     setState(() {
       country = res['Country'];
     });
-    print("country ..$country");
   }
 
   bool sponsorIdInvalid = false;
@@ -88,7 +82,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (sponsorIdTController.text != "" && sponsorIdInvalid == false) {
       Map params = {"Action": "GetSponsor", "ID": sponsorIdTController.text};
       dynamic res = await registerController.getSponsorCheckDb(params);
-      print("sponsor id res...$res");
       if (res['Msg'].toString().toLowerCase() != "success") {
         CommonToast("Invalid sponsor id");
         setState(() {
@@ -113,7 +106,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (placementIdTController.text != "" && placemetnIdInvalid == false) {
       Map params = {"Action": "GetSponsor", "ID": placementIdTController.text};
       dynamic res = await registerController.getSponsorCheckDb(params);
-      print("placementIdTController id res...$res");
       if (res['Msg'].toString().toLowerCase() != "success") {
         CommonToast("Invalid placement id");
 
@@ -147,7 +139,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         "Placement": groupVal == "Left" ? "0" : "1"
       };
       dynamic res = await registerController.getPlacementPlaceCheckDb(params);
-      print("getPlacementPlaceCheckDb id res...$res");
       if (res['Msg'].toString().toLowerCase() != "success") {
         CommonToast(res['Message']);
         if (res['Message'].toString().contains('Placement ID')) {
@@ -176,10 +167,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool userIdInvalid = false;
   Future<bool> userCheckFun() async {
     if (userNameTController.text != "") {
-      print("klij");
       Map params = {"ID": userNameTController.text};
       dynamic res = await registerController.getUserCheckDb(params);
-      print("userCheckFun id res...$res");
       if (res['Msg'].toString().toLowerCase() != "success") {
         CommonToast(res['Message']);
         setState(() {
@@ -215,145 +204,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      // const SpaceHeightWidget(height: 10),
-                      // const RegisterTitleWidget(title: "SPONSOR INFORMATION"),
-                      // const SpaceHeightWidget(height: 15),
-                      // RegisterTextField(
-                      //   filedSubmitFun: (val) {
-                      //     print("ch.....${sponsorIdTController.text}");
-                      //   },
-                      //   editFun: () {
-                      //     print("chrerrrr.....${sponsorIdTController.text}");
-                      //   },
-                      //   onchangeFun: (val) {
-                      //     setState(() {
-                      //       sponsorIdInvalid = false;
-                      //     });
-                      //   },
-                      //   outsideFun: (val) async {
-                      //     // sponsorIdCheckFun();
-                      //     // placementPlaceCheckFun();
-                      //   },
-                      //   textInputType: TextInputType.name,
-                      //   hintText: "ex: John Lee",
-                      //   labelText: "Sponsor User ID",
-                      //   controller: sponsorIdTController,
-                      //   validation: (val) {
-                      //     if (sponsorIdInvalid) {
-                      //       return "Invalid sponsor id";
-                      //     } else if (val!.isEmpty) {
-                      //       return "Sponsor user id";
-                      //     } else {
-                      //       return null;
-                      //     }
-                      //   },
-                      // ),
-                      // RegisterTextField(
-                      //   readOnly: true,
-                      //   onTapFun: () {
-                      //     sponsorIdCheckFun();
-                      //     placementPlaceCheckFun();
-                      //   },
-                      //   textInputType: TextInputType.name,
-                      //   labelText: "Sponsor Name",
-                      //   hintText: "ex: John Lee",
-                      //   controller: sponsorNameTController,
-                      //   validation: (val) {
-                      //     return null;
-                      //   },
-                      // ),
-                      // RegisterTextField(
-                      //   onchangeFun: (val) {
-                      //     setState(() {
-                      //       placemetnIdInvalid = false;
-                      //     });
-                      //   },
-                      //   outsideFun: (val) async {
-                      //     // placementIdCheckFun();
-                      //     // placementPlaceCheckFun();
-                      //   },
-                      //   textInputType: TextInputType.name,
-                      //   labelText: "Placement ID",
-                      //   hintText: "ex: John Lee133",
-                      //   controller: placementIdTController,
-                      //   validation: (val) {
-                      //     if (placemetnIdInvalid) {
-                      //       return "Invalid placement id";
-                      //     } else if (val!.isEmpty) {
-                      //       return "Placement id";
-                      //     } else {
-                      //       return null;
-                      //     }
-                      //   },
-                      // ),
-                      // RegisterTextField(
-                      //   onTapFun: () {
-                      //     placementIdCheckFun();
-                      //     placementPlaceCheckFun();
-                      //   },
-                      //   readOnly: true,
-                      //   textInputType: TextInputType.name,
-                      //   labelText: "Placement ID Name",
-                      //   hintText: "ex: John Lee",
-                      //   controller: palcementNameTController,
-                      //   validation: (val) {
-                      //     return null;
-                      //   },
-                      // ),
-                      // Stack(
-                      //   alignment: AlignmentDirectional.topStart,
-                      //   children: [
-                      //     Container(
-                      //       margin: const EdgeInsets.only(top: 10),
-                      //       height: 40,
-                      //       width: double.infinity,
-                      //       decoration: BoxDecoration(
-                      //           borderRadius: BorderRadius.circular(5),
-                      //           border: Border.all(
-                      //               color: lightDarKBlue.withOpacity(0.3))),
-                      //       child: Row(
-                      //         children: [
-                      //           Radio(
-                      //               value: "Left",
-                      //               groupValue: groupVal,
-                      //               onChanged: (val) {
-                      //                 setState(() {
-                      //                   groupVal = val.toString();
-                      //                 });
-                      //                 placementPlaceCheckFun();
-                      //                 sponsorIdCheckFun();
-                      //                 placementIdCheckFun();
-                      //               }),
-                      //           const Text("Left"),
-                      //           Radio(
-                      //               value: "Right",
-                      //               groupValue: groupVal,
-                      //               onChanged: (val) {
-                      //                 setState(() {
-                      //                   groupVal = val.toString();
-                      //                 });
-                      //                 placementPlaceCheckFun();
-                      //                 sponsorIdCheckFun();
-                      //                 placementIdCheckFun();
-                      //               }),
-                      //           const Text("Right")
-                      //         ],
-                      //       ),
-                      //     ),
-                      //     Container(
-                      //         margin: const EdgeInsets.all(3),
-                      //         alignment: Alignment.center,
-                      //         color: whiteColor,
-                      //         width: 95,
-                      //         child: Text(
-                      //           "Select Placement",
-                      //           style: TextStyle(
-                      //               fontFamily: "OnestSemiBold",
-                      //               fontSize: 10,
-                      //               color: blackColor),
-                      //         ))
-                      //   ],
-                      // ),
                       const SpaceHeightWidget(height: 15),
                       const RegisterTitleWidget(title: "PERSONAL INFORMATION"),
                       const SpaceHeightWidget(height: 10),
@@ -423,24 +273,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                         },
                       ),
-                      // RegisterDropDown(
-                      //   hintText: "Gender",
-                      //   labelText: "GENDER",
-                      //   items: const ["Male", "Female"],
-                      //   onChangedFun: (val) {
-                      //     setState(() {
-                      //       gender = val.toString();
-                      //     });
-                      //   },
-                      //   value: gender,
-                      //   validationFun: (val) {
-                      //     if (val == "" || val == null) {
-                      //       return "Gender";
-                      //     } else {
-                      //       return null;
-                      //     }
-                      //   },
-                      // ),
                       RegisterTextField(
                         textInputType: TextInputType.emailAddress,
                         labelText: "EMAIL ADDRESS",
@@ -477,21 +309,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                         },
                       ),
-                      // RegisterTextField(
-                      //   textInputType: TextInputType.name,
-                      //   labelText: "Address 2",
-                      //   hintText: "Enter Your address 2",
-                      //   controller: address2TController,
-                      //   validation: (val) {
-                      //     if (val!.isEmpty) {
-                      //       return "Address";
-                      //     } else if (val.length < 3) {
-                      //       return "Enter valid address";
-                      //     } else {
-                      //       return null;
-                      //     }
-                      //   },
-                      // ),
                       RegisterTextField(
                         textInputType: TextInputType.name,
                         labelText: "City/Area",
@@ -611,7 +428,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       });
                                     }
                                   }
-                                  print(stateId);
                                 },
                                 value: state,
                               );
@@ -641,29 +457,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                         },
                       ),
-                      // RegisterTextField(
-                      //   onTapFun: () {
-                      //     print("heloo");
-                      //     userCheckFun();
-                      //   },
-                      //   textInputType: TextInputType.name,
-                      //   labelText: "LOGIN/TRANSACTION PASSWORD",
-                      //   hintText: "Enter your Login/Transaction password",
-                      //   controller: passwordTController,
-                      //   validation: (val) {
-                      //     RegExp pattern =
-                      //         RegExp(r'[~`!@#\$%^&*()\-_+={}[\]\\|;:"<>,./]');
-                      //     if (val!.isEmpty) {
-                      //       return "Your Login/Transaction password";
-                      //     } else if (pattern.hasMatch(val)) {
-                      //       return "Input should not contains special characters";
-                      //     } else if (val.length < 6) {
-                      //       return "Characters should be more than 5";
-                      //     } else {
-                      //       return null;
-                      //     }
-                      //   },
-                      // ),
                       const SpaceHeightWidget(height: 5),
                       LoginTextField(
                         obscureText: passwordVisible,
@@ -682,7 +475,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                         onTapFun: () {
-                          print("heloo");
                           userCheckFun();
                         },
                         textInputType: TextInputType.name,
@@ -811,12 +603,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           '* All Fields Are Mandatory           ',
           textDirection: TextDirection.rtl,
           textAlign: TextAlign.right,
-          // mode: TextScrollMode.endless,
           fadedBorderWidth: 0.03,
           fadedBorder: true,
           velocity: const Velocity(pixelsPerSecond: Offset(50, 0)),
-          // delayBefore: const Duration(seconds: 2),
-          // pauseBetween: const Duration(seconds: 2),
           style: TextStyle(
               fontFamily: "OnestRegular", color: whiteColor, fontSize: 12),
         ),
@@ -847,14 +636,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       "SessionID": Constants.prefs.get("ss_id"),
       "Area": zipcodeTController.text
     };
-    print("signup params...$params");
     dynamic res = await registerController.getRegister(params);
     if (res['Msg'].toString().toLowerCase() == "success") {
-      // ignore: use_build_context_synchronously
-      // MotionToast.success(
-      //   title: const Text("Congartulations!"),
-      //   description: const Text("Successfully Registered."),
-      // ).show(context);
       Get.back();
       Get.off(() => RegisterCartScreen(
             sponsorId: widget.checkoutSponsorId.removeAllWhitespace,

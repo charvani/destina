@@ -53,7 +53,7 @@ class _SalesProductDetailsScreen2State
   @override
   void initState() {
     super.initState();
-    print("from...${widget.from}");
+
     firstQtyController.text = "1";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       countryid = Constants.prefs.getString("country_id");
@@ -70,9 +70,6 @@ class _SalesProductDetailsScreen2State
       } else {
         sessionId = Constants.prefs.getString("ss_id");
       }
-
-      print("uniqid...$uniqId");
-      print("sessionid..$sessionId");
     });
   }
 
@@ -80,7 +77,6 @@ class _SalesProductDetailsScreen2State
   List<String> carouselImages = [];
   getRegisterPackageData() async {
     Map parameters = {
-      // "Action": "GetPackdescr",
       "Action": "GetNPackdescr",
       "pkid": "3",
       "Desc": widget.packageCode,
@@ -118,7 +114,6 @@ class _SalesProductDetailsScreen2State
   }
 
   reviewDataFun(String pid) async {
-    print("at reviewDataFun");
     Map bData = {
       "action": "Report",
       "Pid": pid,
@@ -133,14 +128,11 @@ class _SalesProductDetailsScreen2State
   }
 
   getPackageItemsData() async {
-    print("my para...${widget.packageCode}....$uniqId...$sessionId");
-
     dynamic res = await packDetailsController.getProductPackageItems(
         productCode: widget.packageCode,
         uniqId: uniqId,
         sessionId: sessionId,
         quantity: firstQtyController.text);
-    print("packages data...$res");
   }
 
   @override
@@ -152,16 +144,11 @@ class _SalesProductDetailsScreen2State
         appBar: commonAppBar(
           backNavigation: true,
           title: widget.packageCode,
-          // onTapFun: () {
-          //   // Get.offAll(() => const BottomBarScreen());
-          //   Get.back();
-          // },
         ),
         bottomSheet: Form(
           key: _fomkey1,
           child: Container(
             padding: const EdgeInsets.fromLTRB(15, 5, 5, 0),
-            // margin: const EdgeInsets.only(bottom: 1),
             height: 90,
             alignment: Alignment.center,
             width: double.infinity,
@@ -183,8 +170,6 @@ class _SalesProductDetailsScreen2State
                       children: [
                         InkWell(
                           onTap: () {
-                            // print(
-                            //     "${double.parse(packDetailsController.productDetails.value.price.replaceAll(packDetailsController.productDetails.value.currency, "")) * int.parse(firstQtyController.text)}");
                             if (int.parse(firstQtyController.text) > 1) {
                               setState(() {
                                 firstQtyController.text =
@@ -250,8 +235,7 @@ class _SalesProductDetailsScreen2State
                                 setState(() {
                                   packageLoading = true;
                                 });
-                                // this register add to cart fun
-                                print("add to car fun");
+
                                 Map parameters = {
                                   "action": "addSACartitems",
                                   // "addSGCartitems",
@@ -265,13 +249,12 @@ class _SalesProductDetailsScreen2State
                                   // "0",
                                   "Quantity": firstQtyController.text
                                 };
-                                print("add to cart params...$parameters");
+
                                 dynamic res = await MainController()
                                     .getRegPackAddToCart(parameters);
 
                                 if (res['Msg'].toString().toLowerCase() ==
                                     "success") {
-                                  print("res....$res");
                                   setState(() {
                                     packageLoading = false;
                                   });
@@ -286,34 +269,6 @@ class _SalesProductDetailsScreen2State
                                     packageLoading = false;
                                   });
                                 }
-
-                                //this is original exitsted function
-
-                                // print("add to car fun");
-                                // Map parameters = {
-                                //   "Pkid": widget.packageCode,
-                                //   "pid": pidList.join(":"),
-                                //   "uniqid": uniqId,
-                                //   "sessid": sessionId,
-                                //   // "uniqid": widget.hidUid,
-                                //   // "sessid": widget.hidUid,
-                                //   "ipaddress": Constants.prefs.getString("ip"),
-                                //   "sprno": Constants.prefs.getString("reg_id"),
-                                //   "prdtype": "Package",
-                                //   "qty": firstQtyController.text,
-                                //   "country":
-                                //       Constants.prefs.getString("country_id"),
-                                // };
-                                // print("add to cart params...$parameters");
-                                // dynamic res = await MainController()
-                                //     .getSalesMallAddToCart(parameters);
-                                // if (res['Msg'].toString().toLowerCase() ==
-                                //     "success") {
-                                //   Timer(const Duration(seconds: 1), () {
-                                //     Get.back();
-                                //     Get.to(() => const SalesmallCartScreen());
-                                //   });
-                                // }
                               },
                               imagePath: 'assets/images/cart_icon.png',
                               labelColor: whiteColor,
@@ -362,7 +317,7 @@ class _SalesProductDetailsScreen2State
                           title: packDetailsController
                               .packageDetailsData.value.pkname,
                         ),
-                         PdfWidget(
+                        PdfWidget(
                           category: widget.fromPack,
                         ),
                         if (widget.fromPack == "Kritalia & Co")
@@ -476,9 +431,7 @@ class _SalesProductDetailsScreen2State
                             Icons.star,
                             color: Colors.amber,
                           ),
-                          onRatingUpdate: (rating) {
-                            print(rating);
-                          },
+                          onRatingUpdate: (rating) {},
                         ),
                         const SpaceWidthWidget(width: 10),
                         CommonTitle(
@@ -626,7 +579,6 @@ class _SalesProductDetailsScreen2State
             myState(() {
               gval = val;
             });
-            print("gValue.....$val");
           },
           gVal: gval,
           submitFun: () {

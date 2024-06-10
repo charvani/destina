@@ -25,11 +25,9 @@ class _VideoDisplayScreenState extends State<VideoDisplayScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
       ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
       });
     _controller.addListener(_onVideoPlayerStateChanged);

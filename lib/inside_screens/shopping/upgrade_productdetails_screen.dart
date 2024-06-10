@@ -60,9 +60,6 @@ class _UpgradeProductDetailsScreenState
       } else {
         sessionId = Constants.prefs.getString("ss_id");
       }
-
-      print("uniqid...$uniqId");
-      print("sessionid..$sessionId");
     });
   }
 
@@ -76,7 +73,6 @@ class _UpgradeProductDetailsScreenState
     };
     dynamic res = await _dataController.getSalesProductDetails(parameters);
     if (res != null) {
-      print("product details data...$res");
       for (int i = 0; i < 4; i++) {
         if (i == 0) {
           carouselImages.add(res["img"]);
@@ -84,25 +80,19 @@ class _UpgradeProductDetailsScreenState
           carouselImages.add(res["img$i"]);
         }
       }
-
-      print("carouselIMages length...${carouselImages.length}");
     }
   }
 
   getPackageItemsData() async {
-    print("my para...${widget.packageCode}....$uniqId...$sessionId");
     Map parameters = {
       "pkgcode": widget.packageCode,
       "dtype": "Package",
       "qty": firstQtyController.text,
       "uniqid": uniqId,
       "sessid": sessionId,
-      // "uniqid": widget.hidUid,
-      // "sessid": widget.hidUid,
       "Jointype": "Upgrade"
     };
     dynamic res = await _dataController.getSalesMallProductItems(parameters);
-    print("packages data...$res");
   }
 
   @override
@@ -114,10 +104,6 @@ class _UpgradeProductDetailsScreenState
         appBar: commonAppBar(
           backNavigation: true,
           title: widget.packageCode,
-          // onTapFun: () {
-          //   // Get.offAll(() => const BottomBarScreen());
-          //   Get.back();
-          // },
         ),
         bottomSheet: Form(
           key: _fomkey1,
@@ -146,7 +132,7 @@ class _UpgradeProductDetailsScreenState
                         child: IconElevatedButton(
                           onTapFun: () async {
                             // if (widget.from == "register") {
-                            print("popup");
+
                             // Get.defaultDialog();
                             setState(() {
                               packageLoading = true;
@@ -359,7 +345,6 @@ class _UpgradeProductDetailsScreenState
                       children: [
                         const SpaceHeightWidget(height: 5),
                         Text(
-                          // "Products In The Package MYSH01",
                           _dataController.packageDetails.value.head,
                           style: TextStyle(
                               fontFamily: "OnestSemiBold",
@@ -389,10 +374,8 @@ class _UpgradeProductDetailsScreenState
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: DataTable(
-                              // dataRowMinHeight: ,
                               dataRowMaxHeight: 70,
                               horizontalMargin: 0,
-                              // dataRowMaxHeight: 100,
                               columnSpacing: 0,
                               border: TableBorder.all(
                                   color: middleBlackColor.withOpacity(0.15)),
@@ -533,8 +516,6 @@ class _UpgradeProductDetailsScreenState
                                                   .digitsOnly,
                                               LengthLimitingTextInputFormatter(
                                                   2),
-                                              // FilteringTextInputFormatter.allow(
-                                              //     RegExp("[1-28]"))
                                             ],
                                             padding: 8,
                                             textAlignVertical:
@@ -615,26 +596,18 @@ class _UpgradeProductDetailsScreenState
                                                   loading = true;
                                                 });
 
-                                                print("add to car fun");
                                                 Map parameters = {
                                                   "Pkid": widget.packageCode,
                                                   "pid": pidList.join(":"),
                                                   "uniqid": uniqId,
                                                   "sessid": sessionId,
-                                                  // "uniqid": widget.hidUid,
-                                                  // "sessid": widget.hidUid,
                                                   "ipaddress": Constants.prefs
                                                       .getString("ip"),
                                                   "sprno": Constants.prefs
                                                       .getString("user_id"),
                                                   "prdtype": "Package",
-                                                  // "qty":
-                                                  //     firstQtyController.text,
-                                                  // "country": Constants.prefs
-                                                  //     .getString("country_id"),
                                                 };
-                                                print(
-                                                    "add to cart params...$parameters");
+                                                
                                                 dynamic res =
                                                     await MainController()
                                                         .getUpgradeMallAddToCart(
@@ -643,14 +616,6 @@ class _UpgradeProductDetailsScreenState
                                                         .toString()
                                                         .toLowerCase() ==
                                                     "success") {
-                                                  // ignore: use_build_context_synchronously
-                                                  // MotionToast.success(
-                                                  //   title: const Text(
-                                                  //       "Congartulations!"),
-                                                  //   description: const Text(
-                                                  //       "Products added successfully to your cart."),
-                                                  // ).show(context);
-
                                                   Timer(
                                                       const Duration(
                                                           seconds: 1), () {
@@ -684,10 +649,6 @@ class _UpgradeProductDetailsScreenState
                                                   showQtyErrorText = true;
                                                 });
                                               }
-
-                                              // await Constants.prefs.setInt("cart_count", 1);
-                                              // Get.back();
-                                              // Get.to(() => const EnrollPackageScreen());
                                             },
                                             title: "Add To Cart")),
                                     const SpaceWidthWidget(width: 10),

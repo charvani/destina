@@ -247,7 +247,6 @@ remarkTextWidget(String title, int i) {
           redirectUrl:
               "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/invoiceparam.html?BillNo=${_dataController.ecardData.value.emoneyrpt[i].billNo}"
 
-          // "https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?BillNo=${_dataController.ecardData.value.emoneyrpt[i].billNo}",
           ));
     },
     child: Padding(
@@ -265,9 +264,7 @@ viewSlipWidget(String imageText, imagePath) {
   return GestureDetector(
     behavior: HitTestBehavior.translucent,
     onTap: () {
-      // Get.to(() => HeroAnimationScreen(
-      //       tagData: imagePath,
-      //     ));
+      
       Get.dialog(Dialog(
         backgroundColor: whiteColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

@@ -23,7 +23,7 @@ class _SHomeScreenState extends State<SHomeScreen> {
   MainController productController = Get.put(MainController());
   dataFun() async {
     dynamic data = await productController.getProducts("Wellness Care", null);
-    print("product screen data...$data");
+
     for (int i = 0; i < data['productRpt'].length; i++) {
       if (data['productRpt'][i]['packageName']
           .toString()

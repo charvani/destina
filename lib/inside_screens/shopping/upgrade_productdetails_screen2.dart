@@ -52,7 +52,7 @@ class _UpgradeProductDetailsScreen2State
   @override
   void initState() {
     super.initState();
-    print("from...${widget.from}");
+
     firstQtyController.text = "1";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       countryid = Constants.prefs.getString("country_id");
@@ -69,9 +69,6 @@ class _UpgradeProductDetailsScreen2State
       } else {
         sessionId = Constants.prefs.getString("ss_id");
       }
-
-      print("uniqid...$uniqId");
-      print("sessionid..$sessionId");
     });
   }
 
@@ -79,7 +76,6 @@ class _UpgradeProductDetailsScreen2State
   List<String> carouselImages = [];
   getRegisterPackageData() async {
     Map parameters = {
-      // "Action": "GetPackdescr",
       "Action": "GetNPackdescr",
       "pkid": "3",
       "Desc": widget.packageCode,
@@ -117,7 +113,6 @@ class _UpgradeProductDetailsScreen2State
   }
 
   reviewDataFun(String pid) async {
-    print("at reviewDataFun");
     Map bData = {
       "action": "Report",
       "Pid": pid,
@@ -140,16 +135,11 @@ class _UpgradeProductDetailsScreen2State
         appBar: commonAppBar(
           backNavigation: true,
           title: widget.packageCode,
-          // onTapFun: () {
-          //   // Get.offAll(() => const BottomBarScreen());
-          //   Get.back();
-          // },
         ),
         bottomSheet: Form(
           key: _fomkey1,
           child: Container(
             padding: const EdgeInsets.fromLTRB(15, 5, 5, 0),
-            // margin: const EdgeInsets.only(bottom: 1),
             height: 90,
             alignment: Alignment.center,
             width: double.infinity,
@@ -171,8 +161,6 @@ class _UpgradeProductDetailsScreen2State
                       children: [
                         InkWell(
                           onTap: () {
-                            // print(
-                            //     "${double.parse(packDetailsController.productDetails.value.price.replaceAll(packDetailsController.productDetails.value.currency, "")) * int.parse(firstQtyController.text)}");
                             if (int.parse(firstQtyController.text) > 1) {
                               setState(() {
                                 firstQtyController.text =
@@ -239,8 +227,7 @@ class _UpgradeProductDetailsScreen2State
                                 setState(() {
                                   packageLoading = true;
                                 });
-                                // this register add to cart fun
-                                print("add to car fun");
+
                                 Map parameters = {
                                   "action": "addUGCartitems",
                                   // "addSGCartitems",
@@ -254,67 +241,23 @@ class _UpgradeProductDetailsScreen2State
                                   // "0",
                                   "Quantity": firstQtyController.text
                                 };
-                                print("add to cart params...$parameters");
+
                                 dynamic res = await MainController()
                                     .getRegPackAddToCart(parameters);
 
                                 if (res['Msg'].toString().toLowerCase() ==
                                     "success") {
-                                  print("res....$res");
                                   setState(() {
                                     packageLoading = false;
                                   });
                                   Timer(const Duration(seconds: 1), () {
                                     Get.back(result: [true]);
-
-                                    // Get.back();
-                                    // Get.to(() => UpgradeCartScreen2(
-                                    //       packCode: widget.packageCode,
-                                    //     ));
                                   });
                                 } else {
                                   setState(() {
                                     packageLoading = false;
                                   });
                                 }
-
-/*
-                                //this is original exitsted function
-
-                                print("add to car fun");
-                                Map parameters = {
-                                  "Pkid": widget.packageCode,
-                                  "pid": pidList.join(":"),
-                                  "uniqid": uniqId,
-                                  "sessid": sessionId,
-                                  // "uniqid": widget.hidUid,
-                                  // "sessid": widget.hidUid,
-                                  "ipaddress": Constants.prefs.getString("ip"),
-                                  "sprno": Constants.prefs.getString("user_id"),
-                                  "prdtype": "Package",
-                                  // "qty":
-                                  //     firstQtyController.text,
-                                  // "country": Constants.prefs
-                                  //     .getString("country_id"),
-                                };
-                                print("add to cart params...$parameters");
-                                dynamic res = await MainController()
-                                    .getUpgradeMallAddToCart(parameters);
-                                if (res['Msg'].toString().toLowerCase() ==
-                                    "success") {
-                                  Timer(const Duration(seconds: 1), () {
-                                    Get.back();
-                                    Get.to(() => UpgradeCartScreen(
-                                          packCode: widget.packageCode,
-                                        ));
-                                  });
-                                }
-
-                                setState(() {
-                                  packageLoading = false;
-                                });
-
-                                */
                               },
                               imagePath: 'assets/images/cart_icon.png',
                               labelColor: whiteColor,
@@ -477,9 +420,7 @@ class _UpgradeProductDetailsScreen2State
                             Icons.star,
                             color: Colors.amber,
                           ),
-                          onRatingUpdate: (rating) {
-                            print(rating);
-                          },
+                          onRatingUpdate: (rating) {},
                         ),
                         const SpaceWidthWidget(width: 10),
                         CommonTitle(
@@ -627,7 +568,6 @@ class _UpgradeProductDetailsScreen2State
             myState(() {
               gval = val;
             });
-            print("gValue.....$val");
           },
           gVal: gval,
           submitFun: () {

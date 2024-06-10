@@ -41,9 +41,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
 
     sponsorController.text = "";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // if (uniqId != null && sessionId != null) {
       getData("init");
-      // }
     });
   }
 
@@ -56,17 +54,6 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
       });
     }
 
-    // cartParams = {
-    //   "Pkid": "",
-    //   "pid": "",
-    //   "Uniqid": uniqId,
-    //   "sessid": sessionId,
-    //   "ipaddress": Constants.prefs.get("ip"),
-    //   "sprno": Constants.prefs.get("reg_id"),
-    //   "prdtype": "Package",
-    //   "qty": "1",
-    //   "country": Constants.prefs.get("country_id"),
-    // };
     cartParams = {
       "Uniqid": uniqId,
       "sessid": sessionId,
@@ -76,10 +63,10 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
       "amt": "0",
       "amttype": "",
     };
-    print("cart params...$cartParams");
+
     dynamic res =
         await cartController.getRedemptionMCartItems(from, cartParams);
-    print("cart res...$res");
+
     if (res['result'] == "Promotion") {
       setState(() {
         showProductsSelection = true;
@@ -101,16 +88,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
   final _fomkey = GlobalKey<FormState>();
   List<TextEditingController> textEControllerList = [];
 
-  getPackageItemsData() async {
-    // print("my para...${widget.packageCode}....$uniqId...$sessionId");
-
-    // dynamic res = await cartController.getPacktPackageItems(
-    //     productCode: widget.packageCode,
-    //     uniqId: uniqId,
-    //     sessionId: sessionId,
-    //     dtype: "Promotion");
-    // print("packages data...$res");
-  }
+  getPackageItemsData() async {}
 
   bool screenLoad = false;
   @override
@@ -155,7 +133,6 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                         Column(
                                           children: [
                                             CartItemWidget(
-                                              // removeCartOption: true,
                                               showTotals: true,
                                               symbol: cartController
                                                   .salesMallCartItems[0].symbol,
@@ -206,7 +183,6 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                       .pkcode,
                                                 );
                                               },
-
                                               imagePath: cartController
                                                   .salesMallCartItems[i].pimage,
                                               removeFun: () {
@@ -227,21 +203,8 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                                       params,
                                                                       cartParams);
                                                           if (res != null) {
-                                                            print(
-                                                                "remove res..$res");
+                                                            
                                                           }
-
-                                                          // ignore: use_build_context_synchronously
-
-                                                          //           Timer(
-                                                          //               const Duration(seconds: 1),
-                                                          //               () {
-                                                          //             Get.offAll(() =>
-                                                          //                 const BottomBarScreen(
-                                                          // index: 1,
-
-                                                          //                 ));
-                                                          //           });
                                                         },
                                                         title:
                                                             "Are you sure?"));
@@ -269,7 +232,6 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                             children: [
                                               const Text(
                                                 "You qualified to receive an ADD ON products!",
-                                                // textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontFamily: "OnestSemiBold",
                                                   fontSize: 16,
@@ -279,7 +241,6 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                   height: 10),
                                               const Text(
                                                 "You are eligible for the following promotion:",
-                                                // textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontFamily: "OnestRegular",
                                                   fontSize: 13,
@@ -287,7 +248,6 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                               ),
                                               const Text(
                                                 "Be sure to select your preferred choice in the given catalogue.",
-                                                // textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontFamily: "OnestRegular",
                                                   fontSize: 13,
@@ -378,95 +338,6 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                     .salesMallCartItems[0]
                                                     .symbol);
                                       }),
-                                      // Container(
-                                      //   width: double.infinity,
-                                      //   margin: const EdgeInsets.all(10),
-                                      //   padding: const EdgeInsets.symmetric(
-                                      //       horizontal: 15, vertical: 20),
-                                      //   decoration: BoxDecoration(
-                                      //       color:
-                                      //           lightDarKBlue.withOpacity(0.1),
-                                      //       borderRadius:
-                                      //           BorderRadius.circular(10)),
-                                      //   child: Column(
-                                      //     crossAxisAlignment:
-                                      //         CrossAxisAlignment.start,
-                                      //     children: [
-                                      //       const Text(
-                                      //         "Order Summary",
-                                      //         style: TextStyle(
-                                      //           fontFamily: "OnestBold",
-                                      //           fontSize: 17,
-                                      //         ),
-                                      //       ),
-                                      //       const SpaceHeightWidget(height: 10),
-                                      //       Row(
-                                      //         mainAxisAlignment:
-                                      //             MainAxisAlignment
-                                      //                 .spaceBetween,
-                                      //         children: [
-                                      //           const Text(
-                                      //             "Order Subtotal",
-                                      //             style: TextStyle(
-                                      //               fontFamily: "OnestRegular",
-                                      //               fontSize: 15,
-                                      //             ),
-                                      //           ),
-                                      //           Obx(() {
-                                      //             return cartController
-                                      //                     .loading.value
-                                      //                 ? Text(
-                                      //                     "${cartController.salesMallCartItems[0].symbol} 0.0")
-                                      //                 : Text(
-                                      //                     "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallTAmount.value.roundToDouble()}",
-                                      //                     style:
-                                      //                         const TextStyle(
-                                      //                       fontFamily:
-                                      //                           "OnestRegular",
-                                      //                       fontSize: 15,
-                                      //                     ),
-                                      //                   );
-                                      //           }),
-                                      //         ],
-                                      //       ),
-                                      //       const SpaceHeightWidget(height: 10),
-                                      //       const CommonDivider(),
-                                      //       const SpaceHeightWidget(height: 5),
-                                      //       Row(
-                                      //         mainAxisAlignment:
-                                      //             MainAxisAlignment
-                                      //                 .spaceBetween,
-                                      //         children: [
-                                      //           Text(
-                                      //             "Total Amount",
-                                      //             style: TextStyle(
-                                      //               fontFamily: "OnestSemiBold",
-                                      //               fontSize: 15,
-                                      //               color: darkBlue,
-                                      //             ),
-                                      //           ),
-                                      //           Obx(() {
-                                      //             return cartController
-                                      //                     .loading.value
-                                      //                 ? Text(
-                                      //                     "${cartController.salesMallCartItems[0].symbol} 0.0")
-                                      //                 : Text(
-                                      //                     "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallTAmount.value.roundToDouble()}",
-                                      //                     style: TextStyle(
-                                      //                       fontFamily:
-                                      //                           "OnestSemiBold",
-                                      //                       fontSize: 15,
-                                      //                       color: darkBlue,
-                                      //                     ),
-                                      //                   );
-                                      //           }),
-                                      //         ],
-                                      //       ),
-                                      //       const SpaceHeightWidget(height: 20),
-                                      //     ],
-                                      //   ),
-                                      // ),
-
                                       const SpaceHeightWidget(height: 20),
                                       Container(
                                         alignment: Alignment.center,
@@ -514,89 +385,8 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                           ),
                                         ),
                                       ),
-                                      // Container(
-                                      //   padding: const EdgeInsets.all(8.0),
-                                      //   alignment: Alignment.center,
-                                      //   width: double.infinity,
-                                      //   child: SizedBox(
-                                      //     width: 200,
-                                      //     height: 35,
-                                      //     child: IconElevatedButton(
-                                      //       onTapFun: () {
-                                      //         Get.offAll(() => const BottomBarScreen(
-                                      //               index: 1,
-                                      //             ));
-                                      //       },
-                                      //       imagePath: 'assets/images/arrow_right.png',
-                                      //       labelColor: whiteColor,
-                                      //       buttonColor: lightDarKBlue,
-                                      //       titile: "Continue Shopping",
-                                      //     ),
-                                      //   ),
-                                      // )
                                     ],
                                   ),
-                        // Container(
-                        //   color: lightBlackColor.withOpacity(0.04),
-                        //   child: const Row(
-                        //     mainAxisAlignment: MainAxisAlignment.start,
-                        //     children: [
-                        //       Padding(
-                        //         padding: EdgeInsets.all(8.0),
-                        //         child: CommonTitle(titleName: "Recommended for you"),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        // Container(
-                        //   color: lightBlackColor.withOpacity(0.04),
-                        //   alignment: Alignment.center,
-                        //   // height: (4 / 2) * 325,
-                        //   child: GridView.builder(
-                        //     padding: const EdgeInsets.all(0),
-                        //     physics: const NeverScrollableScrollPhysics(),
-                        //     shrinkWrap: true,
-                        //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        //         crossAxisCount: 2, childAspectRatio: 1 / 1.5),
-                        //     itemBuilder: (context, i) {
-                        //       return PromotionItemWidget(
-                        //         onTapFun: () {
-                        //           Get.to(() => ProductDetailsScreen(
-                        //                 from: widget.from,
-                        //                 packageCode: "",
-                        //               ));
-                        //         },
-                        //         amountColor: darkBlue,
-                        //         imagePath: i == 0
-                        //             ? promotionItems[0].image
-                        //             : i == 1
-                        //                 ? promotionItems[1].image
-                        //                 : i == 2
-                        //                     ? promotionItems[2].image
-                        //                     : i == 3
-                        //                         ? promotionItems[3].image
-                        //                         : promotionItems[4].image,
-                        //         itemName: i == 0
-                        //             ? promotionItems[0].title
-                        //             : i == 1
-                        //                 ? promotionItems[1].title
-                        //                 : i == 2
-                        //                     ? promotionItems[2].title
-                        //                     : i == 3
-                        //                         ? promotionItems[3].title
-                        //                         : promotionItems[4]
-                        //                             .title
-                        //                             .capitalize
-                        //                             .toString(),
-                        //         amount: "2465",
-                        //         memberAmount: "2240",
-                        //         exclusiveProduct: false,
-                        //       );
-                        //     },
-                        //     itemCount: 4,
-                        //   ),
-                        // ),
-
                         const SpaceHeightWidget(height: 40)
                       ],
                     );
@@ -778,10 +568,8 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: DataTable(
-                              // dataRowMinHeight: ,
                               dataRowMaxHeight: 70,
                               horizontalMargin: 0,
-                              // dataRowMaxHeight: 100,
                               columnSpacing: 0,
                               border: TableBorder.all(
                                   color: middleBlackColor.withOpacity(0.15)),
@@ -922,8 +710,6 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                   .digitsOnly,
                                               LengthLimitingTextInputFormatter(
                                                   2),
-                                              // FilteringTextInputFormatter.allow(
-                                              //     RegExp("[1-28]"))
                                             ],
                                             padding: 8,
                                             textAlignVertical:
@@ -1004,7 +790,6 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                   loading = true;
                                                 });
 
-                                                print("add to car fun");
                                                 Map parameters = {
                                                   "Pkid": "",
                                                   "pid": pidList.join(":"),
@@ -1017,8 +802,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                   "jointype": "Promotion",
                                                   "action": "addSGPromoitems",
                                                 };
-                                                print(
-                                                    "add to cart params...$parameters");
+                                                
                                                 dynamic res =
                                                     await cartController
                                                         .getPackAddToCart(
@@ -1079,8 +863,6 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
   }
 
   incrdcrFun(String from, String itemcount, String packCode) async {
-    print("add to car fun");
-
     Map parameters = {
       "action": "addRDCartitems",
       "Pkid": packCode,
@@ -1093,7 +875,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
           ? "${int.parse(itemcount) + 1}"
           : "${int.parse(itemcount) - 1}"
     };
-    print("add to cart params...$parameters");
+
     dynamic res = await MainController().getRegPackAddToCart(parameters);
 
     if (res['Msg'].toString().toLowerCase() == "success") {

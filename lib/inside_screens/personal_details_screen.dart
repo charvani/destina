@@ -43,8 +43,7 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
                 decoration: BoxDecoration(
                   color: darkBlue.withOpacity(0.05),
                   borderRadius: BorderRadius.circular(10),
-                  // border: Border.all(
-                  //     color: middleBlackColor.withOpacity(0.2), width: 1)
+                 
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +87,6 @@ class _PersonalDetailsScreenState extends State<PersonalDetailsScreen> {
                             firstDate: DateTime(1900, 0),
                           );
                           if (picked != null && picked != selectedDate) {
-                            print(picked);
                             final DateFormat formatter =
                                 DateFormat('dd-MM-yyyy');
                             setState(() {

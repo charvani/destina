@@ -60,17 +60,6 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
       });
     }
 
-    // cartParams = {
-    //   "Pkid": "",
-    //   "pid": "",
-    //   "Uniqid": uniqId,
-    //   "sessid": sessionId,
-    //   "ipaddress": Constants.prefs.get("ip"),
-    //   "sprno": Constants.prefs.get("reg_id"),
-    //   "prdtype": "Package",
-    //   "qty": "1",
-    //   "country": Constants.prefs.get("country_id"),
-    // };
     cartParams = {
       "Uniqid": uniqId,
       "sessid": Constants.prefs.get("ss_id"),
@@ -80,18 +69,9 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
       "amt": "0",
       "amttype": "",
     };
-    print("cart params...$cartParams");
+
     dynamic res = await cartController.getMemberMCartItems(from, cartParams);
-    print("cart res...$res");
-    // if (res['result'] == "Promotion") {
-    //   setState(() {
-    //     showProductsSelection = true;
-    //   });
-    // } else {
-    //   setState(() {
-    //     showProductsSelection = false;
-    //   });
-    // }
+
     if (from == "add to cart") {
       setState(() {
         screenLoad = false;
@@ -104,16 +84,7 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
   final _fomkey = GlobalKey<FormState>();
   List<TextEditingController> textEControllerList = [];
 
-  getPackageItemsData() async {
-    // print("my para...${widget.packageCode}....$uniqId...$sessionId");
-
-    // dynamic res = await cartController.getPacktPackageItems(
-    //     productCode: widget.packageCode,
-    //     uniqId: uniqId,
-    //     sessionId: sessionId,
-    //     dtype: "Promotion");
-    // print("packages data...$res");
-  }
+  getPackageItemsData() async {}
 
   bool screenLoad = false;
   @override
@@ -193,31 +164,6 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                               cv: cartController
                                                   .salesMallCartItems[i].cv,
                                               showQuantity: true,
-                                              // removeCartOption: true,
-                                              // decrementFun: () {
-                                              //   if (int.parse(cartController
-                                              //           .salesMallCartItems[i]
-                                              //           .qty) >
-                                              //       1) {
-                                              //     incrdcrFun(
-                                              //         "decrement",
-                                              //         cartController
-                                              //             .salesMallCartItems[i]
-                                              //             .qty,
-                                              //         cartController
-                                              //             .salesMallCartItems[i]
-                                              //             .pkcode);
-                                              //   }
-                                              // },
-                                              // incrementFun: () {
-                                              //   incrdcrFun(
-                                              //       "increment",
-                                              //       cartController
-                                              //           .salesMallCartItems[i].qty,
-                                              //       cartController
-                                              //           .salesMallCartItems[i]
-                                              //           .pkcode);
-                                              // },
                                               imagePath: cartController
                                                   .salesMallCartItems[i].pimage,
                                               removeFun: () {
@@ -237,29 +183,6 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                                                   .getMemberMallItemRemove(
                                                                       params,
                                                                       cartParams);
-                                                          if (res != null) {
-                                                            print(
-                                                                "remove res..$res");
-                                                            // if (res['Message'] ==
-                                                            //     "SUCCESS") {
-                                                            //   // int.parse(cartController
-                                                            //   //         .memberMallCartCount
-                                                            //   //         .value) -
-                                                            //   //     1;
-                                                            // }
-                                                          }
-
-                                                          // ignore: use_build_context_synchronously
-
-                                                          //           Timer(
-                                                          //               const Duration(seconds: 1),
-                                                          //               () {
-                                                          //             Get.offAll(() =>
-                                                          //                 const BottomBarScreen(
-                                                          // index: 1,
-
-                                                          //                 ));
-                                                          //           });
                                                         },
                                                         title:
                                                             "Are you sure?"));
@@ -396,91 +319,6 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                                     .salesMallCartItems[0]
                                                     .symbol);
                                       }),
-                                      // Container(
-                                      //   width: double.infinity,
-                                      //   margin: const EdgeInsets.all(10),
-                                      //   padding: const EdgeInsets.symmetric(
-                                      //       horizontal: 15, vertical: 20),
-                                      //   decoration: BoxDecoration(
-                                      //       color:
-                                      //           lightDarKBlue.withOpacity(0.1),
-                                      //       borderRadius:
-                                      //           BorderRadius.circular(10)),
-                                      //   child: Column(
-                                      //     crossAxisAlignment:
-                                      //         CrossAxisAlignment.start,
-                                      //     children: [
-                                      //       const Text(
-                                      //         "Order Summary",
-                                      //         style: TextStyle(
-                                      //           fontFamily: "OnestBold",
-                                      //           fontSize: 17,
-                                      //         ),
-                                      //       ),
-                                      //       const SpaceHeightWidget(height: 10),
-                                      //       Row(
-                                      //         mainAxisAlignment:
-                                      //             MainAxisAlignment
-                                      //                 .spaceBetween,
-                                      //         children: [
-                                      //           const Text(
-                                      //             "Order Subtotal",
-                                      //             style: TextStyle(
-                                      //               fontFamily: "OnestRegular",
-                                      //               fontSize: 15,
-                                      //             ),
-                                      //           ),
-                                      //           Obx(() {
-                                      //             return cartController
-                                      //                     .loading.value
-                                      //                 ? Text(
-                                      //                     "${cartController.salesMallCartItems[0].symbol} 0.0")
-                                      //                 : Text(
-                                      //                     "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallTAmount.value}",
-                                      //                     style:
-                                      //                         const TextStyle(
-                                      //                       fontFamily:
-                                      //                           "OnestRegular",
-                                      //                       fontSize: 15,
-                                      //                     ),
-                                      //                   );
-                                      //           }),
-                                      //         ],
-                                      //       ),
-                                      //       const SpaceHeightWidget(height: 10),
-                                      //       const CommonDivider(),
-                                      //       const SpaceHeightWidget(height: 5),
-                                      //       Row(
-                                      //         mainAxisAlignment:
-                                      //             MainAxisAlignment
-                                      //                 .spaceBetween,
-                                      //         children: [
-                                      //           Text(
-                                      //             "Total Amount",
-                                      //             style: TextStyle(
-                                      //               fontFamily: "OnestSemiBold",
-                                      //               fontSize: 15,
-                                      //               color: darkBlue,
-                                      //             ),
-                                      //           ),
-                                      //           Obx(() {
-                                      //             return cartController
-                                      //                     .loading.value
-                                      //                 ? Text(
-                                      //                     "${cartController.salesMallCartItems[0].symbol} 0.0")
-                                      //                 : Text(
-                                      //                     "${cartController.salesMallCartItems[0].symbol} ${cartController.salesMallTAmount.value}",
-                                      //                     style: TextStyle(
-                                      //                       fontFamily:
-                                      //                           "OnestSemiBold",
-                                      //                       fontSize: 15,
-                                      //                       color: darkBlue,
-                                      //                     ),
-                                      //                   );
-                                      //           }),
-                                      //         ],
-                                      //       ),
-                                      //       const SpaceHeightWidget(height: 20),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8),
@@ -508,114 +346,10 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                           ],
                                         ),
                                       ),
-                                      //   ],
-                                      // ),
-                                      // ),
                                       const SpaceHeightWidget(height: 20),
-                                      // Container(
-                                      //   padding: const EdgeInsets.all(8.0),
-                                      //   alignment: Alignment.center,
-                                      //   width: double.infinity,
-                                      //   child: SizedBox(
-                                      //     width: 200,
-                                      //     height: 35,
-                                      //     child: IconElevatedButton(
-                                      //       onTapFun: () {
-                                      //         Get.offAll(() => const BottomBarScreen(
-                                      //               index: 1,
-                                      //             ));
-                                      //       },
-                                      //       imagePath: 'assets/images/arrow_right.png',
-                                      //       labelColor: whiteColor,
-                                      //       buttonColor: lightDarKBlue,
-                                      //       titile: "Continue Shopping",
-                                      //     ),
-                                      //   ),
-                                      // )
                                     ],
                                   ),
-                        // Container(
-                        //   color: lightBlackColor.withOpacity(0.04),
-                        //   child: const Row(
-                        //     mainAxisAlignment: MainAxisAlignment.start,
-                        //     children: [
-                        //       Padding(
-                        //         padding: EdgeInsets.all(8.0),
-                        //         child: CommonTitle(titleName: "Recommended for you"),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        // Container(
-                        //   color: lightBlackColor.withOpacity(0.04),
-                        //   alignment: Alignment.center,
-                        //   // height: (4 / 2) * 325,
-                        //   child: GridView.builder(
-                        //     padding: const EdgeInsets.all(0),
-                        //     physics: const NeverScrollableScrollPhysics(),
-                        //     shrinkWrap: true,
-                        //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        //         crossAxisCount: 2, childAspectRatio: 1 / 1.5),
-                        //     itemBuilder: (context, i) {
-                        //       return PromotionItemWidget(
-                        //         onTapFun: () {
-                        //           Get.to(() => ProductDetailsScreen(
-                        //                 from: widget.from,
-                        //                 packageCode: "",
-                        //               ));
-                        //         },
-                        //         amountColor: darkBlue,
-                        //         imagePath: i == 0
-                        //             ? promotionItems[0].image
-                        //             : i == 1
-                        //                 ? promotionItems[1].image
-                        //                 : i == 2
-                        //                     ? promotionItems[2].image
-                        //                     : i == 3
-                        //                         ? promotionItems[3].image
-                        //                         : promotionItems[4].image,
-                        //         itemName: i == 0
-                        //             ? promotionItems[0].title
-                        //             : i == 1
-                        //                 ? promotionItems[1].title
-                        //                 : i == 2
-                        //                     ? promotionItems[2].title
-                        //                     : i == 3
-                        //                         ? promotionItems[3].title
-                        //                         : promotionItems[4]
-                        //                             .title
-                        //                             .capitalize
-                        //                             .toString(),
-                        //         amount: "2465",
-                        //         memberAmount: "2240",
-                        //         exclusiveProduct: false,
-                        //       );
-                        //     },
-                        //     itemCount: 4,
-                        //   ),
-                        // ),
-
                         const SpaceHeightWidget(height: 10),
-
-                        // Container(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   alignment: Alignment.center,
-                        //   width: double.infinity,
-                        //   child: SizedBox(
-                        //     width: 200,
-                        //     height: 35,
-                        //     child: IconElevatedButton(
-                        //       onTapFun: () {
-                        //         Get.back();
-                        //         Get.back(result: [true]);
-                        //       },
-                        //       imagePath: 'assets/images/arrow_right.png',
-                        //       labelColor: whiteColor,
-                        //       titile: "Continue Shopping",
-                        //       buttonColor: blackColor,
-                        //     ),
-                        //   ),
-                        // ),
                         const SpaceHeightWidget(height: 40)
                       ],
                     );
@@ -797,10 +531,8 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: DataTable(
-                              // dataRowMinHeight: ,
                               dataRowMaxHeight: 70,
                               horizontalMargin: 0,
-                              // dataRowMaxHeight: 100,
                               columnSpacing: 0,
                               border: TableBorder.all(
                                   color: middleBlackColor.withOpacity(0.15)),
@@ -1023,7 +755,6 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                                   loading = true;
                                                 });
 
-                                                print("add to car fun");
                                                 Map parameters = {
                                                   "Pkid": "",
                                                   "pid": pidList.join(":"),
@@ -1036,8 +767,7 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                                   "jointype": "Promotion",
                                                   "action": "addSGPromoitems",
                                                 };
-                                                print(
-                                                    "add to cart params...$parameters");
+                                               
                                                 dynamic res =
                                                     await cartController
                                                         .getPackAddToCart(
@@ -1098,8 +828,6 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
   }
 
   incrdcrFun(String from, String itemcount, String packCode) async {
-    print("add to car fun");
-
     Map parameters = {
       "action": "addMECartitems",
       // "addSGCartitems",
@@ -1113,7 +841,7 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
           ? "${int.parse(itemcount) + 1}"
           : "${int.parse(itemcount) - 1}"
     };
-    print("add to cart params...$parameters");
+
     dynamic res = await MainController().getRegPackAddToCart(parameters);
 
     if (res['Msg'].toString().toLowerCase() == "success") {

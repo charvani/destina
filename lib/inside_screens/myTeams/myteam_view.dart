@@ -156,62 +156,7 @@ class _MyTeamViewScreenState extends State<MyTeamViewScreen> {
                             source: tSource),
                       ),
                       const SpaceHeightWidget(height: 20)
-                      // Column(
-                      //   children: [
-                      //     Scrollbar(
-                      //       interactive: true,
-                      //       trackVisibility: true,
-                      //       controller: _scrollController,
-                      //       thumbVisibility: true,
-                      //       thickness: 8,
-                      //       radius: const Radius.circular(10),
-                      //       scrollbarOrientation: ScrollbarOrientation.bottom,
-                      //       child: SingleChildScrollView(
-                      //         controller: _scrollController,
-                      //         scrollDirection: Axis.horizontal,
-                      //         child: Row(
-                      //           children: [
-                      //             Padding(
-                      //               padding: const EdgeInsets.all(8.0),
-                      //               child: ClipRRect(
-                      //                 borderRadius: BorderRadius.circular(10),
-                      //                 child: DataTable(
-                      //                     // dataRowMaxHeight: 50,
-                      //                     horizontalMargin: 10,
-                      //                     columnSpacing: 20,
-                      //                     border: TableBorder.all(
-                      //                         color: middleBlackColor.withOpacity(0.15),
-                      //                         borderRadius: BorderRadius.circular(10)),
-                      //                     headingRowColor: MaterialStatePropertyAll(
-                      //                         blackColor.withOpacity(0.8)),
-                      //                     dataRowColor: MaterialStatePropertyAll(
-                      //                         lightDarKBlue.withOpacity(0.1)
-                      //                         // whiteColor
-                      //                         ),
-                      //                     columns: [
-                      //                       DataColumn(label: idTextStyle("S.No")),
-                      //                       DataColumn(label: idTextStyle("User ID")),
-                      //                       DataColumn(label: idTextStyle("Name")),
-                      //                       DataColumn(label: idTextStyle("Sponsor")),
-                      //                       DataColumn(label: idTextStyle("DOJ")),
-                      //                       DataColumn(label: idTextStyle("Upliner")),
-                      //                       DataColumn(label: idTextStyle("Country")),
-                      //                     ],
-                      //                     rows: [
-                      //                       for (int i = 1; i <= 8; i++)
-                      //                         DataRow(cells: [])
-                      //                     ]),
-                      //               ),
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     const SpaceHeightWidget(
-                      //       height: 18,
-                      //     )
-                      //   ],
-                      // ),
+                   
                     ],
                   ),
                 ),

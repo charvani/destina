@@ -10,33 +10,18 @@ class AESEncrypt {
   final String cipherTransformation = "AES/CBC/PKCS5Padding";
   final String aesEncryptionAlgorithm = "AES";
 
-  // Uint8List decrypt(
-  //     Uint8List cipherText, Uint8List key, Uint8List initialVector) {
-  //   final cipher = CryptoUtils.getCipherInstance(cipherTransformation);
-  //   final secretKeySpec = new KeyParameter(key);
-  //   final ivParameterSpec = new ParametersWithIV(secretKeySpec, initialVector);
-  //   cipher.init(false, ivParameterSpec);
-  //   return cipher.process(cipherText);
-  // }
-
   Uint8List encrypttt(
       Uint8List plainText, Uint8List key, Uint8List initialVector) {
-    // final cipher = CBCBlockCipher(
-
-    // );
-    //  CryptoUtils.getCipherInstance(cipherTransformation);
     final cipher = PaddedBlockCipherImpl(
       PKCS7Padding(),
       CBCBlockCipher(AESEngine()),
     )..init(
-        true, // decrypt
+        true,
         PaddedBlockCipherParameters(
           ParametersWithIV(KeyParameter(key), initialVector),
           null,
         ),
       );
-    // final secretKeySpec = KeyParameter(key);
-    // final ivParameterSpec = ParametersWithIV(secretKeySpec, initialVector);
 
     return cipher.process(plainText);
   }
@@ -55,12 +40,6 @@ class AESEncrypt {
     return base64.encode(
         encrypttt(Uint8List.fromList(plainTextBytes), keyBytes, keyBytes));
   }
-
-  // String decrypt(String encryptedText, String key) {
-  //   final cipheredBytes = base64.decode(encryptedText);
-  //   final keyBytes = getKeyBytes(key);
-  //   return utf8.decode(decrypt(cipheredBytes, keyBytes, keyBytes));
-  // }
 }
 
 class Encrypt {
@@ -71,25 +50,18 @@ class Encrypt {
     try {
       final aesEncrypt = AESEncrypt();
       encryptedText = aesEncrypt.encrypt(stringResponse, key);
-      print("klfsk...$encryptedText");
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
     return encryptedText.toString();
   }
 
   static String encryptJsonObjectResponse(String jsonResponse) {
     const key = "Dena%sS4YtiXc&a1";
     final keyWithDate = getCurrentDate() + key;
-    print("mykeywithdate...$keyWithDate");
     String encryptedText = "";
     try {
       final aesEncrypt = AESEncrypt();
       encryptedText = aesEncrypt.encrypt(jsonResponse, keyWithDate);
-      print("my encripted data....$encryptedText");
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
     return encryptedText;
   }
 

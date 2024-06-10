@@ -68,7 +68,6 @@ class _ForgotTransPassScreenState extends State<ForgotTransPassScreen> {
                         child: CustomElevatedButton(
                             onTapFun: () async {
                               if (_formKey.currentState!.validate()) {
-                                print("submit fun");
                                 Map bdata = {
                                   "UserId":
                                       Constants.prefs.getString("user_id"),

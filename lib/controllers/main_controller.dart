@@ -861,7 +861,6 @@ class MainController extends GetxController {
       <TrendingOnSocialMModel>[].obs;
   RxList<TrendingOnSocialMModel> promotionsData =
       <TrendingOnSocialMModel>[].obs;
-// *********************** *********************************************************************
   getCountryCode() async {
     dynamic res = await ApiCall().getMethodFun(url: ApiData().countryUrl);
     return res;
@@ -878,9 +877,6 @@ class MainController extends GetxController {
     Map parameters = {
       "action": productType,
       "pcode": key ?? "0",
-
-      // "action": "MAGetKproducts",
-      // "pcode": "Jewellery sets",
       "country": Constants.prefs.getString("open_country")
     };
     dynamic res = await ApiCall().postMethodFun(
@@ -895,7 +891,6 @@ class MainController extends GetxController {
       }
     }
 
-    print(productItemList.length);
     loading.value = false;
     return res;
   }
@@ -918,8 +913,6 @@ class MainController extends GetxController {
         }
       }
     }
-
-    print(productItemList.length);
     loading.value = false;
     return res;
   }
@@ -942,7 +935,6 @@ class MainController extends GetxController {
             .add(ProductCategoryItem.fromJson(res['productRpt'][i]));
       }
     }
-    print("searchProductItemList.length.....${searchProductItemList.length}");
     genealogyLoading.value = false;
     return res;
   }
@@ -1004,7 +996,6 @@ class MainController extends GetxController {
     totalCV.value = 0.0;
     totalItems.value = 0;
 
-    print("cart_itmes...${cartItemsList.length}");
     if (res['packageDataRpt'].length > 0) {
       for (int i = 0; i < res['packageDataRpt'].length; i++) {
         cartItemsList.add(CartItemModel.fromJson(res['packageDataRpt'][i]));
@@ -1018,7 +1009,6 @@ class MainController extends GetxController {
             int.parse(res['packageDataRpt'][i]['packQuantity']);
       }
     }
-    print(cartItemsList.length);
     if (from == "init") {
       loading.value = false;
     }
@@ -1076,7 +1066,6 @@ class MainController extends GetxController {
     loading.value = true;
     dynamic res = await ApiCall().postMethodFun(
         methodName: ApiData().packageDetailsMethod, params: parameters);
-    print("res...$res");
     packageDetailsData.value = PackageDetailsModel.fromJson(res);
     loading.value = false;
     return "res";
@@ -1089,12 +1078,8 @@ class MainController extends GetxController {
       required String dtype,
       required Map params}) async {
     Map parameters = {
-      "pkgcode":
-          // "MYJD02",
-          productCode,
+      "pkgcode": productCode,
       "dtype": dtype,
-      // "Package",
-      // "dtype": "Promotion",
       "qty": "1",
       "uniqid": uniqId,
       "sessid": sessionId,
@@ -1102,12 +1087,7 @@ class MainController extends GetxController {
     };
 
     dynamic res = await ApiCall().postMethodFun(
-        methodName: ApiData()
-            .
-            // registerCart,
-
-            packPackageItemsMethod,
-        params: parameters);
+        methodName: ApiData().packPackageItemsMethod, params: parameters);
     packPackageDetails.value = PackageItemsModel.fromJson(res);
     return res;
   }
@@ -1176,7 +1156,6 @@ class MainController extends GetxController {
     registerCartItems.clear();
     totalAmount.value = 0.0;
     totalCV.value = 0.0;
-    print("cart_itmes...${registerCartItems.length}");
     if (res['SGCartItemRpt'].length > 0) {
       for (int i = 0; i < res['SGCartItemRpt'].length; i++) {
         registerCartItems
@@ -1216,7 +1195,6 @@ class MainController extends GetxController {
         Constants.prefs.setString("user_type", res['PkType']);
         Constants.prefs.setString("profile_image", res['Memberphoto']);
       }
-      print("bbbb....${bannerPopUp.length}");
     }
     loading.value = false;
     return res;
@@ -1283,7 +1261,6 @@ class MainController extends GetxController {
       imageFile: image64,
       endUrl: ApiData().uploadPhoto,
     );
-    print("ressss....$res");
     loading.value = false;
 
     return res;
@@ -1295,7 +1272,6 @@ class MainController extends GetxController {
       bodyData: bodyData,
       endUrl: endUrl,
     );
-    print("ressss....$res");
     loading.value = false;
 
     return res;
@@ -1560,7 +1536,6 @@ class MainController extends GetxController {
         }
       }
     }
-    print("shippingOrderData...${shippingOrderData.length}");
     return res;
   }
 
@@ -1612,7 +1587,6 @@ class MainController extends GetxController {
   getEcardMoneyType(Map parameters) async {
     dynamic res = await ApiCall().listPostMethodFun(
         methodName: ApiData().emoneyType, params: parameters);
-    print("res...$res");
     return res;
   }
 
@@ -1773,7 +1747,6 @@ class MainController extends GetxController {
           maintenanceCVData.add(MaintanenceCvModel.fromJson(res[i]));
         }
       }
-      print("///...${maintenanceCVData.length}");
     }
     loading.value = false;
     return res;
@@ -1907,20 +1880,10 @@ class MainController extends GetxController {
 
   getGlobalLBonus(Map parameters) async {
     loading.value = true;
-    // teamBuilderBonusTotal.value = 0.0;
-    // teamBuilderBonusList.clear();
     dynamic res = await ApiCall().listPostMethodFun(
         methodName: ApiData().globalLeadBonus, params: parameters);
     if (res != null) {
-      if (res.length > 0) {
-        // for (int i = 0; i < res.length; i++) {
-        //   teamBuilderBonusList.add(TeamBuilderBonusModel.fromJson(res[i]));
-        //   if (teamBuilderBonusList[i].netBonus != "") {
-        //     teamBuilderBonusTotal.value = teamBuilderBonusTotal.value +
-        //         double.parse(teamBuilderBonusList[i].netBonus);
-        //   }
-        // }
-      }
+      if (res.length > 0) {}
     }
     loading.value = false;
     return res;
@@ -1928,20 +1891,10 @@ class MainController extends GetxController {
 
   getSpecialBonus(Map parameters) async {
     loading.value = true;
-    // teamBuilderBonusTotal.value = 0.0;
-    // teamBuilderBonusList.clear();
     dynamic res = await ApiCall().listPostMethodFun(
         methodName: ApiData().specialBonus, params: parameters);
     if (res != null) {
-      if (res.length > 0) {
-        // for (int i = 0; i < res.length; i++) {
-        //   teamBuilderBonusList.add(TeamBuilderBonusModel.fromJson(res[i]));
-        //   if (teamBuilderBonusList[i].netBonus != "") {
-        //     teamBuilderBonusTotal.value = teamBuilderBonusTotal.value +
-        //         double.parse(teamBuilderBonusList[i].netBonus);
-        //   }
-        // }
-      }
+      if (res.length > 0) {}
     }
     loading.value = false;
     return res;
@@ -1949,20 +1902,10 @@ class MainController extends GetxController {
 
   getSpecialBonusSponsor(Map parameters) async {
     loading.value = true;
-    // teamBuilderBonusTotal.value = 0.0;
-    // teamBuilderBonusList.clear();
     dynamic res = await ApiCall().listPostMethodFun(
         methodName: ApiData().specialBonusSpr, params: parameters);
     if (res != null) {
-      if (res.length > 0) {
-        // for (int i = 0; i < res.length; i++) {
-        //   teamBuilderBonusList.add(TeamBuilderBonusModel.fromJson(res[i]));
-        //   if (teamBuilderBonusList[i].netBonus != "") {
-        //     teamBuilderBonusTotal.value = teamBuilderBonusTotal.value +
-        //         double.parse(teamBuilderBonusList[i].netBonus);
-        //   }
-        // }
-      }
+      if (res.length > 0) {}
     }
     loading.value = false;
     return res;
@@ -2034,20 +1977,10 @@ class MainController extends GetxController {
 
   getDistributorBonus(Map parameters) async {
     loading.value = true;
-    // teamBuilderBonusTotal.value = 0.0;
-    // teamBuilderBonusList.clear();
     dynamic res = await ApiCall().listPostMethodFun(
         methodName: ApiData().directDistSaleBonus, params: parameters);
     if (res != null) {
-      if (res.length > 0) {
-        // for (int i = 0; i < res.length; i++) {
-        //   teamBuilderBonusList.add(TeamBuilderBonusModel.fromJson(res[i]));
-        //   if (teamBuilderBonusList[i].netBonus != "") {
-        //     teamBuilderBonusTotal.value = teamBuilderBonusTotal.value +
-        //         double.parse(teamBuilderBonusList[i].netBonus);
-        //   }
-        // }
-      }
+      if (res.length > 0) {}
     }
     loading.value = false;
     return res;
@@ -2055,20 +1988,10 @@ class MainController extends GetxController {
 
   getFlushCvBonus(Map parameters) async {
     loading.value = true;
-    // teamBuilderBonusTotal.value = 0.0;
-    // teamBuilderBonusList.clear();
     dynamic res = await ApiCall().listPostMethodFun(
         methodName: ApiData().flushCVRpt, params: parameters);
     if (res != null) {
-      if (res.length > 0) {
-        // for (int i = 0; i < res.length; i++) {
-        //   teamBuilderBonusList.add(TeamBuilderBonusModel.fromJson(res[i]));
-        //   if (teamBuilderBonusList[i].netBonus != "") {
-        //     teamBuilderBonusTotal.value = teamBuilderBonusTotal.value +
-        //         double.parse(teamBuilderBonusList[i].netBonus);
-        //   }
-        // }
-      }
+      if (res.length > 0) {}
     }
     loading.value = false;
     return res;
@@ -2133,7 +2056,6 @@ class MainController extends GetxController {
 
     dynamic res = await ApiCall().listPostMethodFun(
         methodName: ApiData().fTARegistration, params: parameters);
-    print("getFTARegistration...res...$res");
     if (res != null) {
       if (res.length > 0) {
         ftaRegData.value = FtaRegistrationModel.fromJson(res[0]);
@@ -2204,7 +2126,6 @@ class MainController extends GetxController {
   }
 
   getSalesMCartItems(String from, Map parameters) async {
-    print("in cont...$from");
     if (from == "init") {
       loading.value = true;
     }
@@ -2214,7 +2135,6 @@ class MainController extends GetxController {
     salesMallCartItems.clear();
     salesMallTAmount.value = 0.0;
     salesMallTCV.value = 0.0;
-    print("cart_itmes...${salesMallCartItems.length}");
     if (res != null) {
       if (res['SalesPackgeRpt'].length > 0 &&
           res['SalesPackgeRpt'].toString() != "[]") {
@@ -2242,7 +2162,6 @@ class MainController extends GetxController {
   }
 
   getMallCartItems(String from, Map parameters, String apiName) async {
-    print("in cont...$from");
     if (from == "init") {
       loading.value = true;
     }
@@ -2252,7 +2171,6 @@ class MainController extends GetxController {
     salesMallCartItems.clear();
     salesMallTAmount.value = 0.0;
     salesMallTCV.value = 0.0;
-    print("cart_itmes...${salesMallCartItems.length}");
     if (res != null) {
       if (res['SalesPackgeRpt'].length > 0 &&
           res['SalesPackgeRpt'].toString() != "[]") {
@@ -2268,11 +2186,6 @@ class MainController extends GetxController {
         }
       }
     }
-    // else {
-    //   Timer(const Duration(seconds: 1), () {
-    //     Get.back();
-    //   });
-    // }
 
     if (from == "init") {
       loading.value = false;
@@ -2337,7 +2250,6 @@ class MainController extends GetxController {
     salesMallTAmount.value = 0.0;
     salesMallTCV.value = 0.0;
 
-    print("cart_itmes...${salesMallCartItems.length}");
     if (res != null) {
       if (res['SalesPackgeRpt'].length > 0 &&
           res['SalesPackgeRpt'].toString() != "[]") {
@@ -2423,8 +2335,7 @@ class MainController extends GetxController {
               .add(SalesMallCartItemModel.fromJson(res['DPPackageRpt'][i]));
 
           final endIndex = res['DPPackageRpt'][i]['mrp'].indexOf("DP", 0);
-          print(
-              "dp val..${res['DPPackageRpt'][i]['mrp'].substring(0, endIndex)}");
+
           String dpval = res['DPPackageRpt'][i]['mrp'].substring(0, endIndex);
           List<dynamic> split1 =
               res['DPPackageRpt'][i]['mrp'].toString().split('+');
@@ -2448,7 +2359,6 @@ class MainController extends GetxController {
         Get.back();
       });
     }
-    print("cart_itmes...${salesMallCartItems.length}");
 
     if (from == "init") {
       loading.value = false;
@@ -2476,12 +2386,9 @@ class MainController extends GetxController {
               .add(SalesMallCartItemModel.fromJson(res['DPPackageRpt'][i]));
 
           final endIndex = res['DPPackageRpt'][i]['mrp'].indexOf("DP", 0);
-          print(
-              "dp val..${res['DPPackageRpt'][i]['mrp'].substring(0, endIndex)}");
+
           String dpval = res['DPPackageRpt'][i]['mrp'].substring(0, endIndex);
 
-          print(
-              "rm val ...${res['DPPackageRpt'][i]['mrp'].substring(res['DPPackageRpt'][i]['mrp'].indexOf("RM"), res['DPPackageRpt'][i]['mrp'].length - 1).replaceAll("RM", "")}");
           String rmval = res['DPPackageRpt'][i]['mrp']
               .substring(res['DPPackageRpt'][i]['mrp'].indexOf("RM"),
                   res['DPPackageRpt'][i]['mrp'].length - 1)
@@ -2499,7 +2406,6 @@ class MainController extends GetxController {
         }
       }
     }
-    print("cart_itmes...${salesMallCartItems.length}");
 
     if (from == "init") {
       loading.value = false;
@@ -2557,7 +2463,6 @@ class MainController extends GetxController {
     salesMallTAmount.value = 0.0;
     salesMallTCV.value = 0.0;
     memberMallCartCount.value = "0";
-    print("cart_itmes...${salesMallCartItems.length}");
     if (res != null) {
       if (res['SalesPackgeRpt'].length > 0 &&
           res['SalesPackgeRpt'].toString() != "[]") {
@@ -2628,7 +2533,6 @@ class MainController extends GetxController {
     }
     dynamic res = await ApiCall()
         .postMethodFun(methodName: ApiData().cartItemsUpg, params: parameters);
-    print("cart_itmes...${salesMallCartItems.length}");
     if (res != null) {
       upgradeCartData.value = UpgradeCartItemModel.fromJson(res);
     } else {
@@ -2709,7 +2613,6 @@ class MainController extends GetxController {
   getPackages({required String packageMalVal, required String countyId}) async {
     loading.value = true;
     Map parameters = {
-      // "action": "GetMDiPackagesNew",
       "action": "GetShoppeProducts",
       "CountryID": countyId,
       "MallName": packageMalVal
@@ -2730,7 +2633,6 @@ class MainController extends GetxController {
             .add(SelPackageModel.fromJson(res['DistRelPackageRpt'][i]));
       }
     }
-    // print(productItemList.length);
     loading.value = false;
     return res;
   }
@@ -2790,7 +2692,6 @@ class MainController extends GetxController {
     loading.value = true;
     dynamic res =
         await ApiCall().uploadReview(bData: bdata, apiEndPoint: "WriteNReview");
-    print("ressss....$res");
     loading.value = false;
     getReviewData(reviewDataParams, "init");
     return res;
@@ -2802,7 +2703,6 @@ class MainController extends GetxController {
     loading.value = true;
     dynamic res =
         await ApiCall().uploadReview(bData: bdata, apiEndPoint: "UploadVideo");
-    print("ressss....$res");
     loading.value = false;
     return res;
   }
@@ -2839,7 +2739,6 @@ class MainController extends GetxController {
     dynamic res =
         await ApiCall().rawFun(endUrl: "AddRevReport", params: params);
     if (res != null) {
-      print("res...$res");
       if (res['Msg'] == "SUCCESS") {
         CommonToastTrue(res['Message']);
       } else {
@@ -2873,7 +2772,6 @@ class MainController extends GetxController {
     dynamic res = await ApiCall()
         .postMethodFun(methodName: ApiData().getTestimonials, params: params);
     if (res != null) {
-      print("res...$res");
       if (res['Message'] == "SUCCESS") {
         for (int i = 0; i < res['TestimonialsRpt'].length; i++) {
           testimonialData
@@ -2915,7 +2813,6 @@ class MainController extends GetxController {
         .postMethodFun(methodName: ApiData().getSMTrending, params: parameters);
     socialMediaData.clear();
     if (res != null) {
-      print("res...$res");
       for (int i = 0; i < res['SMdataRpt'].length; i++) {
         socialMediaData
             .add(TrendingOnSocialMModel.fromJson(res['SMdataRpt'][i]));
@@ -2932,8 +2829,6 @@ class MainController extends GetxController {
     promotionsData.clear();
 
     if (res != null) {
-      print("res...$res");
-
       for (int i = 0; i < res['SMdataRpt'].length; i++) {
         promotionsData
             .add(TrendingOnSocialMModel.fromJson(res['SMdataRpt'][i]));

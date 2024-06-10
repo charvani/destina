@@ -48,7 +48,6 @@ class _DashboardRedeemScreenState extends State<DashboardRedeemScreen> {
     };
     dynamic res = await _dataController.getDashboardRedemPoints(bdata);
     if (res != null) {
-      print("oooo...$res");
       if (res['Msg'] == "SUCCESS") {
         setState(() {
           redemData = res;

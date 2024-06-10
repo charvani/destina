@@ -34,11 +34,7 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
   void initState() {
     super.initState();
     packCode = widget.pkCode;
-    // if (widget.pkMallNum == "3") {
-    //   packCode = "MYJD02";
-    // } else {
-    //   packCode = "MYPLU01";
-    // }
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       if (Constants.prefs.getString("uniq_id") == null) {
         uniqId = generateRandomString(10);
@@ -52,22 +48,11 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
       } else {
         sessionId = Constants.prefs.getString("ss_id");
       }
-
-      print("uniqid...$uniqId");
-      print("sessionid..$sessionId");
     });
   }
 
   getPackageItemsData() async {
-    // Map parameters = {
-    //   "Uniqid": uniqId,
-    //   "sessid": sessionId,
-    //   "ipaddress": "GetPromoPacks",
-    //   "sprno": Constants.prefs.getString("reg_id"),
-    //   "pcode": "MYJD02",
-    //   "amt": "0",
-    //   "amttype": ""
-    // };
+    //
     Map parameters = {
       "pkgcode": packCode,
       "dtype": "RePromotion",
@@ -81,7 +66,6 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
         widget.pkMallNum == "3"
             ? ApiData().getPkgItemsPro
             : ApiData().getPkgItemsUpgPro);
-    print("packages data...$res");
   }
 
   @override
@@ -108,9 +92,6 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
                     ? loader
                     : ElevatedButton(
                         onPressed: () async {
-                          // if (widget.from == "register") {
-                          print("popup");
-                          // Get.defaultDialog();
                           setState(() {
                             packageLoading = true;
                           });
@@ -252,10 +233,8 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: DataTable(
-                              // dataRowMinHeight: ,
                               dataRowMaxHeight: 70,
                               horizontalMargin: 0,
-                              // dataRowMaxHeight: 100,
                               columnSpacing: 0,
                               border: TableBorder.all(
                                   color: middleBlackColor.withOpacity(0.15)),
@@ -422,8 +401,6 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
                                                   .digitsOnly,
                                               LengthLimitingTextInputFormatter(
                                                   2),
-                                              // FilteringTextInputFormatter.allow(
-                                              //     RegExp("[1-28]"))
                                             ],
                                             padding: 8,
                                             textAlignVertical:
@@ -506,7 +483,6 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
                                                   loading = true;
                                                 });
 
-                                                print("add to car fun");
                                                 Map parameters = {
                                                   "Pkid": packCode,
                                                   "pid": pidList.join(":"),
@@ -518,8 +494,7 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
                                                       .getString("user_id"),
                                                   "prdtype": "Promotion",
                                                 };
-                                                print(
-                                                    "add to cart params...$parameters");
+                                                
                                                 dynamic res = await MainController()
                                                     .getPromoPackAddToCart(
                                                         parameters,
@@ -566,10 +541,6 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
                                                   showQtyErrorText = true;
                                                 });
                                               }
-
-                                              // await Constants.prefs.setInt("cart_count", 1);
-                                              // Get.back();
-                                              // Get.to(() => const EnrollPackageScreen());
                                             },
                                             title: "Add To Cart")),
                                     const SpaceWidthWidget(width: 10),

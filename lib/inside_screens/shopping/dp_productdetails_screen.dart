@@ -47,7 +47,6 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    print("krushna,,,");
     firstQtyController.text = "1";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       getData();
@@ -63,9 +62,6 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
       } else {
         sessionId = Constants.prefs.getString("ss_id");
       }
-
-      print("uniqid...$uniqId");
-      print("sessionid..$sessionId");
     });
   }
 
@@ -79,7 +75,6 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
     };
     dynamic res = await _dataController.getDPProductDetails(parameters);
     if (res != null) {
-      print("product details data...$res");
       for (int i = 0; i < 4; i++) {
         if (i == 0) {
           carouselImages.add(res["img"]);
@@ -89,13 +84,10 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
       }
 
       reviewDataFun(_dataController.dpProductdata.value.pkid.toString());
-
-      print("carouselIMages length...${carouselImages.length}");
     }
   }
 
   reviewDataFun(String pid) async {
-    print("at reviewDataFun");
     Map bData = {
       "action": "Report",
       "Pid": pid,
@@ -115,10 +107,6 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
       appBar: commonAppBar(
         backNavigation: true,
         title: widget.packageCode,
-        // onTapFun: () {
-        //   // Get.offAll(() => const BottomBarScreen());
-        //   Get.back();
-        // },
       ),
       bottomSheet: Form(
         key: _fomkey1,
@@ -146,8 +134,6 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                     children: [
                       InkWell(
                         onTap: () {
-                          // print(
-                          //     "${double.parse(productDetailsController.productDetails.value.price.replaceAll(productDetailsController.productDetails.value.currency, "")) * int.parse(firstQtyController.text)}");
                           if (int.parse(firstQtyController.text) > 1) {
                             setState(() {
                               firstQtyController.text =
@@ -180,12 +166,6 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                             },
                             validation: (val) {
                               return null;
-
-                              // if (val!.isEmpty) {
-                              //   return "Enter Quantity";
-                              // } else {
-                              //   return null;
-                              // }
                             },
                             labelText: '',
                           )),
@@ -220,7 +200,7 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                                 setState(() {
                                   packageLoading = true;
                                 });
-                                print("add to car fun");
+
                                 Map parameters = {
                                   "Pkid": widget.packageCode,
                                   "pid": "1",
@@ -233,7 +213,7 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                                   "country":
                                       Constants.prefs.getString("country_id"),
                                 };
-                                print("add to cart params...$parameters");
+
                                 dynamic res = await MainController()
                                     .getDPMallAddToCart(parameters);
 
@@ -241,7 +221,6 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                                   packageLoading = false;
                                 });
                                 if (res != null) {
-                                  print("res...$res");
                                   if (res['Msg'] == "SUCCESS") {
                                     Timer(const Duration(seconds: 1), () {
                                       Get.back();
@@ -426,9 +405,7 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                             Icons.star,
                             color: Colors.amber,
                           ),
-                          onRatingUpdate: (rating) {
-                            print(rating);
-                          },
+                          onRatingUpdate: (rating) {},
                         ),
                         const SpaceWidthWidget(width: 10),
                         CommonTitle(
@@ -548,7 +525,7 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
       "Action": "AddHelp",
       "Pid": pid,
       "Name": "",
-     "Session": sessionId,
+      "Session": sessionId,
     };
 
     Map reviewDataParams = {
@@ -575,7 +552,6 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
             myState(() {
               gval = val;
             });
-            print("gValue.....$val");
           },
           gVal: gval,
           submitFun: () {

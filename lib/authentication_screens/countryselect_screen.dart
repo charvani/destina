@@ -27,7 +27,6 @@ class _CountySelectScreenState extends State<CountySelectScreen> {
 
   getCountryData() async {
     dynamic res = await _countryController.getCountries();
-    print("Country res..$res");
   }
 
   @override

@@ -58,32 +58,7 @@ class _MyGenealogyState extends State<MyGenealogy> {
             ? loader
             : SingleChildScrollView(
                 child: Column(children: [
-                  // Container(
-                  //   height: 60,
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   child: Row(
-                  //     children: [
-                  //       Expanded(
-                  //         child: CommonFormFieldwidget(
-                  //           hintText: "Search",
-                  //           onChangeFun: (val) {
-                  //             print("vall...$val");
-                  //           },
-                  //           prefixIcon: Icon(
-                  //             FeatherIcons.search,
-                  //             size: 18,
-                  //             color: blackColor.withOpacity(0.3),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //       const SpaceWidthWidget(width: 20),
-                  //       Expanded(
-                  //         child: CustomElevatedButton(
-                  //             onTapFun: () {}, title: "View Tree"),
-                  //       )
-                  //     ],
-                  //   ),
-                  // ),
+                
                   const SpaceHeightWidget(height: 15),
                   Column(
                     children: [

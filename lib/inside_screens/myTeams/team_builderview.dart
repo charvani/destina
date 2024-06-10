@@ -46,7 +46,6 @@ class _TeamBuilderViewScreenState extends State<TeamBuilderViewScreen> {
         dataFun(dataList[i].level, i);
       }
     }
-    print("dddd...${dataList.length}");
   }
 
   dataFun(String teamNo, int index) async {
@@ -59,7 +58,6 @@ class _TeamBuilderViewScreenState extends State<TeamBuilderViewScreen> {
     for (int i = 0; i < res.length; i++) {
       dataList[index].data.add(TeamViewListData.fromJson(res[i]));
     }
-    print("finn....${dataList[index].data.length}");
     setState(() {});
   }
 

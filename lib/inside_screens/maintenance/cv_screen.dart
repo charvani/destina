@@ -155,7 +155,6 @@ class _CVScreenState extends State<CVScreen> {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        print("add");
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),

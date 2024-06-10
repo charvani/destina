@@ -35,8 +35,7 @@ int sopCarouselIndex = 0;
 
 List<OnboardModel> productsCategories = [
   OnboardModel(image: "assets/images/health_care.png", title: "Wellness Care"),
-  // OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
-  // OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
+
   OnboardModel(
       image: "assets/images/a_start_privilege.png", title: "Kritalia & Co"),
 ];
@@ -86,9 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   popupFun() {
-    print("da....${widget.data}");
     if (widget.bannerPopUpImages!.isNotEmpty) {
-      print(widget.bannerPopUpImages!.length);
 
       Get.dialog(
           barrierDismissible: false,
@@ -116,14 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   )
-                  // IconButton(
-                  //     onPressed: () {
-                  //       Get.back();
-                  //     },
-                  //     icon: Icon(
-                  //       Icons.cancel_outlined,
-                  //       color: redColor,
-                  //     )),
+                 
                   ),
               contentPadding:
                   const EdgeInsets.only(top: 0, left: 3, right: 3, bottom: 18),
@@ -226,98 +216,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   )));
         }
       });
-      // Timer(const Duration(microseconds: 700), () {
-      //   if (widget.data['RenewaAlert'] != "No") {
-      //     Get.dialog(
-      //         barrierDismissible: false,
-      //         AlertDialog(
-      //             insetPadding: const EdgeInsets.symmetric(horizontal: 10),
-      //             titlePadding: EdgeInsets.zero,
-      //             title: Container(
-      //               width: double.maxFinite,
-      //               alignment: Alignment.topRight,
-      //               child: IconButton(
-      //                   onPressed: () {
-      //                     Get.back();
-      //                   },
-      //                   icon: Icon(
-      //                     Icons.cancel_outlined,
-      //                     color: redColor,
-      //                   )),
-      //             ),
-      //             contentPadding: const EdgeInsets.only(
-      //                 top: 0, left: 3, right: 3, bottom: 18),
-      //             content: SingleChildScrollView(
-      //               child: Column(
-      //                 mainAxisSize: MainAxisSize.min,
-      //                 children: [
-      //                   CommonTitle(
-      //                     titleName: "Destina 1 International alerts!!!!",
-      //                     fontColor: darkRedColor,
-      //                   ),
-      //                   const SpaceHeightWidget(height: 15),
-      //                   SideTitle(title: widget.data['RenNotifyMsg'])
-      //                 ],
-      //               ),
-      //             )));
-      //   }
-      // });
-      // Timer(const Duration(microseconds: 800), () {
-      //   // if (widget.data['RenewaAlert'] != "No") {
-      //   //able to close
-      //   if ("mm" != "No") {
-      //     Get.dialog(
-      //         barrierDismissible: false,
-      //         AlertDialog(
-      //           insetPadding: const EdgeInsets.symmetric(horizontal: 10),
-      //           titlePadding: EdgeInsets.zero,
-      //           title: Container(
-      //             width: double.maxFinite,
-      //             alignment: Alignment.topRight,
-      //             child: IconButton(
-      //                 onPressed: () {
-      //                   Get.back();
-      //                 },
-      //                 icon: Icon(
-      //                   Icons.cancel_outlined,
-      //                   color: redColor,
-      //                 )),
-      //           ),
-      //           contentPadding: const EdgeInsets.only(
-      //               top: 0, left: 3, right: 3, bottom: 18),
-      //           content: SingleChildScrollView(
-      //             child: Column(
-      //               mainAxisSize: MainAxisSize.min,
-      //               children: [
-      //                 CommonTitle(
-      //                   titleName: "Destina1.com alerts!!!!",
-      //                   fontColor: darkRedColor,
-      //                 ),
-      //                 const SpaceHeightWidget(height: 15),
-      //                 const SideTitle(
-      //                     title:
-      //                         "Your Account Will Expire On 11 May 2024 It is time to renew your Destina 1 Virtual Business Office subscription . It is important for your success as a Distributor. As a Distributor affiliated with Destina 1 International, you have invested time and effort in building a successful business. You have created the beginning of a legacy for future generations. Whatever your experience so far, whatever your achievement level, you have created the foundation for the future which you can build with continuous activity, as long as you renew")
-      //               ],
-      //             ),
-      //           ),
-      //           actions: [
-      //             CustomAutoWidthButton(
-      //                 onTapFun: () {
-      //                   Get.to(() => PopupEnrollPackageScreen(
-      //                         countyId: widget.data['CountryID'],
-      //                       ));
-      //                 },
-      //                 title: "Click Here To Unlock Your Account")
-      //           ],
-      //         ));
-
-      //   }
-      // });
 
       Timer(const Duration(microseconds: 700), () {
         if (widget.data['RenewalComp'] == "Yes") {
-          //not able to close at all the popup
-          // if ("mm" != "No") {
           Get.dialog(
               barrierDismissible: false,
               PopScope(
@@ -423,7 +324,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   dataFun(String category) async {
     dynamic data = await productController.getProducts(category, null);
-    print("product screen data...$data");
     if (mounted) {
       setState(() {});
     }
@@ -482,12 +382,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 150,
                 width: double.infinity,
                 decoration: BoxDecoration(color: darkBlue
-                    // image: DecorationImage(
-                    //     opacity: 0.3,
-                    //     image: AssetImage(
-                    //       "assets/images/blue_bg.jpg",
-                    //     ),
-                    //     fit: BoxFit.cover)
+                  
                     ),
               ),
               Column(children: [
@@ -499,7 +394,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 Container(
-                  // height: MediaQuery.of(context).size.height * 0.785,
                   width: double.infinity,
                   decoration: BoxDecoration(
                       color: whiteColor,
@@ -510,43 +404,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const SpaceHeightWidget(height: 15),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(
-                      //       horizontal: 8, vertical: 12),
-                      //   child: ClipRRect(
-                      //       borderRadius: BorderRadius.circular(18),
-                      //       child: Stack(
-                      //         alignment: Alignment.bottomLeft,
-                      //         children: [
-                      //           // Image.asset(
-                      //           //   "assets/images/home_signup_slider.png",
-                      //           //   height: 140,
-                      //           //   width: double.infinity,
-                      //           //   fit: BoxFit.fill,
-                      //           // ),
-                      //           if (Constants.prefs.getString("user_id") ==
-                      //                   null ||
-                      //               Constants.prefs.getString("user_id") ==
-                      //                   "false")
-                      //             Container(
-                      //               margin: const EdgeInsets.only(
-                      //                   bottom: 8, left: 12, top: 0),
-                      //               height: 28,
-                      //               width: 148,
-                      //               child: CustomAutoWidthButton(
-                      //                 onTapFun: () {
-                      //                   Get.to(() => const LoginScreen());
-                      //                 },
-                      //                 title: "Sign Up / Sign in",
-                      //               ),
-                      //             )
-                      //         ],
-                      //       )),
-                      // ),
-                      // const FreeDeliveryBanner(
-                      //   amount: "699",
-                      // ),
-                      // const SpaceHeightWidget(height: 15),
                       SizedBox(
                         height: 110,
                         width: 500,
@@ -623,11 +480,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               .promotionsData[i].redirecturl);
                                     },
                                     options: CarouselOptions(
-                                        // aspectRatio: 2.9 / 4.2,
-                                        // aspectRatio: 2.5 / 4,
+                                      
                                         viewportFraction: 0.7,
                                         enlargeCenterPage: true,
-                                        // autoPlay: true,
                                         autoPlayInterval:
                                             const Duration(seconds: 2),
                                         onPageChanged: (index, reason) {
@@ -764,93 +619,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       const SpaceHeightWidget(height: 13),
-                      // Stack(
-                      //   alignment: Alignment.bottomCenter,
-                      //   children: [
-                      //     const SopWidget(),
-                      //     Column(
-                      //       children: [
-                      //         CarouselSlider.builder(
-                      //             itemCount: 2,
-                      //             itemBuilder: (context, i, rindex) {
-                      //               return Padding(
-                      //                 padding: const EdgeInsets.only(right: 8),
-                      //                 child: i == 0
-                      //                     ? SopCarouselWidget(
-                      //                         imagePath:
-                      //                             "assets/images/woman_shopping.png",
-                      //                         amount: "6000",
-                      //                         imageContainerColor:
-                      //                             lightAppthemeColor
-                      //                                 .withOpacity(0.3),
-                      //                         twelvthPurchaseDiscount: "90",
-                      //                         sixthPurchaseDiscount: "50",
-                      //                         elevatedButton:
-                      //                             IconElevatedButton(
-                      //                           onTapFun: () {},
-                      //                           imagePath:
-                      //                               'assets/images/gift.png',
-                      //                           labelColor: whiteColor,
-                      //                           buttonColor: woodColor,
-                      //                           titile: "Beyond",
-                      //                         ),
-                      //                       )
-                      //                     : SopCarouselWidget(
-                      //                         imagePath:
-                      //                             "assets/images/bag.png",
-                      //                         amount: "2500",
-                      //                         imageContainerColor: biscutColor,
-                      //                         twelvthPurchaseDiscount: "50",
-                      //                         sixthPurchaseDiscount: "50",
-                      //                         elevatedButton:
-                      //                             IconElevatedButton(
-                      //                           onTapFun: () {},
-                      //                           imagePath:
-                      //                               'assets/images/gift.png',
-                      //                           labelColor: greenColor,
-                      //                           buttonColor: lightAmberColor,
-                      //                           titile: "Basic",
-                      //                         ),
-                      //                       ),
-                      //               );
-                      //             },
-                      //             options: CarouselOptions(
-                      //                 // height: 250,
-                      //                 aspectRatio: 16 / 10,
-                      //                 viewportFraction: 0.94,
-                      //                 autoPlay: false,
-                      //                 enableInfiniteScroll: false,
-                      //                 // enlargeCenterPage: true,
-                      //                 // enlargeFactor: 0.3,
-                      //                 autoPlayInterval:
-                      //                     const Duration(seconds: 2),
-                      //                 onPageChanged: (index, i) {
-                      //                   setState(() {
-                      //                     sopCarouselIndex = index;
-                      //                   });
-                      //                 })),
-                      //         const SpaceHeightWidget(height: 10),
-                      //         Container(
-                      //           width: double.infinity,
-                      //           alignment: Alignment.center,
-                      //           child: Row(
-                      //             mainAxisAlignment: MainAxisAlignment.center,
-                      //             mainAxisSize: MainAxisSize.max,
-                      //             children: [
-                      //               for (int i = 0; i < 2; i++)
-                      //                 (i == sopCarouselIndex)
-                      //                     ? ActiveDot(
-                      //                         fillColor: lightDarKBlue,
-                      //                       )
-                      //                     : const SopInactiveDot(),
-                      //             ],
-                      //           ),
-                      //         ),
-                      //         const SpaceHeightWidget(height: 13),
-                      //       ],
-                      //     ),
-                      //   ],
-                      // ),
                       const SpaceHeightWidget(height: 20),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -935,7 +703,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         onPageChanged: (index, reason) {})),
                               );
                       }),
-
                       const SpaceHeightWidget(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -1072,49 +839,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ],
                                   ),
                                 ),
-
-                      // Container(
-                      //     alignment: Alignment.center,
-                      //     child: GridView.builder(
-                      //       padding: const EdgeInsets.all(0),
-                      //       physics:
-                      //           const NeverScrollableScrollPhysics(),
-                      //       shrinkWrap: true,
-                      //       gridDelegate:
-                      //           const SliverGridDelegateWithFixedCrossAxisCount(
-                      //               crossAxisCount: 2,
-                      //               childAspectRatio: 1 / 1.1),
-                      //       itemBuilder: (context, i) {
-                      //         return PromotionItemWidget(
-                      //           onTapFun: () {
-                      //             Get.to(() => ProductDetailsScreen(
-                      //                   from: "recommended_for_you",
-                      //                   packageCode: productController
-                      //                       .productItemList[i]
-                      //                       .packagecode,
-                      //                 ));
-                      //           },
-                      //           amountColor: darkBlue,
-                      //           imagePath: productController
-                      //               .productItemList[i].image,
-                      //           itemName: productController
-                      //               .productItemList[i]
-                      //               .packageName
-                      //               .capitalizeFirst
-                      //               .toString(),
-                      //           amount: productController
-                      //                       .productItemList[i].dp !=
-                      //                   0.0
-                      //               ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
-                      //               : "",
-                      //           exclusiveProduct: false,
-                      //         );
-                      //       },
-                      //       itemCount: productController
-                      //           .productItemList.length,
-                      //     ),
-                      //   ),
-
                       const SpaceHeightWidget(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -1234,122 +958,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontFamily: "PoppinsBold",
                                 )),
                           ),
-                          // Expanded(
-                          //   child: Container(
-                          //     decoration: const BoxDecoration(
-                          //       color: Color(0XFF285AEB),
-                          //     ),
-                          //     child: Center(
-                          //       child: Image.asset(
-                          //         "assets/images/facebook1.png",
-                          //         color: whiteColor,
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // Expanded(
-                          //   child: Container(
-                          //     decoration: const BoxDecoration(
-                          //         gradient: LinearGradient(colors: [
-                          //       Color(0XFFfdf497),
-                          //       Color(0XFFfdf497),
-                          //       Color(0XFFfd5949),
-                          //       Color(0XFFd6249f),
-                          //       Color(0XFF285AEB),
-                          //     ])),
-                          //     child: Center(
-                          //       child: Image.asset(
-                          //         height: 25,
-                          //         color: whiteColor,
-                          //         "assets/images/instagram1.png",
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // Expanded(
-                          //   child: Container(
-                          //     decoration:
-                          //         const BoxDecoration(color: Colors.black),
-                          //     child: Center(
-                          //       child: Image.asset(
-                          //         height: 25,
-                          //         "assets/images/tiktock1.png",
-                          //         color: whiteColor,
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // Expanded(
-                          //   child: Container(
-                          //     decoration:
-                          //         const BoxDecoration(color: Colors.red),
-                          //     child: Center(
-                          //       child: Image.asset(
-                          //         // height: 25,
-                          //         "assets/images/youtube2.jpg",
-                          //         // color: whiteColor,
-                          //       ),
-                          //     ),
-                          //   ),
-                          // )
-                          // Expanded(
-                          //   child: Container(
-                          //     decoration: const BoxDecoration(
-                          //       color: Color(0XFF285AEB),
-                          //     ),
-                          //     child: Center(
-                          //       child: Image.asset(
-                          //         "assets/images/facebook1.png",
-                          //         color: whiteColor,
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // Expanded(
-                          //   child: Container(
-                          //     decoration: const BoxDecoration(
-                          //         gradient: LinearGradient(colors: [
-                          //       Color(0XFFfdf497),
-                          //       Color(0XFFfdf497),
-                          //       Color(0XFFfd5949),
-                          //       Color(0XFFd6249f),
-                          //       Color(0XFF285AEB),
-                          //     ])),
-                          //     child: Center(
-                          //       child: Image.asset(
-                          //         height: 25,
-                          //         color: whiteColor,
-                          //         "assets/images/instagram1.png",
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // Expanded(
-                          //   child: Container(
-                          //     decoration:
-                          //         const BoxDecoration(color: Colors.black),
-                          //     child: Center(
-                          //       child: Image.asset(
-                          //         height: 25,
-                          //         "assets/images/tiktock1.png",
-                          //         color: whiteColor,
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // Expanded(
-                          //   child: Container(
-                          //     decoration:
-                          //         const BoxDecoration(color: Colors.red),
-                          //     child: Center(
-                          //       child: Image.asset(
-                          //         // height: 25,
-                          //         "assets/images/youtube2.jpg",
-                          //         // color: whiteColor,
-                          //       ),
-                          //     ),
-                          //   ),
-                          // )
+                      
                         ],
                       ),
                       Obx(() {
@@ -1424,58 +1033,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   );
                       }),
                       const SpaceHeightWidget(height: 10),
-                      // productController.loading.value
-                      //     ? loader
-                      //     : productController.productItemList.isEmpty
-                      //         ? const SizedBox(
-                      //             height: 100,
-                      //             child: NotAvailableText(
-                      //               text: "Best seller products not available",
-                      //             ))
-                      //         : SingleChildScrollView(
-                      //             scrollDirection: Axis.horizontal,
-                      //             child: Row(
-                      //               children: [
-                      //                 for (int i = 0;
-                      //                     i <
-                      //                         productController
-                      //                             .productItemList.length;
-                      //                     i++)
-                      //                   SizedBox(
-                      //                     width: 150,
-                      //                     height: 190,
-                      //                     child: PromotionItemWidget(
-                      //                       onTapFun: () {
-                      //                         Get.to(() =>
-                      //                             ProductDetailsScreen2(
-                      //                               from: "Best_seller",
-                      //                               packageCode:
-                      //                                   productController
-                      //                                       .productItemList[i]
-                      //                                       .packagecode,
-                      //                               fromPack: "Wellness Care",
-                      //                             ));
-                      //                       },
-                      //                       amountColor: darkBlue,
-                      //                       imagePath: productController
-                      //                           .productItemList[i].image,
-                      //                       itemName: productController
-                      //                           .productItemList[i]
-                      //                           .packageName
-                      //                           .capitalizeFirst
-                      //                           .toString(),
-                      //                       amount: productController
-                      //                                   .productItemList[i]
-                      //                                   .dp !=
-                      //                               0.0
-                      //                           ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
-                      //                           : "",
-                      //                       exclusiveProduct: false,
-                      //                     ),
-                      //                   )
-                      //               ],
-                      //             ),
-                      //           ),
                       const SpaceHeightWidget(height: 40)
                     ],
                   ),
@@ -1500,10 +1057,6 @@ class _HomeScreenState extends State<HomeScreen> {
       behavior: HitTestBehavior.translucent,
       onTap: () async {
         if (redirectUrl != "") {
-          // final Uri url = Uri.parse(redirectUrl);
-          // if (!await launchUrl(url)) {
-          //   throw Exception('Could not launch $url');
-          // }
           Get.to(() => WebUrlScreen(from: "", redirectUrl: redirectUrl));
         } else {
           CommonToast("Coming soon");
@@ -1513,18 +1066,6 @@ class _HomeScreenState extends State<HomeScreen> {
         borderRadius: BorderRadius.circular(10),
         child: CommonCachedNetworkImage(imagePath: imagePath),
       ),
-      // ClipRRect(
-      //     borderRadius: BorderRadius.circular(10),
-      //     child: Container(
-      //       alignment: Alignment.bottomCenter,
-      //       decoration: BoxDecoration(
-      //         image: DecorationImage(
-      //             image: AssetImage(
-      //               "assets/images/promotion$i.png",
-      //             ),
-      //             fit: BoxFit.fill),
-      //       ),
-      //     )),
     );
   }
 

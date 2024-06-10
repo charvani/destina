@@ -1,14 +1,8 @@
 class ApiData {
-  // String countryUrl = "https://ipinfo.io/?token=36d76d73391d6e";
   String countryUrl = "https://ipinfo.io/?token=fd2675b165f575";
-// staging//
   // String baseUrl = "https://worldunityfoundation.org/MobileAPI/api/MobileApp/";
   // String checkOutUrlDomain = "showcase.worldunityfoundation.org";
-// live//
   String baseUrl = "https://admin.destina1.com/MobileAPI/api/MobileApp/";
-  // demo
-  // String checkOutUrlDomain = "beta.destina1.com";
-  // live
   String checkOutUrlDomain = "destina1.com";
 
   String productCategoryMethod = "GetProductsdata";
@@ -106,14 +100,12 @@ class ApiData {
   String loadSalesMall = "LoadSalesMall";
   String getSalesSingleProduct = "GetSalesSingleProduct";
   String pAddtoCartOpenSales = "PAddtoCartOpenSales";
-  // String checkOutSalesCartItems = "CheckOutSalesCartItems";
   String checkOutSalesCartItems = "GetSalesPackages";
   String removeSalesProduct = "RemoveSalesProduct";
   String loadRedemMall = "LoadRedemMall";
   String loadDPMall = "LoadDPMall";
   String getDPSingleProduct = "GetDPSingleProduct";
   String addtoCartDP = "AddtoCartDP";
-  // String checkOutDPCartItems = "CheckOutDPCartItems";
   String getdppackages = "getdppackages";
   String removeDPProduct = "RemoveDPProduct";
   String loadMembershipMall = "LoadMembershipMall";

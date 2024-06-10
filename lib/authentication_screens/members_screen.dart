@@ -112,15 +112,7 @@ class _MemberScreenState extends State<MemberScreen> {
       ddcTap = true;
       ddTap = false;
     }
-    //  else if ((double.parse(checkController.checkCountryData.value.diRenFee)
-    //             .round() >
-    //         0 &&
-    //     double.parse(checkController.checkCountryData.value.dRenF).round() >
-    //         0)) {
-    //   pcTap = false;
-    //   ddcTap = false;
-    //   ddTap = true;
-    // }
+    
     applicationInfo = [
       {"title": "18 Years and above", "image_path": "assets/images/age.jpe"},
       {
@@ -130,15 +122,10 @@ class _MemberScreenState extends State<MemberScreen> {
       },
       {
         "title": "",
-        //  pcTap
-        // ? checkController.checkCountryData.value.pcRenFee
-        // : ddcTap
-        //     ? checkController.checkCountryData.value.dcRenFee
-        //     : checkController.checkCountryData.value.dRenFee,
+   
         "image_path": "assets/images/signupfree.jpe"
       },
     ];
-    print("chck country...$res");
   }
 
   @override
@@ -180,31 +167,7 @@ class _MemberScreenState extends State<MemberScreen> {
       body: Obx(() {
         return checkController.loading.value
             ? loader
-            // : (
-            // (double.parse(checkController.checkCountryData.value.pCiRenFee)
-            //                   .round() >
-            //               0 &&
-            //           double.parse(checkController
-            //                       .checkCountryData.value.pcRenF)
-            //                   .round() >
-            //               0) ||
-            //       (double.parse(checkController
-            //                       .checkCountryData.value.dCiRenFee)
-            //                   .round() >
-            //               0 &&
-            //           double.parse(checkController
-            //                       .checkCountryData.value.dcRenF)
-            //                   .round() >
-            //               0)
-            //         ||
-            // (double.parse(checkController.checkCountryData.value.diRenFee)
-            //             .round() >
-            //         0 &&
-            //     double.parse(
-            //                 checkController.checkCountryData.value.dRenF)
-            //             .round() >
-            //         0)
-            // )
+        
             : Container(
                 child: Column(
                   children: [
@@ -275,17 +238,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                         : lightBlackColor.withOpacity(0.4),
                                     title: "Become a DDC"),
                             const SpaceWidthWidget(width: 7),
-                            // if (double.parse(checkController
-                            //                 .checkCountryData
-                            //                 .value
-                            //                 .diRenFee)
-                            //             .round() >
-                            //         0 &&
-                            //     double.parse(
-                            //                 checkController.checkCountryData
-                            //                     .value.dRenF)
-                            //             .round() >
-                            //         0)
+                            
                             CustomMemberButton(
                                 imagePath: "assets/images/team_employee.png",
                                 textColor: ddTap ? lightDarKBlue : blackColor,
@@ -308,7 +261,6 @@ class _MemberScreenState extends State<MemberScreen> {
                     ),
                     Expanded(
                       child: Container(
-                        // height: 800,
                         color: whiteColor,
                         child: SingleChildScrollView(
                           child: Column(
@@ -328,16 +280,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                     (pcTap == true))
                                   MemberScreenInfoWidget(
                                     signupFun: () {
-                                      // if (ddcTap) {
-                                      //   Get.to(() => PackageScreen(
-                                      //         from: ddcTap
-                                      //             ? "DDC"
-                                      //             : ddTap
-                                      //                 ? "DD"
-                                      //                 : "PC",
-                                      //         countryId: widget.countryId,
-                                      //       ));
-                                      // } else {
+                                     
                                       Get.to(() => RegisterPackageScreen(
                                             from: ddcTap
                                                 ? "DDC"
@@ -346,7 +289,6 @@ class _MemberScreenState extends State<MemberScreen> {
                                                     : "PC",
                                             countryId: widget.countryId,
                                           ));
-                                      // }
                                     },
                                     amount: checkController
                                         .checkCountryData.value.pcRenFee,
@@ -374,16 +316,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                     (ddcTap == true))
                                   MemberScreenInfoWidget(
                                     signupFun: () {
-                                      // if (ddcTap) {
-                                      //   Get.to(() => PackageScreen(
-                                      //         from: ddcTap
-                                      //             ? "DDC"
-                                      //             : ddTap
-                                      //                 ? "DD"
-                                      //                 : "PC",
-                                      //         countryId: widget.countryId,
-                                      //       ));
-                                      // } else {
+                                      
                                       Get.to(() => RegisterPackageScreen(
                                             from: ddcTap
                                                 ? "DDC"
@@ -392,7 +325,6 @@ class _MemberScreenState extends State<MemberScreen> {
                                                     : "PC",
                                             countryId: widget.countryId,
                                           ));
-                                      // }
                                     },
                                     amount: checkController
                                         .checkCountryData.value.dcRenFee,
@@ -407,29 +339,11 @@ class _MemberScreenState extends State<MemberScreen> {
                                   ),
                               if (
 
-                                  // double.parse(checkController
-                                  //               .checkCountryData
-                                  //               .value
-                                  //               .diRenFee)
-                                  //           .round() >
-                                  //       0 &&
-                                  //   double.parse(checkController
-                                  //               .checkCountryData.value.dRenF)
-                                  //           .round() >
-                                  //       0 &&
+                                 
                                   (ddTap == true))
                                 MemberScreenInfoWidget(
                                   signupFun: () {
-                                    // if (ddcTap) {
-                                    //   Get.to(() => PackageScreen(
-                                    //         from: ddcTap
-                                    //             ? "DDC"
-                                    //             : ddTap
-                                    //                 ? "DD"
-                                    //                 : "PC",
-                                    //         countryId: widget.countryId,
-                                    //       ));
-                                    // } else {
+                                    //
                                     Get.to(() => RegisterPackageScreen(
                                           from: ddcTap
                                               ? "DDC"
@@ -538,17 +452,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                                     ? darkRedColor
                                                     : darkBlue,
                                             onTapFun: () {
-                                              // if (ddcTap) {
-                                              //   Get.to(() => PackageScreen(
-                                              //         from: ddcTap
-                                              //             ? "DDC"
-                                              //             : ddTap
-                                              //                 ? "DD"
-                                              //                 : "PC",
-                                              //         countryId:
-                                              //             widget.countryId,
-                                              //       ));
-                                              // } else {
+                                              
                                               Get.to(() =>
                                                   RegisterPackageScreen(
                                                     from: ddcTap
@@ -579,10 +483,7 @@ class _MemberScreenState extends State<MemberScreen> {
                   ],
                 ),
               );
-        // : SizedBox(
-        //     height: 300,
-        //     child: notAvailableW,
-        //   );
+       
       }),
     );
   }

@@ -42,7 +42,6 @@ class _LoginScreenState extends State<LoginScreen> {
         ";SIMSERIAL:"
         ";IMEI:$imei;SUBID:"
         ";WLANMAC:$macAddress;ANDROIDID:${androidInfo.id};VERSION:${Constants.appversion}";
-    print("mobile infor....$mobileInfo");
     _loginController.mobileInfo.value = mobileInfo;
   }
 
@@ -50,12 +49,9 @@ class _LoginScreenState extends State<LoginScreen> {
     var status = await Permission.phone.status;
     if (status != PermissionStatus.granted) {
       status = await Permission.phone.request();
-      if (status != PermissionStatus.granted) {
-        // Handle the case where the user denies the permission request.
-      }
+      if (status != PermissionStatus.granted) {}
     }
 
-    // Now you can proceed with using the READ_PHONE_STATE permission.
     deviceInfoFun();
   }
 
@@ -93,12 +89,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           bottomRight: Radius.circular(35),
                         )),
                   ),
-                  // Image.asset(
-                  //   "assets/images/login_background.png",
-                  //   width: double.infinity,
-                  //   fit: BoxFit.fill,
-                  //   height: 150,
-                  // ),
                   Padding(
                     padding: const EdgeInsets.only(
                       left: 20,
@@ -162,7 +152,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         LoginTextField(
-                          // focusNode: _focusNode,
                           suffix: Icon(
                             Icons.perm_identity_rounded,
                             color: middleBlackColor.withOpacity(0.5),
@@ -226,7 +215,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               : CustomElevatedButton(
                                   onTapFun: () async {
                                     if (_formKey.currentState!.validate()) {
-                                      print("charvani");
                                       Map bodyData = {
                                         "idno": idTController.text.trim(),
                                         "Pwd": passwordTController.text.trim(),
@@ -239,7 +227,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                       dynamic res = await _loginController
                                           .getMemberLogin(bodyData);
                                       if (res != null) {
-                                        print(res);
                                         if (res['Msg']
                                                 .toString()
                                                 .toUpperCase() ==
@@ -284,7 +271,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontFamily: "OnestRegular",
                       size: 14,
                     ),
-                    // const SpaceWidthWidget(width: 10),
                     CommonTextButton(
                       textColor: lightDarKBlue,
                       onTapFun: () {
@@ -295,22 +281,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: CustomBorderElevatedButton(
-              //       bgcolor: whiteColor,
-              //       onTapFun: () {
-              //         Get.to(() => const CountySelectScreen());
-              //       },
-              //       title: "Register Member"),
-              // ),
               const SpaceHeightWidget(height: 20),
-              // UnderLineTextButton(
-              //     onTapFun: () {
-              //       Get.offAll(() => const BottomBarScreen());
-              //     },
-              //     titile: "Shop now",
-              //     fontSize: 20),
               Container(
                 padding: const EdgeInsets.all(8.0),
                 alignment: Alignment.center,

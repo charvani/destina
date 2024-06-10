@@ -59,9 +59,6 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
       } else {
         sessionId = Constants.prefs.getString("ss_id");
       }
-
-      print("uniqid...$uniqId");
-      print("sessionid..$sessionId");
     });
   }
 
@@ -75,7 +72,6 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
     };
     dynamic res = await _dataController.getSalesProductDetails(parameters);
     if (res != null) {
-      print("product details data...$res");
       for (int i = 0; i < 4; i++) {
         if (i == 0) {
           carouselImages.add(res["img"]);
@@ -83,25 +79,19 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
           carouselImages.add(res["img$i"]);
         }
       }
-
-      print("carouselIMages length...${carouselImages.length}");
     }
   }
 
   getPackageItemsData() async {
-    print("my para...${widget.packageCode}....$uniqId...$sessionId");
     Map parameters = {
       "pkgcode": widget.packageCode,
       "dtype": "Package",
       "qty": firstQtyController.text,
       "uniqid": uniqId,
       "sessid": sessionId,
-      // "uniqid": widget.hidUid,
-      // "sessid": widget.hidUid,
       "Jointype": "Sales"
     };
     dynamic res = await _dataController.getSalesMallProductItems(parameters);
-    print("packages data...$res");
   }
 
   @override
@@ -113,10 +103,6 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
         appBar: commonAppBar(
           backNavigation: true,
           title: widget.packageCode,
-          // onTapFun: () {
-          //   // Get.offAll(() => const BottomBarScreen());
-          //   Get.back();
-          // },
         ),
         bottomSheet: Form(
           key: _fomkey1,
@@ -175,20 +161,12 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                               },
                               validation: (val) {
                                 return null;
-
-                                // if (val!.isEmpty) {
-                                //   return "Enter Quantity";
-                                // } else {
-                                //   return null;
-                                // }
                               },
                               labelText: '',
                             )),
                         const SpaceWidthWidget(width: 3),
                         InkWell(
                           onTap: () {
-                            // print(
-                            //     "${double.parse(productDetailsController.productDetails.value.price.replaceAll(productDetailsController.productDetails.value.currency, "")) * int.parse(firstQtyController.text)}");
                             if (int.parse(firstQtyController.text) > 1) {
                               setState(() {
                                 firstQtyController.text =
@@ -215,7 +193,7 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                             child: IconElevatedButton(
                               onTapFun: () async {
                                 // if (widget.from == "register") {
-                                print("popup");
+
                                 // Get.defaultDialog();
                                 setState(() {
                                   packageLoading = true;
@@ -462,10 +440,8 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: DataTable(
-                              // dataRowMinHeight: ,
                               dataRowMaxHeight: 70,
                               horizontalMargin: 0,
-                              // dataRowMaxHeight: 100,
                               columnSpacing: 0,
                               border: TableBorder.all(
                                   color: middleBlackColor.withOpacity(0.15)),
@@ -606,8 +582,6 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                                   .digitsOnly,
                                               LengthLimitingTextInputFormatter(
                                                   2),
-                                              // FilteringTextInputFormatter.allow(
-                                              //     RegExp("[1-28]"))
                                             ],
                                             padding: 8,
                                             textAlignVertical:
@@ -688,14 +662,11 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                                   loading = true;
                                                 });
 
-                                                print("add to car fun");
                                                 Map parameters = {
                                                   "Pkid": widget.packageCode,
                                                   "pid": pidList.join(":"),
                                                   "uniqid": uniqId,
                                                   "sessid": sessionId,
-                                                  // "uniqid": widget.hidUid,
-                                                  // "sessid": widget.hidUid,
                                                   "ipaddress": Constants.prefs
                                                       .getString("ip"),
                                                   "sprno": Constants.prefs
@@ -706,8 +677,7 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                                   "country": Constants.prefs
                                                       .getString("country_id"),
                                                 };
-                                                print(
-                                                    "add to cart params...$parameters");
+                                           
                                                 dynamic res =
                                                     await MainController()
                                                         .getSalesMallAddToCart(
@@ -716,14 +686,6 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                                         .toString()
                                                         .toLowerCase() ==
                                                     "success") {
-                                                  // ignore: use_build_context_synchronously
-                                                  // MotionToast.success(
-                                                  //   title: const Text(
-                                                  //       "Congartulations!"),
-                                                  //   description: const Text(
-                                                  //       "Products added successfully to your cart."),
-                                                  // ).show(context);
-
                                                   Timer(
                                                       const Duration(
                                                           seconds: 1), () {
@@ -756,10 +718,6 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                                   showQtyErrorText = true;
                                                 });
                                               }
-
-                                              // await Constants.prefs.setInt("cart_count", 1);
-                                              // Get.back();
-                                              // Get.to(() => const EnrollPackageScreen());
                                             },
                                             title: "Add To Cart")),
                                     const SpaceWidthWidget(width: 10),

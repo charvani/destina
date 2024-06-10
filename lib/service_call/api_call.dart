@@ -21,21 +21,14 @@ class ApiCall {
   }
 
   postMethodFun({required String methodName, required Map params}) async {
-    print("method...$methodName");
-    print("params...$params");
-//encryption
     dynamic encryptedText = Encrypt.encryptStringResponse(json.encode(params));
-    print("Encrypted text....$encryptedText");
     http.Response response = await http.post(
         Uri.parse(ApiData().baseUrl + methodName),
         body: {"Info": encryptedText.toString()});
-    print("cherry.....");
     dynamic convertedData = convert.jsonDecode(response.body);
-    print(
-        "response.statusCode...${convertedData['Msg'].toString().toLowerCase()}");
+
     if (response.statusCode == 200 &&
         convertedData['Msg'].toString().toLowerCase() == "success") {
-      print("kkkkkkk");
       return convertedData;
     } else {
       CommonToast(convertedData['Message']);
@@ -44,11 +37,7 @@ class ApiCall {
 
   saleMallPostMethodFun(
       {required String methodName, required Map params}) async {
-    print("method...$methodName");
-    print("params...$params");
-//encryption
     dynamic encryptedText = Encrypt.encryptStringResponse(json.encode(params));
-    print("Encrypted text....$encryptedText");
     http.Response response = await http.post(
         Uri.parse(ApiData().baseUrl + methodName),
         body: {"Info": encryptedText.toString()});
@@ -59,15 +48,10 @@ class ApiCall {
 
   sponsorPostMethodFun(
       {required String methodName, required Map params}) async {
-    print("method...$methodName");
-    print("params...$params");
-//encryption
     dynamic encryptedText = Encrypt.encryptStringResponse(json.encode(params));
-    print("Encrypted text....$encryptedText");
     http.Response response = await http.post(
         Uri.parse(ApiData().baseUrl + methodName),
         body: {"Info": encryptedText.toString()});
-    print("cherry.....");
     dynamic convertedData = convert.jsonDecode(response.body);
     if (response.statusCode == 200) {
       return convertedData;
@@ -87,12 +71,10 @@ class ApiCall {
       "Country": Constants.prefs.getString("country_name"),
       "Filename": imageFile
     };
-    print("image bdata...$bData");
 
     http.Response response =
         await http.post(Uri.parse(ApiData().baseUrl + endUrl), body: bData);
 
-    print("cherry.....");
     dynamic convertedData = convert.jsonDecode(response.body);
     if (response.statusCode == 200) {
       return convertedData;
@@ -102,11 +84,7 @@ class ApiCall {
   }
 
   listPostMethodFun({required String methodName, required Map params}) async {
-    print("method...$methodName");
-    print("params...$params");
-//encryption
     dynamic encryptedText = Encrypt.encryptStringResponse(json.encode(params));
-    print("Encrypted text....$encryptedText");
     http.Response response = await http.post(
         Uri.parse(ApiData().baseUrl + methodName),
         body: {"Info": encryptedText.toString()});
@@ -125,7 +103,6 @@ class ApiCall {
   }) async {
     http.Response response =
         await http.post(Uri.parse(ApiData().baseUrl + endUrl), body: bodyData);
-    print("cherry.....");
     dynamic convertedData = convert.jsonDecode(response.body);
     if (response.statusCode == 200) {
       return convertedData;
@@ -134,49 +111,13 @@ class ApiCall {
     }
   }
 
-  ///previous upload review code::::::::::::::::::::::::::::::::
-  ///:::::::::::::::::::::::::::::::
-  // uploadReview({required bData, required apiEndPoint}) async {
-  //   String endUrl = ApiData().baseUrl + apiEndPoint;
-  //   print("getting url...$endUrl");
-
-  //   try {
-  //     http.Response response = await http.post(
-  //       Uri.parse(endUrl),
-  //       body: bData,
-  //     );
-
-  //     print("cherry.....${response.body}");
-  //     print("response.statusCode.....${response.statusCode}");
-  //     print("response.reasonPhrase.....${response.reasonPhrase}");
-
-  //     if (response.statusCode == 200) {
-  //       dynamic convertedData = convert.jsonDecode(response.body);
-
-  //       return convertedData;
-  //     } else {
-  //       dynamic convertedData = convert.jsonDecode(response.body);
-
-  //       print("get error....${convertedData['Message']}");
-  //       CommonToast(convertedData['Message']);
-  //     }
-  //   } catch (e) {
-  //     print("getting error....$e");
-  //     Get.dialog(OkDialog(title: e.toString()));
-  //   }
-  // }
   uploadReview({required bData, required apiEndPoint}) async {
     String endUrl = ApiData().baseUrl + apiEndPoint;
-    print("getting url...$endUrl");
 
     try {
       http.Response response = await http.post(Uri.parse(endUrl),
           body: jsonEncode(bData),
           headers: {'Content-Type': 'application/json'});
-
-      print("cherry.....${response.body}");
-      print("response.statusCode.....${response.statusCode}");
-      print("response.reasonPhrase.....${response.reasonPhrase}");
 
       if (response.statusCode == 200) {
         dynamic convertedData = convert.jsonDecode(response.body);
@@ -185,28 +126,21 @@ class ApiCall {
       } else {
         dynamic convertedData = convert.jsonDecode(response.body);
 
-        print("get error....${convertedData['Message']}");
         CommonToast(convertedData['Message']);
       }
     } catch (e) {
-      print("getting error....$e");
       Get.dialog(OkDialog(title: e.toString()));
     }
   }
 
   rawFun({required params, required endUrl}) async {
-    print("method....$endUrl");
-    print("params....$params");
-
     http.Response response =
         await http.post(Uri.parse(ApiData().baseUrl + endUrl), body: params);
 
-    print("cherry.....${response.body}");
     dynamic convertedData = convert.jsonDecode(response.body);
     if (response.statusCode == 200) {
       return convertedData;
     } else {
-      print("get error....${convertedData['Message']}");
       CommonToast(convertedData['Message']);
     }
   }

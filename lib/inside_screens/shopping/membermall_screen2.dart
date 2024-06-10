@@ -45,10 +45,7 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
       } else {
         sessionId = Constants.prefs.getString("ss_id");
       }
-      // uniqId = generateRandomString(10);
-      // await Constants.prefs.setString("uniq_id", uniqId);
-      // sessionId = generateTimeStamp();
-      // await Constants.prefs.setString("ss_id", sessionId);
+
       dataFun("Wellness Care");
     });
   }
@@ -57,7 +54,6 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
     dynamic res = await _dataController.getPackages(
         countyId: Constants.prefs.getString("country_id")!,
         packageMalVal: malVal);
-    print("getPackages screen data...$res");
   }
 
   actionFun() async {
@@ -103,10 +99,10 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
       "amt": "0",
       "amttype": "",
     };
-    print("cart params...$cartParams");
+
     dynamic res =
         await _dataController.getMemberMCartItems("screen", cartParams);
-    print("cart res...$res");
+
     setState(() {
       cartLoad = false;
     });
@@ -137,7 +133,6 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
           child: InkWell(
               // behavior: HitTestBehavior.translucent,
               onTap: () {
-                print("ooooo");
                 Get.back();
               },
               child:
@@ -239,119 +234,34 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2, childAspectRatio: 1 / 1.2),
                         itemBuilder: (context, i) {
-                          return
-                              // productCtgs[selectedInd] == "Kritalia & Co"
-                              //     ? KritaliaItemWidget(
-                              //         tapped: krialiaTappedInd == i ? true : false,
-                              //         amount:
-                              //             _dataController.selPackageItemList[i].mrp,
-                              //         onTapFun: () {
-                              //           setState(() {
-                              //             krialiaTappedInd = i;
-                              //           });
-
-                              //           Timer(const Duration(seconds: 1), () async {
-                              //             dynamic res = await Get.to(() =>
-                              //                 MemberProductDetailsScreen2(
-                              //                   // packageCode: _dataController
-                              //                   //     .salesOrdersList[i].pkcode,
-                              //                   from: 'membership',
-                              //                   packageCode: _dataController
-                              //                       .selPackageItemList[i].pkcode,
-                              //                   fromPack: productCtgs[selectedInd],
-                              //                 ));
-
-                              //             if (res != null) {
-                              //               if (res[0] == true) {
-                              //                 getCartData();
-                              //                 // _dataController.memberMallCartCount
-                              //                 //     .value = res[1].toString() ?? "0";
-                              //                 setState(() {});
-                              //               }
-                              //             }
-                              //           });
-                              //         },
-                              //         imagePath:
-                              //             // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                              //             _dataController
-                              //                 .selPackageItemList[i].pImage,
-                              //         titile: _dataController
-                              //             .selPackageItemList[i].pkname)
-                              //     :
-                              CategroyItemWidget(
-                                  amount:
-                                      _dataController.selPackageItemList[i].mrp,
-                                  onTapFun: () async {
-                                    dynamic res = await Get.to(() =>
-                                        MemberProductDetailsScreen2(
+                          return CategroyItemWidget(
+                              amount: _dataController.selPackageItemList[i].mrp,
+                              onTapFun: () async {
+                                dynamic res = await Get.to(
+                                    () => MemberProductDetailsScreen2(
                                           from: 'membership',
                                           packageCode: _dataController
                                               .selPackageItemList[i].pkcode,
                                           fromPack: productCtgs[selectedInd],
-                                          // packageCode: _dataController
-                                          //     .salesOrdersList[i].pkcode,
                                         ));
 
-                                    if (res != null) {
-                                      if (res[0] == true) {
-                                        getCartData();
-                                        // _dataController.memberMallCartCount
-                                        //     .value = res[1].toString() ?? "0";
-                                        setState(() {});
-                                      }
-                                    }
-                                  },
-                                  imagePath:
-                                      // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                      _dataController
-                                          .selPackageItemList[i].pImage,
-                                  titile: _dataController
-                                      .selPackageItemList[i].pkname);
+                                if (res != null) {
+                                  if (res[0] == true) {
+                                    getCartData();
+
+                                    setState(() {});
+                                  }
+                                }
+                              },
+                              imagePath:
+                                  _dataController.selPackageItemList[i].pImage,
+                              titile:
+                                  _dataController.selPackageItemList[i].pkname);
                         },
                         itemCount: _dataController.selPackageItemList.length);
           })),
         ],
       ),
-
-      // Obx(() {
-      //   return _dataController.loading.value
-      //       ? loader
-      //       : _dataController.salesOrdersList.isEmpty
-      //           ? const NotAvailableText(text: "No data found")
-      //           : Padding(
-      //               padding: const EdgeInsets.all(8.0),
-      //               child: GridView.builder(
-      //                 padding: const EdgeInsets.all(0),
-      //                 shrinkWrap: true,
-      //                 gridDelegate:
-      //                     const SliverGridDelegateWithFixedCrossAxisCount(
-      //                         crossAxisCount: 2, childAspectRatio: 1 / 1.1),
-      //                 itemBuilder: (context, i) {
-      //                   return CategroyItemWidget(
-      //                     onTapFun: () async {
-      //                       dynamic res =
-      //                           await Get.to(() => MemberProductDetailsScreen2(
-      //                                 packageCode: _dataController
-      //                                     .salesOrdersList[i].pkcode,
-      //                               ));
-
-      //                       if (res != null) {
-      //                         if (res[0] == true) {
-      //                           _dataController.memberMallCartCount.value =
-      //                               res[1] ?? "0";
-      //                           setState(() {});
-      //                         }
-      //                       }
-      //                     },
-      //                     imagePath: _dataController.salesOrdersList[i].pImage,
-      //                     titile: _dataController.salesOrdersList[i].pkname,
-      //                     amount: _dataController.salesOrdersList[i].mrp,
-      //                   );
-      //                 },
-      //                 itemCount: _dataController.salesOrdersList.length,
-      //               ),
-      //             );
-      // }),
     );
   }
 
@@ -436,7 +346,6 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
   }
 
   incrdcrFun(String from, String itemcount, String packCode) async {
-    print("add to car fun");
     Map parameters = {
       "action": "addMECartitems",
       // "addSGCartitems",
@@ -450,7 +359,7 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
           ? "${int.parse(itemcount) + 1}"
           : "${int.parse(itemcount) - 1}"
     };
-    print("add to cart params...$parameters");
+
     dynamic res = await MainController().getRegPackAddToCart(parameters);
     if (res['Msg'].toString().toLowerCase() == "success") {
       getCartData();

@@ -46,7 +46,6 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    print("from...${widget.from}");
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       getRegisterPackageData();
       if (Constants.prefs.getString("uniq_id") == null) {
@@ -61,9 +60,6 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
       } else {
         sessionId = Constants.prefs.getString("ss_id");
       }
-
-      print("uniqid...$uniqId");
-      print("sessionid..$sessionId");
     });
   }
 
@@ -71,16 +67,12 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
   List<String> carouselImages = [];
 
   getPackageItemsData() async {
-    print("my para...${widget.packageCode}....$uniqId...$sessionId");
-
     dynamic res = await packDetailsController.getPacktPackageItems(
         productCode: widget.packageCode,
         uniqId: uniqId,
         sessionId: sessionId,
         dtype: "Package",
         params: {});
-
-    print("packages data...$res");
   }
 
   getRegisterPackageData() async {
@@ -188,9 +180,6 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                               height: 35,
                               child: IconElevatedButton(
                                 onTapFun: () async {
-                                  // if (widget.from == "register") {
-                                  print("popup");
-                                  // Get.defaultDialog();
                                   if (mounted) {
                                     setState(() {
                                       packageLoading = true;
@@ -309,28 +298,6 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                             data: packDetailsController
                                 .packageDetailsData.value.desc,
                           ),
-
-                        // Container(
-                        //   padding: const EdgeInsets.symmetric(
-                        //       horizontal: 8, vertical: 4),
-                        //   width: double.infinity,
-                        //   height: 50,
-                        //   color: blueColor.withOpacity(0.2),
-                        //   child: Row(
-                        //     children: [
-                        //       Image.asset(
-                        //         "assets/images/award.png",
-                        //       ),
-                        //       const SpaceWidthWidget(width: 10),
-                        //       const Flexible(
-                        //           child: Text(
-                        //         "Destina 1 packages are satisfied with the guarantee",
-                        //         style: TextStyle(
-                        //             fontFamily: "OnestSemiBold", fontSize: 13),
-                        //       ))
-                        //     ],
-                        //   ),
-                        // ),
                         const SpaceHeightWidget(height: 65),
                       ]),
                 );
@@ -396,7 +363,6 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                         children: [
                           const SpaceHeightWidget(height: 5),
                           Text(
-                            // "Products In The Package MYSH01",
                             packDetailsController.packPackageDetails.value.head,
                             style: TextStyle(
                                 fontFamily: "OnestSemiBold",
@@ -427,10 +393,8 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: DataTable(
-                                // dataRowMinHeight: ,
                                 dataRowMaxHeight: 70,
                                 horizontalMargin: 0,
-                                // dataRowMaxHeight: 100,
                                 columnSpacing: 0,
                                 border: TableBorder.all(
                                     color: middleBlackColor.withOpacity(0.15)),
@@ -583,8 +547,6 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                                     .digitsOnly,
                                                 LengthLimitingTextInputFormatter(
                                                     2),
-                                                // FilteringTextInputFormatter.allow(
-                                                //     RegExp("[1-28]"))
                                               ],
                                               padding: 8,
                                               textAlignVertical:
@@ -672,7 +634,6 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                                     });
                                                   }
 
-                                                  print("add to packcart fun");
                                                   Map parameters = {
                                                     "Pkid": widget.packageCode,
                                                     "pid": pidList.join(":"),
@@ -685,8 +646,7 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                                     "jointype": "Package",
                                                     "action": "addSGCartitems",
                                                   };
-                                                  print(
-                                                      "add to cart params...$parameters");
+
                                                   dynamic res =
                                                       await MainController()
                                                           .getPackAddToCart(
@@ -695,13 +655,6 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                                           .toString()
                                                           .toLowerCase() ==
                                                       "success") {
-                                                    // ignore: use_build_context_synchronously
-                                                    // MotionToast.success(
-                                                    //   title: const Text(
-                                                    //       "Congartulations!"),
-                                                    //   description: const Text(
-                                                    //       "Packages added successfully"),
-                                                    // ).show(context);
                                                     Map params = {
                                                       "rpt": "EnrollDetails",
                                                       "Cid": widget.countryid,
@@ -712,9 +665,7 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                                         await packDetailsController
                                                             .getEnrollPack(
                                                                 params);
-                                                    print("enroll res..$res");
-                                                    print(
-                                                        "***********${double.parse(res['EnrollPackageRpt'][0]['RenFee'])}");
+
                                                     if (mounted) {
                                                       myState(() {
                                                         loading = false;

@@ -15,33 +15,7 @@ class PromotionsScreen extends StatefulWidget {
 }
 
 class _PromotionsScreenState extends State<PromotionsScreen> {
-  // List<PromotionsModel> promotions = [
-  //   PromotionsModel(
-  //       image: "assets/images/promotion1.png",
-  //       title: "Power play promotion",
-  //       date: "02/11/23 09:00",
-  //       isBigPromotion: false),
-  //   PromotionsModel(
-  //       image: "assets/images/promotion2.png",
-  //       title: "Power play promotion",
-  //       date: "02/11/23 09:00",
-  //       isBigPromotion: false),
-  //   PromotionsModel(
-  //       image: "assets/images/promotion3.png",
-  //       title: "Power play promotion",
-  //       date: "02/11/23 09:00",
-  //       isBigPromotion: false),
-  //   PromotionsModel(
-  //       image: "assets/images/promotion4.png",
-  //       title: "Power play promotion",
-  //       date: "02/11/23 09:00",
-  //       isBigPromotion: false),
-  //   PromotionsModel(
-  //       image: "assets/images/promotion5.png",
-  //       title: "Power play promotion",
-  //       date: "02/11/23 09:00",
-  //       isBigPromotion: true),
-  // ];
+
   final MainController _dataController = Get.put(MainController());
   @override
   void initState() {

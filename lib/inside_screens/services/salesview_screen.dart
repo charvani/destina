@@ -82,18 +82,14 @@ class _SalesToolsViewScreenState extends State<SalesToolsViewScreen> {
                               progressbar = false;
                             }
                           });
-
-                          print('FILE fileName HAS PROGRESS $onProgress');
                         },
                         onDownloadCompleted: (String path) {
-                          print('FILE DOWNLOADED TO PATH: $path');
                           CommonToastTrue("Successfully donwloaded");
                           Timer(const Duration(seconds: 1), () {
                             Get.back();
                           });
                         },
                         onDownloadError: (String error) {
-                          print('DOWNLOAD ERROR: $error');
                           CommonToast(error);
                         });
                   }

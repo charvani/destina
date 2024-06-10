@@ -43,9 +43,7 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
 
     sponsorController.text = "";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // if (uniqId != null && sessionId != null) {
       getData("init");
-      // }
     });
   }
 
@@ -63,9 +61,9 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
       "cname": Constants.prefs.getString("uniq_id"),
       "mname": Constants.prefs.getString("country_id")
     };
-    print("cart params...$cartParams");
+
     dynamic res = await cartController.getRegisterCartItems(from, cartParams);
-    print("cart res...$res");
+
     if (int.parse(res['Itemcnt']) == 1) {
       if (int.parse(res['PrCnt']) > 0) {
         setState(() {
@@ -90,7 +88,6 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
   List<TextEditingController> textEControllerList = [];
 
   getPackageItemsData() async {
-    print("my para...${widget.packageCode}....$uniqId...$sessionId");
     Map params = {
       "rpt": "GetPromoPack",
       "cname": widget.packageCode,
@@ -102,7 +99,6 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
         sessionId: sessionId,
         dtype: "Promotion",
         params: params);
-    print("packages data...$res");
   }
 
   bool screenLoad = false;
@@ -118,82 +114,14 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
               color: whiteColor,
             ),
             onPressed: () {
-              // getData("init");
               Get.back();
-
-              // setState(() {
-              //   packageLoading = false;
-              //   loading = false;
-              // });
-              // getData("init");
             }),
         title: Text(
           "Cart",
           style: TextStyle(
               fontFamily: "OnestSemiBold", fontSize: 20, color: whiteColor),
         ),
-        // actions: [
-        //   SizedBox(
-        //     height: 25,
-        //     width: 50,
-        //     child: CommonOulineTextButton(onTapFun: () {}, title: "Edit"),
-        //   ),
-        //   const SpaceWidthWidget(width: 5)
-        // ],
       ),
-      // bottomNavigationBar: (cartCount > 0)
-      //     ? Container(
-      //         decoration: BoxDecoration(
-      //             color: whiteColor,
-      //             border: Border.all(color: lightBlackColor, width: 1.5)),
-      //         height: 60,
-      //         width: double.infinity,
-      //         child: Padding(
-      //           padding: const EdgeInsets.all(8.0),
-      //           child: Row(
-      //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //             children: [
-      //               Column(
-      //                 crossAxisAlignment: CrossAxisAlignment.start,
-      //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                 children: [
-      //                   RichText(
-      //                       text: TextSpan(children: [
-      //                     TextSpan(
-      //                         text: "฿  ",
-      //                         style: TextStyle(
-      //                           color: lightDarKBlue,
-      //                           fontSize: 11.5,
-      //                         )),
-      //                     TextSpan(
-      //                         text: "4877",
-      //                         style: TextStyle(
-      //                           fontFamily: "OnestSemiBold",
-      //                           color: lightDarKBlue,
-      //                           fontSize: 17,
-      //                         )),
-      //                   ])),
-      //                   Text("Save ฿ 435 when you Sign Up.",
-      //                       style: TextStyle(
-      //                         fontFamily: "OnestRegular",
-      //                         color: blackColor.withOpacity(0.5),
-      //                         fontSize: 10,
-      //                       ))
-      //                 ],
-      //               ),
-      //               SizedBox(
-      //                   height: 35,
-      //                   width: 120,
-      //                   child: CustomElevatedButton(
-      //                       onTapFun: () {
-      //                         Get.to(() => const CheckOutScreen());
-      //                       },
-      //                       title: "Checkout"))
-      //             ],
-      //           ),
-      //         ),
-      //       )
-      //     : const SizedBox.shrink(),
       body: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
@@ -224,34 +152,6 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      // const SpaceHeightWidget(height: 8),
-                                      // Padding(
-                                      //   padding: const EdgeInsets.symmetric(
-                                      //       horizontal: 20, vertical: 5),
-                                      //   child: Row(
-                                      //     children: [
-                                      //       CircleAvatar(
-                                      //         radius: 14,
-                                      //         backgroundColor:
-                                      //             lightDarKBlue.withOpacity(0.1),
-                                      //         child: Icon(
-                                      //           Icons.location_on_outlined,
-                                      //           color: lightDarKBlue,
-                                      //           size: 20,
-                                      //         ),
-                                      //       ),
-                                      //       const SpaceWidthWidget(width: 10),
-                                      //       Text(
-                                      //         "Deliver in 1-3 business days",
-                                      //         style: TextStyle(
-                                      //             fontFamily: "OnestLight",
-                                      //             color: lightDarKBlue,
-                                      //             fontSize: 10),
-                                      //       )
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                      // const CommonDivider(),
                                       for (int i = 0;
                                           i <
                                               cartController
@@ -261,28 +161,6 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
                                           children: [
                                             CartItemWidget(
                                               showQuantity: true,
-                                              // decrementFun: () {
-                                              //   if (int.parse(cartController
-                                              //           .registerCartItems[i].qty) >
-                                              //       1) {
-                                              //     incrdcrFun(
-                                              //         "decrement",
-                                              //         cartController
-                                              //             .registerCartItems[i].qty,
-                                              //         cartController
-                                              //             .registerCartItems[i]
-                                              //             .pkcode);
-                                              //   }
-                                              // },
-                                              // incrementFun: () {
-                                              //   incrdcrFun(
-                                              //       "increment",
-                                              //       cartController
-                                              //           .registerCartItems[i].qty,
-                                              //       cartController
-                                              //           .registerCartItems[i]
-                                              //           .pkcode);
-                                              // },
                                               removeCartOption: true,
                                               imagePath: cartController
                                                   .registerCartItems[i].pImage,
@@ -503,88 +381,8 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
                                         ),
                                       ),
                                       const SpaceHeightWidget(height: 20),
-                                      // Container(
-                                      //   padding: const EdgeInsets.all(8.0),
-                                      //   alignment: Alignment.center,
-                                      //   width: double.infinity,
-                                      //   child: SizedBox(
-                                      //     width: 200,
-                                      //     height: 35,
-                                      //     child: IconElevatedButton(
-                                      //       onTapFun: () {
-                                      //         Get.offAll(() => const BottomBarScreen(
-                                      //               index: 1,
-                                      //             ));
-                                      //       },
-                                      //       imagePath: 'assets/images/arrow_right.png',
-                                      //       labelColor: whiteColor,
-                                      //       buttonColor: lightDarKBlue,
-                                      //       titile: "Continue Shopping",
-                                      //     ),
-                                      //   ),
-                                      // )
                                     ],
                                   ),
-                        // Container(
-                        //   color: lightBlackColor.withOpacity(0.04),
-                        //   child: const Row(
-                        //     mainAxisAlignment: MainAxisAlignment.start,
-                        //     children: [
-                        //       Padding(
-                        //         padding: EdgeInsets.all(8.0),
-                        //         child: CommonTitle(titleName: "Recommended for you"),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        // Container(
-                        //   color: lightBlackColor.withOpacity(0.04),
-                        //   alignment: Alignment.center,
-                        //   // height: (4 / 2) * 325,
-                        //   child: GridView.builder(
-                        //     padding: const EdgeInsets.all(0),
-                        //     physics: const NeverScrollableScrollPhysics(),
-                        //     shrinkWrap: true,
-                        //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        //         crossAxisCount: 2, childAspectRatio: 1 / 1.5),
-                        //     itemBuilder: (context, i) {
-                        //       return PromotionItemWidget(
-                        //         onTapFun: () {
-                        //           Get.to(() => ProductDetailsScreen(
-                        //                 from: widget.from,
-                        //                 packageCode: "",
-                        //               ));
-                        //         },
-                        //         amountColor: darkBlue,
-                        //         imagePath: i == 0
-                        //             ? promotionItems[0].image
-                        //             : i == 1
-                        //                 ? promotionItems[1].image
-                        //                 : i == 2
-                        //                     ? promotionItems[2].image
-                        //                     : i == 3
-                        //                         ? promotionItems[3].image
-                        //                         : promotionItems[4].image,
-                        //         itemName: i == 0
-                        //             ? promotionItems[0].title
-                        //             : i == 1
-                        //                 ? promotionItems[1].title
-                        //                 : i == 2
-                        //                     ? promotionItems[2].title
-                        //                     : i == 3
-                        //                         ? promotionItems[3].title
-                        //                         : promotionItems[4]
-                        //                             .title
-                        //                             .capitalize
-                        //                             .toString(),
-                        //         amount: "2465",
-                        //         memberAmount: "2240",
-                        //         exclusiveProduct: false,
-                        //       );
-                        //     },
-                        //     itemCount: 4,
-                        //   ),
-                        // ),
                         const SpaceHeightWidget(height: 40)
                       ],
                     );
@@ -644,7 +442,6 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
   Widget signInReqWidget() {
     return Container(
       height: 100,
-      // width: double.infinity,
       decoration: const BoxDecoration(
           image: DecorationImage(
               fit: BoxFit.cover,
@@ -689,9 +486,7 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
             key: _fomkey,
             child: Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: darkBlue
-                  // blackColor.withOpacity(0.8)
-                  ),
+                  borderRadius: BorderRadius.circular(10), color: darkBlue),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -736,7 +531,6 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
                       children: [
                         const SpaceHeightWidget(height: 5),
                         Text(
-                          // "Products In The Package MYSH01",
                           cartController.packPackageDetails.value.head,
                           style: TextStyle(
                               fontFamily: "OnestSemiBold",
@@ -767,10 +561,8 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: DataTable(
-                              // dataRowMinHeight: ,
                               dataRowMaxHeight: 70,
                               horizontalMargin: 0,
-                              // dataRowMaxHeight: 100,
                               columnSpacing: 0,
                               border: TableBorder.all(
                                   color: middleBlackColor.withOpacity(0.15)),
@@ -993,7 +785,6 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
                                                   loading = true;
                                                 });
 
-                                                print("add to car fun");
                                                 Map parameters = {
                                                   "Pkid": widget.packageCode,
                                                   "pid": pidList.join(":"),
@@ -1006,8 +797,7 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
                                                   "jointype": "Promotion",
                                                   "action": "addSGPromoitems",
                                                 };
-                                                print(
-                                                    "add to cart params...$parameters");
+                                         
                                                 dynamic res =
                                                     await cartController
                                                         .getPackAddToCart(
@@ -1016,13 +806,6 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
                                                         .toString()
                                                         .toLowerCase() ==
                                                     "success") {
-                                                  // ignore: use_build_context_synchronously
-                                                  // MotionToast.success(
-                                                  //   title: const Text(
-                                                  //       "Congartulations!"),
-                                                  //   description: const Text(
-                                                  //       "Products added successfully to your cart."),
-                                                  // ).show(context);
                                                   CommonToastTrue(
                                                       "Successfully added to your cart.");
 
@@ -1079,7 +862,6 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
   }
 
   incrdcrFun(String from, String itemcount, String packCode) async {
-    print("add to car fun");
     Map parameters = {
       "action": "addSGCartitems",
       "Pkid": packCode,
@@ -1092,7 +874,7 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
           ? "${int.parse(itemcount) + 1}"
           : "${int.parse(itemcount) - 1}"
     };
-    print("add to cart params...$parameters");
+
     dynamic res = await MainController().getRegPackAddToCart(parameters);
     if (res['Msg'].toString().toLowerCase() == "success") {
       getData("not init");

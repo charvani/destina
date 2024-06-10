@@ -55,7 +55,6 @@ class _AwardQualifiersScreenState extends State<AwardQualifiersScreen> {
           }
         }
         setState(() {});
-        print("adddddd....${awardDropDownData.length}");
       }
     }
   }
@@ -111,7 +110,6 @@ class _AwardQualifiersScreenState extends State<AwardQualifiersScreen> {
                       onTapFun: () {
                         if (_formKey.currentState!.validate()) {
                           if (award != null && award != "") {
-                            print("submit fun...$award");
                             Get.to(() => AwardDataScreen(
                                   selectedVal: award,
                                 ));

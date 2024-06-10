@@ -67,7 +67,7 @@ class _MyListViewGetReportScreenState extends State<MyListViewGetReportScreen> {
     }
 
     dynamic res = await _datacontroller.getMyListViewLevels(bdata);
-    print("getting res...$res");
+
     if (res != null) {
       if (res.length > 0) {
         for (int i = 0; i < res.length; i++) {
@@ -77,7 +77,7 @@ class _MyListViewGetReportScreenState extends State<MyListViewGetReportScreen> {
         for (int i = 0; i < dataList.length; i++) {
           dataFun(dataList[i].level, i);
         }
-        print("dddd...${dataList.length}");
+
         setState(() {
           screenLoading = false;
         });
@@ -130,7 +130,6 @@ class _MyListViewGetReportScreenState extends State<MyListViewGetReportScreen> {
       }
     }
 
-    print("finn....${dataList[index].data.length}");
     setState(() {});
   }
 

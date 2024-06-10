@@ -57,8 +57,7 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
   @override
   void initState() {
     super.initState();
-    print("charvani");
-    print("from...${widget.from}");
+
     firstQtyController.text = "1";
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       getRegisterPackageData();
@@ -74,9 +73,6 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
       } else {
         sessionId = Constants.prefs.getString("ss_id");
       }
-
-      print("uniqid...$uniqId");
-      print("sessionid..$sessionId");
     });
   }
 
@@ -152,14 +148,11 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
   }
 
   getPackageItemsData() async {
-    print("my para...${widget.packageCode}....$uniqId...$sessionId");
-
     dynamic res = await packDetailsController.getProductPackageItems(
         productCode: widget.packageCode,
         uniqId: uniqId,
         sessionId: sessionId,
         quantity: firstQtyController.text);
-    print("packages data...$res");
   }
 
   @override
@@ -171,10 +164,6 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
         appBar: commonAppBar(
           backNavigation: true,
           title: widget.packageCode,
-          // onTapFun: () {
-          //   // Get.offAll(() => const BottomBarScreen());
-          //   Get.back();
-          // },
         ),
         bottomSheet: Obx(() {
           return packDetailsController.loading.value
@@ -188,7 +177,6 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                       key: _fomkey1,
                       child: Container(
                         padding: const EdgeInsets.fromLTRB(15, 5, 5, 0),
-                        // margin: const EdgeInsets.only(bottom: 1),
                         height: 90,
                         alignment: Alignment.center,
                         width: double.infinity,
@@ -211,8 +199,6 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        // print(
-                                        //     "${double.parse(packDetailsController.productDetails.value.price.replaceAll(packDetailsController.productDetails.value.currency, "")) * int.parse(firstQtyController.text)}");
                                         if (int.parse(firstQtyController.text) >
                                             1) {
                                           setState(() {
@@ -285,9 +271,7 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                                             setState(() {
                                               packageLoading = true;
                                             });
-                                            // this register add to cart fun
 
-                                            print("add to car fun");
                                             Map parameters = {
                                               "action": "addRTCartitems",
                                               "Pkid": widget.packageCode,
@@ -301,8 +285,7 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                                               "Quantity":
                                                   firstQtyController.text
                                             };
-                                            print(
-                                                "add to cart params...$parameters");
+
                                             dynamic res = await MainController()
                                                 .getRegPackAddToCart(
                                                     parameters);
@@ -320,35 +303,6 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                                               });
                                             }
 
-                                            //this is original exitsted function
-                                            // Map parameters = {
-                                            //   "Action": "addCartitems",
-                                            //   "Pkid": widget.packageCode,
-                                            //   "pid": pidList.join(":"),
-                                            //   "uniqid": uniqId,
-                                            //   "sessid": sessionId,
-                                            //   "ipaddress": Constants.prefs.getString("ip"),
-                                            //   "sprno": "0",
-                                            //   "prdtype": "Package",
-                                            //   "Quantity": firstQtyController.text
-                                            // };
-                                            // print("add to cart params...$parameters");
-                                            // dynamic res = await MainController()
-                                            //     .getAddToCart(parameters);
-                                            // if (res['Msg'].toString().toLowerCase() ==
-                                            //     "success") {
-                                            //   // ignore: use_build_context_synchronously
-                                            //   MotionToast.success(
-                                            //     title: const Text("Congartulations!"),
-                                            //     description: const Text(
-                                            //         "Products added successfully to your cart."),
-                                            //   ).show(context);
-                                            //   Timer(const Duration(seconds: 1), () {
-                                            //     Get.back();
-                                            //     Get.off(
-                                            //         () => CartScreen(from: widget.from));
-                                            //   });
-                                            // }
                                             setState(() {
                                               packageLoading = false;
                                             });
@@ -393,32 +347,6 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                             currentIndex: carouselIndex,
                           ),
                         const SpaceHeightWidget(height: 30),
-                        // if (widget.fromPack == "Kritalia & Co")
-                        //   Padding(
-                        //     padding: const EdgeInsets.only(left: 10, right: 10),
-                        //     child: Row(
-                        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //       children: [
-                        //         UnderLineTextButton(
-                        //             onTapFun: () async {
-                        //               // final Uri uri =
-                        //               //     Uri.parse('https://flutter.dev');
-                        //               // if (await canLaunchUrl(uri)) {
-                        //               //   await launchUrl(uri);
-                        //               // } else {
-                        //               //   throw Exception('Could not launch $uri');
-                        //               // }
-                        //             },
-                        //             titile: "Kritalia Necklaces & Pendents",
-                        //             fontSize: 12),
-                        //         SizedBox(
-                        //           height: 25,
-                        //           child: CustomAutoWidthButton(
-                        //               onTapFun: () {}, title: "Shop Now"),
-                        //         )
-                        //       ],
-                        //     ),
-                        //   ),
                         ProductAmountDetailsWidget(
                           units: "1",
                           qty: "1",
@@ -437,12 +365,10 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                         PdfWidget(
                           category: widget.fromPack,
                         ),
-
                         const SpaceHeightWidget(height: 5),
                         if (widget.fromPack == "Kritalia & Co")
                           kritaliaWidget(packDetailsController
                               .packageDetailsData.value.desc),
-
                         if (packDetailsController
                                     .packageDetailsData.value.pkname ==
                                 "UNIWAVE PENDENT" ||
@@ -474,7 +400,6 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                                     .packageDetailsData.value.pkname ==
                                 "UNIWAVE BIO MATRIX SHIELD")
                           biomatrixWidget(),
-
                         if (videoId != "" && videoId != null)
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -551,9 +476,7 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                             Icons.star,
                             color: Colors.amber,
                           ),
-                          onRatingUpdate: (rating) {
-                            print(rating);
-                          },
+                          onRatingUpdate: (rating) {},
                         ),
                         const SpaceWidthWidget(width: 10),
                         CommonTitle(
@@ -701,7 +624,6 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
             myState(() {
               gval = val;
             });
-            print("gValue.....$val");
           },
           gVal: gval,
           submitFun: () {

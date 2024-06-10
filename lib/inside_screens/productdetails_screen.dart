@@ -43,7 +43,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    print("from...${widget.from}");
     firstQtyController.text = "1";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       getData();
@@ -60,18 +59,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         sessionId = Constants.prefs.getString("ss_id");
       }
 
-      print("uniqid...$uniqId");
-      print("sessionid..$sessionId");
     });
   }
 
   String? videoId;
   List<String> carouselImages = [];
   getData() async {
-    // badgeCount = Constants.prefs.getInt("cart_count") ?? 0;
     dynamic res =
         await productDetailsController.getProductDetails(widget.packageCode);
-    print("product details data...$res");
     for (int i = 0; i < res['productImages'].length; i++) {
       carouselImages.add(res['productImages'][i]["url"]);
     }
@@ -86,18 +81,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     }
 
     // res['VideoUrl'];
-    print("carouselIMages length...${carouselImages.length}");
   }
 
   getPackageItemsData() async {
-    print("my para...${widget.packageCode}....$uniqId...$sessionId");
 
     dynamic res = await productDetailsController.getProductPackageItems(
         productCode: widget.packageCode,
         uniqId: uniqId,
         sessionId: sessionId,
         quantity: firstQtyController.text);
-    print("packages data...$res");
   }
 
   @override
@@ -120,7 +112,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   key: _fomkey1,
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(15, 5, 5, 0),
-                    // margin: const EdgeInsets.only(bottom: 1),
                     height: 90,
                     alignment: Alignment.center,
                     width: double.infinity,
@@ -174,20 +165,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       },
                                       validation: (val) {
                                         return null;
-
-                                        // if (val!.isEmpty) {
-                                        //   return "Enter Quantity";
-                                        // } else {
-                                        //   return null;
-                                        // }
                                       },
                                       labelText: '',
                                     )),
                                 const SpaceWidthWidget(width: 3),
                                 InkWell(
                                   onTap: () {
-                                    // print(
-                                    //     "${double.parse(productDetailsController.productDetails.value.price.replaceAll(productDetailsController.productDetails.value.currency, "")) * int.parse(firstQtyController.text)}");
                                     if (int.parse(firstQtyController.text) >
                                         1) {
                                       setState(() {
@@ -215,9 +198,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     height: 35,
                                     child: IconElevatedButton(
                                       onTapFun: () async {
-                                        // if (widget.from == "register") {
-                                        print("popup");
-                                        // Get.defaultDialog();
+                                        
                                         setState(() {
                                           packageLoading = true;
                                         });
@@ -295,8 +276,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                           ),
                         const SpaceHeightWidget(height: 30),
                         ProductAmountDetailsWidget(
-                          // retialPrice: "1500",
-                          // memberPrice: "1450",
                           units: firstQtyController.text,
                           qty: firstQtyController.text,
                           price: productDetailsController
@@ -350,74 +329,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         ),
                         const CommonDivider(),
                         const SpaceHeightWidget(height: 15),
-
-// overview, description and resource widgets
-
-                        // for (int i = 0;
-                        //     i <
-                        //         productDetailsController
-                        //             .productDetails.value.tabcontent.length;
-                        //     i++)
-                        //   Column(
-                        //     children: [
-                        //       ExpansionTile(
-                        //         textColor: lightDarKBlue,
-                        //         // collapsedBackgroundColor: redColor,
-                        //         title: Text(
-                        //           productDetailsController
-                        //               .productDetails.value.tabcontent[i].title,
-                        //           style: const TextStyle(
-                        //               fontFamily: "OnestSemiBold",
-                        //               fontSize: 14),
-                        //         ),
-                        //         children: [
-                        //           Padding(
-                        //               padding:
-                        //                   const EdgeInsets.only(bottom: 10),
-                        //               child: Container(
-                        //                 margin: const EdgeInsets.only(
-                        //                     right: 10, left: 10),
-                        //                 decoration: BoxDecoration(
-                        //                     color:
-                        //                         lightDarKBlue.withOpacity(0.1),
-                        //                     borderRadius:
-                        //                         BorderRadius.circular(5)),
-                        //                 padding: const EdgeInsets.all(10),
-                        //                 width: double.infinity,
-                        //                 child: HtmlWidget(
-                        //                     productDetailsController
-                        //                         .productDetails
-                        //                         .value
-                        //                         .tabcontent[i]
-                        //                         .content),
-                        //               ))
-                        //         ],
-                        //       ),
-                        //       const CommonDivider()
-                        //     ],
-                        //   ),
-
-                        // Container(
-                        //   padding: const EdgeInsets.symmetric(
-                        //       horizontal: 8, vertical: 4),
-                        //   width: double.infinity,
-                        //   height: 50,
-                        //   color: blueColor.withOpacity(0.2),
-                        //   child: Row(
-                        //     children: [
-                        //       Image.asset(
-                        //         "assets/images/award.png",
-                        //       ),
-                        //       const SpaceWidthWidget(width: 10),
-                        //       const Flexible(
-                        //           child: Text(
-                        //         "Destina 1 products are satisfied with the guarantee",
-                        //         style: TextStyle(
-                        //             fontFamily: "OnestSemiBold", fontSize: 13),
-                        //       ))
-                        //     ],
-                        //   ),
-                        // ),
                         if (productDetailsController
                                     .productDetails.value.name ==
                                 "UNIWAVE PENDENT" ||
@@ -445,7 +356,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 .productDetails.value.name ==
                             "UNIWAVE BIOMATRIX SHIELD")
                           biomatrixWidget(),
-
                         if (videoId != "" && videoId != null)
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -639,10 +549,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: DataTable(
-                              // dataRowMinHeight: ,
                               dataRowMaxHeight: 70,
                               horizontalMargin: 0,
-                              // dataRowMaxHeight: 100,
                               columnSpacing: 0,
                               border: TableBorder.all(
                                   color: middleBlackColor.withOpacity(0.15)),
@@ -867,7 +775,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                   loading = true;
                                                 });
 
-                                                print("add to car fun");
                                                 Map parameters = {
                                                   "Action": "addCartitems",
                                                   "Pkid": widget.packageCode,
@@ -881,8 +788,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                   "Quantity":
                                                       firstQtyController.text
                                                 };
-                                                print(
-                                                    "add to cart params...$parameters");
+                                             
                                                 dynamic res =
                                                     await MainController()
                                                         .getAddToCart(
@@ -1251,29 +1157,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         const SpaceHeightWidget(height: 8),
         for (int i = 0; i < flaskResultData.length; i++)
           UniwaveProductDetails(dataText: flaskResultData[i]),
-        // Padding(
-        //   padding: const EdgeInsets.only(left: 10, right: 10),
-        //   child: Row(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       Image.asset(
-        //         "assets/images/leaf.png",
-        //         height: 30,
-        //       ),
-        //       Expanded(
-        //         flex: 2,
-        //         child: Padding(
-        //           padding: const EdgeInsets.only(top: 6),
-        //           child: CommonTitle(
-        //             titleName: flaskResultData[i],
-        //             fontFamily: "OnestSemiBold",
-        //             size: 12.5,
-        //           ),
-        //         ),
-        //       )
-        //     ],
-        //   ),
-        // ),
         const SpaceHeightWidget(height: 15),
         Image.asset(
           "assets/images/uniwave_flask2.jpg",

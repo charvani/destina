@@ -37,7 +37,6 @@ class _SearchItemsScreenState extends State<SearchItemsScreen> {
 
   dataFun(String category) async {
     dynamic data = await productController.getProducts(category, null);
-    print("product screen data...$data");
   }
 
   final TextEditingController _seachTextController = TextEditingController();
@@ -64,7 +63,6 @@ class _SearchItemsScreenState extends State<SearchItemsScreen> {
             child: SearcItemhWidget(
               readOnly: true,
               onFieldSubFun: (val) {
-                print("submit val..$val");
                 Get.to(() => SearchItemsScreen(searchKeyword: val));
               },
               clearFun: () {
@@ -73,7 +71,6 @@ class _SearchItemsScreenState extends State<SearchItemsScreen> {
                 });
               },
               onchangeFun: (key) {
-                print("key");
                 setState(() {});
               },
               controller: _seachTextController,

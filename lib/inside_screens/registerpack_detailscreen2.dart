@@ -56,7 +56,7 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    print("from...${widget.from}");
+
     firstQtyController.text = "1";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       getRegisterPackageData();
@@ -72,9 +72,6 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
       } else {
         sessionId = Constants.prefs.getString("ss_id");
       }
-
-      print("uniqid...$uniqId");
-      print("sessionid..$sessionId");
     });
   }
 
@@ -82,7 +79,6 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
   List<String> carouselImages = [];
   getRegisterPackageData() async {
     Map parameters = {
-      // "Action": "GetPackdescr",
       "Action": "GetNPackdescr",
       "pkid": "3",
       "Desc": widget.packageCode,
@@ -120,7 +116,6 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
   }
 
   reviewDataFun(String pid) async {
-    print("at reviewDataFun");
     Map bData = {
       "action": "Report",
       "Pid": pid,
@@ -135,14 +130,11 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
   }
 
   getPackageItemsData() async {
-    print("my para...${widget.packageCode}....$uniqId...$sessionId");
-
     dynamic res = await packDetailsController.getProductPackageItems(
         productCode: widget.packageCode,
         uniqId: uniqId,
         sessionId: sessionId,
         quantity: firstQtyController.text);
-    print("packages data...$res");
   }
 
   @override
@@ -154,16 +146,11 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
         appBar: commonAppBar(
           backNavigation: true,
           title: widget.packageCode,
-          // onTapFun: () {
-          //   // Get.offAll(() => const BottomBarScreen());
-          //   Get.back();
-          // },
         ),
         bottomSheet: Form(
           key: _fomkey1,
           child: Container(
             padding: const EdgeInsets.fromLTRB(15, 5, 5, 0),
-            // margin: const EdgeInsets.only(bottom: 1),
             height: 90,
             alignment: Alignment.center,
             width: double.infinity,
@@ -185,8 +172,6 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                            // print(
-                            //     "${double.parse(packDetailsController.productDetails.value.price.replaceAll(packDetailsController.productDetails.value.currency, "")) * int.parse(firstQtyController.text)}");
                             if (int.parse(firstQtyController.text) > 1) {
                               setState(() {
                                 firstQtyController.text =
@@ -254,7 +239,6 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                                   packageLoading = true;
                                 });
 
-                                print("add to car fun");
                                 Map parameters = {
                                   "action": "addSGCartitems",
                                   "Pkid": widget.packageCode,
@@ -265,18 +249,11 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                                   "sprno": "0",
                                   "Quantity": firstQtyController.text
                                 };
-                                print("add to cart params...$parameters");
+
                                 dynamic res = await MainController()
                                     .getRegPackAddToCart(parameters);
                                 if (res['Msg'].toString().toLowerCase() ==
                                     "success") {
-                                  // ignore: use_build_context_synchronously
-                                  // MotionToast.success(
-                                  //   title: const Text("Congartulations!"),
-                                  //   description: const Text(
-                                  //       "Products added successfully to your cart."),
-                                  // ).show(context);
-                                  print("res....$res");
                                   setState(() {
                                     packageLoading = false;
                                   });
@@ -331,32 +308,6 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                             currentIndex: carouselIndex,
                           ),
                         const SpaceHeightWidget(height: 30),
-                        // if (widget.fromPack == "Kritalia & Co")
-                        //   Padding(
-                        //     padding: const EdgeInsets.only(left: 10, right: 10),
-                        //     child: Row(
-                        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //       children: [
-                        //         UnderLineTextButton(
-                        //             onTapFun: () async {
-                        //               // final Uri uri =
-                        //               //     Uri.parse('https://flutter.dev');
-                        //               // if (await canLaunchUrl(uri)) {
-                        //               //   await launchUrl(uri);
-                        //               // } else {
-                        //               //   throw Exception('Could not launch $uri');
-                        //               // }
-                        //             },
-                        //             titile: "Kritalia Necklaces & Pendents",
-                        //             fontSize: 12),
-                        //         SizedBox(
-                        //           height: 25,
-                        //           child: CustomAutoWidthButton(
-                        //               onTapFun: () {}, title: "Shop Now"),
-                        //         )
-                        //       ],
-                        //     ),
-                        //   ),
                         ProductAmountDetailsWidget(
                           units: "1",
                           qty: "1",
@@ -371,13 +322,10 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                         PdfWidget(
                           category: widget.fromPack,
                         ),
-
                         if (widget.fromPack == "Kritalia & Co")
                           kritaliaWidget(packDetailsController
                               .packageDetailsData.value.desc),
-
                         const SpaceHeightWidget(height: 15),
-
                         if (packDetailsController
                                     .packageDetailsData.value.pkname ==
                                 "UNIWAVE PENDENT" ||
@@ -409,7 +357,6 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                                     .packageDetailsData.value.pkname ==
                                 "UNIWAVE BIO MATRIX SHIELD")
                           biomatrixWidget(),
-
                         if (videoId != "" && videoId != null)
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -438,7 +385,6 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                             ],
                           ),
                         ratingReviewWidget(),
-
                         const SpaceHeightWidget(height: 115),
                       ]),
                 );
@@ -451,8 +397,6 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
     Map params = {"rpt": "EnrollDetails", "Cid": widget.countryid, "mid": "0"};
 
     dynamic res = await packDetailsController.getEnrollPack(params);
-    print("enroll res..$res");
-    print("***********${double.parse(res['EnrollPackageRpt'][0]['RenFee'])}");
 
     Get.back();
     if (double.parse(res['EnrollPackageRpt'][0]['RenFee']) > 0) {
@@ -510,9 +454,7 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                             Icons.star,
                             color: Colors.amber,
                           ),
-                          onRatingUpdate: (rating) {
-                            print(rating);
-                          },
+                          onRatingUpdate: (rating) {},
                         ),
                         const SpaceWidthWidget(width: 10),
                         CommonTitle(
@@ -660,7 +602,6 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
             myState(() {
               gval = val;
             });
-            print("gValue.....$val");
           },
           gVal: gval,
           submitFun: () {

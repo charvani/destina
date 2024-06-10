@@ -81,8 +81,6 @@ class CustomBorderElevatedButton extends StatelessWidget {
           backgroundColor: MaterialStatePropertyAll(bgcolor),
           minimumSize:
               const MaterialStatePropertyAll(Size(double.infinity, 45)),
-          // maximumSize:
-          //     const MaterialStatePropertyAll(Size(double.infinity, 45)),
           shape: MaterialStatePropertyAll(RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20),
               side: BorderSide(color: blackColor))),
@@ -221,9 +219,7 @@ class ProductItemWidget extends StatelessWidget {
                 const SpaceHeightWidget(height: 5),
                 Text(
                   title.toUpperCase(),
-                  // overflow: TextOverflow.ellipsis,
                   maxLines: 2,
-                  // textAlign: TextAlign.center,
                   style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 15,
@@ -437,7 +433,6 @@ class CartItemCountWidget extends StatelessWidget {
                   height: 90,
                 ),
               ),
-              // const SpaceWidthWidget(width: 13),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -869,7 +864,6 @@ class MyOrderItemWidget extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // CommonCachedNetworkImage(imagePath: imgPath),
                   Image.asset(
                     imgPath,
                     height: 90,
@@ -898,7 +892,6 @@ class MyOrderItemWidget extends StatelessWidget {
                         if (showShippingHis)
                           SizedBox(
                               height: 25,
-                              // width: 120,
                               child: loading
                                   ? loader
                                   : CustomAutoWidthButton(
@@ -1226,7 +1219,6 @@ class PromotionItemWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // const SpaceHeightWidget(height: 5),
                   Stack(
                     alignment: Alignment.bottomLeft,
                     children: [
@@ -1240,7 +1232,6 @@ class PromotionItemWidget extends StatelessWidget {
                                 imagePath,
                                 height: 100,
                                 width: 100,
-                                // fit: BoxFit.fill,
                               ),
                             )
                           : CommonCachedNetworkImage(
@@ -1283,10 +1274,8 @@ class PromotionItemWidget extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: Text(
                       itemName.toString(),
-                      // .capitalize.toString().replaceAll("d1", "D1"),
                       maxLines: 2,
                       textAlign: TextAlign.center,
-
                       style: const TextStyle(
                           fontFamily: "OnestSemiBold", fontSize: 14),
                     ),
@@ -1341,7 +1330,6 @@ class HomeScreenProductCategory extends StatelessWidget {
             child: imagePath.contains("assets")
                 ? Image.asset(
                     imagePath,
-                    // height: 80,
                   )
                 : CommonCachedNetworkImage(imagePath: imagePath),
           ),
@@ -1436,12 +1424,6 @@ class HomeScreenNewArrivalItemWidget extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 child: CommonCachedNetworkImage(imagePath: imagePath),
-                // Image.asset(
-                //   imagePath,
-                //   height: 90,
-                //   width: 90,
-                //   // fit: BoxFit.fill,
-                // ),
               ),
               Expanded(
                 child: SingleChildScrollView(
@@ -1457,11 +1439,6 @@ class HomeScreenNewArrivalItemWidget extends StatelessWidget {
                       const SpaceHeightWidget(height: 8),
                       Row(
                         children: [
-                          // Text("RM ",
-                          //     style: TextStyle(
-                          //         fontFamily: "OnestSemiBold",
-                          //         fontSize: 14,
-                          //         color: blackColor)),
                           Text(
                             amount,
                             style: TextStyle(
@@ -1502,10 +1479,7 @@ class SeeNewAllProductsBanner extends StatelessWidget {
             Text(
               "See all product details.",
               style: TextStyle(
-                  fontFamily: "OnestMedium",
-                  fontSize: 12,
-                  // fontWeight: FontWeight.w600,
-                  color: greenColor),
+                  fontFamily: "OnestMedium", fontSize: 12, color: greenColor),
             ),
             RightArrow(arrowColor: greenColor)
           ]),
@@ -1679,7 +1653,6 @@ class SopCarouselWidget extends StatelessWidget {
                         imagePath,
                         height: 70,
                         width: 70,
-                        // fit: BoxFit.fill,
                       ),
                     ),
                     const SpaceWidthWidget(width: 5),
@@ -1730,7 +1703,6 @@ class SopCarouselWidget extends StatelessWidget {
                             style: TextStyle(
                                 fontFamily: "OnestRegular",
                                 fontSize: 20,
-                                // fontWeight: FontWeight.bold,
                                 color: blackColor)),
                         Text(
                           amount,
@@ -1837,10 +1809,7 @@ class IconElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
-        style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(darkBlue
-                // buttonColor
-                )),
+        style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(darkBlue)),
         onPressed: onTapFun,
         icon: imagePath.contains("assets")
             ? Image.asset(
@@ -1888,7 +1857,6 @@ class CategroyItemWidget extends StatelessWidget {
               color: whiteColor,
               borderRadius: BorderRadius.circular(15)),
           child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -1896,19 +1864,9 @@ class CategroyItemWidget extends StatelessWidget {
                   imagePath: imagePath,
                   height: 95,
                 ),
-                // CachedNetworkImage(
-                //   imageUrl: imagePath,
-                //   height: 100,
-                //   progressIndicatorBuilder: (context, url, progress) => loader,
-                //   errorWidget: (context, url, error) => Image.asset(
-                //     "assets/images/new_logo.png",
-                //     height: 100,
-                //   ),
-                // ),
                 const SpaceHeightWidget(height: 5),
                 Text(
                   titile.toString(),
-                  // capitalizeFirst.toString().replaceAll("d1", "D1"),
                   textAlign: TextAlign.center,
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
@@ -1967,7 +1925,6 @@ class KritaliaItemWidget extends StatelessWidget {
               color: whiteColor,
               borderRadius: BorderRadius.circular(15)),
           child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -1999,7 +1956,6 @@ class KritaliaItemWidget extends StatelessWidget {
                     children: [
                       Text(
                         titile.toString(),
-                        // capitalizeFirst.toString().replaceAll("d1", "D1"),
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -2021,8 +1977,6 @@ class KritaliaItemWidget extends StatelessWidget {
   }
 }
 
-// commonCachedNetworkImage
-
 class CommonCachedNetworkImage extends StatelessWidget {
   final String imagePath;
   final double? height;
@@ -2043,10 +1997,6 @@ class CommonCachedNetworkImage extends StatelessWidget {
       imageUrl: imagePath,
       height: height,
       width: width,
-      // memCacheWidth: 45,
-      // memCacheHeight: ,
-      // maxHeightDiskCache: 60,
-      // maxWidthDiskCache: 45,
       progressIndicatorBuilder: (context, url, progress) => SizedBox(
         width: 80,
         height: loaderHeight,
@@ -2077,7 +2027,6 @@ class PromotionScreenWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(4),
-      // height: 180,
       width: MediaQuery.of(context).size.width * 0.5,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -2090,28 +2039,6 @@ class PromotionScreenWidget extends StatelessWidget {
             ),
           ),
           const SpaceHeightWidget(height: 5),
-          // Text(
-          //   titile,
-          //   style: TextStyle(
-          //       fontFamily: "OnestSemiBold", fontSize: 14, color: blackColor),
-          // ),
-          // const SpaceHeightWidget(height: 5),
-          // Row(
-          //   children: [
-          //     Icon(
-          //       Icons.timer_outlined,
-          //       size: 10,
-          //       color: blackColor.withOpacity(0.4),
-          //     ),
-          //     Text(
-          //       "Start $date",
-          //       style: TextStyle(
-          //           fontFamily: "OnestRegular",
-          //           fontSize: 12,
-          //           color: blackColor.withOpacity(0.4)),
-          //     ),
-          //   ],
-          // ),
         ],
       ),
     );
@@ -2376,7 +2303,6 @@ PreferredSizeWidget commonAppBar(
                       onPressed: onTapFun ??
                           () {
                             Get.back();
-                            // Navigator.pop(context!);
                           },
                     )
                   : const SizedBox.shrink(),
@@ -2399,14 +2325,12 @@ class ProductAmountDetailsWidget extends StatelessWidget {
   final String title;
   final String productCode;
   final String cv;
-  // final String memberPrice;
   final String price;
   final String qty;
   final String units;
 
   const ProductAmountDetailsWidget(
       {super.key,
-      // required this.memberPrice,
       required this.productCode,
       required this.cv,
       required this.price,
@@ -2456,25 +2380,6 @@ class ProductAmountDetailsWidget extends StatelessWidget {
                     fontFamily: "OnestSemiBold", fontSize: 14, color: darkBlue),
               )
             ])),
-          // Row(
-          //   children: [
-          //     Text(
-          //       "Quantity: ",
-          //       style: TextStyle(
-          //           fontFamily: "OnestSemiBold",
-          //           fontSize: 14,
-          //           color: blackColor.withOpacity(0.4)),
-          //     ),
-          //     const SpaceWidthWidget(width: 5),
-          //     Text(
-          //       qty,
-          //       style: TextStyle(
-          //           fontFamily: "OnestSemiBold",
-          //           fontSize: 14,
-          //           color: blackColor.withOpacity(0.4)),
-          //     ),
-          //   ],
-          // ),
           Row(
             children: [
               Text(
@@ -2559,7 +2464,6 @@ class CommonCarousel extends StatelessWidget {
                   ));
             },
             options: CarouselOptions(
-                // pageSnapping: false,
                 viewportFraction: 0.95,
                 padEnds: false,
                 autoPlay: autoPlay ?? true,
@@ -2602,145 +2506,6 @@ class _CommonDividerState extends State<CommonDivider> {
     );
   }
 }
-
-// class CartItemWidget extends StatelessWidget {
-//   final VoidCallback removeFun;
-//   final VoidCallback addFun;
-//   final int itemCount;
-//   final String productCode;
-//   final String itemname;
-//   final String imagePath;
-//   final String actualItemPrice;
-//   final String itemsPrice;
-//   final String memberPrice;
-
-//   const CartItemWidget(
-//       {super.key,
-//       required this.removeFun,
-//       required this.addFun,
-//       required this.actualItemPrice,
-//       required this.imagePath,
-//       required this.itemname,
-//       required this.itemsPrice,
-//       required this.memberPrice,
-//       required this.productCode,
-//       required this.itemCount});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-//       child: Row(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Text("#$productCode",
-//                   style: TextStyle(
-//                       fontFamily: "OnestRegular",
-//                       fontSize: 12,
-//                       color: blackColor.withOpacity(0.5))),
-//               const SpaceHeightWidget(height: 5),
-//               Image.asset(
-//                 imagePath,
-//                 height: 90,
-//                 width: 90,
-//                 // fit: BoxFit.fill,
-//               )
-//             ],
-//           ),
-//           const SpaceWidthWidget(width: 10),
-//           Expanded(
-//             child: Column(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 Text(
-//                   itemname,
-//                   maxLines: 3,
-//                   style: TextStyle(
-//                       fontFamily: "OnestRegular",
-//                       fontSize: 11,
-//                       color: blackColor),
-//                 ),
-//                 const SpaceHeightWidget(height: 10),
-//                 Row(
-//                   crossAxisAlignment: CrossAxisAlignment.end,
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     Container(
-//                       height: 28,
-//                       // width: 120,
-//                       padding: const EdgeInsets.all(5),
-//                       decoration: BoxDecoration(
-//                           borderRadius: BorderRadius.circular(20),
-//                           border: Border.all()),
-//                       child: Row(
-//                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                         children: [
-//                           InkWell(
-//                               onTap: removeFun,
-//                               child: Icon(
-//                                 Icons.remove_outlined,
-//                                 color: blackColor,
-//                                 size: 15,
-//                               )),
-//                           Padding(
-//                             padding: const EdgeInsets.symmetric(horizontal: 8),
-//                             child: Text(
-//                               itemCount.toString(),
-//                               style: TextStyle(
-//                                   color: blackColor,
-//                                   fontFamily: "OnestRegular"),
-//                             ),
-//                           ),
-//                           InkWell(
-//                               onTap: addFun,
-//                               child: Icon(
-//                                 size: 15,
-//                                 Icons.add,
-//                                 color: blackColor,
-//                               ))
-//                         ],
-//                       ),
-//                     ),
-//                     Column(
-//                       crossAxisAlignment: CrossAxisAlignment.end,
-//                       children: [
-//                         Text(
-//                           "3 x ฿ $actualItemPrice",
-//                           style: TextStyle(
-//                               fontFamily: "OnestRegular",
-//                               fontSize: 12.5,
-//                               color: blackColor.withOpacity(0.5)),
-//                         ),
-//                         Text(
-//                           "฿ $itemsPrice",
-//                           style: TextStyle(
-//                               fontFamily: "OnestSemiBold",
-//                               color: lightDarKBlue,
-//                               fontSize: 14),
-//                         ),
-//                         Text(
-//                           "Member Price $memberPrice",
-//                           maxLines: 2,
-//                           style: TextStyle(
-//                               fontFamily: "OnestRegular",
-//                               fontSize: 12,
-//                               color: blackColor),
-//                         ),
-//                       ],
-//                     )
-//                   ],
-//                 )
-//               ],
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 class CartItemWidget extends StatelessWidget {
   final VoidCallback removeFun;
@@ -2847,7 +2612,6 @@ class CartItemWidget extends StatelessWidget {
                         ])),
                       ],
                     ),
-                    // const SpaceHeightWidget(height: 5),
                     if (dp != null && dp != "")
                       RichText(
                           text: TextSpan(children: [
@@ -2889,7 +2653,6 @@ class CartItemWidget extends StatelessWidget {
                             children: [
                               Column(
                                 children: [
-                                  // const SpaceHeightWidget(height: 5),
                                   RichText(
                                       text: TextSpan(children: [
                                     TextSpan(
@@ -3137,7 +2900,6 @@ class CheckOutItemWidget extends StatelessWidget {
                   children: [
                     Container(
                       height: 28,
-                      // width: 120,
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
@@ -3339,11 +3101,7 @@ class RegisterDropDown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
-      // height: 40,
       child: DropdownButtonFormField<String>(
-          // menuMaxHeight: 20,
-          // itemHeight: 40,
-          // value: value,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: validationFun,
           icon: Icon(
@@ -3370,7 +3128,6 @@ class RegisterDropDown extends StatelessWidget {
               labelStyle: TextStyle(
                   fontFamily: "OnestSemiBold", fontSize: 14, color: blackColor),
               floatingLabelBehavior: FloatingLabelBehavior.always,
-              // contentPadding: const EdgeInsets.symmetric(horizontal: 10),
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5),
                   borderSide:
@@ -3628,8 +3385,6 @@ class CustomCurveShape extends StatelessWidget {
               color: blueColor.withOpacity(0.1),
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(10), topRight: Radius.circular(10))),
-          // width: 150,
-          // height: 85,
         ));
   }
 }
@@ -3690,10 +3445,6 @@ class FlagWidget extends StatelessWidget {
                       imagePath: imagePath,
                       height: 60,
                     )
-                    // Image.asset(
-                    //   imagePath,
-                    //   height: 60,
-                    // )
                   ],
                 ),
                 Padding(
@@ -3787,25 +3538,7 @@ class MemberScreenInfoWidget extends StatelessWidget {
                                   color: whiteColor,
                                   fontFamily: "OnestSemiBold",
                                 ),
-                              ))
-                          // CustomAutoWidthButton(
-                          //   bcolor: activeColor,
-                          //   onTapFun: signupFun,
-                          //   title: "SIGN UP here! >",
-                          // ),
-                          ),
-                      // GestureDetector(
-                      //   behavior: HitTestBehavior.translucent,
-                      //   onTap: signupFun,
-                      //   child: Text(
-                      //     "SIGN UP here! >",
-                      //     textAlign: TextAlign.center,
-                      //     style: TextStyle(
-                      //         fontFamily: "OnestSemiBold",
-                      //         fontSize: 13,
-                      //         color: activeColor),
-                      //   ),
-                      // ),
+                              ))),
                     ]),
               ),
               Container(
@@ -3989,11 +3722,6 @@ class OkDialog extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // SizedBox(
-                //     width: 80,
-                //     height: 35,
-                //     child:
-                //         CustomElevatedButton(onTapFun: onTapFun, title: "Yes")),
                 const SpaceWidthWidget(width: 10),
                 SizedBox(
                     width: 80,
@@ -4101,7 +3829,6 @@ class LoginTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: TextFormField(
-        // scrollPadding: const EdgeInsets.all(40),
         obscureText: obscureText ?? false,
         onEditingComplete: editFun,
         onChanged: onchangeFun,
@@ -4542,20 +4269,6 @@ class DownLineWidget extends StatelessWidget {
               height: 35,
             ),
           ),
-          //  Container(
-          //     padding: const EdgeInsets.all(8),
-          //     width: 50,
-          //     decoration: BoxDecoration(
-          //         borderRadius: BorderRadius.circular(50),
-          //         border: Border.all(
-          //             color: greenColor.withOpacity(0.5), width: 2.5)),
-          //     child:
-          //     Icon(
-          //       Icons.person,
-          //       size: 28,
-          //       color: lightDarKBlue,
-          //     ),
-          //     ),
           title: Text(
             title,
             style: const TextStyle(fontFamily: "OnestSemiBold", fontSize: 13),
@@ -4564,10 +4277,6 @@ class DownLineWidget extends StatelessWidget {
             subtitle,
             style: const TextStyle(fontFamily: "OnestRegular", fontSize: 11),
           ),
-          // trailing: Image.asset(
-          //   "assets/images/share_mail.png",
-          //   height: 33,
-          // ),
         ),
         const CommonDivider()
       ],
@@ -4638,9 +4347,7 @@ class ProfileDropDown extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
-      // height: 40,
       child: DropdownButtonFormField<String>(
-          // menuMaxHeight: 20,
           itemHeight: null,
           isExpanded: true,
           value: value,
@@ -4670,7 +4377,6 @@ class ProfileDropDown extends StatelessWidget {
               labelStyle: TextStyle(
                   fontFamily: "OnestSemiBold", fontSize: 14, color: blackColor),
               floatingLabelBehavior: FloatingLabelBehavior.always,
-              // contentPadding: const EdgeInsets.symmetric(horizontal: 10),
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5),
                   borderSide:
@@ -5055,9 +4761,7 @@ class CustomAutoWidthButton extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-              color:
-                  // textColor ??
-                  whiteColor,
+              color: whiteColor,
               fontFamily: "OnestSemiBold",
               fontSize: textSize),
         ));
@@ -5099,10 +4803,6 @@ class PackageReviewWidget extends StatelessWidget {
                 children: [
                   const SpaceHeightWidget(height: 8),
                   CommonCachedNetworkImage(height: 90, imagePath: imgPath),
-                  // Image.asset(
-                  //   imgPath,
-                  //   height: 90,
-                  // ),
                   const SpaceHeightWidget(height: 5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -5141,7 +4841,6 @@ class PackageReviewWidget extends StatelessWidget {
                 SizedBox(
                     height: 28,
                     child: CustomAutoWidthButton(
-                        // bcolor: darkNaviBlueColor,
                         textSize: 10.5,
                         onTapFun: reviewFun,
                         title: reviewTitle)),
@@ -5183,8 +4882,6 @@ class DaysTimerWidget extends StatelessWidget {
               : CircularProgressIndicator(
                   color: whiteColor.withOpacity(0.8),
                   backgroundColor: darkNaviBlueColor,
-                  // color: darkNaviBlueColor,
-                  // backgroundColor: darkNaviBlueColor.withOpacity(0.2),
                   strokeWidth: 5,
                   value: int.parse(timeValue) > int.parse(markedRangeVal)
                       ? double.parse(markedRangeVal) / double.parse(timeValue)
@@ -5494,24 +5191,7 @@ class KristaliaTileWidget extends StatelessWidget {
               ),
             ],
           ),
-          children: const [
-            // Padding(
-            //   padding: const EdgeInsets.only(bottom: 10),
-            //   child: Container(
-            //       margin: const EdgeInsets.only(right: 10, left: 10),
-            //       decoration: BoxDecoration(
-            //           color: lightDarKBlue.withOpacity(0.1),
-            //           borderRadius: BorderRadius.circular(5)),
-            //       padding: const EdgeInsets.all(10),
-            //       width: double.infinity,
-            //       child: CommonTitle(
-            //         titleName: "Learn More",
-            //         fontColor: brownColor,
-            //         fontFamily: "OnestSemiBold",
-            //         size: 14,
-            //       )),
-            // )
-          ],
+          children: const [],
         ),
         const CommonDivider()
       ],
@@ -5669,7 +5349,6 @@ class WhatsNewWidget extends StatelessWidget {
             height: 300,
           ),
           const SpaceHeightWidget(height: 10),
-
           Text(
             title,
             style: TextStyle(
@@ -5677,54 +5356,33 @@ class WhatsNewWidget extends StatelessWidget {
           ),
           htmlDataWidget(description),
           const SpaceHeightWidget(height: 3),
-
           SizedBox(
             height: 28,
             child: CustomAutoWidthButton(
                 onTapFun: () async {
-                  // final Uri url = Uri.parse(popupImage);
-                  // if (!await launchUrl(url)) {
-                  //   throw Exception('Could not launch $url');
-                  // }
-                  Get.dialog(
-                      // barrierDismissible: false,
-                      AlertDialog(
-                          insetPadding: const EdgeInsets.symmetric(
-                              horizontal: 30, vertical: 53),
-                          titlePadding: EdgeInsets.zero,
-                          contentPadding: const EdgeInsets.only(
-                              top: 18, left: 3, right: 3, bottom: 18),
-                          content: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: SingleChildScrollView(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  CommonCachedNetworkImage(
-                                    imagePath: popupImage,
-                                    loaderHeight: 600,
-                                  )
-                                ],
-                              ),
-                            ),
-                          )));
+                  Get.dialog(AlertDialog(
+                      insetPadding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 53),
+                      titlePadding: EdgeInsets.zero,
+                      contentPadding: const EdgeInsets.only(
+                          top: 18, left: 3, right: 3, bottom: 18),
+                      content: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              CommonCachedNetworkImage(
+                                imagePath: popupImage,
+                                loaderHeight: 600,
+                              )
+                            ],
+                          ),
+                        ),
+                      )));
                 },
                 title: "View"),
           )
-          // RichText(
-          //     text: TextSpan(children: [
-          //   TextSpan(
-          //     text: "Product",
-          //     style: TextStyle(
-          //         fontFamily: "OnestSemiBold", fontSize: 14, color: darkBlue),
-          //   ),
-          //   TextSpan(
-          //     text: productCode,
-          //     style: TextStyle(
-          //         fontFamily: "OnestSemiBold", fontSize: 14, color: darkBlue),
-          //   )
-          // ])),
-          // const SpaceHeightWidget(height: 10),
         ],
       ),
     );

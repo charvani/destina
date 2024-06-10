@@ -47,22 +47,6 @@ class _UpdationReportScreenState extends State<UpdationReportScreen> {
                 child: Column(
                 children: [
                   const SpaceHeightWidget(height: 10),
-
-                  // Container(
-                  //   height: 60,
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   child: CommonFormFieldwidget(
-                  //     hintText: "Search",
-                  //     onChangeFun: (val) {
-                  //       print("vall...$val");
-                  //     },
-                  //     prefixIcon: Icon(
-                  //       FeatherIcons.search,
-                  //       size: 18,
-                  //       color: blackColor.withOpacity(0.3),
-                  //     ),
-                  //   ),
-                  // ),
                   Scrollbar(
                     interactive: true,
                     trackVisibility: true,
@@ -89,59 +73,6 @@ class _UpdationReportScreenState extends State<UpdationReportScreen> {
                         source: tSource),
                   ),
                   const SpaceHeightWidget(height: 20)
-                  // Scrollbar(
-                  //   interactive: true,
-                  //   trackVisibility: true,
-                  //   controller: _scrollController,
-                  //   thumbVisibility: true,
-                  //   thickness: 8,
-                  //   radius: const Radius.circular(10),
-                  //   scrollbarOrientation: ScrollbarOrientation.bottom,
-                  //   child: SingleChildScrollView(
-                  //     controller: _scrollController,
-                  //     scrollDirection: Axis.horizontal,
-                  //     child: Padding(
-                  //       padding: const EdgeInsets.all(8.0),
-                  //       child: DataTable(
-                  //           dataRowMaxHeight: 50,
-                  //           horizontalMargin: 0,
-                  //           columnSpacing: 0,
-                  //           border: TableBorder.all(
-                  //               color: middleBlackColor.withOpacity(0.15)),
-                  //           columns: [
-                  //             DataColumn(label: tableTitleWidget("S.No")),
-                  //             DataColumn(label: tableTitleWidget("Name")),
-                  //             DataColumn(
-                  //                 label: tableTitleWidget("Update Type")),
-                  //             DataColumn(
-                  //                 label: tableTitleWidget("Update Date")),
-                  //           ],
-                  //           rows: [
-                  //             for (int i = 0;
-                  //                 i < _litsOfReqController.listofReqs.length;
-                  //                 i++)
-                  //               DataRow(cells: [
-                  //                 DataCell(
-                  //                   rowTextWidget(
-                  //                       _litsOfReqController.listofReqs[i].sno),
-                  //                 ),
-                  //                 DataCell(
-                  //                   rowTextWidget(_litsOfReqController
-                  //                       .listofReqs[i].name),
-                  //                 ),
-                  //                 DataCell(
-                  //                   rowTextWidget(_litsOfReqController
-                  //                       .listofReqs[i].updateType),
-                  //                 ),
-                  //                 DataCell(
-                  //                   rowTextWidget(_litsOfReqController
-                  //                       .listofReqs[i].updateDate),
-                  //                 ),
-                  //               ])
-                  //           ]),
-                  //     ),
-                  //   ),
-                  // )
                 ],
               ));
       }),

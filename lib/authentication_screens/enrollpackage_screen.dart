@@ -35,7 +35,6 @@ class _EnrollPackageScreenState extends State<EnrollPackageScreen> {
   dataFun() async {
     Map params = {"rpt": "  EnrollDetails", "Cid": widget.countyId, "mid": "0"};
     dynamic res = await enrollController.getEnrollPack(params);
-    print("enrollpage data..$res");
   }
 
   @override
@@ -68,7 +67,6 @@ class _EnrollPackageScreenState extends State<EnrollPackageScreen> {
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     color: darkRedColor,
                     child: Text(
-                      // "12 Months Enrollment Package Is Activated For RM55",
                       enrollController
                           .enrollData.value.enrollPackageRpt[0].renMonths,
                       maxLines: 4,
@@ -89,20 +87,14 @@ class _EnrollPackageScreenState extends State<EnrollPackageScreen> {
                           i++)
                         Transform.translate(
                             offset:
-                                //  i == 6
-                                //     ? const Offset(0, -40)
-                                // :
+                               
                                 const Offset(0, 0),
                             child: CommonCachedNetworkImage(
                               imagePath: enrollController
                                   .enrollData.value.iconDetails[i].iconPath,
                               height: 160,
                             )
-                            // Image.asset(
-                            //   enrollInfoImages[i],
-                            //   height: 160,
-                            //   width: 160,
-                            // ),
+                          
                             )
                     ],
                   ),

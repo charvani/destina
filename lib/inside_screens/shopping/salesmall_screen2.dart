@@ -57,11 +57,9 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
     dynamic res = await _dataController.getPackages(
         countyId: Constants.prefs.getString("country_id")!,
         packageMalVal: malVal);
-    print("getPackages screen data...$res");
+
     if (res != null) {
-      print("at res...........");
       if (widget.from == "order_again") {
-        print("at order_again...........");
         oderAgainAddtoCartFun();
       } else {
         cartItemsFun();
@@ -80,7 +78,7 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
       "sprno": Constants.prefs.getString("reg_id"),
       "Quantity": "0"
     };
-    print("add to cart params...$parameters");
+
     dynamic res = await MainController().getRegPackAddToCart(parameters);
     if (res['Msg'].toString().toLowerCase() == "success") {
       cartItemsFun();
@@ -97,13 +95,12 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
       "amt": "0",
       "amttype": "",
     };
-    print("cart params...$cartParams");
+
     dynamic res = await _dataController.getMallCartItems(
       "salemall products",
       cartParams,
       ApiData().checkOutSalesCartItems,
     );
-    print("d...res...$res");
   }
 
   @override
@@ -125,7 +122,6 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
           child: InkWell(
               // behavior: HitTestBehavior.translucent,
               onTap: () {
-                print("ooooo");
                 Get.back();
               },
               child: Icon(
@@ -348,7 +344,6 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
   }
 
   incrdcrFun(String from, String itemcount, String packCode) async {
-    print("add to car fun");
     Map parameters = {
       "action": "addSACartitems",
       // "addSGCartitems",
@@ -363,7 +358,7 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
           ? "${int.parse(itemcount) + 1}"
           : "${int.parse(itemcount) - 1}"
     };
-    print("add to cart params...$parameters");
+
     dynamic res = await MainController().getRegPackAddToCart(parameters);
 
     if (res['Msg'].toString().toLowerCase() == "success") {

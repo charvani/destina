@@ -7,7 +7,6 @@ class Constants {
   static late SharedPreferences prefs;
   static String appversion = "1.1";
   String country = "MY";
-  // String ip = "";
 }
 
 Center loader = Center(
@@ -20,12 +19,6 @@ Center loader = Center(
     ),
   ),
 );
-
-// Center loader = Center(
-//     child: CupertinoActivityIndicator(
-//   color: appthemeColor,
-//   radius: 45,
-// ));
 
 Center notAvailableW = Center(
     child: Text(

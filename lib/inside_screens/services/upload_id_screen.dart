@@ -153,8 +153,6 @@ class _UploadIDScreenState extends State<UploadIDScreen> {
                             selectedFile = file;
                           });
                         } else {
-                          print("dfsf");
-                          // User canceled the picker
                         }
                       },
                       title: selectedFile != null
@@ -170,7 +168,6 @@ class _UploadIDScreenState extends State<UploadIDScreen> {
                     : CustomElevatedButton(
                         onTapFun: () async {
                           if (_formKey.currentState!.validate()) {
-                            print("submit fun");
                             if (selectedFile == null) {
                               CommonToast("please select image");
                             } else {
@@ -180,18 +177,15 @@ class _UploadIDScreenState extends State<UploadIDScreen> {
                               final bytes =
                                   File(selectedFile!.path).readAsBytesSync();
                               String img64 = base64Encode(bytes);
-                              print("img64....$img64");
                               Map bdata = {
                                 "UserId": userId,
                                 "Pwd": password,
                                 "IDType": proofType,
                                 "FileName": img64,
                               };
-                              print("my b ...$bdata");
                               dynamic res = await _dataController.getUploadFile(
                                   bdata, ApiData().uploadID);
                               if (res != null) {
-                                print("lllll...$res");
                                 if (res['Msg'] == "SUCCESS") {
                                   CommonToastTrue(res['Message']);
 

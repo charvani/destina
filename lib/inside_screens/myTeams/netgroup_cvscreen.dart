@@ -112,12 +112,10 @@ infoTextStyle(String id, Color textColor) {
     behavior: HitTestBehavior.translucent,
     onTap: () {
       if (textColor == darkBlue) {
-        // print("funtion cll");
 
         Get.to(() => InvoiceScreen(
             redirectUrl:
                 "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/invoiceparam.html?BillNo=$id"
-            // 'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderRpt"&OrderNo=${_dataController.orderReportData[i].orderNo}',
             ));
       }
     },

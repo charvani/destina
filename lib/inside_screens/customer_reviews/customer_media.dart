@@ -24,7 +24,6 @@ class _CustomerMediaScreenState extends State<CustomerMediaScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("widget.photos..${widget.photos}");
     if (widget.photos.isEmpty) {
       setState(() {
         selectedInd = 0;

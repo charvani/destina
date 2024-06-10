@@ -31,12 +31,10 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
   List<dynamic>? imgExtensionsList = [];
   XFile? videoFile;
   VideoPlayerController _controller = VideoPlayerController.asset("");
-  //  MainController reviewController = Get.put(MainController());
   final MainController _reviewController = Get.put(MainController());
   dynamic ratingVal, reviewSession;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       ratingVal = "3";
@@ -233,10 +231,6 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                         ? Stack(
                             alignment: Alignment.topRight,
                             children: [
-                              // AspectRatio(
-                              //   aspectRatio: _controller.value.aspectRatio,
-                              //   child: VideoPlayer(_controller),
-                              // ),
                               Stack(
                                 alignment: Alignment.center,
                                 children: [
@@ -248,9 +242,6 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                                       border:
                                           Border.all(color: lightBlackColor),
                                       borderRadius: BorderRadius.circular(10),
-                                      // image: DecorationImage(
-                                      //     image: FileImage(File(videoFile!.path)),
-                                      //     fit: BoxFit.cover)
                                     ),
                                     child: VideoPlayer(_controller),
                                   ),
@@ -324,60 +315,31 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                             ),
                           ),
                     const SpaceHeightWidget(height: 20),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Obx(() {
-                        //   return _reviewController.loading.value
-                        //       ? loader
-                        //       :
-                        // SizedBox(
-                        //     height: 35,
-                        //     child: CustomAutoWidthButton(
-                        //         onTapFun: () {
-                        //           if (_fomkey.currentState!.validate()) {
-                        //             FocusManager.instance.primaryFocus
-                        //                 ?.unfocus();
-
-                        //             videosubmitFun();
-                        //             // submitFun();
-                        //           }
-                        //         },
-                        //         title: "Upload Video"))
-                        // ;
-                        // })
-                      ],
-                    ),
-                    const SpaceHeightWidget(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Obx(() {
                           return _reviewController.loading.value
                               ? loader
-                              :
-                        SizedBox(
-                            height: 35,
-                            child: CustomAutoWidthButton(
-                                onTapFun: () {
-                                  if (_fomkey.currentState!.validate()) {
-                                    FocusManager.instance.primaryFocus
-                                        ?.unfocus();
-                                    print(
-                                        "imageBytesCount.....$imageBytesCount");
-                                    if (imageBytesCount > 0 &&
-                                        imageBytesCount > 1000000) {
-                                      Get.dialog(const OkDialog(
-                                          title:
-                                              "Images size should not exceed 1.0MB"));
-                                    } else {
-                                      // submitFun();
-                                      videosubmitFun();
-                                    }
-                                  }
-                                },
-                                title: "Submit"))
-                        ;
+                              : SizedBox(
+                                  height: 35,
+                                  child: CustomAutoWidthButton(
+                                      onTapFun: () {
+                                        if (_fomkey.currentState!.validate()) {
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+
+                                          if (imageBytesCount > 0 &&
+                                              imageBytesCount > 1000000) {
+                                            Get.dialog(const OkDialog(
+                                                title:
+                                                    "Images size should not exceed 1.0MB"));
+                                          } else {
+                                            videosubmitFun();
+                                          }
+                                        }
+                                      },
+                                      title: "Submit"));
                         })
                       ],
                     ),
@@ -397,7 +359,6 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
   imageSelctionFun() {
     Get.dialog(ImageOptionsDialog(
       cameraFun: () async {
-        print("camera");
         Get.back();
         XFile imageFile = await imagePickFun("camera");
         final filePath = imageFile.path;
@@ -413,7 +374,6 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
         });
       },
       galleryFun: () async {
-        print("gallery");
         Get.back();
         XFile imageFile = await imagePickFun("gallery");
         final filePath = imageFile.path;
@@ -435,7 +395,6 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
   videoSelctionFun() {
     Get.dialog(ImageOptionsDialog(
       cameraFun: () async {
-        print("camera");
         Get.back();
         XFile videofile = await videoPickFun("camera");
         final filePath = videofile.path;
@@ -446,13 +405,11 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
         });
         _controller = VideoPlayerController.file(File(videofile.path))
           ..initialize().then((_) {
-            // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
             setState(() {});
           });
         _controller.addListener(_onVideoPlayerStateChanged);
       },
       galleryFun: () async {
-        print("gallery");
         Get.back();
         XFile videofile = await videoPickFun("gallery");
         final filePath = videofile.path;
@@ -463,7 +420,6 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
         });
         _controller = VideoPlayerController.file(File(videofile.path))
           ..initialize().then((_) {
-            // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
             setState(() {});
           });
         _controller.addListener(_onVideoPlayerStateChanged);
@@ -473,14 +429,10 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
 
   dynamic video64;
   videosubmitFun() async {
-    print("my viiiiiii....$videoFile");
     if (videoFile != null) {
       int videoBytesCount =
           File(videoFile!.path).readAsBytesSync().lengthInBytes;
-      print("video filesize....$videoBytesCount");
-      print("vi + img  filesize....${videoBytesCount + imageBytesCount}");
       if (videoBytesCount > 1000000) {
-        print("at toast");
         Get.dialog(const OkDialog(title: "Video size should not exceed 1.0MB"));
       } else {
         List<int> videoBytes = await videoFile!.readAsBytes();
@@ -500,13 +452,11 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
       "VidFiles": videoExtension ?? "",
       "Video": video64 ?? ""
     };
-    print("video bdata...$bdata");
-    print("video is...$video64");
+
     dynamic res = await _reviewController.getReviewVideoUpload(
       bdata,
     );
     if (res != null) {
-      print("get...$res");
       if (res['Msg'] == "SUCCESS") {
         apicallFun(res['Rid']);
       } else {
@@ -516,48 +466,13 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
   }
 
   submitFun(String rid) async {
-    print("my viiiiiii....$videoFile");
     if (videoFile != null) {
-      // MediaInfo? mediaInfo = await VideoCompress.compressVideo(
-      //   videoFile!.path,
-      //   quality: VideoQuality.LowQuality,
-      //   deleteOrigin: false,
-      // );
-      // setState(() {
-      //   videoFile = XFile(mediaInfo!.file!.path);
-      // });
-      // print("media info....${mediaInfo!.file}");
-      // print("video filesize....${mediaInfo.filesize}");
-      // // print("vi + img  filesize....${mediaInfo.filesize! + imageBytesCount}");
-      // // if (mediaInfo.filesize! > 1000000) {
       int videoBytesCount =
           File(videoFile!.path).readAsBytesSync().lengthInBytes;
-      print("video filesize....$videoBytesCount");
-      print("vi + img  filesize....${videoBytesCount + imageBytesCount}");
-
-      // if (videoBytesCount > 1000000) {
-      //   print("at toast");
-      //   Get.dialog(const OkDialog(title: "Video size should not exceed 1.0MB"));
-      // } else {
-      // MediaInfo? mediaInfo = await VideoCompress.compressVideo(
-      //   videoFile!.path,
-      //   quality: VideoQuality.LowQuality,
-      //   deleteOrigin: false,
-      // );
-      // print("video filesize....${mediaInfo!.filesize}");
-
-      // setState(() {
-      //   videoFile = XFile(mediaInfo.file!.path);
-      // });
       List<int> videoBytes = await videoFile!.readAsBytes();
-      // print("video bytes data...$videoBytes");
       setState(() {
         video64 = base64Encode(videoBytes);
       });
-      // apicallFun()
-      // }
-    } else {
-      // apicallFun();
     }
   }
 
@@ -569,19 +484,13 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
       "Review": reviewController.text,
       "Rating": ratingVal.toString(),
       "ImgFiles": finalImagesList!.isEmpty ? "" : imgExtensionsList!.join(","),
-      // "VidFiles": videoExtension ?? "",
       "VidFiles": "",
       "Session": reviewSession,
       "Images": finalImagesList!.isEmpty ? "" : finalImagesList!.join(","),
-      // "Video": video64 ?? ""
       "Rid": rid,
       "Video": "",
     };
-    print("b data...$bdata");
-    print("video>>>>>$video64");
-    print("videoExtension...$videoExtension");
-    print("imgExtensionsList...$imgExtensionsList");
-    print("image is...${finalImagesList!.join(",")}");
+
     Map reviewDataParams = {
       "action": "Report",
       "Pid": widget.pid,
@@ -595,7 +504,6 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
     dynamic res =
         await _reviewController.getReviewUpload(bdata, reviewDataParams);
     if (res != null) {
-      print("get...$res");
       if (res['Msg'] == "SUCCESS") {
         Get.back();
         CommonToastTrue(res['Message']);

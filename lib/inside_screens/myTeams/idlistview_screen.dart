@@ -72,7 +72,7 @@ class _IdListViewGetReportScreenState extends State<IdListViewGetReportScreen> {
     }
 
     dynamic res = await _datacontroller.getMyListViewLevels(bdata);
-    print("getting res...$res");
+
     if (res != null) {
       if (res.length > 0) {
         for (int i = 0; i < res.length; i++) {
@@ -82,7 +82,7 @@ class _IdListViewGetReportScreenState extends State<IdListViewGetReportScreen> {
         for (int i = 0; i < dataList.length; i++) {
           dataFun(dataList[i].level, i);
         }
-        print("dddd...${dataList.length}");
+
         setState(() {
           screenLoading = false;
         });
@@ -135,7 +135,6 @@ class _IdListViewGetReportScreenState extends State<IdListViewGetReportScreen> {
       }
     }
 
-    print("finn....${dataList[index].data.length}");
     setState(() {});
   }
 

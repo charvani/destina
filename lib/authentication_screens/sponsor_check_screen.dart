@@ -36,7 +36,6 @@ class _SponsorCheckScreenState extends State<SponsorCheckScreen> {
     if (sponsorIdTController.text != "" && sponsorIdInvalid == false) {
       Map params = {"Action": "GetSponsor", "ID": sponsorIdTController.text};
       dynamic res = await registerController.getSponsorCheckDb(params);
-      print("sponsor id res...$res");
       if (res['Msg'].toString().toLowerCase() != "success") {
         CommonToast("Invalid sponsor id");
         setState(() {
@@ -61,7 +60,6 @@ class _SponsorCheckScreenState extends State<SponsorCheckScreen> {
     if (placementIdTController.text != "" && placemetnIdInvalid == false) {
       Map params = {"Action": "GetSponsor", "ID": placementIdTController.text};
       dynamic res = await registerController.getSponsorCheckDb(params);
-      print("placementIdTController id res...$res");
       if (res['Msg'].toString().toLowerCase() != "success") {
         CommonToast("Invalid placement id");
 
@@ -97,7 +95,6 @@ class _SponsorCheckScreenState extends State<SponsorCheckScreen> {
         "Placement": groupVal == "Left" ? "0" : "1"
       };
       dynamic res = await registerController.getPlacementPlaceCheckDb(params);
-      print("getPlacementPlaceCheckDb id res...$res");
       if (res['Msg'].toString().toLowerCase() != "success") {
         CommonToast(res['Message']);
         if (res['Message'].toString().contains('Placement ID')) {
@@ -149,8 +146,7 @@ class _SponsorCheckScreenState extends State<SponsorCheckScreen> {
                     });
                   },
                   outsideFun: (val) async {
-                    // sponsorIdCheckFun();
-                    // placementPlaceCheckFun();
+                  
                   },
                   textInputType: TextInputType.name,
                   hintText: "ex: John Lee",
@@ -190,8 +186,7 @@ class _SponsorCheckScreenState extends State<SponsorCheckScreen> {
                     });
                   },
                   outsideFun: (val) async {
-                    // placementIdCheckFun();
-                    // placementPlaceCheckFun();
+                   
                   },
                   textInputType: TextInputType.name,
                   labelText: "Placement ID",

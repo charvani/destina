@@ -47,7 +47,6 @@ class _DPMallScreen2State extends State<DPMallScreen2> {
     dynamic res = await _dataController.getPackages(
         countyId: Constants.prefs.getString("country_id")!,
         packageMalVal: malVal);
-    print("getPackages screen data...$res");
   }
 
   @override
@@ -69,7 +68,6 @@ class _DPMallScreen2State extends State<DPMallScreen2> {
                 child: InkWell(
                     // behavior: HitTestBehavior.translucent,
                     onTap: () {
-                      print("ooooo");
                       Get.back();
                     },
                     child: Icon(

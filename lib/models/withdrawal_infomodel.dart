@@ -1,6 +1,4 @@
-// To parse this JSON data, do
-//
-//     final withdrawalnfoModel = withdrawalnfoModelFromJson(jsonString);
+
 
 import 'dart:convert';
 

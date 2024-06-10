@@ -65,14 +65,12 @@ class _PromoCartScreenState extends State<PromoCartScreen> {
       "MallID": widget.pkMallNum,
     };
 
-    print("cart params...$cartParams");
     dynamic res = await cartController.getPromoCartItems(
         from,
         cartParams,
         widget.pkMallNum == "3"
             ? ApiData().selPackageDetailsPro
             : ApiData().selPackageDetailsUpgPro);
-    print("cart res...$res");
 
     if (from != "init") {
       setState(() {

@@ -78,22 +78,9 @@ class _OnboardScreenState extends State<OnboardScreen> {
                     strokeWidth: 1.5,
                     dotColor: whiteColor,
                     activeDotColor: blackColor),
-                // effect: WormEffect(
-                //   ra
-                // ),
+                
               ),
-              // Container(
-              //   width: double.infinity,
-              //   alignment: Alignment.center,
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     mainAxisSize: MainAxisSize.max,
-              //     children: [
-              //       for (int i = 0; i < onboardData.length; i++)
-              //         (i == page) ? const ActiveDot() : const InactiveDot(),
-              //     ],
-              //   ),
-              // ),
+              
               SpaceHeightWidget(
                   height: MediaQuery.of(context).size.height * 0.035),
               Padding(
@@ -115,19 +102,7 @@ class _OnboardScreenState extends State<OnboardScreen> {
                         ? "GET START WITH DESTINA"
                         : "NEXT"),
               ),
-              // Stack(
-              //   alignment: Alignment.center,
-              //   children: [
-              // SpaceHeightWidget(
-              //     height: MediaQuery.of(context).size.height * 0.20),
-              //     if ((onboardData.length - page) == 1)
-              //       UnderLineTextButton(
-              //         onTapFun: () {},
-              //         titile: "gdggg",
-              //       )
-              //   ],
-              // ),
-              // const SpaceHeightWidget(height: 10)
+             
             ],
           ),
         ],

@@ -105,7 +105,6 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
             child: InkWell(
                 // behavior: HitTestBehavior.translucent,
                 onTap: () {
-                  print("ooooo");
                   Get.back();
                 },
                 child: const Icon(Icons.keyboard_arrow_left_rounded)),

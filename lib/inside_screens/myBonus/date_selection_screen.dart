@@ -38,8 +38,6 @@ class _BonusDateSelectionScreenState extends State<BonusDateSelectionScreen> {
     super.initState();
     var date = DateTime.now();
     formattedDate = "${date.day}/${date.month}/${date.year}";
-    print("from....${widget.from}");
-    print("formattedDate....$formattedDate");
   }
 
   @override
@@ -88,7 +86,6 @@ class _BonusDateSelectionScreenState extends State<BonusDateSelectionScreen> {
                               firstDate: DateTime(1900, 0),
                             );
                             if (picked != null) {
-                              print(picked);
                               final DateFormat formatter =
                                   DateFormat('dd-MM-yyyy');
                               setState(() {
@@ -143,7 +140,6 @@ class _BonusDateSelectionScreenState extends State<BonusDateSelectionScreen> {
                               firstDate: DateTime(1900, 0),
                             );
                             if (picked != null) {
-                              print(picked);
                               final DateFormat formatter =
                                   DateFormat('dd-MM-yyyy');
                               setState(() {
@@ -236,7 +232,6 @@ class _BonusDateSelectionScreenState extends State<BonusDateSelectionScreen> {
                       width: 100,
                       child: CustomElevatedButton(
                           onTapFun: () {
-                            // if (_formKey.currentState!.validate()) {
                             if (widget.from == "Retail Bonus" ||
                                 widget.from == "Personal Consumption Bonus" ||
                                 widget.from == "Level Consumption Bonus" ||

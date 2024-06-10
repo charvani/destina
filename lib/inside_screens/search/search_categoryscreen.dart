@@ -20,8 +20,6 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
   List<OnboardModel> productsCategories = [
     OnboardModel(
         image: "assets/images/health_care_wb.png", title: "Wellness Care"),
-    // OnboardModel(image: "assets/images/sop_wb.png", title: "Skin Care"),
-    // OnboardModel(image: "assets/images/body_care_wb.png", title: "Hair Care"),
     OnboardModel(
         image: "assets/images/a_start_privilege_wb.png",
         title: "Kritalia & Co"),
@@ -32,12 +30,10 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
   itemsFun(String key) async {
     dynamic data =
         await _productController.getSearchProducts("Getproducts", key);
-    print("getSearchProducts  ggg...$data");
   }
 
   dataFun(String category) async {
     dynamic data = await _productController.getSearchProducts(category, null);
-    print("getSearchProducts...$data");
   }
 
   dynamic krialiaTappedInd;
@@ -71,7 +67,6 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
               child: SearcItemhWidget(
                 readOnly: false,
                 onFieldSubFun: (val) {
-                  print("submit val..$val");
                   Get.to(() => SearchItemsScreen(searchKeyword: val));
                 },
                 clearFun: () {
@@ -80,7 +75,6 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
                   });
                 },
                 onchangeFun: (key) {
-                  print("key....$key");
 
                   setState(() {});
                   if (key.length > 2) {
@@ -125,9 +119,6 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
                               itemBuilder: (context, i) {
                                 return InkWell(
                                   onTap: () {
-                                    // Get.to(() => SearchItemsScreen(
-                                    //     categoryString:
-                                    //         productsCategories[i].title));
                                     dataFun(productsCategories[i].title);
                                   },
                                   child: Card(
@@ -161,62 +152,29 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
                     )
                   : GridView.builder(
                       padding: const EdgeInsets.all(10),
-                      // physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2, childAspectRatio: 1 / 1.1),
                       itemBuilder: (context, i) {
-                        return
-                            //  _productController
-                            //             .searchProductItemList[i].category ==
-                            //         "Kritalia & Co"
-                            //     ? KritaliaItemWidget(
-                            //         tapped: krialiaTappedInd == i ? true : false,
-                            //         amount:
-                            //             "${_productController.searchProductItemList[i].currency} ${_productController.searchProductItemList[i].dp}",
-                            //         onTapFun: () {
-                            //           setState(() {
-                            //             krialiaTappedInd = i;
-                            //           });
-
-                            //           Timer(const Duration(seconds: 1), () async {
-                            //             Get.to(() => ProductDetailsScreen2(
-                            //                 from: "search",
-                            //                 packageCode: _productController
-                            //                     .searchProductItemList[i]
-                            //                     .packagecode,
-                            //                 fromPack: _productController
-                            //                     .searchProductItemList[i]
-                            //                     .category));
-                            //           });
-                            //         },
-                            //         imagePath:
-                            //             // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                            //             _productController
-                            //                 .searchProductItemList[i].image,
-                            //         titile: _productController
-                            //             .searchProductItemList[i].packageName)
-                            //     :
-
-                            CategroyItemWidget(
-                                amount: double.parse(_productController
-                                            .searchProductItemList[i].dp) >
-                                        0
-                                    ? "${_productController.searchProductItemList[i].currency} ${_productController.searchProductItemList[i].dp}"
-                                    : "",
-                                onTapFun: () {
-                                  Get.to(() => ProductDetailsScreen2(
-                                      from: "search",
-                                      packageCode: _productController
-                                          .searchProductItemList[i].packagecode,
-                                      fromPack: _productController
-                                          .searchProductItemList[i].category));
-                                },
-                                imagePath: _productController
-                                    .searchProductItemList[i].image,
-                                titile: _productController
-                                    .searchProductItemList[i].packageName);
+                        return CategroyItemWidget(
+                            amount: double.parse(_productController
+                                        .searchProductItemList[i].dp) >
+                                    0
+                                ? "${_productController.searchProductItemList[i].currency} ${_productController.searchProductItemList[i].dp}"
+                                : "",
+                            onTapFun: () {
+                              Get.to(() => ProductDetailsScreen2(
+                                  from: "search",
+                                  packageCode: _productController
+                                      .searchProductItemList[i].packagecode,
+                                  fromPack: _productController
+                                      .searchProductItemList[i].category));
+                            },
+                            imagePath: _productController
+                                .searchProductItemList[i].image,
+                            titile: _productController
+                                .searchProductItemList[i].packageName);
                       },
                       itemCount:
                           _productController.searchProductItemList.length);

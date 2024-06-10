@@ -67,7 +67,6 @@ class _GroupSalesSelectionScreenState extends State<GroupSalesSelectionScreen> {
                               firstDate: DateTime(1900, 0),
                             );
                             if (picked != null) {
-                              print(picked);
                               final DateFormat formatter =
                                   DateFormat('MM/dd/yyyy');
                               setState(() {
@@ -122,7 +121,6 @@ class _GroupSalesSelectionScreenState extends State<GroupSalesSelectionScreen> {
                               firstDate: DateTime(1900, 0),
                             );
                             if (picked != null) {
-                              print(picked);
                               final DateFormat formatter =
                                   DateFormat('MM/dd/yyyy');
                               setState(() {

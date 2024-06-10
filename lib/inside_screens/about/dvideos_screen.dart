@@ -189,7 +189,6 @@ class _D1VideosScreenState extends State<D1VideosScreen> {
                           selectedInd = i;
                         });
                         Timer(const Duration(seconds: 1), () {
-                          print("charvani");
                           setState(() {
                             loaderVal = false;
                           });

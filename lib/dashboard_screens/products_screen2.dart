@@ -20,23 +20,17 @@ int selectedCategoryIndex = 0;
 
 List<OnboardModel> productsCategoriesOnTap = [
   OnboardModel(image: "assets/images/health_care.png", title: "Wellness Care"),
-  // OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
-  // OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
   OnboardModel(
       image: "assets/images/a_start_privilege.png", title: "Kritalia & Co"),
 ];
 List<OnboardModel> productsCategories = [
   OnboardModel(
       image: "assets/images/health_care_wb.png", title: "Wellness Care"),
-  // OnboardModel(image: "assets/images/sop_wb.png", title: "Skin Care"),
-  // OnboardModel(image: "assets/images/body_care_wb.png", title: "Hair Care"),
   OnboardModel(
       image: "assets/images/a_start_privilege_wb.png", title: "Kritalia & Co"),
 ];
 List<String> topBannerImages = [
   "assets/images/products_baground.png",
-  // "assets/images/products_beauty_banner.jpg",
-  // "assets/images/hair_care_bg.jpg",
   "assets/images/kritalia_banner.jpg",
 ];
 
@@ -50,35 +44,22 @@ class _ProductsScreen2State extends State<ProductsScreen2> {
         setState(() {
           selectedCategoryIndex = widget.index!;
         });
-        dataFun(widget.index == 0
-            ? "Wellness Care"
-            :
-            // : widget.index == 1
-            //     ? "Skin Care"
-            //     : widget.index == 2
-            //         ? "Hair Care"
-            //         :
-            "Kritalia & Co");
+        dataFun(widget.index == 0 ? "Wellness Care" : "Kritalia & Co");
       } else {
-        print("at else");
         dataFun("Wellness Care");
       }
-      // dataFun("All");
     });
   }
 
   dataFun(String category) async {
     dynamic data = await productController.getProducts(category, null);
-    print("product screen data...$data");
   }
 
   dynamic krialiaTappedInd;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar:
-            // commonAppBar(title: "Products", backNavigation: false),
-            AppBar(
+        appBar: AppBar(
           backgroundColor: darkBlue,
           leading: const SizedBox.shrink(),
           leadingWidth: 0,
@@ -88,24 +69,12 @@ class _ProductsScreen2State extends State<ProductsScreen2> {
             style: TextStyle(
                 fontFamily: "OnestSemiBold", fontSize: 20, color: whiteColor),
           ),
-          // Container(
-          //   margin: const EdgeInsets.only(top: 8),
-          //   height: 50,
-          //   child: SearchWidget(
-          //     borderColor: transperantColor,
-          //     hintText: "What are you looking for?",
-          //     onTapFun: () {
-          //       Get.to(() => const SearchCategoryScreen());
-          //     },
-          //   ),
-          // ),
           elevation: 0,
         ),
         body: Row(
           children: [
             SizedBox(
                 height: MediaQuery.of(context).size.height,
-                // width: 150,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -196,82 +165,35 @@ class _ProductsScreen2State extends State<ProductsScreen2> {
                                                   crossAxisCount: 2,
                                                   childAspectRatio: 1 / 1.5),
                                           itemBuilder: (context, i) {
-                                            return
-                                                //  productsCategories[
-                                                //                 selectedCategoryIndex]
-                                                //             .title ==
-                                                //         "Kritalia & Co"
-                                                //     ? KritaliaItemWidget(
-                                                //         tapped:
-                                                //             krialiaTappedInd == i
-                                                //                 ? true
-                                                //                 : false,
-                                                //         amount:
-                                                //             "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}",
-                                                //         onTapFun: () {
-                                                //           setState(() {
-                                                //             krialiaTappedInd = i;
-                                                //           });
-
-                                                //           Timer(
-                                                //               const Duration(
-                                                //                   seconds: 1),
-                                                //               () async {
-                                                //             Get.to(() =>
-                                                //                 ProductDetailsScreen2(
-                                                //                   from: widget.from,
-                                                //                   packageCode:
-                                                //                       productController
-                                                //                           .productItemList[
-                                                //                               i]
-                                                //                           .packagecode,
-                                                //                   fromPack:
-                                                //                       productsCategories[
-                                                //                               selectedCategoryIndex]
-                                                //                           .title,
-                                                //                 ));
-                                                //           });
-                                                //         },
-                                                //         imagePath:
-                                                //             // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                                //             productController
-                                                //                 .productItemList[i]
-                                                //                 .image,
-                                                //         titile: productController
-                                                //             .productItemList[i]
-                                                //             .packageName)
-                                                //     :
-
-                                                CategroyItemWidget(
-                                                    amount: double.parse(
-                                                                productController
-                                                                    .productItemList[
-                                                                        i]
-                                                                    .dp) >
-                                                            0
-                                                        ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
-                                                        : "",
-                                                    onTapFun: () {
-                                                      Get.to(() =>
-                                                          ProductDetailsScreen2(
-                                                            from: widget.from,
-                                                            packageCode:
-                                                                productController
-                                                                    .productItemList[
-                                                                        i]
-                                                                    .packagecode,
-                                                            fromPack:
-                                                                productsCategories[
-                                                                        selectedCategoryIndex]
-                                                                    .title,
-                                                          ));
-                                                    },
-                                                    imagePath: productController
-                                                        .productItemList[i]
-                                                        .image,
-                                                    titile: productController
-                                                        .productItemList[i]
-                                                        .packageName);
+                                            return CategroyItemWidget(
+                                                amount: double.parse(
+                                                            productController
+                                                                .productItemList[
+                                                                    i]
+                                                                .dp) >
+                                                        0
+                                                    ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
+                                                    : "",
+                                                onTapFun: () {
+                                                  Get.to(() =>
+                                                      ProductDetailsScreen2(
+                                                        from: widget.from,
+                                                        packageCode:
+                                                            productController
+                                                                .productItemList[
+                                                                    i]
+                                                                .packagecode,
+                                                        fromPack:
+                                                            productsCategories[
+                                                                    selectedCategoryIndex]
+                                                                .title,
+                                                      ));
+                                                },
+                                                imagePath: productController
+                                                    .productItemList[i].image,
+                                                titile: productController
+                                                    .productItemList[i]
+                                                    .packageName);
                                           },
                                           itemCount: productController
                                               .productItemList.length);

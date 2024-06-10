@@ -45,7 +45,6 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
     dynamic res = await _dataController.getPackages(
         countyId: Constants.prefs.getString("country_id")!,
         packageMalVal: malVal);
-    print("getPackages screen data...$res");
   }
 
   cartcountFun(String action, pid) {
@@ -116,7 +115,6 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
                 child: InkWell(
                     // behavior: HitTestBehavior.translucent,
                     onTap: () {
-                      print("ooooo");
                       Get.back();
                     },
                     child: Icon(
@@ -142,7 +140,6 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
                             count: _dataController.packCartList.length,
                             child: InkWell(
                               onTap: () {
-                                print("tapp");
                                 dialogFun();
                               },
                               child: const Icon(
@@ -336,7 +333,6 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
     };
     dynamic resss = await _dataController.getCheckoutCheck(bData);
     if (resss != null) {
-      print("res....$resss");
       if (resss['result'] != "Fail") {
         Get.to(() => UpgradeOrderCartSceen2(
               packageCode: resss['Pkcode'],

@@ -30,7 +30,7 @@ class _WebUrlScreenState extends State<WebUrlScreen> {
   @override
   void initState() {
     super.initState();
-    print("my url...${widget.redirectUrl}");
+
     webViewControllerFuture = createController();
   }
 

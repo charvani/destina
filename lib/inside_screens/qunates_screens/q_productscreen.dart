@@ -27,7 +27,7 @@ class _QProductsScreenState extends State<QProductsScreen> {
 
   dataFun(String category) async {
     dynamic data = await productController.getProducts(category, null);
-    print("product screen data...$data");
+
     if (widget.from == "scalarvia") {
       for (int i = 0; i < data['productRpt'].length; i++) {
         if (data['productRpt'][i]['packageName']

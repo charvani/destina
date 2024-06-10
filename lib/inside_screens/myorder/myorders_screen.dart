@@ -80,25 +80,11 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                           showOrderAgain: _dataController
                                       .orderReportData[i].orderagain ==
                                   "1"
-                              //  _dataController
-                              //                 .orderReportData[i].mallType ==
-                              //     "Sales Mall" ||
-                              // _dataController.orderReportData[i].mallType ==
-                              //     "Redemption Mall" ||
-                              // _dataController.orderReportData[i].mallType ==
-                              //     "Upgrade Mall" ||
-                              // _dataController.orderReportData[i].mallType
-                              //         .toLowerCase() ==
-                              //     "dp mall" ||
-                              // _dataController.orderReportData[i].mallType ==
-                              //     "Signup Mall" ||
-                              // _dataController.orderReportData[i].mallType ==
-                              //     "Membership Mall"
+                            
                               ? true
                               : false,
                           orderAgainFun: () {
-                            print(
-                                "Mall  ${_dataController.orderReportData[i].mallType}");
+                            
                             if (_dataController.orderReportData[i].mallType ==
                                 "Sales Mall") {
                               Get.to(() => SalesMallScreen2(

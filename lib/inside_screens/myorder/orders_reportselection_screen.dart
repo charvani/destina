@@ -93,7 +93,6 @@ class _OrdersSectionScreenState extends State<OrdersSectionScreen> {
                                 firstDate: DateTime(1900, 0),
                               );
                               if (picked != null) {
-                                print(picked);
                                 final DateFormat formatter =
                                     // DateFormat('dd-MM-yyyy');
                                     DateFormat('MM/dd/yyyy');
@@ -149,7 +148,6 @@ class _OrdersSectionScreenState extends State<OrdersSectionScreen> {
                                 firstDate: DateTime(1900, 0),
                               );
                               if (picked != null) {
-                                print(picked);
                                 final DateFormat formatter =
                                     // DateFormat('dd-MM-yyyy');
                                     DateFormat('MM/dd/yyyy');

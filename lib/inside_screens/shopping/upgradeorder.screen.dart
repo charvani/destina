@@ -74,7 +74,6 @@ class _UpgradeOrderScreenState extends State<UpgradeOrderScreen> {
             child: InkWell(
                 // behavior: HitTestBehavior.translucent,
                 onTap: () {
-                  print("ooooo");
                   Get.back();
                 },
                 child: Icon(

@@ -106,7 +106,6 @@ class _TransactionPasswordScreenState extends State<TransactionPasswordScreen> {
   }
 
   submitFun(String apiAction) async {
-    print("running Fun..${widget.from}");
     Map bdata = {
       "UserId": Constants.prefs.getString("user_id"),
       "Pwd": Constants.prefs.getString("password"),
@@ -136,7 +135,6 @@ class _TransactionPasswordScreenState extends State<TransactionPasswordScreen> {
   }
 
   withdrawStatusFun(String apiAction) async {
-    print("running Fun..${widget.from}");
     Map bdata = {
       "UserId": Constants.prefs.getString("user_id"),
       "Pwd": Constants.prefs.getString("password"),
@@ -156,7 +154,6 @@ class _TransactionPasswordScreenState extends State<TransactionPasswordScreen> {
   }
 
   ecardReqFun() async {
-    print("running Fun..${widget.from}");
     Map bdata = {
       "rpt": "UserId",
       "fromdate": "1/1/2010",
@@ -173,7 +170,6 @@ class _TransactionPasswordScreenState extends State<TransactionPasswordScreen> {
   }
 
   d1cashBckFun() async {
-    print("running Fun..${widget.from}");
     Map bdata = {
       "UserId": Constants.prefs.getString("user_id"),
       "Pwd": Constants.prefs.getString("password"),
@@ -193,7 +189,6 @@ class _TransactionPasswordScreenState extends State<TransactionPasswordScreen> {
   }
 
   d1RebateFun() async {
-    print("running Fun..${widget.from}");
     Map bdata = {
       "UserId": Constants.prefs.getString("user_id"),
       "Pwd": Constants.prefs.getString("password"),
@@ -213,7 +208,6 @@ class _TransactionPasswordScreenState extends State<TransactionPasswordScreen> {
   }
 
   dpWalletFun() async {
-    print("running Fun..${widget.from}");
     Map bdata = {
       "UserId": Constants.prefs.getString("user_id"),
       "Pwd": Constants.prefs.getString("password"),

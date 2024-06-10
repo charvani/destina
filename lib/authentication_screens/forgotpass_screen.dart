@@ -32,7 +32,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 const SpaceHeightWidget(height: 25),
                 Image.asset(
                   "assets/images/logo_voucher.png",
-                  // height: 80,
                   width: 250,
                 ),
                 const SpaceHeightWidget(height: 15),
@@ -69,7 +68,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   fontFamily: "OnestSemiBold", fontSize: 15),
                             ),
                             LoginTextField(
-                              // focusNode: _focusNode,
                               suffix: Icon(
                                 Icons.perm_identity_rounded,
                                 color: middleBlackColor.withOpacity(0.5),

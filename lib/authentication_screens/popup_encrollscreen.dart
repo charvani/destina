@@ -35,7 +35,6 @@ class _PopupEnrollPackageScreenState extends State<PopupEnrollPackageScreen> {
   dataFun() async {
     Map params = {"rpt": "  EnrollDetails", "Cid": widget.countyId, "mid": "0"};
     dynamic res = await enrollController.getEnrollPack(params);
-    print("enrollpage data..$res");
   }
 
   @override
@@ -92,20 +91,14 @@ class _PopupEnrollPackageScreenState extends State<PopupEnrollPackageScreen> {
                           i++)
                         Transform.translate(
                             offset:
-                                //  i == 6
-                                //     ? const Offset(0, -40)
-                                // :
+                              
                                 const Offset(0, 0),
                             child: CommonCachedNetworkImage(
                               imagePath: enrollController
                                   .enrollData.value.iconDetails[i].iconPath,
                               height: 160,
                             )
-                            // Image.asset(
-                            //   enrollInfoImages[i],
-                            //   height: 160,
-                            //   width: 160,
-                            // ),
+                          
                             )
                     ],
                   ),

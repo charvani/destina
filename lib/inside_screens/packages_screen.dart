@@ -70,13 +70,11 @@ class _PackageScreenState extends State<PackageScreen> {
   dataFun(String malVal) async {
     dynamic res = await packageController.getPackages(
         countyId: widget.countryId, packageMalVal: malVal);
-    print("getPackages screen data...$res");
   }
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      print("screen from ...${widget.from}");
       if (widget.from == "DDC") {
         setState(() {
           productsCategoriesOnTap = [
@@ -93,18 +91,11 @@ class _PackageScreenState extends State<PackageScreen> {
             "assets/images/products_baground.png",
           ];
           jadePackageVal = "18";
-          // jadePackageVal = "DIRECT CUSTOMER";
         });
       }
-      //before`
       dataFun(jadePackageVal);
 
-      // //after
-      // if (widget.from == "DDC") {
-      //   dataFun("Wellness Care");
-      // } else {
-      //   dataFun(jadePackageVal);
-      // }
+      
     });
     super.initState();
   }
@@ -228,9 +219,7 @@ class _PackageScreenState extends State<PackageScreen> {
                                             },
                                             imagePath:
                                                 "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                            // packageController
-                                            //     .selPackageItemList[i]
-                                            //     .pImage,
+                                            
                                             titile: packageController
                                                 .selPackageItemList[i].pkname);
                                       },
@@ -285,9 +274,7 @@ class _PackageScreenState extends State<PackageScreen> {
                                                           ));
                                                     },
                                                     imagePath:
-                                                        //  packageController
-                                                        //     .relPackageItemList[i]
-                                                        //     .img,
+                                                        
                                                         "https://admin.destina1.com/admin/RetailImages/20151.jpg",
                                                     titile: packageController
                                                         .relPackageItemList[i]

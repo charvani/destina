@@ -63,17 +63,12 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     super.initState();
-    print("I am from.....${widget.from}");
-    // cartCount = Constants.prefs.getInt("cart_count") ?? 0;
-    // cartItemCount = cartCount;
+
     uniqId = Constants.prefs.getString("uniq_id");
     sessionId = Constants.prefs.getString("ss_id");
     sponsorController.text = "";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       checkUniqIdFun();
-      // if (uniqId != null && sessionId != null) {
-      // getData();
-      // }
     });
   }
 
@@ -90,7 +85,6 @@ class _CartScreenState extends State<CartScreen> {
       "prdtype": "Package",
     };
     dynamic res = await cartController.getCartItems(cartParams, "init");
-    print("gettting res...$res");
     if (res != null) {
       if (res['productDataRpt'][0]['ProductType'] == "Old Id") {
         getData("init");
@@ -108,7 +102,6 @@ class _CartScreenState extends State<CartScreen> {
   getData(String from) async {
     cartParams = {
       "Action": "getNcartitems",
-      // "getcartitems",
       "Pkid": "0",
       "pid": "0",
       "Quantity": "0",
@@ -119,7 +112,6 @@ class _CartScreenState extends State<CartScreen> {
       "prdtype": "Package",
     };
     dynamic res = await cartController.getCartItems(cartParams, from);
-    print("cart res...$res");
   }
 
   bool checkOutShow = false;
@@ -138,76 +130,13 @@ class _CartScreenState extends State<CartScreen> {
               color: whiteColor,
               onPressed: () {
                 Get.back();
-                // getData();
-                // checkUniqIdFun();
               }),
           title: Text(
             "Cart",
             style: TextStyle(
                 fontFamily: "OnestSemiBold", fontSize: 20, color: whiteColor),
           ),
-          // actions: [
-          //   SizedBox(
-          //     height: 25,
-          //     width: 50,
-          //     child: CommonOulineTextButton(onTapFun: () {}, title: "Edit"),
-          //   ),
-          //   const SpaceWidthWidget(width: 5)
-          // ],
         ),
-        // bottomNavigationBar: (cartCount > 0)
-        //     ? Container(
-        //         decoration: BoxDecoration(
-        //             color: whiteColor,
-        //             border: Border.all(color: lightBlackColor, width: 1.5)),
-        //         height: 60,
-        //         width: double.infinity,
-        //         child: Padding(
-        //           padding: const EdgeInsets.all(8.0),
-        //           child: Row(
-        //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //             children: [
-        //               Column(
-        //                 crossAxisAlignment: CrossAxisAlignment.start,
-        //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //                 children: [
-        //                   RichText(
-        //                       text: TextSpan(children: [
-        //                     TextSpan(
-        //                         text: "฿  ",
-        //                         style: TextStyle(
-        //                           color: lightDarKBlue,
-        //                           fontSize: 11.5,
-        //                         )),
-        //                     TextSpan(
-        //                         text: "4877",
-        //                         style: TextStyle(
-        //                           fontFamily: "OnestSemiBold",
-        //                           color: lightDarKBlue,
-        //                           fontSize: 17,
-        //                         )),
-        //                   ])),
-        //                   Text("Save ฿ 435 when you Sign Up.",
-        //                       style: TextStyle(
-        //                         fontFamily: "OnestRegular",
-        //                         color: blackColor.withOpacity(0.5),
-        //                         fontSize: 10,
-        //                       ))
-        //                 ],
-        //               ),
-        //               SizedBox(
-        //                   height: 35,
-        //                   width: 120,
-        //                   child: CustomElevatedButton(
-        //                       onTapFun: () {
-        //                         Get.to(() => const CheckOutScreen());
-        //                       },
-        //                       title: "Checkout"))
-        //             ],
-        //           ),
-        //         ),
-        //       )
-        //     : const SizedBox.shrink(),
         body: Container(
           color: Colors.white,
           child: SingleChildScrollView(
@@ -235,34 +164,6 @@ class _CartScreenState extends State<CartScreen> {
                                       Constants.prefs.getString("user_id") ==
                                           null)
                                     signInReqWidget(),
-                                  // const SpaceHeightWidget(height: 8),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.symmetric(
-                                  //       horizontal: 20, vertical: 5),
-                                  //   child: Row(
-                                  //     children: [
-                                  //       CircleAvatar(
-                                  //         radius: 14,
-                                  //         backgroundColor:
-                                  //             lightDarKBlue.withOpacity(0.1),
-                                  //         child: Icon(
-                                  //           Icons.location_on_outlined,
-                                  //           color: lightDarKBlue,
-                                  //           size: 20,
-                                  //         ),
-                                  //       ),
-                                  //       const SpaceWidthWidget(width: 10),
-                                  //       Text(
-                                  //         "Deliver in 1-3 business days",
-                                  //         style: TextStyle(
-                                  //             fontFamily: "OnestLight",
-                                  //             color: lightDarKBlue,
-                                  //             fontSize: 10),
-                                  //       )
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                  // const CommonDivider(),
                                   for (int i = 0;
                                       i < cartController.cartItemsList.length;
                                       i++)
@@ -339,23 +240,12 @@ class _CartScreenState extends State<CartScreen> {
                                                               .getRemoveCartItem(
                                                                   params,
                                                                   cartParams);
-                                                      // ignore: use_build_context_synchronously
                                                       MotionToast.success(
                                                         title: const Text(
                                                             "Your cart item removed"),
                                                         description:
                                                             const Text(""),
                                                       ).show(context);
-
-                                                      //           Timer(
-                                                      //               const Duration(seconds: 1),
-                                                      //               () {
-                                                      //             Get.offAll(() =>
-                                                      //                 const BottomBarScreen(
-                                                      // index: 1,
-
-                                                      //                 ));
-                                                      //           });
                                                     },
                                                     title: "Are you sure?"));
                                           },
@@ -368,39 +258,9 @@ class _CartScreenState extends State<CartScreen> {
                                           itemCount: cartController
                                               .cartItemsList[i].packQuantity,
                                         ),
-                                        // CartItemWidget(
-                                        //   productCode: "534565",
-                                        //   memberPrice: "4354",
-                                        //   imagePath: "assets/images/health.jpg",
-                                        //   itemname:
-                                        //       "D1 ADVANCE SCALAR ENERGIZED SCALARVIA",
-                                        //   itemsPrice: "5257",
-                                        //   itemCount: cartItemCount,
-                                        //   removeFun: () async {
-                                        //     cartItemCount = cartItemCount - 1;
-                                        //     await Constants.prefs
-                                        //         .setInt("cart_count", cartCount - 1);
-                                        //     cartCount =
-                                        //         Constants.prefs.getInt("cart_count")!;
-                                        //     print("my minus,,$cartCount");
-
-                                        //     setState(() {});
-                                        //   },
-                                        //   addFun: () async {
-                                        //     cartItemCount = cartItemCount + 1;
-                                        //     await Constants.prefs
-                                        //         .setInt("cart_count", cartCount + 1);
-                                        //     cartCount =
-                                        //         Constants.prefs.getInt("cart_count")!;
-                                        //     print("my ++,,,$cartCount");
-                                        //     setState(() {});
-                                        //   },
-                                        //   actualItemPrice: '1897',
-                                        // ),
                                         const CommonDivider(),
                                       ],
                                     ),
-
                                   const SpaceHeightWidget(height: 10),
                                   OrderSummaryWidget(
                                       itemsCount:
@@ -436,7 +296,6 @@ class _CartScreenState extends State<CartScreen> {
                                           children: [
                                             Expanded(
                                               child: SizedBox(
-                                                // height: 35,
                                                 child: TextFormField(
                                                   readOnly: readOnly,
                                                   autovalidateMode:
@@ -450,7 +309,6 @@ class _CartScreenState extends State<CartScreen> {
                                                       return null;
                                                     }
                                                   },
-                                                  // cursorHeight: 12,
                                                   onChanged: (val) {
                                                     if (val != "" ||
                                                         sponsorController
@@ -533,8 +391,7 @@ class _CartScreenState extends State<CartScreen> {
                                                               .getCheckSponsor(
                                                                   sponsorController
                                                                       .text);
-                                                      print(
-                                                          "getting res...$res");
+                                                      
                                                       if (res["Msg"]
                                                               .toString()
                                                               .toLowerCase() ==
@@ -588,7 +445,6 @@ class _CartScreenState extends State<CartScreen> {
                                             };
                                             dynamic res = await cartController
                                                 .getCheckOutCart(parameters);
-                                            print("res....$res");
                                             if (res['Msg']
                                                     .toString()
                                                     .toLowerCase() ==
@@ -632,66 +488,6 @@ class _CartScreenState extends State<CartScreen> {
                                   )
                                 ],
                               ),
-                    // Container(
-                    //   color: lightBlackColor.withOpacity(0.04),
-                    //   child: const Row(
-                    //     mainAxisAlignment: MainAxisAlignment.start,
-                    //     children: [
-                    //       Padding(
-                    //         padding: EdgeInsets.all(8.0),
-                    //         child: CommonTitle(titleName: "Recommended for you"),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    // Container(
-                    //   color: lightBlackColor.withOpacity(0.04),
-                    //   alignment: Alignment.center,
-                    //   // height: (4 / 2) * 325,
-                    //   child: GridView.builder(
-                    //     padding: const EdgeInsets.all(0),
-                    //     physics: const NeverScrollableScrollPhysics(),
-                    //     shrinkWrap: true,
-                    //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    //         crossAxisCount: 2, childAspectRatio: 1 / 1.5),
-                    //     itemBuilder: (context, i) {
-                    //       return PromotionItemWidget(
-                    //         onTapFun: () {
-                    //           Get.to(() => ProductDetailsScreen(
-                    //                 from: widget.from,
-                    //                 packageCode: "",
-                    //               ));
-                    //         },
-                    //         amountColor: darkBlue,
-                    //         imagePath: i == 0
-                    //             ? promotionItems[0].image
-                    //             : i == 1
-                    //                 ? promotionItems[1].image
-                    //                 : i == 2
-                    //                     ? promotionItems[2].image
-                    //                     : i == 3
-                    //                         ? promotionItems[3].image
-                    //                         : promotionItems[4].image,
-                    //         itemName: i == 0
-                    //             ? promotionItems[0].title
-                    //             : i == 1
-                    //                 ? promotionItems[1].title
-                    //                 : i == 2
-                    //                     ? promotionItems[2].title
-                    //                     : i == 3
-                    //                         ? promotionItems[3].title
-                    //                         : promotionItems[4]
-                    //                             .title
-                    //                             .capitalize
-                    //                             .toString(),
-                    //         amount: "2465",
-                    //         memberAmount: "2240",
-                    //         exclusiveProduct: false,
-                    //       );
-                    //     },
-                    //     itemCount: 4,
-                    //   ),
-                    // ),
                     const SpaceHeightWidget(height: 40)
                   ],
                 ),
@@ -750,7 +546,6 @@ class _CartScreenState extends State<CartScreen> {
   Widget signInReqWidget() {
     return Container(
       height: 100,
-      // width: double.infinity,
       decoration: const BoxDecoration(
           image: DecorationImage(
               fit: BoxFit.cover,
@@ -786,7 +581,6 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   incrdcrFun(String from, String itemcount, String packCode) async {
-    print("add to car fun");
     Map parameters = {
       "action": "addRTCartitems",
       "Pkid": packCode,
@@ -799,7 +593,6 @@ class _CartScreenState extends State<CartScreen> {
           ? "${int.parse(itemcount) + 1}"
           : "${int.parse(itemcount) - 1}"
     };
-    print("add to cart params...$parameters");
     dynamic res = await MainController().getRegPackAddToCart(parameters);
     if (res['Msg'].toString().toLowerCase() == "success") {
       getData("not init");

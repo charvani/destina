@@ -61,7 +61,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
         }),
       ),
 
-      // commonAppBar(title: "Notifications (0)", backNavigation: true),
       body: Obx(() {
         return productController.loading.value
             ? SizedBox(

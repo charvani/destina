@@ -59,81 +59,28 @@ class _SalesMallScreenState extends State<SalesMallScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: darkBlue,
-          scrolledUnderElevation: 8,
-          title: Text(
-            "Sales Order",
-            style: TextStyle(
-              fontSize: 18,
-              color: whiteColor,
-              fontFamily: "OnestSemiBold",
-            ),
+        backgroundColor: darkBlue,
+        scrolledUnderElevation: 8,
+        title: Text(
+          "Sales Order",
+          style: TextStyle(
+            fontSize: 18,
+            color: whiteColor,
+            fontFamily: "OnestSemiBold",
           ),
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child: InkWell(
-                // behavior: HitTestBehavior.translucent,
-                onTap: () {
-                  print("ooooo");
-                  Get.back();
-                },
-                child: Icon(
-                  Icons.keyboard_arrow_left_rounded,
-                  color: whiteColor,
-                )),
-          ),
-          actions: const [
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.end,
-            //   children: [
-            //     int.parse(countOfCart) > 0
-            //         ? Badge.count(
-            //             count: int.parse(countOfCart),
-            //             child: InkWell(
-            //               onTap: () {
-            //                 if (countOfCart != "0" && countOfCart != "") {
-            //                   Get.to(() => const SalesmallCartScreen());
-            //                 } else {}
-            //               },
-            //               child: Icon(
-            //                 Icons.shopping_cart,
-            //                 color: appthemeColor,
-            //               ),
-            //             ),
-            //           )
-            //         : InkWell(
-            //             onTap: () {
-            //               if (countOfCart != "0" && countOfCart != "") {
-            //                 Get.to(() => const SalesmallCartScreen());
-            //               } else {}
-            //             },
-            //             child: Icon(
-            //               Icons.shopping_cart,
-            //               color: appthemeColor,
-            //             ),
-            //           ),
-            //     const SpaceWidthWidget(width: 5),
-            //     Container(
-            //         height: 30,
-            //         width: 118,
-            //         padding: const EdgeInsets.only(right: 5),
-            //         child: CustomAutoWidthButton(
-            //             onTapFun: () async {
-            //               if (countOfCart != "0" && countOfCart != "") {
-            //                 dynamic res =
-            //                     await Get.to(() => const SalesmallCartScreen());
-
-            //                 if (res != null) {
-            //                   if (res[0] == true) {
-            //                     dataFun();
-            //                   }
-            //                 }
-            //               } else {}
-            //             },
-            //             title: "Checkout"))
-            //   ],
-            // )
-          ]),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: InkWell(
+              onTap: () {
+                Get.back();
+              },
+              child: Icon(
+                Icons.keyboard_arrow_left_rounded,
+                color: whiteColor,
+              )),
+        ),
+      ),
       body: Obx(() {
         return _dataController.loading.value
             ? loader
@@ -143,7 +90,6 @@ class _SalesMallScreenState extends State<SalesMallScreen> {
                     padding: const EdgeInsets.all(8.0),
                     child: GridView.builder(
                       padding: const EdgeInsets.all(0),
-                      // physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(

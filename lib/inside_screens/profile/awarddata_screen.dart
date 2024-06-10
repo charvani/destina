@@ -35,7 +35,6 @@ class _AwardDataScreenState extends State<AwardDataScreen> {
   @override
   void initState() {
     super.initState();
-    print("sel val ...${widget.selectedVal}");
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       dataFun();
     });

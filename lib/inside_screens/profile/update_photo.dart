@@ -67,7 +67,6 @@ class _UpdatePhotoScreenState extends State<UpdatePhotoScreen> {
                       onTapFun: () {
                         Get.dialog(ImageOptionsDialog(
                           cameraFun: () async {
-                            print("camera");
                             Get.back();
                             XFile imageFile = await imagePickFun("camera");
                             setState(() {
@@ -75,7 +74,6 @@ class _UpdatePhotoScreenState extends State<UpdatePhotoScreen> {
                             });
                           },
                           galleryFun: () async {
-                            print("gallery");
                             Get.back();
                             XFile imageFile = await imagePickFun("gallery");
                             setState(() {
@@ -96,8 +94,7 @@ class _UpdatePhotoScreenState extends State<UpdatePhotoScreen> {
                         child: CustomElevatedButton(
                             onTapFun: () async {
                               if (image != null) {
-                                print("image fun");
-                                print("path....${image!.path}");
+                              
                                 final bytes =
                                     File(image!.path).readAsBytesSync();
 
@@ -106,7 +103,6 @@ class _UpdatePhotoScreenState extends State<UpdatePhotoScreen> {
                                 dynamic res = await _upoladController
                                     .getUploadPhoto(img64);
                                 if (res != null) {
-                                  print("res....$res");
                                   if (res['Msg'] == "SUCCESS") {
                                     CommonToastTrue(res['Message']);
                                     Timer(const Duration(seconds: 1), () {

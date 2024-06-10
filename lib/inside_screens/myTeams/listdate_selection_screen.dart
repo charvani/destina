@@ -108,7 +108,6 @@ class _MyDateListSelectionScreenState extends State<MyDateListSelectionScreen> {
                               firstDate: DateTime(1900, 0),
                             );
                             if (picked != null) {
-                              print(picked);
                               final DateFormat formatter =
                                   DateFormat('dd-MM-yyyy');
                               setState(() {
@@ -181,7 +180,6 @@ class _MyDateListSelectionScreenState extends State<MyDateListSelectionScreen> {
                               firstDate: DateTime(1900, 0),
                             );
                             if (picked != null) {
-                              print(picked);
                               final DateFormat formatter =
                                   DateFormat('dd-MM-yyyy');
                               setState(() {
@@ -238,7 +236,6 @@ class _MyDateListSelectionScreenState extends State<MyDateListSelectionScreen> {
                               firstDate: DateTime(1900, 0),
                             );
                             if (picked != null) {
-                              print(picked);
                               final DateFormat formatter =
                                   DateFormat('dd-MM-yyyy');
                               setState(() {

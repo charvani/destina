@@ -1088,11 +1088,7 @@ class _DistributorshipRulesScreenState
                       "All site links to DESTINA 1 must first obtain written approval from Destina 1 and clearly state in a prominent location that an independent distributor is operating them."),
               const SpaceHeightWidget(height: 5),
 
-              // CommonTitle(
-              // textAlign: TextAlign.justify,
-              // fontFamily: "OnestRegular",
-              // size: 14,
-              // titleName: ""),
+              
 
               const SpaceHeightWidget(height: 20),
             ],

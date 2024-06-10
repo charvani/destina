@@ -34,7 +34,6 @@ class _UpgradeListScreenState extends State<UpgradeListScreen> {
     password = Constants.prefs.getString("password");
 
     if (widget.all != null) {
-      print("all...${widget.all}");
       bData = {
         "UserId": userid,
         "Pwd": password,
@@ -43,7 +42,6 @@ class _UpgradeListScreenState extends State<UpgradeListScreen> {
         "ToDate": "",
       };
     } else if (widget.onDate != null) {
-      print("on...${widget.onDate}");
       bData = {
         "UserId": userid,
         "Pwd": password,
@@ -52,7 +50,6 @@ class _UpgradeListScreenState extends State<UpgradeListScreen> {
         "ToDate": widget.onDate,
       };
     } else if (widget.fromDate != null) {
-      print("from...${widget.fromDate}....${widget.toDate}");
       bData = {
         "UserId": userid,
         "Pwd": password,

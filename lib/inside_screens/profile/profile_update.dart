@@ -206,12 +206,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                   controller: passportTController,
                                   validation: (val) {
                                     return null;
-
-                                    // if (val!.isEmpty) {
-                                    //   return "Passport/IC/DL";
-                                    // } else {
-                                    //   return null;
-                                    // }
                                   },
                                 ),
                                 itemTitleWidget("Father/Spouse Name"),
@@ -326,14 +320,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                   controller: dialTController,
                                   validation: (val) {
                                     return null;
-
-                                    // if (val!.isEmpty) {
-                                    //   return "Dial Code";
-                                    // } else if (val.length < 3) {
-                                    //   return "Enter valid Dial Code";
-                                    // } else {
-                                    //   return null;
-                                    // }
                                   },
                                 ),
                                 itemTitleWidget("Email Address"),
@@ -391,12 +377,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                   controller: landLineTController,
                                   validation: (val) {
                                     return null;
-
-                                    // if (val!.isEmpty) {
-                                    //   return "Land Line";
-                                    // } else {
-                                    //   return null;
-                                    // }
                                   },
                                 ),
                                 itemTitleWidget("Mobile"),
@@ -534,12 +514,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                     controller: holderNameTController,
                                     validation: (val) {
                                       return null;
-
-                                      // if (val!.isEmpty) {
-                                      //   return "Account Holder's Name(Same as the Bank Account)";
-                                      // } else {
-                                      //   return null;
-                                      // }
                                     },
                                   ),
                                 ]),
@@ -581,12 +555,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
                                   controller: nomineeNameTController,
                                   validation: (val) {
                                     return null;
-
-                                    // if (val!.isEmpty) {
-                                    //   return "Nominee's Name(Next of Kin)";
-                                    // } else {
-                                    //   return null;
-                                    // }
                                   },
                                 ),
                               ]),

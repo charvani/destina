@@ -72,7 +72,6 @@ class _KProductsScreen2State extends State<KProductsScreen2> {
         dataFun(widget.from);
       } else {
         dynamic data = productController.getProducts("Kritalia & CO", null);
-        print("product screen data...$data");
       }
 
       // dataFun("All");
@@ -80,9 +79,7 @@ class _KProductsScreen2State extends State<KProductsScreen2> {
   }
 
   dataFun(String category) async {
-    print("seleted Cat...$category");
     dynamic data = await productController.getKritaliaProducts(category);
-    print("product screen data...$data");
   }
 
   dynamic krialiaTappedInd;
@@ -188,80 +185,33 @@ class _KProductsScreen2State extends State<KProductsScreen2> {
                                                   crossAxisCount: 2,
                                                   childAspectRatio: 1 / 1.5),
                                           itemBuilder: (context, i) {
-                                            return
-                                                //  productsCategories[
-                                                //                 selectedCategoryIndex]
-                                                //             .title ==
-                                                //         "Kritalia & Co"
-                                                //     ? KritaliaItemWidget(
-                                                //         tapped:
-                                                //             krialiaTappedInd == i
-                                                //                 ? true
-                                                //                 : false,
-                                                //         amount:
-                                                //             "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}",
-                                                //         onTapFun: () {
-                                                //           setState(() {
-                                                //             krialiaTappedInd = i;
-                                                //           });
-
-                                                //           Timer(
-                                                //               const Duration(
-                                                //                   seconds: 1),
-                                                //               () async {
-                                                //             Get.to(() =>
-                                                //                 ProductDetailsScreen2(
-                                                //                   from: widget.from,
-                                                //                   packageCode:
-                                                //                       productController
-                                                //                           .productItemList[
-                                                //                               i]
-                                                //                           .packagecode,
-                                                //                   fromPack:
-                                                //                       productsCategories[
-                                                //                               selectedCategoryIndex]
-                                                //                           .title,
-                                                //                 ));
-                                                //           });
-                                                //         },
-                                                //         imagePath:
-                                                //             // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                                //             productController
-                                                //                 .productItemList[i]
-                                                //                 .image,
-                                                //         titile: productController
-                                                //             .productItemList[i]
-                                                //             .packageName)
-                                                //     :
-
-                                                CategroyItemWidget(
-                                                    amount: double.parse(
-                                                                productController
-                                                                    .productItemList[
-                                                                        i]
-                                                                    .dp) >
-                                                            0
-                                                        ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
-                                                        : "",
-                                                    onTapFun: () {
-                                                      Get.to(() =>
-                                                          ProductDetailsScreen2(
-                                                            from: widget.from,
-                                                            packageCode:
-                                                                productController
-                                                                    .productItemList[
-                                                                        i]
-                                                                    .packagecode,
-                                                            fromPack:
-                                                                "Kritalia & Co",
-                                                          ));
-                                                    },
-                                                    imagePath: productController
-                                                        .productItemList[i]
-                                                        .image,
-                                                    titile: productController
-                                                        .productItemList[i]
-                                                        .packageName);
+                                            return CategroyItemWidget(
+                                                amount: double.parse(
+                                                            productController
+                                                                .productItemList[
+                                                                    i]
+                                                                .dp) >
+                                                        0
+                                                    ? "${productController.productItemList[i].currency} ${productController.productItemList[i].dp}"
+                                                    : "",
+                                                onTapFun: () {
+                                                  Get.to(() =>
+                                                      ProductDetailsScreen2(
+                                                        from: widget.from,
+                                                        packageCode:
+                                                            productController
+                                                                .productItemList[
+                                                                    i]
+                                                                .packagecode,
+                                                        fromPack:
+                                                            "Kritalia & Co",
+                                                      ));
+                                                },
+                                                imagePath: productController
+                                                    .productItemList[i].image,
+                                                titile: productController
+                                                    .productItemList[i]
+                                                    .packageName);
                                           },
                                           itemCount: productController
                                               .productItemList.length);

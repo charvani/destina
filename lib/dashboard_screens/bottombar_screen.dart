@@ -28,7 +28,6 @@ class BottomBarScreen extends StatefulWidget {
 class _BottomBarScreenState extends State<BottomBarScreen> {
   int selectedIndex = 0;
 
-  /// widget list
   List<Widget> bottomBarPages = [
     HomeScreen(
       bannerPopUpImages: const [],
@@ -41,10 +40,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
       from: "bottombar",
     ),
     const PromotionsScreen(),
-    AccountScreen(
-        // bannerPopUpImages: const [],
-        // data: "",
-        )
+    AccountScreen()
   ];
   int badgeCount = 0;
   @override
@@ -67,18 +63,11 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           from: "bottombar",
         ),
         const PromotionsScreen(),
-        AccountScreen(
-            // bannerPopUpImages: widget.bannerPopup ?? [],
-            // data: widget.data ?? "",
-            )
+        AccountScreen()
       ];
     }
     badgeCount = Constants.prefs.getInt("cart_count") ?? 0;
   }
-
-  // popFun() async {
-  //   Get.offAll(() => const BottomBarScreen());
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -101,10 +90,8 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
             selectedLabelStyle: TextStyle(
                 fontFamily: "OnestSemiBold", color: darkBlue, fontSize: 10),
             elevation: 0,
-            // iconSize: 25,
             showSelectedLabels: true,
             showUnselectedLabels: true,
-
             mouseCursor: SystemMouseCursors.grab,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(

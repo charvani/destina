@@ -98,9 +98,7 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
                                 Icons.star,
                                 color: Colors.amber,
                               ),
-                              onRatingUpdate: (rating) {
-                                print(rating);
-                              },
+                              onRatingUpdate: (rating) {},
                             ),
                             const SpaceWidthWidget(width: 10),
                             CommonTitle(
@@ -432,7 +430,6 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
             myState(() {
               gval = val;
             });
-            print("gValue.....$val");
           },
           gVal: gval,
           submitFun: () {
@@ -479,7 +476,6 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
             myState(() {
               reviewFilterVal = val;
             });
-            print("lol....$reviewFilterVal");
           },
           rFVal: reviewFilterVal,
           applyFun: () {

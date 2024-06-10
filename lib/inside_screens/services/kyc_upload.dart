@@ -132,7 +132,6 @@ class _UploadKYCScreenState extends State<UploadKYCScreen> {
                             : CustomElevatedButton(
                                 onTapFun: () {
                                   if (_formKey.currentState!.validate()) {
-                                    print("Update fun");
                                     updateFun();
                                   }
                                 },
@@ -264,7 +263,6 @@ class _UploadKYCScreenState extends State<UploadKYCScreen> {
                 onTapFun: () {
                   Get.dialog(ImageOptionsDialog(
                     cameraFun: () async {
-                      print("camera");
                       Get.back();
                       XFile imageFile = await imagePickFun("camera");
                       setState(() {
@@ -272,7 +270,6 @@ class _UploadKYCScreenState extends State<UploadKYCScreen> {
                       });
                     },
                     galleryFun: () async {
-                      print("gallery");
                       Get.back();
                       XFile imageFile = await imagePickFun("gallery");
                       setState(() {
@@ -314,7 +311,6 @@ class _UploadKYCScreenState extends State<UploadKYCScreen> {
                 onTapFun: () {
                   Get.dialog(ImageOptionsDialog(
                     cameraFun: () async {
-                      print("camera");
                       Get.back();
                       XFile imageFile = await imagePickFun("camera");
                       setState(() {
@@ -322,7 +318,6 @@ class _UploadKYCScreenState extends State<UploadKYCScreen> {
                       });
                     },
                     galleryFun: () async {
-                      print("gallery");
                       Get.back();
                       XFile imageFile = await imagePickFun("gallery");
                       setState(() {
@@ -380,7 +375,6 @@ class _UploadKYCScreenState extends State<UploadKYCScreen> {
           "Remarks": remarksController.text,
           "ProofType": "KYC",
         };
-        print("update fun bdata...$bdata");
         dynamic res =
             await _dataController.getUploadFile(bdata, ApiData().uploadKYC);
         if (res != null) {
@@ -411,7 +405,6 @@ class _UploadKYCScreenState extends State<UploadKYCScreen> {
           "ProofType": "APP",
           "Filename": img64,
         };
-        print("Application fun bdata...$bdata");
         dynamic res =
             await _dataController.getUploadFile(bdata, ApiData().uploadKYC);
         if (res != null) {
@@ -440,7 +433,6 @@ class _UploadKYCScreenState extends State<UploadKYCScreen> {
       submitLoading = false;
     });
     if (res != null && proofType == "Bank") {
-      print("Bank res...$res");
 
       if (res['Message'] == "NoKYC" ||
           res['Message'] == "KYCREJ" ||
@@ -465,7 +457,6 @@ class _UploadKYCScreenState extends State<UploadKYCScreen> {
         CommonToast(res['Message']);
       }
     } else {
-      print("Application res...$res");
 
       if (res['Message'] == "NoAPP" ||
           res['Message'] == "APPREJ" ||

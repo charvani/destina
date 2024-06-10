@@ -52,7 +52,7 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
   @override
   void initState() {
     super.initState();
-    print("from...${widget.from}");
+
     firstQtyController.text = "1";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       countryid = Constants.prefs.getString("country_id");
@@ -69,9 +69,6 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
       } else {
         sessionId = Constants.prefs.getString("ss_id");
       }
-
-      print("uniqid...$uniqId");
-      print("sessionid..$sessionId");
     });
   }
 
@@ -108,7 +105,6 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
         carouselImages.add(packDetailsController.packageDetailsData.value.img3);
       }
     }
-    // reviewDataFun(packDetailsController.packageDetailsData.value.pkid);
 
     if (mounted) {
       setState(() {});
@@ -124,16 +120,11 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
         appBar: commonAppBar(
           backNavigation: true,
           title: widget.packageCode,
-          // onTapFun: () {
-          //   // Get.offAll(() => const BottomBarScreen());
-          //   Get.back();
-          // },
         ),
         bottomSheet: Form(
           key: _fomkey1,
           child: Container(
             padding: const EdgeInsets.fromLTRB(15, 5, 5, 0),
-            // margin: const EdgeInsets.only(bottom: 1),
             height: 90,
             alignment: Alignment.center,
             width: double.infinity,
@@ -155,8 +146,6 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
                       children: [
                         InkWell(
                           onTap: () {
-                            // print(
-                            //     "${double.parse(packDetailsController.productDetails.value.price.replaceAll(packDetailsController.productDetails.value.currency, "")) * int.parse(firstQtyController.text)}");
                             if (int.parse(firstQtyController.text) > 1) {
                               setState(() {
                                 firstQtyController.text =
@@ -223,9 +212,9 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
                                 setState(() {
                                   packageLoading = true;
                                 });
-                                // this register add to cart fun
+
 /*
-                                print("add to car fun");
+                                
                                 Map parameters = {
                                   "action": "addSGCartitems",
                                   "Pkid": widget.packageCode,
@@ -236,14 +225,14 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
                                   "sprno": "0",
                                   "Quantity": firstQtyController.text
                                 };
-                                print("add to cart params...$parameters");
+                                
                                 dynamic res = await MainController()
                                     .getAddToCart(parameters);
 
                                 if (res['Msg'].toString().toLowerCase() ==
                                     "success") {
                                 
-                                  print("res....$res");
+                                  
                                   setState(() {
                                     packageLoading = false;
                                   });
@@ -259,7 +248,6 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
 
                                 //this is original exitsted function
 
-                                print("add to car fun");
                                 Map parameters = {
                                   "Pkid": widget.packageCode,
                                   "pid": "1",
@@ -270,7 +258,7 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
                                   "prdtype": "Package",
                                   "qty": firstQtyController.text,
                                 };
-                                print("add to cart params...$parameters");
+
                                 dynamic res = await MainController()
                                     .getDPMallAddToCart(parameters);
                                 if (res['Msg'].toString().toLowerCase() ==
@@ -334,7 +322,7 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
                           title: packDetailsController
                               .packageDetailsData.value.pkname,
                         ),
-                         PdfWidget(
+                        PdfWidget(
                           category: widget.fromPack,
                         ),
                         if (widget.fromPack == "Kritalia & Co")
@@ -448,9 +436,7 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
                             Icons.star,
                             color: Colors.amber,
                           ),
-                          onRatingUpdate: (rating) {
-                            print(rating);
-                          },
+                          onRatingUpdate: (rating) {},
                         ),
                         const SpaceWidthWidget(width: 10),
                         CommonTitle(
@@ -595,7 +581,6 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
             myState(() {
               gval = val;
             });
-            print("gValue.....$val");
           },
           gVal: gval,
           submitFun: () {

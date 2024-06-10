@@ -37,24 +37,18 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
   List<OnboardModel> productsCategoriesOnTap = [
     OnboardModel(
         image: "assets/images/health_care.png", title: "Wellness Care"),
-    // OnboardModel(image: "assets/images/sop.png", title: "Skin Care"),
-    // OnboardModel(image: "assets/images/body_care.png", title: "Hair Care"),
     OnboardModel(
         image: "assets/images/a_start_privilege.png", title: "Kritalia & Co"),
   ];
   List<OnboardModel> productsCategories = [
     OnboardModel(
         image: "assets/images/health_care_wb.png", title: "Wellness Care"),
-    // OnboardModel(image: "assets/images/sop_wb.png", title: "Skin Care"),
-    // OnboardModel(image: "assets/images/body_care_wb.png", title: "Hair Care"),
     OnboardModel(
         image: "assets/images/a_start_privilege_wb.png",
         title: "Kritalia & Co"),
   ];
   List<String> topBannerImages = [
     "assets/images/products_baground.png",
-    // "assets/images/products_beauty_banner.jpg",
-    // "assets/images/hair_care_bg.jpg",
     "assets/images/kritalia_banner.jpg",
   ];
   bool isloading = true;
@@ -62,7 +56,6 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
   dataFun(String malVal) async {
     dynamic res = await packageController.getPackages(
         countyId: widget.countryId, packageMalVal: malVal);
-    print("getPackages screen data...$res");
   }
 
   cartcountFun(String action, pid) {
@@ -87,9 +80,6 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
       sessionId = generateTimeStamp();
       await Constants.prefs.setString("ss_id", sessionId);
 
-      print("uniqid...$uniqId");
-      print("sessionid..$sessionId");
-      print("screen from ...${widget.from}");
       if (widget.from == "DDC") {
         setState(() {
           productsCategoriesOnTap = [
@@ -105,8 +95,6 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
           topBannerImages = [
             "assets/images/products_baground.png",
           ];
-          // jadePackageVal = "18";
-          // jadePackageVal = "Wellness Care";
         });
         dataFun("DIRECT CUSTOMER");
       } else {
@@ -205,7 +193,6 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
                                 count: packageController.packCartList.length,
                                 child: InkWell(
                                   onTap: () {
-                                    print("tapp");
                                     dialogFun();
                                   },
                                   child: const Icon(
@@ -327,95 +314,35 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
                                               crossAxisCount: 2,
                                               childAspectRatio: 1 / 1.45),
                                       itemBuilder: (context, i) {
-                                        return
-                                            // productsCategories[
-                                            //                 selectedCategoryIndex]
-                                            //             .title ==
-                                            //         "Kritalia & Co"
-                                            //     ? KritaliaItemWidget(
-                                            //         tapped: krialiaTappedInd == i
-                                            //             ? true
-                                            //             : false,
-                                            //         amount: packageController
-                                            //             .selPackageItemList[i].mrp,
-                                            //         onTapFun: () {
-                                            //           setState(() {
-                                            //             krialiaTappedInd = i;
-                                            //           });
-
-                                            //           Timer(
-                                            //               const Duration(
-                                            //                   seconds: 1),
-                                            //               () async {
-                                            //             dynamic res = await Get.to(() =>
-                                            //                 RegisterPackDetailsScreen(
-                                            //                   fromPack:
-                                            //                       productsCategories[
-                                            //                               selectedCategoryIndex]
-                                            //                           .title,
-                                            //                   from: "register",
-                                            //                   packageCode:
-                                            //                       packageController
-                                            //                           .selPackageItemList[
-                                            //                               i]
-                                            //                           .pkcode,
-                                            //                   countryid:
-                                            //                       widget.countryId,
-                                            //                 ));
-                                            //             if (res != null) {
-                                            //               if (res[0] == true) {
-                                            //                 cartcountFun(
-                                            //                     "GetSignCartData",
-                                            //                     "");
-                                            //               }
-                                            //             }
-                                            //           });
-                                            //         },
-                                            //         imagePath:
-                                            //             // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                            //             packageController
-                                            //                 .selPackageItemList[i]
-                                            //                 .pImage,
-                                            //         titile: packageController
-                                            //             .selPackageItemList[i]
-                                            //             .pkname)
-                                            // :
-                                            CategroyItemWidget(
-                                                amount: packageController
-                                                    .selPackageItemList[i].mrp,
-                                                onTapFun: () async {
-                                                  dynamic res = await Get.to(() =>
-                                                      RegisterPackDetailsScreen(
-                                                        customerType: widget.from,
-                                                        fromPack:
-                                                            productsCategories[
-                                                                    selectedCategoryIndex]
-                                                                .title,
-                                                        from: "register",
-                                                        packageCode:
-                                                            packageController
-                                                                .selPackageItemList[
-                                                                    i]
-                                                                .pkcode,
-                                                        countryid:
-                                                            widget.countryId,
-                                                      ));
-                                                  if (res != null) {
-                                                    if (res[0] == true) {
-                                                      cartcountFun(
-                                                          "GetSignCartData",
-                                                          "");
-                                                    }
-                                                  }
-                                                },
-                                                imagePath:
-                                                    // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                                                    packageController
-                                                        .selPackageItemList[i]
-                                                        .pImage,
-                                                titile: packageController
-                                                    .selPackageItemList[i]
-                                                    .pkname);
+                                        return CategroyItemWidget(
+                                            amount: packageController
+                                                .selPackageItemList[i].mrp,
+                                            onTapFun: () async {
+                                              dynamic res = await Get.to(() =>
+                                                  RegisterPackDetailsScreen(
+                                                    customerType: widget.from,
+                                                    fromPack: productsCategories[
+                                                            selectedCategoryIndex]
+                                                        .title,
+                                                    from: "register",
+                                                    packageCode:
+                                                        packageController
+                                                            .selPackageItemList[
+                                                                i]
+                                                            .pkcode,
+                                                    countryid: widget.countryId,
+                                                  ));
+                                              if (res != null) {
+                                                if (res[0] == true) {
+                                                  cartcountFun(
+                                                      "GetSignCartData", "");
+                                                }
+                                              }
+                                            },
+                                            imagePath: packageController
+                                                .selPackageItemList[i].pImage,
+                                            titile: packageController
+                                                .selPackageItemList[i].pkname);
                                       },
                                       itemCount: packageController
                                           .selPackageItemList.length);
@@ -457,9 +384,8 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
                                                       List<dynamic> res =
                                                           await Get.to(() =>
                                                               RegisterPackDetailsScreen(
-                                                        customerType:
+                                                                customerType:
                                                                     widget.from,
-
                                                                 fromPack:
                                                                     productsCategories[
                                                                             selectedCategoryIndex]
@@ -485,7 +411,6 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
                                                     imagePath: packageController
                                                         .relPackageItemList[i]
                                                         .img,
-                                                    // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
                                                     titile: packageController
                                                         .relPackageItemList[i]
                                                         .pkname);
@@ -504,7 +429,6 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
   }
 
   incrdcrFun(String from, String itemcount, String packCode) async {
-    print("add to car fun");
     Map parameters = {
       "action": "addSGCartitems",
       "Pkid": packCode,
@@ -517,7 +441,7 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
           ? "${int.parse(itemcount) + 1}"
           : "${int.parse(itemcount) - 1}"
     };
-    print("add to cart params...$parameters");
+
     dynamic res = await MainController().getRegPackAddToCart(parameters);
     if (res['Msg'].toString().toLowerCase() == "success") {
       cartcountFun("GetSignCartData", "");
@@ -542,17 +466,13 @@ class _RegisterPackageScreenState extends State<RegisterPackageScreen> {
         };
 
         dynamic res = await packageController.getEnrollPack(params);
-        print("enroll res..$res");
-        print(
-            "***********${double.parse(res['EnrollPackageRpt'][0]['RenFee'])}");
+      
 
         Get.back();
         if (double.parse(res['EnrollPackageRpt'][0]['RenFee']) > 0) {
           Get.off(() => EnrollPackageScreen(
                 cusType: widget.from,
                 packageCoded: resss['Pkcode'],
-                //  widget
-                //     .packageCode,
                 countyId: Constants.prefs.getString("country_id") ?? "",
               ));
         } else {

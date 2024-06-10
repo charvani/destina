@@ -52,7 +52,6 @@ class _DPMallScreenState extends State<DPMallScreen> {
       "Action": "GetDPPackages",
       "CountryID": countryId,
       "MallName": ""
-      // uniqId
     };
 
     dynamic res = await _dataController.getDPMall(bData);
@@ -63,9 +62,7 @@ class _DPMallScreenState extends State<DPMallScreen> {
         });
       }
       if (res != null) {
-        print("at res...........");
         if (widget.from == "order_again") {
-          print("at order_again...........");
           oderAgainAddtoCartFun();
         } else {
           cartItemsFun();
@@ -85,7 +82,7 @@ class _DPMallScreenState extends State<DPMallScreen> {
       "sprno": Constants.prefs.getString("reg_id"),
       "Quantity": "0"
     };
-    print("add to cart params...$parameters");
+
     dynamic res = await MainController().getRegPackAddToCart(parameters);
     if (res['Msg'].toString().toLowerCase() == "success") {
       cartItemsFun();
@@ -102,10 +99,9 @@ class _DPMallScreenState extends State<DPMallScreen> {
       "amt": "0",
       "amttype": "",
     };
-    print("cart params...$cartParams");
+
     dynamic res =
         await _dataController.getDpMallLoadCartItems("DP Mall", cartParams);
-    print("d...res...$res");
   }
 
   @override
@@ -125,7 +121,6 @@ class _DPMallScreenState extends State<DPMallScreen> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 8),
             child: InkWell(
-                // behavior: HitTestBehavior.translucent,
                 onTap: () {
                   Get.back();
                 },
@@ -134,58 +129,7 @@ class _DPMallScreenState extends State<DPMallScreen> {
                   color: whiteColor,
                 )),
           ),
-          actions: const [
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.end,
-            //   children: [
-            //     int.parse(countOfCart) > 0
-            //         ? Badge.count(
-            //             count: int.parse(countOfCart),
-            //             child: InkWell(
-            //               onTap: () {
-            //                 if (countOfCart != "0" && countOfCart != "") {
-            //                   Get.to(() => const SalesmallCartScreen());
-            //                 } else {}
-            //               },
-            //               child: Icon(
-            //                 Icons.shopping_cart,
-            //                 color: appthemeColor,
-            //               ),
-            //             ),
-            //           )
-            //         : InkWell(
-            //             onTap: () {
-            //               if (countOfCart != "0" && countOfCart != "") {
-            //                 Get.to(() => const SalesmallCartScreen());
-            //               } else {}
-            //             },
-            //             child: Icon(
-            //               Icons.shopping_cart,
-            //               color: appthemeColor,
-            //             ),
-            //           ),
-            //     const SpaceWidthWidget(width: 5),
-            //     Container(
-            //         height: 30,
-            //         width: 118,
-            //         padding: const EdgeInsets.only(right: 5),
-            //         child: CustomAutoWidthButton(
-            //             onTapFun: () async {
-            //               if (countOfCart != "0" && countOfCart != "") {
-            //                 dynamic res =
-            //                     await Get.to(() => const SalesmallCartScreen());
-
-            //                 if (res != null) {
-            //                   if (res[0] == true) {
-            //                     dataFun();
-            //                   }
-            //                 }
-            //               } else {}
-            //             },
-            //             title: "Checkout"))
-            //   ],
-            // )
-          ]),
+          actions: const []),
       bottomNavigationBar: Container(
         width: double.infinity,
         height: 50,
@@ -373,7 +317,6 @@ class _DPMallScreenState extends State<DPMallScreen> {
   }
 
   incrdcrFun(String from, String itemcount, String packCode) async {
-    print("add to car fun");
     Map parameters = {
       "Pkid": packCode,
       "pid": "1",
@@ -387,7 +330,7 @@ class _DPMallScreenState extends State<DPMallScreen> {
           : "${int.parse(itemcount) - 1}",
       "country": Constants.prefs.getString("country_id"),
     };
-    print("add to cart params...$parameters");
+
     dynamic res = await MainController().getDPMallAddToCart(parameters);
 
     if (res['Msg'].toString().toLowerCase() == "success") {

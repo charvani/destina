@@ -66,9 +66,9 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
       "cname": Constants.prefs.getString("uniq_id"),
       "mname": Constants.prefs.getString("country_id")
     };
-    print("cart params...$cartParams");
+
     dynamic res = await cartController.getRegisterCartItems(from, cartParams);
-    print("cart res...$res");
+
     if (int.parse(res['Itemcnt']) == 1) {
       if (int.parse(res['PrCnt']) > 0) {
         setState(() {
@@ -93,7 +93,6 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
   List<TextEditingController> textEControllerList = [];
 
   getPackageItemsData() async {
-    print("my para...${widget.packageCode}....$uniqId...$sessionId");
     Map params = {
       "rpt": "GetPromoPack",
       "cname": widget.packageCode,
@@ -105,7 +104,6 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
         sessionId: sessionId,
         dtype: "Promotion",
         params: params);
-    print("packages data...$res");
   }
 
   bool screenLoad = false;
@@ -121,82 +119,14 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
               color: whiteColor,
             ),
             onPressed: () {
-              // getData("init");
               Get.back();
-
-              // setState(() {
-              //   packageLoading = false;
-              //   loading = false;
-              // });
-              // getData("init");
             }),
         title: Text(
           "Cart",
           style: TextStyle(
               fontFamily: "OnestSemiBold", fontSize: 20, color: whiteColor),
         ),
-        // actions: [
-        //   SizedBox(
-        //     height: 25,
-        //     width: 50,
-        //     child: CommonOulineTextButton(onTapFun: () {}, title: "Edit"),
-        //   ),
-        //   const SpaceWidthWidget(width: 5)
-        // ],
       ),
-      // bottomNavigationBar: (cartCount > 0)
-      //     ? Container(
-      //         decoration: BoxDecoration(
-      //             color: whiteColor,
-      //             border: Border.all(color: lightBlackColor, width: 1.5)),
-      //         height: 60,
-      //         width: double.infinity,
-      //         child: Padding(
-      //           padding: const EdgeInsets.all(8.0),
-      //           child: Row(
-      //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //             children: [
-      //               Column(
-      //                 crossAxisAlignment: CrossAxisAlignment.start,
-      //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //                 children: [
-      //                   RichText(
-      //                       text: TextSpan(children: [
-      //                     TextSpan(
-      //                         text: "฿  ",
-      //                         style: TextStyle(
-      //                           color: lightDarKBlue,
-      //                           fontSize: 11.5,
-      //                         )),
-      //                     TextSpan(
-      //                         text: "4877",
-      //                         style: TextStyle(
-      //                           fontFamily: "OnestSemiBold",
-      //                           color: lightDarKBlue,
-      //                           fontSize: 17,
-      //                         )),
-      //                   ])),
-      //                   Text("Save ฿ 435 when you Sign Up.",
-      //                       style: TextStyle(
-      //                         fontFamily: "OnestRegular",
-      //                         color: blackColor.withOpacity(0.5),
-      //                         fontSize: 10,
-      //                       ))
-      //                 ],
-      //               ),
-      //               SizedBox(
-      //                   height: 35,
-      //                   width: 120,
-      //                   child: CustomElevatedButton(
-      //                       onTapFun: () {
-      //                         Get.to(() => const CheckOutScreen());
-      //                       },
-      //                       title: "Checkout"))
-      //             ],
-      //           ),
-      //         ),
-      //       )
-      //     : const SizedBox.shrink(),
       body: GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
@@ -227,34 +157,6 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      // const SpaceHeightWidget(height: 8),
-                                      // Padding(
-                                      //   padding: const EdgeInsets.symmetric(
-                                      //       horizontal: 20, vertical: 5),
-                                      //   child: Row(
-                                      //     children: [
-                                      //       CircleAvatar(
-                                      //         radius: 14,
-                                      //         backgroundColor:
-                                      //             lightDarKBlue.withOpacity(0.1),
-                                      //         child: Icon(
-                                      //           Icons.location_on_outlined,
-                                      //           color: lightDarKBlue,
-                                      //           size: 20,
-                                      //         ),
-                                      //       ),
-                                      //       const SpaceWidthWidget(width: 10),
-                                      //       Text(
-                                      //         "Deliver in 1-3 business days",
-                                      //         style: TextStyle(
-                                      //             fontFamily: "OnestLight",
-                                      //             color: lightDarKBlue,
-                                      //             fontSize: 10),
-                                      //       )
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                      // const CommonDivider(),
                                       for (int i = 0;
                                           i <
                                               cartController
@@ -266,28 +168,6 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                               cv: cartController
                                                   .registerCartItems[i].cv,
                                               showQuantity: true,
-                                              // decrementFun: () {
-                                              //   if (int.parse(cartController
-                                              //           .registerCartItems[i].qty) >
-                                              //       1) {
-                                              //     incrdcrFun(
-                                              //         "decrement",
-                                              //         cartController
-                                              //             .registerCartItems[i].qty,
-                                              //         cartController
-                                              //             .registerCartItems[i]
-                                              //             .pkcode);
-                                              //   }
-                                              // },
-                                              // incrementFun: () {
-                                              //   incrdcrFun(
-                                              //       "increment",
-                                              //       cartController
-                                              //           .registerCartItems[i].qty,
-                                              //       cartController
-                                              //           .registerCartItems[i]
-                                              //           .pkcode);
-                                              // },
                                               removeCartOption: true,
                                               imagePath: cartController
                                                   .registerCartItems[i].pImage,
@@ -416,90 +296,6 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                               .toString(),
                                           symbol: cartController
                                               .registerCartItems[0].symbol),
-                                      // Container(
-                                      //   width: double.infinity,
-                                      //   margin: const EdgeInsets.all(10),
-                                      //   padding: const EdgeInsets.symmetric(
-                                      //       horizontal: 15, vertical: 20),
-                                      //   decoration: BoxDecoration(
-                                      //       color:
-                                      //           lightDarKBlue.withOpacity(0.1),
-                                      //       borderRadius:
-                                      //           BorderRadius.circular(10)),
-                                      //   child: Column(
-                                      //     crossAxisAlignment:
-                                      //         CrossAxisAlignment.start,
-                                      //     children: [
-                                      //       Text(
-                                      //         "Order Summary",
-                                      //         style: TextStyle(
-                                      //             fontFamily: "OnestBold",
-                                      //             fontSize: 17,
-                                      //             color: darkBlue),
-                                      //       ),
-                                      //       const SpaceHeightWidget(height: 10),
-                                      //       Row(
-                                      //         mainAxisAlignment:
-                                      //             MainAxisAlignment
-                                      //                 .spaceBetween,
-                                      //         children: [
-                                      //           const Text(
-                                      //             "Order Subtotal",
-                                      //             style: TextStyle(
-                                      //               fontFamily: "OnestRegular",
-                                      //               fontSize: 15,
-                                      //             ),
-                                      //           ),
-                                      //           Obx(() {
-                                      //             return cartController
-                                      //                     .loading.value
-                                      //                 ? Text(
-                                      //                     "${cartController.registerCartItems[0].symbol} 0.0")
-                                      //                 : Text(
-                                      //                     "${cartController.registerCartItems[0].symbol} ${cartController.totalAmount.value}",
-                                      //                     style:
-                                      //                         const TextStyle(
-                                      //                       fontFamily:
-                                      //                           "OnestRegular",
-                                      //                       fontSize: 15,
-                                      //                     ),
-                                      //                   );
-                                      //           }),
-                                      //         ],
-                                      //       ),
-                                      //       const SpaceHeightWidget(height: 10),
-                                      //       const CommonDivider(),
-                                      //       const SpaceHeightWidget(height: 5),
-                                      //       Row(
-                                      //         mainAxisAlignment:
-                                      //             MainAxisAlignment
-                                      //                 .spaceBetween,
-                                      //         children: [
-                                      //           Text(
-                                      //             "Total Amount",
-                                      //             style: TextStyle(
-                                      //               fontFamily: "OnestSemiBold",
-                                      //               fontSize: 15,
-                                      //               color: darkBlue,
-                                      //             ),
-                                      //           ),
-                                      //           Obx(() {
-                                      //             return cartController
-                                      //                     .loading.value
-                                      //                 ? Text(
-                                      //                     "${cartController.registerCartItems[0].symbol} 0.0")
-                                      //                 : Text(
-                                      //                     "${cartController.registerCartItems[0].symbol} ${cartController.totalAmount.value}",
-                                      //                     style: TextStyle(
-                                      //                       fontFamily:
-                                      //                           "OnestSemiBold",
-                                      //                       fontSize: 15,
-                                      //                       color: darkBlue,
-                                      //                     ),
-                                      //                   );
-                                      //           }),
-                                      //         ],
-                                      //       ),
                                       const SpaceHeightWidget(height: 10),
                                       Row(
                                         mainAxisAlignment:
@@ -513,39 +309,9 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                                   const EdgeInsets.all(8.0),
                                               child: IconElevatedButton(
                                                 onTapFun: () async {
-                                                  // print("sess...$sessionId");
-                                                  // print(
-                                                  //     "https://showcase.worldunityfoundation.org/checkwebitems.html?countrycode=MY&sprno=${widget.sponsorId}&sessid=$sessionId&uniqId=$uniqId");
-                                                  // print(
-                                                  //     "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=1&Pkcode=MYJD02&sessid=glCAnAi2C4x6JEY22xf1&uniqId=9CeGXbQwTqFN2U9PPaHKKspGJRComy");
-
-                                                  // Map parameters = {
-                                                  //   "Action": "checkoutitems_MA",
-                                                  //   "Pkid": "0",
-                                                  //   "pid": "0",
-                                                  //   "Quantity": "0",
-                                                  //   "uniqid": uniqId,
-                                                  //   "sessid": sessionId,
-                                                  //   "ipaddress": Constants.prefs
-                                                  //       .getString("ip"),
-                                                  //   "sprno": sponsorController.text,
-                                                  //   "prdtype": "Package"
-                                                  // };
-                                                  // dynamic res = await cartController
-                                                  //     .getCheckOutCart(parameters);
-                                                  // print("res....$res");
-                                                  // if (res['Msg']
-                                                  //         .toString()
-                                                  //         .toLowerCase() ==
-                                                  //     "success") {
-                                                  print(
-                                                      "jjjj...${widget.sponsorId}");
-
                                                   Get.off(() => CheckOutScreen(
                                                       redirectUrl:
                                                           "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/SignupCheckoutParam.html?Country=${widget.countryId}&Pkcode=${widget.packageCode}&SprIDNo=${widget.sponsorId}&sessid=$sessionId&uniqId=$uniqId&RegType=${widget.customerType}"));
-
-                                                  // }
                                                 },
                                                 imagePath:
                                                     'assets/images/shopping_cart_img.jpg',
@@ -557,92 +323,9 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                           ),
                                         ],
                                       ),
-                                      //     ],
-                                      //   ),
-                                      // ),
                                       const SpaceHeightWidget(height: 20),
-                                      // Container(
-                                      //   padding: const EdgeInsets.all(8.0),
-                                      //   alignment: Alignment.center,
-                                      //   width: double.infinity,
-                                      //   child: SizedBox(
-                                      //     width: 200,
-                                      //     height: 35,
-                                      //     child: IconElevatedButton(
-                                      //       onTapFun: () {
-                                      //         Get.offAll(() => const BottomBarScreen(
-                                      //               index: 1,
-                                      //             ));
-                                      //       },
-                                      //       imagePath: 'assets/images/arrow_right.png',
-                                      //       labelColor: whiteColor,
-                                      //       buttonColor: lightDarKBlue,
-                                      //       titile: "Continue Shopping",
-                                      //     ),
-                                      //   ),
-                                      // )
                                     ],
                                   ),
-                        // Container(
-                        //   color: lightBlackColor.withOpacity(0.04),
-                        //   child: const Row(
-                        //     mainAxisAlignment: MainAxisAlignment.start,
-                        //     children: [
-                        //       Padding(
-                        //         padding: EdgeInsets.all(8.0),
-                        //         child: CommonTitle(titleName: "Recommended for you"),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
-                        // Container(
-                        //   color: lightBlackColor.withOpacity(0.04),
-                        //   alignment: Alignment.center,
-                        //   // height: (4 / 2) * 325,
-                        //   child: GridView.builder(
-                        //     padding: const EdgeInsets.all(0),
-                        //     physics: const NeverScrollableScrollPhysics(),
-                        //     shrinkWrap: true,
-                        //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        //         crossAxisCount: 2, childAspectRatio: 1 / 1.5),
-                        //     itemBuilder: (context, i) {
-                        //       return PromotionItemWidget(
-                        //         onTapFun: () {
-                        //           Get.to(() => ProductDetailsScreen(
-                        //                 from: widget.from,
-                        //                 packageCode: "",
-                        //               ));
-                        //         },
-                        //         amountColor: darkBlue,
-                        //         imagePath: i == 0
-                        //             ? promotionItems[0].image
-                        //             : i == 1
-                        //                 ? promotionItems[1].image
-                        //                 : i == 2
-                        //                     ? promotionItems[2].image
-                        //                     : i == 3
-                        //                         ? promotionItems[3].image
-                        //                         : promotionItems[4].image,
-                        //         itemName: i == 0
-                        //             ? promotionItems[0].title
-                        //             : i == 1
-                        //                 ? promotionItems[1].title
-                        //                 : i == 2
-                        //                     ? promotionItems[2].title
-                        //                     : i == 3
-                        //                         ? promotionItems[3].title
-                        //                         : promotionItems[4]
-                        //                             .title
-                        //                             .capitalize
-                        //                             .toString(),
-                        //         amount: "2465",
-                        //         memberAmount: "2240",
-                        //         exclusiveProduct: false,
-                        //       );
-                        //     },
-                        //     itemCount: 4,
-                        //   ),
-                        // ),
                         const SpaceHeightWidget(height: 40)
                       ],
                     );
@@ -825,10 +508,8 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: DataTable(
-                              // dataRowMinHeight: ,
                               dataRowMaxHeight: 70,
                               horizontalMargin: 0,
-                              // dataRowMaxHeight: 100,
                               columnSpacing: 0,
                               border: TableBorder.all(
                                   color: middleBlackColor.withOpacity(0.15)),
@@ -969,8 +650,6 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                                   .digitsOnly,
                                               LengthLimitingTextInputFormatter(
                                                   2),
-                                              // FilteringTextInputFormatter.allow(
-                                              //     RegExp("[1-28]"))
                                             ],
                                             padding: 8,
                                             textAlignVertical:
@@ -1051,7 +730,6 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                                   loading = true;
                                                 });
 
-                                                print("add to car fun");
                                                 Map parameters = {
                                                   "Pkid": widget.packageCode,
                                                   "pid": pidList.join(":"),
@@ -1065,8 +743,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                                   // "action": "addUGPromoitems",
                                                   "action": "addSGPromoitems",
                                                 };
-                                                print(
-                                                    "add to cart params...$parameters");
+
                                                 dynamic res =
                                                     await cartController
                                                         .getPackAddToCart(
@@ -1075,13 +752,6 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                                         .toString()
                                                         .toLowerCase() ==
                                                     "success") {
-                                                  // ignore: use_build_context_synchronously
-                                                  // MotionToast.success(
-                                                  //   title: const Text(
-                                                  //       "Congartulations!"),
-                                                  //   description: const Text(
-                                                  //       "Products added successfully to your cart."),
-                                                  // ).show(context);
                                                   CommonToastTrue(
                                                       "Successfully added to your cart.");
 
@@ -1106,10 +776,6 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                                   showQtyErrorText = true;
                                                 });
                                               }
-
-                                              // await Constants.prefs.setInt("cart_count", 1);
-                                              // Get.back();
-                                              // Get.to(() => const EnrollPackageScreen());
                                             },
                                             title: "Add To Cart")),
                                     const SpaceWidthWidget(width: 10),
@@ -1138,7 +804,6 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
   }
 
   incrdcrFun(String from, String itemcount, String packCode) async {
-    print("add to car fun");
     Map parameters = {
       "action": "addSGCartitems",
       "Pkid": packCode,
@@ -1151,7 +816,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
           ? "${int.parse(itemcount) + 1}"
           : "${int.parse(itemcount) - 1}"
     };
-    print("add to cart params...$parameters");
+
     dynamic res = await MainController().getRegPackAddToCart(parameters);
     if (res['Msg'].toString().toLowerCase() == "success") {
       getData("not init");

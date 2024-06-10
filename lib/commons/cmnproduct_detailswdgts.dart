@@ -187,11 +187,6 @@ Widget flaskWidget(String itemName) {
         children: [
           productBulletImg(),
           const SpaceWidthWidget(width: 5),
-
-          // Image.asset(
-          //   "assets/images/leaf.png",
-          //   height: 55,
-          // ),
           Padding(
             padding: const EdgeInsets.only(top: 5),
             child: Column(
@@ -335,35 +330,7 @@ Widget flaskWidget(String itemName) {
       const SpaceHeightWidget(height: 8),
       for (int i = 0; i < flaskResultData.length; i++)
         UniwaveProductDetails(dataText: flaskResultData[i]),
-      // Padding(
-      //   padding: const EdgeInsets.only(left: 10, right: 10),
-      //   child: Row(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       Image.asset(
-      //         "assets/images/leaf.png",
-      //         height: 30,
-      //       ),
-      //       Expanded(
-      //         flex: 2,
-      //         child: Padding(
-      //           padding: const EdgeInsets.only(top: 6),
-      //           child: CommonTitle(
-      //             titleName: flaskResultData[i],
-      //             fontFamily: "OnestSemiBold",
-      //             size: 12.5,
-      //           ),
-      //         ),
-      //       )
-      //     ],
-      //   ),
-      // ),
       const SpaceHeightWidget(height: 15),
-      // Image.asset(
-      // "assets/images/uniwave_flask2.jpg",
-
-      //   height: 170,
-      // ),
       Image.asset(
         itemName.toLowerCase() == "uniwave flask"
             ? "assets/images/uniwave_flask.jpg"
@@ -1047,44 +1014,6 @@ Widget biomatrixWidget() {
             )
           ],
         ),
-        // Row(
-        //   children: [
-        //     Transform.translate(
-        //       offset: const Offset(10, -10),
-        //       child: productBulletImg(),
-
-        //       //  Image.asset(
-        //       //   "assets/images/leaf.png",
-        //       //   height: 55,
-        //       // ),
-        //     ),
-        //     Flexible(
-        //       child: CommonTitle(
-        //         titleName: "What is the Uniwave Biomatrix Sheild",
-        //         fontColor: greenColor,
-        //         textAlign: TextAlign.center,
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // Column(
-        //   mainAxisAlignment: MainAxisAlignment.start,
-        //   children: [
-        //     const SpaceHeightWidget(height: 5),
-        //     CommonTitle(
-        //       titleName: "by",
-        //       fontColor: blackColor,
-        //       fontFamily: "OnestRegular",
-        //       textAlign: TextAlign.center,
-        //     ),
-        //     CommonTitle(
-        //       titleName: "Quantes Technology",
-        //       fontColor: darkBlue,
-        //       fontFamily: "OnestSemiBold",
-        //       textAlign: TextAlign.center,
-        //     )
-        //   ],
-        // ),
         const SpaceHeightWidget(height: 15),
         CommonTitle(
           titleName:
@@ -1233,7 +1162,6 @@ Widget biomatrixWidget() {
         CommonTitle(
           titleName:
               "Dr Om Gandhi (University of Utah) shows how radiation that penetrates the skull of 5-year-old children absorbs 10 times more EMR & EMF radiation than an adult.",
-          // "Dr Om Gandhi (University of Utah) shows how radiation penetrates the skull 5year old children absorb 10 times more EMR & EMF radiation than an adult.",
           fontFamily: "OnestRegular",
           size: 12.5,
           fontColor: middleBlackColor,
@@ -1363,56 +1291,13 @@ kritaliaWidget(String itemName) {
         const Text("Description & Details:",
             style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14)),
         htmlDataWidget(itemName),
-        // CommonTitle(
-        //   titleName: itemName,
-        //   // titleName: itemName == "Kritalia`s Essence of Love"
-        //   //     ? "An exquisite collection of heart-themed jewelry that perfectly blends elegance and affection. Featured prominently is a captivating large heart pendant, its silhouette outlined with a multitude of meticulously set, dazzling round-cut diamonds that exude an irresistible sparkle"
-        //   //     : itemName == "Emerald Verdant Crystal"
-        //   //         ? "Discover elegance with this exquisite jewelry set, featuring vibrant green teardrop gemstones encircled by dazzling crystals, all set in lustrous silver—a luxurious addition to any ensemble."
-        //   //         : itemName == "The Scarlet Crimson"
-        //   //             ? "Unleash the power of timeless elegance with this captivating jewelry set. Radiant red gemstones command attention, set in an intricate dance with glittering crystals, echoing the splendor of a royal treasure. Silver settings enhance the fiery hues, crafting a statement of passion and grandeur. This set is not just an accessory; it's a centerpiece designed to turn heads and elevate any occasion to a celebration of exquisite taste."
-        //   //             : "This elegant bracelet is a modern twist on the classic charm, offering a sleek and sophisticated design. The highlight of this bracelet is the charming heart-shaped pendant with a smooth enamel finish in a striking shade of turquoise. This pop of color adds a playful yet chic element to the bracelet, making it a standout accessory that will capture attention.",
-
-        //   fontColor: middleBlackColor,
-        //   size: 12,
-        //   fontFamily: "OnestRegular",
-        // ),
         const SpaceHeightWidget(height: 10),
-        // Container(
-        //   padding: const EdgeInsets.all(8),
-        //   width: double.infinity,
-        //   decoration: BoxDecoration(
-        //       borderRadius: BorderRadius.circular(5),
-        //       color: purpleColor.withOpacity(0.05)),
-        //   child: Column(
-        //     crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
-        //       const Text("THE KRITALIA EXPERIENCE",
-        //           style: TextStyle(fontFamily: "OnestSemiBold", fontSize: 14)),
-        //       const SpaceHeightWidget(height: 10),
-        //       const Text(
-        //           "When you choose Kritalia & Co., you become a valued member of the Kritalia family. Since 1937, we’ve prided ourselves on providing premium service, a tradition that continues to this day.",
-        //           style: TextStyle(fontFamily: "OnestRegular", fontSize: 12)),
-        //       const SpaceHeightWidget(height: 10),
-        //       const CommonDivider(),
-        //       for (int i = 0; i < kritaliaExpData.length; i++)
-        //         KristaliaTileWidget(
-        //             title: kritaliaExpData[i]['title'],
-        //             data: kritaliaExpData[i]['des'])
-        //     ],
-        //   ),
-        // ),
       ],
     ),
   );
 }
 
-List<String> productCtgs = [
-  "Wellness Care",
-  // "Hair Care",
-  // "Skin Care",
-  "Kritalia & Co"
-];
+List<String> productCtgs = ["Wellness Care", "Kritalia & Co"];
 
 class ProductCatScrollWidget extends StatelessWidget {
   final int selInd;
@@ -1529,20 +1414,11 @@ class ViewRatingWidget extends StatelessWidget {
                     color: Colors.amber,
                   ),
                   onRatingUpdate: (rating) {
-                    print(rating);
                   },
                 ),
-                // const SpaceWidthWidget(width: 5),
-                // CommonTitle(
-                //   titleName: "Verified Purchase",
-                //   fontColor: darkRedColor,
-                //   size: 10,
-                //   fontFamily: "OnestRegular",
-                // )
               ],
             ),
             const SpaceHeightWidget(height: 4),
-            // const SideTitle(title: "Reviewed in India"),
             CommonTitle(
               titleName: review,
               fontColor: middleBlackColor,
@@ -1628,7 +1504,6 @@ class ViewRatingWidget extends StatelessWidget {
                     imagePath: '',
                     idata: Icons.share,
                     onTapFun: () async {
-                      print("sharing function");
                       String imgUrl = "";
                       if (reviewImagesData!.isNotEmpty) {
                         imgUrl = reviewImagesData![0];
@@ -1667,14 +1542,6 @@ class ViewRatingWidget extends StatelessWidget {
                     titile: 'Share',
                   ),
                   CustomAutoWidthButton(onTapFun: reportFun, title: "Report")
-                  // IconElevatedButton(
-                  //   buttonColor: darkBlue,
-                  //   imagePath: '',
-                  //   idata: Icons.report_gmailerrorred_rounded,
-                  //   onTapFun: () {},
-                  //   labelColor: whiteColor,
-                  //   titile: 'Report',
-                  // ),
                 ],
               ),
             )
@@ -1773,10 +1640,7 @@ class RportWidget extends StatelessWidget {
                     color: lightDarKBlue.withOpacity(0.8),
                     fontFamily: "OnestSemiBold",
                   ),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () {
-                      print('community guidelines.');
-                    }),
+                  recognizer: TapGestureRecognizer()..onTap = () {}),
               TextSpan(
                 text: " If it doesn't, we'll remove it.",
                 style: TextStyle(
@@ -1913,8 +1777,6 @@ class _PdfWidgetState extends State<PdfWidget> {
                             FileDownloader.downloadFile(
                                 url:
                                     "https://admin.destina1.com/Resources/Mini%20Book%20web.pdf",
-                                // url:
-                                //     "https://admin.destina1.com/MemberDownloads/GoProChapter_12.mp3",
                                 name:
                                     "https://admin.destina1.com/Resources/Mini%20Book%20web.pdf"
                                         .split('MemberDownloads/')
@@ -1927,16 +1789,11 @@ class _PdfWidgetState extends State<PdfWidget> {
                                       progressbar = false;
                                     }
                                   });
-
-                                  print(
-                                      'FILE fileName HAS PROGRESS $onProgress');
                                 },
                                 onDownloadCompleted: (String path) {
-                                  print('FILE DOWNLOADED TO PATH: $path');
                                   CommonToastTrue("Successfully donwloaded");
                                 },
                                 onDownloadError: (String error) {
-                                  print('DOWNLOAD ERROR: $error');
                                   CommonToast(error);
                                 });
                           }
@@ -2035,11 +1892,8 @@ class _ReviewVideoWidgetState extends State<ReviewVideoWidget> {
 
   @override
   void initState() {
-    print("vi....${widget.videoUrl}");
     videoId = YoutubePlayer.convertUrlToId(widget.videoUrl)!;
-    print("vi id...$videoId");
     thumbNailImg = YoutubePlayer.getThumbnail(videoId: videoId);
-    print("vi thumbNailImg...$thumbNailImg");
 
     _ycontroller = YoutubePlayerController(
         initialVideoId: videoId,
@@ -2095,14 +1949,6 @@ class _ReviewVideoWidgetState extends State<ReviewVideoWidget> {
                     showVideoProgressIndicator: true,
                   ),
                 ),
-                // SizedBox(
-                //   width: double.infinity,
-                //   child: CommonCachedNetworkImage(
-                //     imagePath: thumbNailImg,
-                //     height: widget.videoImgHeight,
-                //     boxfit: BoxFit.cover,
-                //   ),
-                // ),
                 CircleAvatar(
                   backgroundColor: darkRedColor,
                   radius: 18,
@@ -2182,8 +2028,6 @@ class _ReviewViWidgetState extends State<ReviewViWidget> {
                             img!,
                             height: 100,
                             width: 160,
-                            // widget.videoImgWidth
-                            //  ?? double.infinity,
                             fit: BoxFit.cover,
                           )
                         : const CommonCachedNetworkImage(

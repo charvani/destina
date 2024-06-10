@@ -44,11 +44,9 @@ import 'tools/ftaform_reportscreen.dart';
 import 'tools/ftareg_formscreen.dart';
 
 class MyAccountScreen extends StatefulWidget {
-  // List<String>? bannerPopUpImages = [];
-  // dynamic data;
+ 
   const MyAccountScreen({
     super.key,
-    //  this.bannerPopUpImages, this.data
   });
 
   @override
@@ -63,15 +61,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // if (widget.bannerPopUpImages!.isNotEmpty) {
-
-      //   Get.to(
-      //     () => DashBoardScreen(
-      //       data: widget.data,
-      //       bannerPopUpImages: widget.bannerPopUpImages,
-      //     ),
-      //   );
-      // }
+     
     });
   }
 
@@ -84,32 +74,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         flexibleSpace: Stack(
           alignment: Alignment.center,
           children: [
-            // Container(
-            //   color: redColor,
-            //   height: 125,
-            //   width: double.infinity,
-            //   child: SvgPicture.asset(
-            //     "assets/images/myaccount_bg.svg",
-            //     fit: BoxFit.fill,
-            //   ),
-            // ),
-            // InkWell(
-            //   onTap: () {
-            //     print("dflkskdlf");
-            //     Get.back();
-            //   },
-            //   child: Container(
-            //     alignment: Alignment.topLeft,
-            //     width: double.infinity,
-            //     margin: const EdgeInsets.only(bottom: 50),
-            //     padding: const EdgeInsets.only(left: 5, bottom: 0),
-            //     height: 15,
-            //     child: Icon(
-            //       Icons.keyboard_arrow_left_rounded,
-            //       color: blackColor,
-            //     ),
-            //   ),
-            // ),
+          
             Padding(
               padding: const EdgeInsets.only(left: 15, top: 35),
               child: Row(
@@ -143,7 +108,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              // "Destina1int",
                               Constants.prefs.getString("user_id").toString(),
                               style: const TextStyle(
                                   fontFamily: "OnestSemiBold", fontSize: 18),
@@ -180,8 +144,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 leadingIcon: Icons.home,
                 onTapFun: () {
                   Get.to(() => const DashBoardScreen(
-                      // data: widget.data,
-                      // bannerPopUpImages: widget.bannerPopUpImages,
+                    
                       ));
                 },
                 title: "Dashboard",
@@ -794,12 +757,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           },
           title: "FAQS",
         ),
-        // MyAccountItemWidget(
-        //   onTapFun: () {
-        //     Get.to(() => const PackageReviewScreen());
-        //   },
-        //   title: "Package Review",
-        // ),
+       
         MyAccountItemWidget(
           onTapFun: () {
             Get.to(() => const FTARegistrationFormScreen());

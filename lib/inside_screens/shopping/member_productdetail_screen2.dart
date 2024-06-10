@@ -52,7 +52,7 @@ class _MemberProductDetailsScreen2State
   @override
   void initState() {
     super.initState();
-    print("from...${widget.from}");
+
     firstQtyController.text = "1";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       getRegisterPackageData();
@@ -68,9 +68,6 @@ class _MemberProductDetailsScreen2State
       } else {
         sessionId = Constants.prefs.getString("ss_id");
       }
-
-      print("uniqid...$uniqId");
-      print("sessionid..$sessionId");
     });
   }
 
@@ -117,7 +114,6 @@ class _MemberProductDetailsScreen2State
   }
 
   reviewDataFun(String pid) async {
-    print("at reviewDataFun");
     Map bData = {
       "action": "Report",
       "Pid": pid,
@@ -149,7 +145,6 @@ class _MemberProductDetailsScreen2State
           key: _fomkey1,
           child: Container(
             padding: const EdgeInsets.fromLTRB(15, 5, 5, 0),
-            // margin: const EdgeInsets.only(bottom: 1),
             height: 90,
             alignment: Alignment.center,
             width: double.infinity,
@@ -171,8 +166,6 @@ class _MemberProductDetailsScreen2State
                       children: [
                         InkWell(
                           onTap: () {
-                            // print(
-                            //     "${double.parse(packDetailsController.productDetails.value.price.replaceAll(packDetailsController.productDetails.value.currency, "")) * int.parse(firstQtyController.text)}");
                             if (int.parse(firstQtyController.text) > 1) {
                               setState(() {
                                 firstQtyController.text =
@@ -239,8 +232,7 @@ class _MemberProductDetailsScreen2State
                                 setState(() {
                                   packageLoading = true;
                                 });
-                                // this register add to cart fun
-                                print("add to car fun");
+
                                 Map parameters = {
                                   "action": "addMECartitems",
                                   // "addSGCartitems",
@@ -253,13 +245,12 @@ class _MemberProductDetailsScreen2State
                                   "sprno": Constants.prefs.get("reg_id"),
                                   "Quantity": firstQtyController.text
                                 };
-                                print("add to cart params...$parameters");
+
                                 dynamic res = await MainController()
                                     .getRegPackAddToCart(parameters);
 
                                 if (res['Msg'].toString().toLowerCase() ==
                                     "success") {
-                                  print("res....$res");
                                   setState(() {
                                     packageLoading = false;
                                   });
@@ -295,7 +286,7 @@ class _MemberProductDetailsScreen2State
                                   "country":
                                       Constants.prefs.getString("country_id"),
                                 };
-                                print("add to cart params...$parameters");
+                                
                                 dynamic res = await MainController()
                                     .getMemberMallAddToCart(parameters);
                                 if (res['Msg'].toString().toLowerCase() ==
@@ -361,7 +352,7 @@ class _MemberProductDetailsScreen2State
                           title: packDetailsController
                               .packageDetailsData.value.pkname,
                         ),
-                         PdfWidget(
+                        PdfWidget(
                           category: widget.fromPack,
                         ),
                         if (widget.fromPack == "Kritalia & Co")
@@ -475,9 +466,7 @@ class _MemberProductDetailsScreen2State
                             Icons.star,
                             color: Colors.amber,
                           ),
-                          onRatingUpdate: (rating) {
-                            print(rating);
-                          },
+                          onRatingUpdate: (rating) {},
                         ),
                         const SpaceWidthWidget(width: 10),
                         CommonTitle(
@@ -625,7 +614,6 @@ class _MemberProductDetailsScreen2State
             myState(() {
               gval = val;
             });
-            print("gValue.....$val");
           },
           gVal: gval,
           submitFun: () {

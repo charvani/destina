@@ -27,12 +27,7 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
   dynamic userId, password, countryId, hidUid, countOfCart, uniqId, sessionId;
   int selectedInd = 0;
   dynamic krialiaTappedInd;
-  List<String> productCatgs = [
-    "Wellness Care",
-    // "Hair Care",
-    // "Skin Care",
-    "Redemption"
-  ];
+  List<String> productCatgs = ["Wellness Care", "Redemption"];
   @override
   void initState() {
     super.initState();
@@ -62,11 +57,9 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
     dynamic res = await _dataController.getPackages(
         countyId: Constants.prefs.getString("country_id")!,
         packageMalVal: malVal);
-    print("getPackages screen data...$res");
+
     if (res != null) {
-      print("at res...........");
       if (widget.from == "order_again") {
-        print("at order_again...........");
         oderAgainAddtoCartFun();
       } else {
         cartItemsFun();
@@ -85,7 +78,7 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
       "sprno": Constants.prefs.getString("reg_id"),
       "Quantity": "0"
     };
-    print("add to cart params...$parameters");
+
     dynamic res = await MainController().getRegPackAddToCart(parameters);
     if (res['Msg'].toString().toLowerCase() == "success") {
       cartItemsFun();
@@ -111,7 +104,6 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
                 child: InkWell(
                     // behavior: HitTestBehavior.translucent,
                     onTap: () {
-                      print("ooooo");
                       Get.back();
                     },
                     child: Icon(
@@ -253,46 +245,6 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
             })),
           ],
         ));
-
-    //   Obx(() {
-    //     return _dataController.loading.value
-    //         ? loader
-    //         : _dataController.salesOrdersList.isEmpty
-    //             ? const NotAvailableText(text: "No data found")
-    //             : Padding(
-    //                 padding: const EdgeInsets.all(8.0),
-    //                 child: GridView.builder(
-    //                   padding: const EdgeInsets.all(0),
-    //                   // physics: const NeverScrollableScrollPhysics(),
-    //                   shrinkWrap: true,
-    //                   gridDelegate:
-    //                       const SliverGridDelegateWithFixedCrossAxisCount(
-    //                           crossAxisCount: 2, childAspectRatio: 1 / 1.1),
-    //                   itemBuilder: (context, i) {
-    //                     return CategroyItemWidget(
-    //                       onTapFun: () async {
-    //                         dynamic res = await Get.to(
-    //                             () => RedemptionProductDetailsScreen(
-    //                                   packageCode: _dataController
-    //                                       .salesOrdersList[i].pkcode,
-    //                                 ));
-    //                         if (res != null) {
-    //                           if (res[0] == true) {
-    //                             dataFun();
-    //                           }
-    //                         }
-    //                       },
-    //                       imagePath: _dataController.salesOrdersList[i].pImage,
-    //                       titile: _dataController.salesOrdersList[i].pkname,
-    //                       amount:
-    //                           "RP ${_dataController.salesOrdersList[i].mrp}",
-    //                     );
-    //                   },
-    //                   itemCount: _dataController.salesOrdersList.length,
-    //                 ),
-    //               );
-    //   }),
-    // );
   }
 
   dialogFun() {
@@ -391,13 +343,12 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
       "amt": "0",
       "amttype": "",
     };
-    print("cart params...$cartParams");
+
     dynamic res = await _dataController.getMallCartItems(
         "Redemption mall load", cartParams, ApiData().getRedemPackages);
   }
 
   incrdcrFun(String from, String itemcount, String packCode) async {
-    print("add to car fun");
     Map parameters = {
       "action": "addRDCartitems",
       "Pkid": packCode,
@@ -411,7 +362,7 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
           ? "${int.parse(itemcount) + 1}"
           : "${int.parse(itemcount) - 1}"
     };
-    print("add to cart params...$parameters");
+
     dynamic res = await MainController().getRegPackAddToCart(parameters);
 
     if (res['Msg'].toString().toLowerCase() == "success") {
