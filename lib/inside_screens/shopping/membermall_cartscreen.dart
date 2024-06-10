@@ -169,6 +169,8 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                         Column(
                                           children: [
                                             CartItemWidget(
+                                              symbol: cartController
+                                                  .salesMallCartItems[i].symbol,
                                               showTotals: true,
                                               totalPrice: (double.parse(
                                                           cartController
@@ -482,22 +484,28 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8),
-                                        child: SizedBox(
-                                          width: 200,
-                                          height: 35,
-                                          child: IconElevatedButton(
-                                            onTapFun: () async {
-                                              Get.off(() =>
-                                                  MemberShipCheckOutScreen(
-                                                      redirectUrl:
-                                                          "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/MembershipCheckoutParam.html?RegId=$regId&UpgMember=$upgradeMemVal&sessid=$sessionId&uniqId=$uniqId"));
-                                            },
-                                            imagePath:
-                                                'assets/images/shopping_cart_img.jpg',
-                                            labelColor: whiteColor,
-                                            buttonColor: lightDarKBlue,
-                                            titile: "Checkout",
-                                          ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              width: 200,
+                                              height: 35,
+                                              child: IconElevatedButton(
+                                                onTapFun: () async {
+                                                  Get.off(() =>
+                                                      MemberShipCheckOutScreen(
+                                                          redirectUrl:
+                                                              "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/MembershipCheckoutParam.html?RegId=$regId&UpgMember=$upgradeMemVal&sessid=$sessionId&uniqId=$uniqId"));
+                                                },
+                                                imagePath:
+                                                    'assets/images/shopping_cart_img.jpg',
+                                                labelColor: whiteColor,
+                                                buttonColor: lightDarKBlue,
+                                                titile: "Checkout",
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       //   ],

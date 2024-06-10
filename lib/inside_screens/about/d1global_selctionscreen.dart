@@ -83,7 +83,8 @@ class _D1GlobalScreenState extends State<D1GlobalScreen> {
               onTapFun: () async {
                 final Uri url = Uri.parse(
                     // "https://www.tiktok.com/@d1globalcorp"
-                    "https://www.tiktok.com/@d1global");
+                    // "https://www.tiktok.com/@d1global"
+                    "https://www.tiktok.com/@destina1global");
                 if (!await launchUrl(url)) {
                   throw Exception('Could not launch $url');
                 }

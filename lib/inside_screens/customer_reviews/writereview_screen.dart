@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:video_player/video_player.dart';
 
+import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
 
 class WriteReviewScreen extends StatefulWidget {
@@ -323,25 +324,26 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                             ),
                           ),
                     const SpaceHeightWidget(height: 20),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         // Obx(() {
                         //   return _reviewController.loading.value
                         //       ? loader
                         //       :
-                        SizedBox(
-                            height: 35,
-                            child: CustomAutoWidthButton(
-                                onTapFun: () {
-                                  if (_fomkey.currentState!.validate()) {
-                                    FocusManager.instance.primaryFocus
-                                        ?.unfocus();
+                        // SizedBox(
+                        //     height: 35,
+                        //     child: CustomAutoWidthButton(
+                        //         onTapFun: () {
+                        //           if (_fomkey.currentState!.validate()) {
+                        //             FocusManager.instance.primaryFocus
+                        //                 ?.unfocus();
 
-                                    videosubmitFun();
-                                  }
-                                },
-                                title: "Upload Video"))
+                        //             videosubmitFun();
+                        //             // submitFun();
+                        //           }
+                        //         },
+                        //         title: "Upload Video"))
                         // ;
                         // })
                       ],
@@ -350,10 +352,10 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Obx(() {
-                        //   return _reviewController.loading.value
-                        //       ? loader
-                        //       :
+                        Obx(() {
+                          return _reviewController.loading.value
+                              ? loader
+                              :
                         SizedBox(
                             height: 35,
                             child: CustomAutoWidthButton(
@@ -369,13 +371,14 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                                           title:
                                               "Images size should not exceed 1.0MB"));
                                     } else {
-                                      submitFun();
+                                      // submitFun();
+                                      videosubmitFun();
                                     }
                                   }
                                 },
                                 title: "Submit"))
-                        // ;
-                        // })
+                        ;
+                        })
                       ],
                     ),
                     const SpaceHeightWidget(height: 10),
@@ -486,27 +489,33 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
         });
         videoapiFun();
       }
+    } else {
+      apicallFun("");
     }
   }
 
   videoapiFun() async {
-    Map bdata = {"VidFiles": videoExtension ?? "", "Video": video64 ?? ""};
+    Map bdata = {
+      "Action": "Insert",
+      "VidFiles": videoExtension ?? "",
+      "Video": video64 ?? ""
+    };
     print("video bdata...$bdata");
+    print("video is...$video64");
     dynamic res = await _reviewController.getReviewVideoUpload(
       bdata,
     );
     if (res != null) {
       print("get...$res");
       if (res['Msg'] == "SUCCESS") {
-        Get.back();
-        CommonToastTrue(res['Message']);
+        apicallFun(res['Rid']);
       } else {
         CommonToast(res['Message']);
       }
     }
   }
 
-  submitFun() async {
+  submitFun(String rid) async {
     print("my viiiiiii....$videoFile");
     if (videoFile != null) {
       // MediaInfo? mediaInfo = await VideoCompress.compressVideo(
@@ -545,14 +554,14 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
       setState(() {
         video64 = base64Encode(videoBytes);
       });
-      apicallFun();
+      // apicallFun()
       // }
     } else {
-      apicallFun();
+      // apicallFun();
     }
   }
 
-  apicallFun() async {
+  apicallFun(String rid) async {
     Map bdata = {
       "Action": "Insert",
       "Pid": widget.pid,
@@ -560,12 +569,13 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
       "Review": reviewController.text,
       "Rating": ratingVal.toString(),
       "ImgFiles": finalImagesList!.isEmpty ? "" : imgExtensionsList!.join(","),
-      "VidFiles": videoExtension ?? "",
+      // "VidFiles": videoExtension ?? "",
+      "VidFiles": "",
       "Session": reviewSession,
       "Images": finalImagesList!.isEmpty ? "" : finalImagesList!.join(","),
-      "Video": video64 ?? ""
-      // "Images": "",
-      // "Video": "",
+      // "Video": video64 ?? ""
+      "Rid": rid,
+      "Video": "",
     };
     print("b data...$bdata");
     print("video>>>>>$video64");

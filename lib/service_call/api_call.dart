@@ -134,14 +134,45 @@ class ApiCall {
     }
   }
 
+  ///previous upload review code::::::::::::::::::::::::::::::::
+  ///:::::::::::::::::::::::::::::::
+  // uploadReview({required bData, required apiEndPoint}) async {
+  //   String endUrl = ApiData().baseUrl + apiEndPoint;
+  //   print("getting url...$endUrl");
+
+  //   try {
+  //     http.Response response = await http.post(
+  //       Uri.parse(endUrl),
+  //       body: bData,
+  //     );
+
+  //     print("cherry.....${response.body}");
+  //     print("response.statusCode.....${response.statusCode}");
+  //     print("response.reasonPhrase.....${response.reasonPhrase}");
+
+  //     if (response.statusCode == 200) {
+  //       dynamic convertedData = convert.jsonDecode(response.body);
+
+  //       return convertedData;
+  //     } else {
+  //       dynamic convertedData = convert.jsonDecode(response.body);
+
+  //       print("get error....${convertedData['Message']}");
+  //       CommonToast(convertedData['Message']);
+  //     }
+  //   } catch (e) {
+  //     print("getting error....$e");
+  //     Get.dialog(OkDialog(title: e.toString()));
+  //   }
+  // }
   uploadReview({required bData, required apiEndPoint}) async {
-    print("getting url...${"${ApiData().baseUrl}$apiEndPoint"}");
+    String endUrl = ApiData().baseUrl + apiEndPoint;
+    print("getting url...$endUrl");
 
     try {
-      http.Response response = await http.post(
-        Uri.parse("${ApiData().baseUrl}WriteNReview"),
-        body: bData,
-      );
+      http.Response response = await http.post(Uri.parse(endUrl),
+          body: jsonEncode(bData),
+          headers: {'Content-Type': 'application/json'});
 
       print("cherry.....${response.body}");
       print("response.statusCode.....${response.statusCode}");

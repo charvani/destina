@@ -132,12 +132,12 @@ class _SplashScreenState extends State<SplashScreen> {
     onboard = Constants.prefs.getBool("onboard") ?? false;
     login = Constants.prefs.getString("user_id") ?? "false";
     // live
-    // versionCheckFun();
+    versionCheckFun();
     //staging
-    countyCodeFun();
-    Timer(const Duration(seconds: 3), () {
-      navgationFun();
-    });
+    // countyCodeFun();
+    // Timer(const Duration(seconds: 3), () {
+    //   navgationFun();
+    // });
   }
 
   @override

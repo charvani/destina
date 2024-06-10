@@ -33,16 +33,22 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
     countryId = Constants.prefs.getString("country_id");
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      // if (Constants.prefs.getString("uniq_id") == null) {
-      //   uniqId = generateRandomString(10);
-      //   await Constants.prefs.setString("uniq_id", uniqId);
-      // } else {
-      //   uniqId = Constants.prefs.getString("uniq_id");
-      // }
-      uniqId = generateRandomString(10);
-      await Constants.prefs.setString("uniq_id", uniqId);
-      sessionId = generateTimeStamp();
-      await Constants.prefs.setString("ss_id", sessionId);
+      if (Constants.prefs.getString("uniq_id") == null) {
+        uniqId = generateRandomString(10);
+        await Constants.prefs.setString("uniq_id", uniqId);
+      } else {
+        uniqId = Constants.prefs.getString("uniq_id");
+      }
+      if (Constants.prefs.getString("ss_id") == null) {
+        sessionId = generateTimeStamp();
+        await Constants.prefs.setString("ss_id", sessionId);
+      } else {
+        sessionId = Constants.prefs.getString("ss_id");
+      }
+      // uniqId = generateRandomString(10);
+      // await Constants.prefs.setString("uniq_id", uniqId);
+      // sessionId = generateTimeStamp();
+      // await Constants.prefs.setString("ss_id", sessionId);
       dataFun("Wellness Care");
     });
   }
@@ -364,6 +370,8 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
                           i < _dataController.salesMallCartItems.length;
                           i++)
                         CartItemWidget(
+                            symbol:
+                                _dataController.salesMallCartItems[i].symbol,
                             showTotals:
                                 _dataController.salesMallCartItems.length - i ==
                                         1
