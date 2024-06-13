@@ -97,6 +97,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         final url = Uri.parse("market://details?id=$appId");
                         launchUrl(
                           url,
+                          mode: LaunchMode.externalApplication,
                         );
                       }
                     },

@@ -19,53 +19,52 @@ class _BrandSelectionScreenState extends State<BrandSelectionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppBar(title: "Brands", backNavigation: true),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(children: [
-            const SpaceHeightWidget(height: 15),
-            GestureDetector(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(children: [
+          const SpaceHeightWidget(height: 15),
+          Expanded(
+            child: GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () {
-                Get.to(() => const QHomeScreen(
-                   
-                    ));
+                Get.to(() => const QHomeScreen());
               },
               child: Image.asset(
                 "assets/images/brand_q.png",
               ),
             ),
-            const SpaceHeightWidget(height: 15),
-            const CommonDivider(),
-            const SpaceHeightWidget(height: 10),
-            GestureDetector(
+          ),
+          const SpaceHeightWidget(height: 15),
+          const CommonDivider(),
+          const SpaceHeightWidget(height: 10),
+          Expanded(
+            child: GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () {
-                Get.to(() => const SHomeScreen()
-                   
-                    );
+                Get.to(() => const SHomeScreen());
               },
               child: Image.asset(
                 "assets/images/brand_s.png",
-                height: 150,
+                // height: 150,
               ),
             ),
-            const CommonDivider(),
-            const SpaceHeightWidget(height: 35),
-            GestureDetector(
+          ),
+          const CommonDivider(),
+          // const SpaceHeightWidget(height: 35),
+          Expanded(
+            child: GestureDetector(
               behavior: HitTestBehavior.translucent,
               onTap: () {
                 Get.to(() => const KritaliaHomeScreen());
-               
               },
               child: Image.asset(
                 "assets/images/brand_k.png",
               ),
             ),
-            const SpaceHeightWidget(height: 50),
-            const CommonDivider(),
-          ]),
-        ),
+          ),
+          const CommonDivider(),
+          const SpaceHeightWidget(height: 20),
+        ]),
       ),
     );
   }

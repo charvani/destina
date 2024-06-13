@@ -5,7 +5,7 @@ import 'colors.dart';
 
 class Constants {
   static late SharedPreferences prefs;
-  static String appversion = "1.1";
+  static String appversion = "2.0";
   String country = "MY";
 }
 

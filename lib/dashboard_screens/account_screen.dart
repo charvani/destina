@@ -51,9 +51,7 @@ class _AccountScreenState extends State<AccountScreen>
     );
 
     _controller.repeat(reverse: true);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    });
-
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
   }
 
   @override
@@ -70,9 +68,7 @@ class _AccountScreenState extends State<AccountScreen>
     return Scaffold(
         key: _scaffoldKey,
         drawer: const Drawer(
-          child:
-              MyAccountScreen(
-                  ),
+          child: MyAccountScreen(),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -264,7 +260,6 @@ class _AccountScreenState extends State<AccountScreen>
               Container(
                 width: double.infinity,
                 margin: const EdgeInsets.all(10),
-
                 child: Text(
                   "Destina 1 member premier picks",
                   style: TextStyle(
