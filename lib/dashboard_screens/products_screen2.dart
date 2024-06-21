@@ -10,8 +10,10 @@ import '../models/onboarding_model.dart';
 
 class ProductsScreen2 extends StatefulWidget {
   final int? index;
+  final String? billno;
   final String from;
-  const ProductsScreen2({super.key, required this.from, this.index});
+  const ProductsScreen2(
+      {super.key, required this.from, this.index, this.billno});
   @override
   State<ProductsScreen2> createState() => _ProductsScreen2State();
 }
@@ -51,8 +53,42 @@ class _ProductsScreen2State extends State<ProductsScreen2> {
     });
   }
 
+  dynamic uniqId, sessionId;
   dataFun(String category) async {
     dynamic data = await productController.getProducts(category, null);
+    if (data != null) {
+      if (Constants.prefs.getString("uniq_id") == null) {
+        uniqId = generateRandomString(10);
+        await Constants.prefs.setString("uniq_id", uniqId);
+      } else {
+        uniqId = Constants.prefs.getString("uniq_id");
+      }
+      if (Constants.prefs.getString("ss_id") == null) {
+        sessionId = generateTimeStamp();
+        await Constants.prefs.setString("ss_id", sessionId);
+      } else {
+        sessionId = Constants.prefs.getString("ss_id");
+      }
+      print("bill ...${widget.billno}");
+      if (widget.billno != "" && widget.billno != null) {
+        oderAgainAddtoCartFun();
+      }
+    }
+  }
+
+  oderAgainAddtoCartFun() async {
+    Map parameters = {
+      "action": "addBYRTCartitems",
+      "Pkid": "0",
+      "Country": Constants.prefs.getString("country_id"),
+      "Uniqid": uniqId,
+      "sessid": sessionId,
+      "ipaddress": widget.billno,
+      "sprno": Constants.prefs.getString("reg_id"),
+      "Quantity": "0"
+    };
+
+    dynamic res = await MainController().getRegPackAddToCart(parameters);
   }
 
   dynamic krialiaTappedInd;

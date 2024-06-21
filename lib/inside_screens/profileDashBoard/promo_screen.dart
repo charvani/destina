@@ -34,7 +34,8 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
   void initState() {
     super.initState();
     packCode = widget.pkCode;
-
+    print("p...${widget.pkCode}");
+    print("p22...${widget.pkMallNum}");
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       if (Constants.prefs.getString("uniq_id") == null) {
         uniqId = generateRandomString(10);
@@ -494,7 +495,7 @@ class _PromoDashboardScreenState extends State<PromoDashboardScreen> {
                                                       .getString("user_id"),
                                                   "prdtype": "Promotion",
                                                 };
-                                                
+
                                                 dynamic res = await MainController()
                                                     .getPromoPackAddToCart(
                                                         parameters,

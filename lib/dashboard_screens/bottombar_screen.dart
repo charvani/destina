@@ -14,9 +14,15 @@ class BottomBarScreen extends StatefulWidget {
   final int? index;
   final List<String>? bannerPopup;
   final dynamic data;
+  final String? billno;
 
   const BottomBarScreen(
-      {Key? key, this.index, this.productIndex, this.bannerPopup, this.data})
+      {Key? key,
+      this.index,
+      this.productIndex,
+      this.bannerPopup,
+      this.data,
+      this.billno})
       : super(
           key: key,
         );
@@ -58,6 +64,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         ProductsScreen2(
           from: "bottombar",
           index: widget.productIndex,
+          billno: widget.billno,
         ),
         const CartScreen(
           from: "bottombar",

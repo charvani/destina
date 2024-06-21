@@ -49,21 +49,22 @@ class _SplashScreenState extends State<SplashScreen> {
     if (res != null) {
       if (res['Message'] == "SUCCESS") {
         countyCodeFun();
-
         Timer(const Duration(seconds: 3), () {
           navgationFun();
         });
       } else {
         Timer(const Duration(seconds: 1), () {
-          Get.dialog(barrierDismissible: false, versionDialog(res['Updtae']));
+          Get.dialog(
+              barrierDismissible: false,
+              versionDialog(res['Updtae'], res['Message']));
         });
       }
     }
   }
 
-  versionDialog(String updateForcefully) {
+  versionDialog(String updateForcefully, String mesg) {
     return Dialog(
-      alignment: Alignment.bottomLeft,
+      alignment: Alignment.center,
       child: PopScope(
         canPop: false,
         child: Container(
@@ -72,8 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const CommonTitle(
-                  titleName: "Version update available, please update."),
+              CommonTitle(titleName: mesg),
               const SpaceHeightWidget(height: 15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

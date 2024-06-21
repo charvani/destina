@@ -4,12 +4,12 @@ import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/inside_screens/myEmoney/ecard_reqreport_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -144,7 +144,7 @@ Widget pendentWidget() {
       ),
       const SpaceHeightWidget(height: 15),
       const CommonTitle(
-        titleName: "THE RESULTS :",
+        titleName: "BENEFITS :",
         fontFamily: "OnestSemiBold",
         size: 15,
       ),
@@ -158,26 +158,69 @@ Widget pendentWidget() {
         "assets/images/prDetails_pendent.png",
         height: 170,
       ),
+      const SpaceHeightWidget(height: 15),
+      const CommonTitle(
+        titleName: "How It Works",
+        fontFamily: "OnestSemiBold",
+        size: 15,
+      ),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: CommonTitle(
+          titleName:
+              "Uniwave by Quantes Technology is much needed as most of us are running out of energy due to today's fast-paced, busy lifestyle. There is no time to relax, and there's too much to do! All the radiation emitted from the electronic gadgets, vehicles, and technological advancements we use to get everything done quicker further drains out the energy that is much needed for our daily activities.",
+          textAlign: TextAlign.justify,
+          size: 12,
+          fontFamily: "OnestRegular",
+          fontColor: middleBlackColor,
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: CommonTitle(
+          titleName:
+              "Uniwave by Quantes Technology provides optimum energy that helps restore our body's energy levels to an ideal range of 70-90 mV. With Uniwave, we can enjoy increased energy and significant health benefits. It's a fast-acting, natural choice for improving our energy and well-being.",
+          textAlign: TextAlign.justify,
+          size: 12,
+          fontFamily: "OnestRegular",
+          fontColor: middleBlackColor,
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: ReviewVideoWidget(
+                onTapFun: () async {
+                  final Uri url = Uri.parse(
+                      "https://www.youtube.com/watch?v=b-QVKZD9jSQ&list=PLSn3vs1mApFHDMlwZgDmI4VGyHT4ximp8");
+                  if (!await launchUrl(url)) {
+                    throw Exception('Could not launch $url');
+                  }
+                },
+                videoUrl:
+                    "https://www.youtube.com/watch?v=b-QVKZD9jSQ&list=PLSn3vs1mApFHDMlwZgDmI4VGyHT4ximp8",
+                videoImgHeight: 200)),
+      ),
     ],
   );
 }
 
 List<String> pendentResultData = [
   "A re-balanced biofield & stability.",
-  "Significant protection from EMF, including 5G and Geopathic Stress.",
+  "Significant protection from EMR & EMF Radiation.",
   "Improved Physical performance.",
   "Energy flow and qualitative balance is restored.",
   "Having a quality sleep.",
   "Enhance positivity and creativity.",
-  "Rejuvenation of cells.",
-  "Increase Energy Levels.",
+  "Enhance the Body's Energy Level.",
   "Improve focus and concentration.",
-  "Neutralize harmful manmade and natural frequencies transmitted into beneficial energizes.",
-  "Boost endurance, strength and vitality.",
+  "Neutralize harmful manmade and natural frequencies transmitted into beneficial energies.",
+  "Boost endurance, strength, and vitality.",
   "Enhance the body's flexibility.",
-  "Strengthen the body's immune system .",
-  "Trigger the production of stem cells for new cell formation.",
-  "Provide optimum energy for the healthy lifestyle.",
+  "Enhance the body's natural defense system.",
+  "Improve the body's stability.",
+  "Promotes healthy blood flow."
 ];
 Widget flaskWidget(String itemName) {
   return Column(
@@ -214,25 +257,27 @@ Widget flaskWidget(String itemName) {
         ],
       ),
       const SpaceHeightWidget(height: 10),
-      for (int i = 0; i < 3; i++)
-        UniwaveProductDetails(
-          dataText: i == 0
-              ? "Rejuvenation of cells"
-              : i == 1
-                  ? "Trigger the production of stem cells for new cell formation"
-                  : " Provide optimum energy for the healthy lifestyle",
-        ),
-      const SpaceHeightWidget(height: 18),
-      CommonTitle(
-        titleName: "Benefits of $itemName",
-        fontFamily: "OnestSemiBold",
-        size: 15.5,
+      // for (int i = 0; i < 3; i++)
+      const UniwaveProductDetails(
+        dataText:
+            // i == 0
+            //     ? "Rejuvenation of cells"
+            //     : i == 1
+            //         ? "Trigger the production of stem cells for new cell formation"
+            //         :
+            " Provide optimum energy for the healthy lifestyle",
       ),
-      const SpaceHeightWidget(height: 8),
-      for (int i = 0; i < flaskBenfitsData.length; i++)
-        UniwaveProductDetails(
-          dataText: flaskBenfitsData[i],
-        ),
+      // const SpaceHeightWidget(height: 5),
+      // CommonTitle(
+      //   titleName: "Benefits of $itemName",
+      //   fontFamily: "OnestSemiBold",
+      //   size: 15.5,
+      // ),
+      // const SpaceHeightWidget(height: 8),
+      // for (int i = 0; i < flaskBenfitsData.length; i++)
+      //   UniwaveProductDetails(
+      //     dataText: flaskBenfitsData[i],
+      //   ),
       const SpaceHeightWidget(height: 15),
       Padding(
         padding: const EdgeInsets.all(10.0),
@@ -299,31 +344,32 @@ Widget flaskWidget(String itemName) {
             ),
             const SpaceHeightWidget(height: 8),
             const UniwaveRitchTextWidget(
-                boldText: "1. Living Water Transformation:",
-                plainText:
-                    'Transforms regular water into "living Water" for improved blood circulation, enhances the body\'s energy level, reduces inflammation and gives us anti-aging effects'),
+              boldText: "1. Living Water Transformation:",
+              plainText:
+                  'Transforms regular water into "living Water" promotes healthy blood flow, enhances the body\'s energy levels, supports the body\'s natural balance and comfort, and contributes to maintaining youthful vitality.',
+            ),
             const SpaceHeightWidget(height: 5),
             const UniwaveRitchTextWidget(
                 boldText: "2. Alkaline Balance :",
                 plainText:
-                    'Neutralizes acidity, ensuring a balanced pH level, particularly beneficial for smokers and alcohol consumers.'),
+                    "This neutralizes acidity, reduces toxicity, and ensures a balanced pH level, particularly beneficial for smokers, alcohol consumers, and individuals who frequently consume fast food."),
             const SpaceHeightWidget(height: 5),
             const UniwaveRitchTextWidget(
                 boldText: "3. Antioxidant Power :",
                 plainText:
-                    "Transforms water into a potent antioxidant, combating diseases with an ORP of -380mV to -400mV."),
+                    "Transforms water into a potent antioxidant with an ORP of -380mV to -400mV."),
             const SpaceHeightWidget(height: 5),
             const UniwaveRitchTextWidget(
                 boldText: "4. Enhanced Hydration :",
                 plainText:
-                    'Reduces water molecule size for superior cellular hydration, aiding in detoxification and metabolism.'),
+                    "Reduces water molecule size for optimum hydration and better absorption, aiding detoxification and metabolism."),
             const SpaceHeightWidget(height: 5),
           ],
         ),
       ),
       const SpaceHeightWidget(height: 15),
       const CommonTitle(
-        titleName: "THE RESULTS :",
+        titleName: "BENFITS:",
         fontFamily: "OnestSemiBold",
         size: 15,
       ),
@@ -358,7 +404,39 @@ Widget flaskWidget(String itemName) {
             zatoliteWidget(),
             muyuWidget(),
             clayStoneWidget(),
-            maifanshiWidget()
+            maifanshiWidget(),
+            const SpaceHeightWidget(height: 15),
+            const CommonTitle(
+              titleName: "How It Works",
+              fontFamily: "OnestSemiBold",
+              size: 15,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CommonTitle(
+                titleName:
+                    "The Destina1 Uniwave by Quantes Technology Energized Alkaline Flask lowers normal drinking water's Oxygen Reduction Potential (ORP) by at least 200mV. This process transforms regular water into alkaline water, which has a more vital and beneficial potential for your body.",
+                textAlign: TextAlign.justify,
+                size: 12,
+                fontFamily: "OnestRegular",
+                fontColor: middleBlackColor,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: ReviewVideoWidget(
+                      onTapFun: () async {
+                        final Uri url = Uri.parse(
+                            "https://www.youtube.com/watch?v=LGyYBeaskgE");
+                        if (!await launchUrl(url)) {
+                          throw Exception('Could not launch $url');
+                        }
+                      },
+                      videoUrl: "https://www.youtube.com/watch?v=LGyYBeaskgE",
+                      videoImgHeight: 200)),
+            ),
           ],
         ),
       )
@@ -381,20 +459,20 @@ tourmalineWidget() {
       ),
       const SpaceHeightWidget(height: 10),
       const CustomBulletTextWidget(
-        data: "Improve overall well-being.",
+        data: "Supports overall well-being",
         verticalPadding: 0,
       ),
       const CustomBulletTextWidget(
-        data: "Helps alleviate fatigue and improve vitality.",
+        data: "Helps maintain energy levels and vitality",
         verticalPadding: 0,
       ),
       const CustomBulletTextWidget(
-        data: "Better sleep by creating a calming and soothing environment.",
+        data: "Promotes a calm and soothing environment for better sleep",
         verticalPadding: 0,
       ),
       const CustomBulletTextWidget(
         data:
-            "Better blood circulation, relieve muscle and joint pain, and aid in detoxification.",
+            "Supports healthy blood flow and promotes comfort in muscles and joints",
         verticalPadding: 0,
       ),
     ],
@@ -416,19 +494,19 @@ muyuWidget() {
       ),
       const SpaceHeightWidget(height: 10),
       const CustomBulletTextWidget(
-        data: "Help relieve stress and tension.",
+        data: "Promotes relaxation and comfort.",
         verticalPadding: 0,
       ),
       const CustomBulletTextWidget(
-        data: "Help in better oxygen and nutrient delivery to cells.",
+        data: "Supports healthy oxygen and nutrient flow to cells.",
         verticalPadding: 0,
       ),
       const CustomBulletTextWidget(
-        data: "Help draw out toxins from the body when applied in massages.",
+        data: "Supports the body's natural cleansing processes.",
         verticalPadding: 0,
       ),
       const CustomBulletTextWidget(
-        data: "Help in reducing puffiness and improving skin tone.",
+        data: "Promotes a refreshed appearance and healthy skin tone.",
         verticalPadding: 0,
       ),
     ],
@@ -450,13 +528,11 @@ nanoWidget() {
       ),
       const SpaceHeightWidget(height: 10),
       const CustomBulletTextWidget(
-        data:
-            "It can inhibit the growth of harmful bacteria and microorganisms, which may help in preventing infections.",
+        data: "Helps maintain a balanced microbial environment",
         verticalPadding: 0,
       ),
       const CustomBulletTextWidget(
-        data:
-            "Support the immune system by enhancing the body's ability to fight off infections.",
+        data: "Supports the body's natural defenses",
         verticalPadding: 0,
       ),
     ],
@@ -478,17 +554,16 @@ zatoliteWidget() {
       ),
       const SpaceHeightWidget(height: 10),
       const CustomBulletTextWidget(
-        data: "It helps in cleansing the system and supporting overall health.",
+        data:
+            "Supports the body's natural cleansing processes and overall well-being.",
         verticalPadding: 0,
       ),
       const CustomBulletTextWidget(
-        data:
-            "Help balance the body's pH levels, creating an environment where harmful pathogens are less likely to thrive.",
+        data: "Supports balanced pH levels.",
         verticalPadding: 0,
       ),
       const CustomBulletTextWidget(
-        data:
-            "Help in maintaining kidney health by assisting in the removal of waste and toxins from the bloodstream.",
+        data: "Supports the removal of waste and toxins from the bloodstream.",
         verticalPadding: 0,
       ),
     ],
@@ -510,18 +585,16 @@ clayStoneWidget() {
       ),
       const SpaceHeightWidget(height: 10),
       const CustomBulletTextWidget(
-        data:
-            "Help remove dead skin cells, leaving your skin smoother and rejuvenated.",
+        data: "Helps exfoliate the skin for a smoother appearance.",
         verticalPadding: 0,
       ),
       const CustomBulletTextWidget(
         data:
-            "Can aid in detoxifying the skin by drawing out impurities and toxins from the pores.",
+            "Supports the natural cleansing of the skin by removing impurities from the pores.",
         verticalPadding: 0,
       ),
       const CustomBulletTextWidget(
-        data:
-            "These minerals can nourish the skin and promote a more radiant appearance.",
+        data: "These minerals support healthy skin and a more radiant look.",
         verticalPadding: 0,
       ),
     ],
@@ -544,12 +617,12 @@ maifanshiWidget() {
       const SpaceHeightWidget(height: 10),
       const CustomBulletTextWidget(
         data:
-            "Maintaining healthy bones, muscles, and overall bodily functions.",
+            "Supports the maintenance of bones, muscles, and overall bodily functions.",
         verticalPadding: 0,
       ),
       const CustomBulletTextWidget(
         data:
-            "Help neutralize excess acidity in the body, potentially aiding in digestion and reducing acid-related discomfort.",
+            "Supports balanced acidity levels and comfort in the digestive tract.",
         verticalPadding: 0,
       ),
     ],
@@ -568,21 +641,19 @@ List<String> flaskBenfitsData = [
 ];
 
 List<String> flaskResultData = [
-  "Energizes water to enhance nutritional uptake",
-  "Reduce lethargy",
-  "Aids in detoxification of cells",
-  "Reduce the acidity in the body",
-  "Maintain pH level",
-  "Treat acid reflux",
-  "Increases energy and well-being",
-  "Helps in weight loss",
-  "May overcome skin problems",
-  "Enhance the immune system",
-  "Helps to reduce the effects caused by environmental stress",
-  "Reduce the oxidative stress in the cells",
-  "Prevent the formation of Free Radicals",
-  "Act against cancer cells",
-  "Regulate the blood pressure"
+  "Supports proper hydration",
+  "Supports nutrient absorption",
+  "Helps maintain energy levels",
+  "Supports the body's natural cleansing processes",
+  "Supports balanced acidity levels",
+  "Supports digestive health",
+  "Supports a balanced pH level",
+  "Supports comfort in the digestive tract",
+  "Promotes skin health",
+  "Helps to manage the effects of daily environmental factors",
+  "Supports the body's response to oxidative stress",
+  "Helps manage the presence of Free Radicals",
+  "Supports healthy blood flow",
 ];
 Widget scalarviaWidget() {
   return Column(
@@ -697,21 +768,21 @@ Widget scalarviaWidget() {
             const SpaceHeightWidget(height: 8),
             const CommonTitle(
               titleName:
-                  "GFC is a patented technology that is a high protein isolate extracted from colostrum and contains high levels of insulin- like growth factor(IGF) and Epidermal Growth Factor(EGF).",
+                  "GFC is a patented technology that isolates high-protein from colostrum. It contains high insulin-like growth factors (IGF) and Epidermal Growth Factor (EGF).",
               size: 12,
               fontFamily: "OnestRegular",
             ),
             const SpaceHeightWidget(height: 5),
             const CommonTitle(
               titleName:
-                  "GFC can stimulate the formation of new stem cells, which will then group to form new epidermis and dermis to replace the old and dying cells in the human body.",
+                  "GFC supports the natural process of cell renewal, helping to refresh the skin by forming new epidermis and dermis layers.",
               size: 12,
               fontFamily: "OnestRegular",
             ),
             const SpaceHeightWidget(height: 5),
             const CommonTitle(
               titleName:
-                  "Growth Factors have long been known as an effective treatment for various diseases. We developed growth factor concentrate (GFC) from platelets and evaluated their clinical outcome in nasolabial folds.",
+                  "Growth factors have been extensively studied for their potential benefits. The growth factor concentrate (GFC), derived from the cow's colostrum, has been evaluated for its effects on skin appearance, hair quality, and hormonal balance.",
               size: 12,
               fontFamily: "OnestRegular",
             ),
@@ -728,29 +799,58 @@ Widget scalarviaWidget() {
           textAlign: TextAlign.center,
         ),
       ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: CommonTitle(
-          titleName:
-              "It has 100,000 different kinds of decoding technologies. Boosting the immune system, enhance the metabolism, and recharge the body cells.",
-          fontFamily: "OnestSemiBold",
-          size: 12,
-          fontColor: middleBlackColor,
-        ),
-      ),
       const SpaceHeightWidget(height: 8),
-      for (int i = 0; i < 3; i++)
+      for (int i = 0; i < 7; i++)
         ScalarviaProductDetails(
           dataText: i == 0
-              ? "Provide Optimum Energy for Healthy Lifestyle"
+              ? "Consists of 100,000 types of decoding technologies."
               : i == 1
-                  ? "Supports Rejuventaion of Cells and Repair the Damaged Cells."
-                  : "Trigger the Production of Stem Cells for New Cell Formation.",
+                  ? "Enhance the body's natural defense system"
+                  : i == 2
+                      ? "Supports natural metabolic processes"
+                      : i == 3
+                          ? "Enhance the Body's Energy Level."
+                          : i == 4
+                              ? "Promotes healthy blood flow."
+                              : i == 5
+                                  ? "Enhance vitality, endurance, strength, flexibility, and stability."
+                                  : "Support on the focus and concentration",
         ),
       const SpaceHeightWidget(height: 15),
       Image.asset(
         "assets/images/scalarvia2.jpg",
         height: 170,
+      ),
+      const CommonTitle(
+        titleName: "How It Works",
+        fontFamily: "OnestSemiBold",
+        size: 15,
+      ),
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: CommonTitle(
+          titleName:
+              "Scalarvia benefits from Stevia, a natural sweetener. It is used as an alternative sweetener. Scalarvia has no calories and is 200-300 times sweeter than sugar. It does not affect blood sugar levels, and it is a very low-calorie sweetener that benefits people with higher glucose levels. It is also well suited for daily use as a substitute for sugar.",
+          textAlign: TextAlign.justify,
+          size: 12,
+          fontFamily: "OnestRegular",
+          fontColor: middleBlackColor,
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: ReviewVideoWidget(
+                onTapFun: () async {
+                  final Uri url =
+                      Uri.parse("https://www.youtube.com/watch?v=5-OPw274MR8");
+                  if (!await launchUrl(url)) {
+                    throw Exception('Could not launch $url');
+                  }
+                },
+                videoUrl: "https://www.youtube.com/watch?v=5-OPw274MR8",
+                videoImgHeight: 200)),
       ),
     ],
   );
@@ -1015,41 +1115,16 @@ Widget biomatrixWidget() {
           ],
         ),
         const SpaceHeightWidget(height: 15),
-        CommonTitle(
-          titleName:
-              "The Uniwave Biomatrix Shield is a unique wellness solution that protects your body from the harmful effects of electro-smog exposure from mobile phones, computers, laptops, and televisions.",
-          fontFamily: "OnestSemiBold",
-          size: 12.5,
-          fontColor: middleBlackColor,
-          textAlign: TextAlign.center,
-        ),
-        const SpaceHeightWidget(height: 15),
-        CommonTitle(
-          titleName:
-              "Your Biomatrix Shield goes wherever you go by discreetly attaching to your electronic devices. Thus, the uniwave Biomatrix Shield will help those affected by electro-sensitivesness and act as a preventative measure for your future protection.",
-          fontFamily: "OnestSemiBold",
-          size: 12.5,
-          fontColor: middleBlackColor,
-          textAlign: TextAlign.center,
-        ),
-        const SpaceHeightWidget(height: 15),
-        CommonTitle(
-          titleName:
-              "Using a unique nano stealth technology is an essential radiant absorbent and EMF/EMR harmonizer.",
-          fontFamily: "OnestSemiBold",
-          size: 12.5,
-          fontColor: middleBlackColor,
-          textAlign: TextAlign.center,
-        ),
-        const SpaceHeightWidget(height: 15),
-        CommonTitle(
-          titleName:
-              "This technology helps to absorb and eliminate harmful EMR/EMF radiation emitted form electronic and mobile devices.",
-          fontFamily: "OnestSemiBold",
-          size: 12.5,
-          fontColor: middleBlackColor,
-          textAlign: TextAlign.center,
-        ),
+        for (int i = 0; i < 4; i++)
+          UniwaveProductDetails(
+            dataText: i == 0
+                ? "The Uniwave Biomatrix Shield is a unique solution designed to protect your body from the harmful effects of electromagnetic radiation emitted from mobile phones, computers, laptops, and televisions."
+                : i == 1
+                    ? "This shield discreetly attaches to your electronic devices, so it can go with you wherever you are. It benefits those affected by electrosensitivity and is a preventative measure against radiation."
+                    : i == 2
+                        ? "The Uniwave Biomatrix Shield uses advanced nano stealth technology as an essential radiant absorbent and EMF/EMR harmonizer."
+                        : "The Uniwave Biomatrix Shield helps absorb and eliminate harmful electromagnetic radiation from your electronic devices, keeping you safer from radiation.",
+          ),
         const SpaceHeightWidget(height: 18),
         const CommonTitle(
           titleName: "Uniwave by Quantes Technology Key Benefits:",
@@ -1061,10 +1136,10 @@ Widget biomatrixWidget() {
         for (int i = 0; i < 3; i++)
           UniwaveProductDetails(
             dataText: i == 0
-                ? "Reduce detection by harmonizing electromagnetic waves from radars"
+                ? "Helps harmonize electromagnetic waves"
                 : i == 1
-                    ? "This technology can neutralize the EMR & EMF Radiation"
-                    : "360-degree protection with smart scalar wave technology",
+                    ? "Supports the neutralization of EMR & EMF radiation"
+                    : "Provides comprehensive protection barrier with Smart Uniwave Technology",
           ),
         Padding(
           padding: const EdgeInsets.all(10.0),
@@ -1166,17 +1241,61 @@ Widget biomatrixWidget() {
           size: 12.5,
           fontColor: middleBlackColor,
         ),
+        const SpaceHeightWidget(height: 10),
+        const CommonTitle(
+          titleName: "How It Works",
+          fontFamily: "OnestSemiBold",
+          size: 15,
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CommonTitle(
+            titleName:
+                "The Uniwave by Quantes Technology from the \"Uniwave Bio Matrix Shield\" will support the body's natural biofield against environmental factors, preventing electromagnetic radiation from affecting one's health. \"Uniwave Bio Matrix Shield is the first-line defense against electro pollution. \" It can be used on any appliance or device emitting electromagnetic frequencies (EMF) or electromagnetic radiation (EMR), such as mobile phones, home phones, cars, microwaves, computers, game consoles, home appliances, etc.",
+            textAlign: TextAlign.justify,
+            size: 12,
+            fontFamily: "OnestRegular",
+            fontColor: middleBlackColor,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CommonTitle(
+            titleName:
+                "If it plugs and plays on DC or AC currents, protect it with \"Uniwave Bio Matrix Shield.\"",
+            textAlign: TextAlign.justify,
+            size: 12,
+            fontFamily: "OnestRegular",
+            fontColor: middleBlackColor,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: ReviewVideoWidget(
+                  onTapFun: () async {
+                    final Uri url = Uri.parse(
+                        "https://www.youtube.com/watch?v=KauxvsIwVGc&list=PLSn3vs1mApFHDMlwZgDmI4VGyHT4ximp8&index=1");
+                    if (!await launchUrl(url)) {
+                      throw Exception('Could not launch $url');
+                    }
+                  },
+                  videoUrl:
+                      "https://www.youtube.com/watch?v=KauxvsIwVGc&list=PLSn3vs1mApFHDMlwZgDmI4VGyHT4ximp8&index=1",
+                  videoImgHeight: 200)),
+        ),
       ],
     ),
   );
 }
 
 List<String> biomatrixBenfitsData = [
-  "Restores balance & harmony in the body",
-  "Harmonize harmful EMF and EMR",
-  "Strengthens the body's biofield",
-  "Reduces cellular inflammation",
-  "Regulates body temperature"
+  "Promotes a balanced and harmonious condition",
+  "Helps harmonize EMF and EMR radiation",
+  "Supports the body's natural biofield",
+  "Promotes comfort at the cellular level",
+  "Helps maintain a stable body temperature"
 ];
 
 List<BiomatrixImageData> bimatrixImageData = [
@@ -1413,8 +1532,7 @@ class ViewRatingWidget extends StatelessWidget {
                     Icons.star,
                     color: Colors.amber,
                   ),
-                  onRatingUpdate: (rating) {
-                  },
+                  onRatingUpdate: (rating) {},
                 ),
               ],
             ),
@@ -1754,73 +1872,75 @@ class _PdfWidgetState extends State<PdfWidget> {
   bool progressbar = false;
   @override
   Widget build(BuildContext context) {
-    return widget.category == "Kritalia & Co"
-        ? const SizedBox.shrink()
-        : Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CommonTitle(
-                      titleName: "Download Broucher:",
-                      fontColor: darkBlue,
-                      size: 16,
-                    ),
-                    SizedBox(
-                      // width: 130,
-                      height: 30,
-                      child: IconElevatedButton(
-                        onTapFun: () {
-                          if (progressbar == false) {
-                            FileDownloader.downloadFile(
-                                url:
-                                    "https://admin.destina1.com/Resources/Mini%20Book%20web.pdf",
-                                name:
-                                    "https://admin.destina1.com/Resources/Mini%20Book%20web.pdf"
-                                        .split('MemberDownloads/')
-                                        .last, //(optional)
-                                onProgress: (String? name, double? onProgress) {
-                                  setState(() {
-                                    progressbar = true;
-                                    progressVal = onProgress;
-                                    if (progressVal == 100.0) {
-                                      progressbar = false;
-                                    }
-                                  });
-                                },
-                                onDownloadCompleted: (String path) {
-                                  CommonToastTrue("Successfully donwloaded");
-                                },
-                                onDownloadError: (String error) {
-                                  CommonToast(error);
-                                });
-                          }
-                        },
-                        idata: Icons.picture_as_pdf_outlined,
-                        imagePath: '',
-                        labelColor: whiteColor,
-                        buttonColor: blackColor,
-                        titile: "Download",
-                      ),
-                    ),
-                  ],
-                ),
-                if (progressbar)
-                  Column(
-                    children: [
-                      const SpaceHeightWidget(height: 10),
-                      LinearProgressIndicator(
-                        borderRadius: BorderRadius.circular(10),
-                        value: progressVal! / 100.00,
-                      ),
-                      const SpaceHeightWidget(height: 10)
-                    ],
-                  ),
-              ],
-            ),
-          );
+    return const SizedBox.shrink();
+
+    // widget.category == "Kritalia & Co"
+    //     ? const SizedBox.shrink()
+    //     : Padding(
+    //         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+    //         child: Column(
+    //           children: [
+    //             Row(
+    //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //               children: [
+    //                 CommonTitle(
+    //                   titleName: "Download Broucher:",
+    //                   fontColor: darkBlue,
+    //                   size: 16,
+    //                 ),
+    //                 SizedBox(
+    //                   // width: 130,
+    //                   height: 30,
+    //                   child: IconElevatedButton(
+    //                     onTapFun: () {
+    //                       if (progressbar == false) {
+    //                         FileDownloader.downloadFile(
+    //                             url:
+    //                                 "https://admin.destina1.com/Resources/Mini%20Book%20web.pdf",
+    //                             name:
+    //                                 "https://admin.destina1.com/Resources/Mini%20Book%20web.pdf"
+    //                                     .split('MemberDownloads/')
+    //                                     .last, //(optional)
+    //                             onProgress: (String? name, double? onProgress) {
+    //                               setState(() {
+    //                                 progressbar = true;
+    //                                 progressVal = onProgress;
+    //                                 if (progressVal == 100.0) {
+    //                                   progressbar = false;
+    //                                 }
+    //                               });
+    //                             },
+    //                             onDownloadCompleted: (String path) {
+    //                               CommonToastTrue("Successfully donwloaded");
+    //                             },
+    //                             onDownloadError: (String error) {
+    //                               CommonToast(error);
+    //                             });
+    //                       }
+    //                     },
+    //                     idata: Icons.picture_as_pdf_outlined,
+    //                     imagePath: '',
+    //                     labelColor: whiteColor,
+    //                     buttonColor: blackColor,
+    //                     titile: "Download",
+    //                   ),
+    //                 ),
+    //               ],
+    //             ),
+    //             if (progressbar)
+    //               Column(
+    //                 children: [
+    //                   const SpaceHeightWidget(height: 10),
+    //                   LinearProgressIndicator(
+    //                     borderRadius: BorderRadius.circular(10),
+    //                     value: progressVal! / 100.00,
+    //                   ),
+    //                   const SpaceHeightWidget(height: 10)
+    //                 ],
+    //               ),
+    //           ],
+    //         ),
+    //       );
   }
 }
 

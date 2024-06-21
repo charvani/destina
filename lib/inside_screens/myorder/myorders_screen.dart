@@ -1,17 +1,15 @@
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/inside_screens/shopping/dpmall_screen.dart';
 import 'package:destina_1_international/inside_screens/shopping/redemptionmall_screen.dart2.dart';
-import 'package:destina_1_international/inside_screens/shopping/upgradeorder.screen2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../authentication_screens/members_screen.dart';
 import '../../commons/colors.dart';
 import '../../commons/constants.dart';
 import '../../controllers/main_controller.dart';
+import '../../dashboard_screens/bottombar_screen.dart';
 import '../../service_call/api_data.dart';
-import '../shopping/membermall_screen2.dart';
 import '../shopping/salesmall_screen2.dart';
 import 'invoice_screen.dart';
 
@@ -77,14 +75,12 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                               _dataController.orderReportData[i].lbillno == "0"
                                   ? false
                                   : true,
-                          showOrderAgain: _dataController
-                                      .orderReportData[i].orderagain ==
-                                  "1"
-                            
-                              ? true
-                              : false,
+                          showOrderAgain:
+                              _dataController.orderReportData[i].orderagain ==
+                                      "1"
+                                  ? true
+                                  : false,
                           orderAgainFun: () {
-                            
                             if (_dataController.orderReportData[i].mallType ==
                                 "Sales Mall") {
                               Get.to(() => SalesMallScreen2(
@@ -101,10 +97,6 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                         .orderReportData[i].orderNo,
                                   ));
                             } else if (_dataController
-                                    .orderReportData[i].mallType ==
-                                "Upgrade Mall") {
-                              Get.to(() => const UpgradeOrderScreen2());
-                            } else if (_dataController
                                     .orderReportData[i].mallType
                                     .toLowerCase() ==
                                 "dp mall") {
@@ -114,15 +106,22 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                         .orderReportData[i].orderNo,
                                   ));
                             } else if (_dataController
-                                    .orderReportData[i].mallType ==
-                                "Signup Mall") {
-                              Get.to(() => MemberScreen(
-                                  countryId: Constants.prefs
-                                      .getString("country_id")!));
-                            } else if (_dataController
-                                    .orderReportData[i].mallType ==
-                                "Membership Mall") {
-                              Get.to(() => const MembershipMallScreen2());
+                                        .orderReportData[i].mallType
+                                        .toLowerCase() ==
+                                    "retail mall" ||
+                                _dataController.orderReportData[i].mallType
+                                        .toLowerCase() ==
+                                    "guest shoppers") {
+                              Get.to(() => BottomBarScreen(
+                                    index: 1,
+                                    billno: _dataController
+                                        .orderReportData[i].orderNo,
+                                  ));
+                              //  ProductsScreen2(
+                              //       from: "order_again",
+                              //       billno: _dataController
+                              //           .orderReportData[i].orderNo,
+                              //     ));
                             }
                           },
                           loading: selectedInt == i ? true : false,

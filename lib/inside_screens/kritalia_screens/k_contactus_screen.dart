@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../commons/colors.dart';
+import '../../commons/constants.dart';
 import '../about/weburl_screen.dart';
 
 class KContactUsScreen extends StatefulWidget {
@@ -83,11 +84,17 @@ class _KContactUsScreenState extends State<KContactUsScreen> {
           iconRelatedWidget("", "Sunday:", "10:00 AM - 9:00 PM"),
           const SpaceHeightWidget(height: 10),
           CustomAutoWidthButton(
-              onTapFun: () {
-                Get.to(() => const WebUrlScreen(
-                      redirectUrl: "https://destina1.com/MAKritaliaBA.html",
-                      from: "Book an Appointment",
-                    ));
+              onTapFun: () async {
+                dynamic con = Constants.prefs.getString("open_country");
+                if (con != null) {
+                  print("con...$con");
+                  Get.to(() => WebUrlScreen(
+                        // redirectUrl: "https://destina1.com/MAKritaliaBA.html",
+                        redirectUrl:
+                            "https://destina1.com/MABookAppointment.html?countrycode=$con",
+                        from: "Book an Appointment",
+                      ));
+                }
               },
               title: "Book an Appointment"),
           const SpaceHeightWidget(height: 10),

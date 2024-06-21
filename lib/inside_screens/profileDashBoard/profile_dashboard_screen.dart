@@ -92,7 +92,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             .parse(_dashboardController.dashboardData.value.nupgdate);
         givenDate = dateTime;
 
-      
         Timer.periodic(const Duration(seconds: 1), (timer) {
           if (mounted) {
             setState(() {
@@ -112,7 +111,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             inputFormat.parse(_dashboardController.dashboardData.value.endDate);
         promgivenDate = dateTime;
 
-      
         Timer.periodic(const Duration(seconds: 1), (timer) {
           if (mounted) {
             setState(() {
