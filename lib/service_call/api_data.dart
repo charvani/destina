@@ -140,4 +140,5 @@ class ApiData {
   String getNewsdata = "GetNewsdata";
   String getSMTrending = "GetSMTrending";
   String getPromotions = "GetSMTrending";
+  String healthAppointment = "HealthAppointment";
 }

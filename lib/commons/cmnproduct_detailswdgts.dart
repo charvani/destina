@@ -166,24 +166,20 @@ Widget pendentWidget() {
       ),
       Padding(
         padding: const EdgeInsets.all(8.0),
-        child: CommonTitle(
-          titleName:
+        child: CustomBulletTextWidget(
+          data:
               "Uniwave by Quantes Technology is much needed as most of us are running out of energy due to today's fast-paced, busy lifestyle. There is no time to relax, and there's too much to do! All the radiation emitted from the electronic gadgets, vehicles, and technological advancements we use to get everything done quicker further drains out the energy that is much needed for our daily activities.",
-          textAlign: TextAlign.justify,
-          size: 12,
-          fontFamily: "OnestRegular",
-          fontColor: middleBlackColor,
+          verticalPadding: 0,
+          textColor: middleBlackColor,
         ),
       ),
       Padding(
         padding: const EdgeInsets.all(8.0),
-        child: CommonTitle(
-          titleName:
+        child: CustomBulletTextWidget(
+          data:
               "Uniwave by Quantes Technology provides optimum energy that helps restore our body's energy levels to an ideal range of 70-90 mV. With Uniwave, we can enjoy increased energy and significant health benefits. It's a fast-acting, natural choice for improving our energy and well-being.",
-          textAlign: TextAlign.justify,
-          size: 12,
-          fontFamily: "OnestRegular",
-          fontColor: middleBlackColor,
+          verticalPadding: 0,
+          textColor: middleBlackColor,
         ),
       ),
       Padding(
@@ -279,14 +275,16 @@ Widget flaskWidget(String itemName) {
       //     dataText: flaskBenfitsData[i],
       //   ),
       const SpaceHeightWidget(height: 15),
-      Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Image.asset(itemName.toLowerCase() == "uniwave flask"
-            ? "assets/images/uniwave_flask.jpg"
-            : itemName.toLowerCase() == "uniwave stick"
-                ? "assets/images/stick1.jpg"
-                : "assets/images/filter1.jpg"),
-      ),
+
+      // Padding(
+      //   padding: const EdgeInsets.all(10.0),
+      //   child: Image.asset(itemName.toLowerCase() == "uniwave flask"
+      //       ? "assets/images/uniwave_flask.jpg"
+      //       // : itemName.toLowerCase() == "uniwave stick"
+      //       //     ? "assets/images/stick1.jpg"
+      //       //     :
+      //           "assets/images/filter1.jpg"),
+      // ),
       const SpaceHeightWidget(height: 15),
       Container(
         width: double.infinity,
@@ -369,7 +367,7 @@ Widget flaskWidget(String itemName) {
       ),
       const SpaceHeightWidget(height: 15),
       const CommonTitle(
-        titleName: "BENFITS:",
+        titleName: "BENEFITS:",
         fontFamily: "OnestSemiBold",
         size: 15,
       ),
@@ -413,13 +411,11 @@ Widget flaskWidget(String itemName) {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: CommonTitle(
-                titleName:
-                    "The Destina1 Uniwave by Quantes Technology Energized Alkaline Flask lowers normal drinking water's Oxygen Reduction Potential (ORP) by at least 200mV. This process transforms regular water into alkaline water, which has a more vital and beneficial potential for your body.",
-                textAlign: TextAlign.justify,
-                size: 12,
-                fontFamily: "OnestRegular",
-                fontColor: middleBlackColor,
+              child: CustomBulletTextWidget(
+                data:
+                    "The Destina1 Uniwave by Quantes Technology Energized Alkaline ${itemName.replaceAll("UNIWAVE", "").capitalize} lowers normal drinking water's Oxygen Reduction Potential (ORP) by at least 200mV. This process transforms regular water into alkaline water, which has a more vital and beneficial potential for your body.",
+                verticalPadding: 0,
+                textColor: middleBlackColor,
               ),
             ),
             Padding(
@@ -696,17 +692,17 @@ Widget scalarviaWidget() {
           dataText: scalarviaInfoData[i],
         ),
       const SpaceHeightWidget(height: 18),
-      const CommonTitle(
-        titleName: "Benefits of Uniwave Scalarvia",
-        fontFamily: "OnestSemiBold",
-        size: 15.5,
-      ),
-      const SpaceHeightWidget(height: 10),
-      for (int i = 0; i < scalarviaBenfitsData.length; i++)
-        ScalarviaProductDetails(
-          dataText: scalarviaBenfitsData[i],
-        ),
-      const SpaceHeightWidget(height: 10),
+      // const CommonTitle(
+      //   titleName: "Benefits of Uniwave Scalarvia",
+      //   fontFamily: "OnestSemiBold",
+      //   size: 15.5,
+      // ),
+      // const SpaceHeightWidget(height: 10),
+      // for (int i = 0; i < scalarviaBenfitsData.length; i++)
+      //   ScalarviaProductDetails(
+      //     dataText: scalarviaBenfitsData[i],
+      //   ),
+      // const SpaceHeightWidget(height: 10),
       Padding(
         padding: const EdgeInsets.all(10.0),
         child: Image.asset("assets/images/scalarvia1.jpg"),
@@ -828,13 +824,11 @@ Widget scalarviaWidget() {
       ),
       Padding(
         padding: const EdgeInsets.all(8.0),
-        child: CommonTitle(
-          titleName:
+        child: CustomBulletTextWidget(
+          data:
               "Scalarvia benefits from Stevia, a natural sweetener. It is used as an alternative sweetener. Scalarvia has no calories and is 200-300 times sweeter than sugar. It does not affect blood sugar levels, and it is a very low-calorie sweetener that benefits people with higher glucose levels. It is also well suited for daily use as a substitute for sugar.",
-          textAlign: TextAlign.justify,
-          size: 12,
-          fontFamily: "OnestRegular",
-          fontColor: middleBlackColor,
+          verticalPadding: 0,
+          textColor: middleBlackColor,
         ),
       ),
       Padding(
@@ -1249,24 +1243,20 @@ Widget biomatrixWidget() {
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: CommonTitle(
-            titleName:
+          child: CustomBulletTextWidget(
+            data:
                 "The Uniwave by Quantes Technology from the \"Uniwave Bio Matrix Shield\" will support the body's natural biofield against environmental factors, preventing electromagnetic radiation from affecting one's health. \"Uniwave Bio Matrix Shield is the first-line defense against electro pollution. \" It can be used on any appliance or device emitting electromagnetic frequencies (EMF) or electromagnetic radiation (EMR), such as mobile phones, home phones, cars, microwaves, computers, game consoles, home appliances, etc.",
-            textAlign: TextAlign.justify,
-            size: 12,
-            fontFamily: "OnestRegular",
-            fontColor: middleBlackColor,
+            verticalPadding: 0,
+            textColor: middleBlackColor,
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: CommonTitle(
-            titleName:
+          child: CustomBulletTextWidget(
+            data:
                 "If it plugs and plays on DC or AC currents, protect it with \"Uniwave Bio Matrix Shield.\"",
-            textAlign: TextAlign.justify,
-            size: 12,
-            fontFamily: "OnestRegular",
-            fontColor: middleBlackColor,
+            verticalPadding: 0,
+            textColor: middleBlackColor,
           ),
         ),
         Padding(

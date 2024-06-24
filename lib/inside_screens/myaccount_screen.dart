@@ -44,7 +44,6 @@ import 'tools/ftaform_reportscreen.dart';
 import 'tools/ftareg_formscreen.dart';
 
 class MyAccountScreen extends StatefulWidget {
- 
   const MyAccountScreen({
     super.key,
   });
@@ -60,9 +59,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-     
-    });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {});
   }
 
   @override
@@ -74,7 +71,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         flexibleSpace: Stack(
           alignment: Alignment.center,
           children: [
-          
             Padding(
               padding: const EdgeInsets.only(left: 15, top: 35),
               child: Row(
@@ -143,9 +139,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                 traillingFun: () {},
                 leadingIcon: Icons.home,
                 onTapFun: () {
-                  Get.to(() => const DashBoardScreen(
-                    
-                      ));
+                  Get.to(() => const DashBoardScreen());
                 },
                 title: "Dashboard",
               ),
@@ -624,34 +618,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         MyAccountItemWidget(
           onTapFun: () {
             Get.to(() => const BonusDateSelectionScreen(
-                  from: "Personal Consumption Bonus",
-                ));
-          },
-          title: "Personal Consumption Bonus",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const BonusDateSelectionScreen(
-                  from: "Level Consumption Bonus",
-                ));
-          },
-          title: "Level Consumption Bonus",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const BonusDateSelectionScreen(
-                  from: "Group Consumption Bonus",
-                ));
-          },
-          title: "Group Consumption Bonus",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const BonusDateSelectionScreen(
                   from: "Customer Acquisition",
                 ));
           },
-          title: "Customer Acquisition Bonus",
+          title: "Shopper Acquisition Bonus",
         ),
         MyAccountItemWidget(
           onTapFun: () {
@@ -659,7 +629,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   from: "Upgrade Acquisition",
                 ));
           },
-          title: "Upgrade Acquisition Bonus",
+          title: "Shopper Upgrade Acquisition Bonus",
         ),
         MyAccountItemWidget(
           onTapFun: () {
@@ -667,7 +637,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                   from: "Rollup Bonus",
                 ));
           },
-          title: "Rollup Bonus",
+          title: "PassUp Bonus",
         ),
         MyAccountItemWidget(
           onTapFun: () {
@@ -692,22 +662,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         MyAccountItemWidget(
           onTapFun: () {
             Get.to(() => const BonusDateSelectionScreen(
-                  from: "Special Bonus",
-                ));
-          },
-          title: "Special Bonus",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const BonusDateSelectionScreen(
-                  from: "Special Bonus(Sponsor)",
-                ));
-          },
-          title: "Special Bonus(Sponsor)",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const BonusDateSelectionScreen(
                   from: "Special Leadership",
                 ));
           },
@@ -716,26 +670,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         MyAccountItemWidget(
           onTapFun: () {
             Get.to(() => const BonusDateSelectionScreen(
-                  from: "Direct Distributor",
-                ));
-          },
-          title: "Direct Distributor Sales Bonus",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const BonusDateSelectionScreen(
-                  from: "Personal Sales",
-                ));
-          },
-          title: "Personal Sales Bonus",
-        ),
-        MyAccountItemWidget(
-          onTapFun: () {
-            Get.to(() => const BonusDateSelectionScreen(
                   from: "Activation Bonus",
                 ));
           },
-          title: "Activation Bonus",
+          title: "Stockist Activation Bonus",
         ),
         MyAccountItemWidget(
           onTapFun: () {
@@ -743,6 +681,65 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           },
           title: "Flush CV Report",
         ),
+        MyAccountItemWidget(
+          onTapFun: () {
+            Get.to(() => const BonusDateSelectionScreen(
+                  from: "Personal Consumption Bonus",
+                ));
+          },
+          title: "Personal Consumption Bonus",
+        ),
+        MyAccountItemWidget(
+          onTapFun: () {
+            Get.to(() => const BonusDateSelectionScreen(
+                  from: "Level Consumption Bonus",
+                ));
+          },
+          title: "Leadership consumption bonus",
+        ),
+        MyAccountItemWidget(
+          onTapFun: () {
+            Get.to(() => const BonusDateSelectionScreen(
+                  from: "Group Consumption Bonus",
+                ));
+          },
+          title: "Group Consumption Bonus",
+        ),
+
+        // MyAccountItemWidget(
+        //   onTapFun: () {
+        //     Get.to(() => const BonusDateSelectionScreen(
+        //           from: "Special Bonus",
+        //         ));
+        //   },
+        //   title: "Special Bonus",
+        // ),
+        // MyAccountItemWidget(
+        //   onTapFun: () {
+        //     Get.to(() => const BonusDateSelectionScreen(
+        //           from: "Special Bonus(Sponsor)",
+        //         ));
+        //   },
+        //   title: "Special Bonus(Sponsor)",
+        // ),
+
+        // MyAccountItemWidget(
+        //   onTapFun: () {
+        //     Get.to(() => const BonusDateSelectionScreen(
+        //           from: "Direct Distributor",
+        //         ));
+        //   },
+        //   title: "Direct Distributor Sales Bonus",
+        // ),
+        // MyAccountItemWidget(
+        //   onTapFun: () {
+        //     Get.to(() => const BonusDateSelectionScreen(
+        //           from: "Personal Sales",
+        //         ));
+        //   },
+        //   title: "Personal Sales Bonus",
+        // ),
+
         const SpaceHeightWidget(height: 13)
       ],
     );
@@ -757,7 +754,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           },
           title: "FAQS",
         ),
-       
         MyAccountItemWidget(
           onTapFun: () {
             Get.to(() => const FTARegistrationFormScreen());

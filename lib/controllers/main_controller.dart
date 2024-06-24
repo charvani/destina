@@ -2836,4 +2836,14 @@ class MainController extends GetxController {
     }
     loading.value = false;
   }
+
+  getDoctorAppointment(Map parameters) async {
+    loading.value = true;
+
+    dynamic res = await ApiCall()
+        .rawFun(endUrl: ApiData().healthAppointment, params: parameters);
+
+    loading.value = false;
+    return res;
+  }
 }

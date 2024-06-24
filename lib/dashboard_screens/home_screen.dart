@@ -14,6 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../authentication_screens/popup_encrollscreen.dart';
 import '../commons/constants.dart';
 import '../inside_screens/about/weburl_screen.dart';
+import '../inside_screens/doctorconsultation_screen.dart';
 import '../inside_screens/notifications_screen.dart';
 import '../inside_screens/productdetails_screen2.dart';
 import '../inside_screens/search/search_categoryscreen.dart';
@@ -35,7 +36,6 @@ int sopCarouselIndex = 0;
 
 List<OnboardModel> productsCategories = [
   OnboardModel(image: "assets/images/health_care.png", title: "Wellness Care"),
-
   OnboardModel(
       image: "assets/images/a_start_privilege.png", title: "Kritalia & Co"),
 ];
@@ -86,7 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   popupFun() {
     if (widget.bannerPopUpImages!.isNotEmpty) {
-
       Get.dialog(
           barrierDismissible: false,
           AlertDialog(
@@ -112,9 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bcolor: darkRedColor,
                       ),
                     ),
-                  )
-                 
-                  ),
+                  )),
               contentPadding:
                   const EdgeInsets.only(top: 0, left: 3, right: 3, bottom: 18),
               content: Scrollbar(
@@ -381,9 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 height: 150,
                 width: double.infinity,
-                decoration: BoxDecoration(color: darkBlue
-                  
-                    ),
+                decoration: BoxDecoration(color: darkBlue),
               ),
               Column(children: [
                 SearchWidget(
@@ -480,7 +475,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                               .promotionsData[i].redirecturl);
                                     },
                                     options: CarouselOptions(
-                                      
                                         viewportFraction: 0.7,
                                         enlargeCenterPage: true,
                                         autoPlayInterval:
@@ -958,7 +952,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontFamily: "PoppinsBold",
                                 )),
                           ),
-                      
                         ],
                       ),
                       Obx(() {
@@ -1057,7 +1050,15 @@ class _HomeScreenState extends State<HomeScreen> {
       behavior: HitTestBehavior.translucent,
       onTap: () async {
         if (redirectUrl != "") {
-          Get.to(() => WebUrlScreen(from: "", redirectUrl: redirectUrl));
+          if (redirectUrl.contains("MAHealthAppointment")) {
+            Get.to(() => const DoctorConsultationScreen());
+          } else {
+            if (redirectUrl != "") {
+              Get.to(() => WebUrlScreen(from: "", redirectUrl: redirectUrl));
+            } else {
+              CommonToast("Coming soon");
+            }
+          }
         } else {
           CommonToast("Coming soon");
         }

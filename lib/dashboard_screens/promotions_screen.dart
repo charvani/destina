@@ -1,5 +1,6 @@
 import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/inside_screens/doctorconsultation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +16,6 @@ class PromotionsScreen extends StatefulWidget {
 }
 
 class _PromotionsScreenState extends State<PromotionsScreen> {
-
   final MainController _dataController = Get.put(MainController());
   @override
   void initState() {
@@ -77,15 +77,22 @@ class _PromotionsScreenState extends State<PromotionsScreen> {
                                     behavior: HitTestBehavior.translucent,
                                     onTap: () async {
                                       if (_dataController
-                                              .promotionsData[i].redirecturl !=
-                                          "") {
-                                        Get.to(() => WebUrlScreen(
-                                            from: "",
-                                            redirectUrl: _dataController
-                                                .promotionsData[i]
-                                                .redirecturl));
+                                          .promotionsData[i].redirecturl
+                                          .contains("MAHealthAppointment")) {
+                                        Get.to(() =>
+                                            const DoctorConsultationScreen());
                                       } else {
-                                        CommonToast("Coming soon");
+                                        if (_dataController.promotionsData[i]
+                                                .redirecturl !=
+                                            "") {
+                                          Get.to(() => WebUrlScreen(
+                                              from: "",
+                                              redirectUrl: _dataController
+                                                  .promotionsData[i]
+                                                  .redirecturl));
+                                        } else {
+                                          CommonToast("Coming soon");
+                                        }
                                       }
                                     },
                                     child: PromotionScreenWidget(

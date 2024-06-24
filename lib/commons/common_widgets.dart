@@ -3705,7 +3705,8 @@ class ConfrimationDialog extends StatelessWidget {
 
 class OkDialog extends StatelessWidget {
   final String title;
-  const OkDialog({super.key, required this.title});
+  final VoidCallback? onTapFun;
+  const OkDialog({super.key, required this.title, this.onTapFun});
 
   @override
   Widget build(BuildContext context) {
@@ -3727,7 +3728,9 @@ class OkDialog extends StatelessWidget {
                     width: 80,
                     height: 35,
                     child: CustomElevatedButton(
-                        onTapFun: () {
+                        onTapFun: 
+                        onTapFun??
+                        () {
                           Get.back();
                         },
                         title: "OK"))

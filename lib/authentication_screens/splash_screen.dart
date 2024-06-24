@@ -73,35 +73,58 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              CommonTitle(titleName: mesg),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CommonTitle(
+                    titleName: "App Update",
+                    fontColor: darkRedColor,
+                    size: 16,
+                    fontFamily: "OnestSemiBold",
+                  ),
+                ],
+              ),
+              const SpaceHeightWidget(height: 15),
+              CommonTitle(
+                titleName: mesg,
+                fontColor: darkBlue,
+                size: 14,
+                fontFamily: "OnestRegular",
+              ),
               const SpaceHeightWidget(height: 15),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if (updateForcefully.toLowerCase() == "no")
-                    CustomAutoWidthButton(
-                      onTapFun: () {
-                        Get.back();
-                        countyCodeFun();
-                        Timer(const Duration(seconds: 1), () {
-                          navgationFun();
-                        });
-                      },
-                      title: "Skip",
+                    SizedBox(
+                      height: 35,
+                      child: CustomAutoWidthButton(
+                        onTapFun: () {
+                          Get.back();
+                          countyCodeFun();
+                          Timer(const Duration(seconds: 1), () {
+                            navgationFun();
+                          });
+                        },
+                        title: "Skip",
+                      ),
                     ),
                   const SpaceWidthWidget(width: 10),
-                  CustomAutoWidthButton(
-                    onTapFun: () {
-                      if (Platform.isAndroid) {
-                        const appId = 'com.destina1.international';
-                        final url = Uri.parse("market://details?id=$appId");
-                        launchUrl(
-                          url,
-                          mode: LaunchMode.externalApplication,
-                        );
-                      }
-                    },
-                    title: "Update Now",
+                  SizedBox(
+                    height: 35,
+                    child: CustomAutoWidthButton(
+                      onTapFun: () {
+                        if (Platform.isAndroid) {
+                          const appId = 'com.destina1.international';
+                          final url = Uri.parse("market://details?id=$appId");
+                          launchUrl(
+                            url,
+                            mode: LaunchMode.externalApplication,
+                          );
+                        }
+                      },
+                      title: "Update Now",
+                    ),
                   ),
                 ],
               )
