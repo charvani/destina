@@ -167,160 +167,155 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
         ),
         bottomSheet: Obx(() {
           return packDetailsController.loading.value
-              ? const SizedBox.shrink()
-              : packDetailsController.packageDetailsData.value.mrp != "0" &&
-                      packDetailsController.packageDetailsData.value.mrp !=
-                          "0.0" &&
-                      packDetailsController.packageDetailsData.value.mrp !=
-                          "0.00"
-                  ? Form(
-                      key: _fomkey1,
-                      child: Container(
-                        padding: const EdgeInsets.fromLTRB(15, 5, 5, 0),
-                        height: 90,
-                        alignment: Alignment.center,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 1.5, color: darkBlue),
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30)),
-                          color: whiteColor,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+              ? loader
+              : Form(
+                  key: _fomkey1,
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(15, 5, 5, 0),
+                    height: 90,
+                    alignment: Alignment.center,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1.5, color: darkBlue),
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30)),
+                      color: whiteColor,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text("Quantity: "),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text("Quantity: "),
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        if (int.parse(firstQtyController.text) >
-                                            1) {
+                                InkWell(
+                                  onTap: () {
+                                    if (int.parse(firstQtyController.text) >
+                                        1) {
+                                      setState(() {
+                                        firstQtyController.text = (int.parse(
+                                                    firstQtyController.text) -
+                                                1)
+                                            .toString();
+                                      });
+                                    }
+                                  },
+                                  child: const CircleAvatar(
+                                    radius: 15,
+                                    child: Icon(
+                                      Icons.remove,
+                                      size: 18,
+                                    ),
+                                  ),
+                                ),
+                                const SpaceWidthWidget(width: 3),
+                                SizedBox(
+                                    width: 60,
+                                    // height: 35,
+                                    child: RegisterTextField(
+                                      inputFormatter: [
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                      controller: firstQtyController,
+                                      hintText: '',
+                                      textInputType: TextInputType.number,
+                                      onchangeFun: (val) {
+                                        setState(() {});
+                                      },
+                                      validation: (val) {
+                                        return null;
+                                      },
+                                      labelText: '',
+                                    )),
+                                const SpaceWidthWidget(width: 3),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      firstQtyController.text =
+                                          (int.parse(firstQtyController.text) +
+                                                  1)
+                                              .toString();
+                                    });
+                                  },
+                                  child: const CircleAvatar(
+                                    radius: 15,
+                                    child: Icon(
+                                      Icons.add,
+                                      size: 18,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              width: 150,
+                              height: 35,
+                              child: packageLoading
+                                  ? loader
+                                  : IconElevatedButton(
+                                      onTapFun: () async {
+                                        if (int.parse(packDetailsController
+                                                .packageDetailsData
+                                                .value
+                                                .aqty) >
+                                            0) {
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+
                                           setState(() {
-                                            firstQtyController.text =
-                                                (int.parse(firstQtyController
-                                                            .text) -
-                                                        1)
-                                                    .toString();
+                                            packageLoading = true;
+                                          });
+
+                                          Map parameters = {
+                                            "action": "addRTCartitems",
+                                            "Pkid": widget.packageCode,
+                                            "Country": Constants.prefs
+                                                .getString("country_id"),
+                                            "Uniqid": uniqId,
+                                            "sessid": sessionId,
+                                            "ipaddress":
+                                                Constants.prefs.getString("ip"),
+                                            "sprno": "0",
+                                            "Quantity": firstQtyController.text
+                                          };
+
+                                          dynamic res = await MainController()
+                                              .getRegPackAddToCart(parameters);
+
+                                          if (res['Msg']
+                                                  .toString()
+                                                  .toLowerCase() ==
+                                              "success") {
+                                            Timer(const Duration(seconds: 1),
+                                                () {
+                                              // Get.back(result: [true]);
+                                              Get.back();
+                                              Get.to(() => CartScreen(
+                                                  from: widget.from));
+                                            });
+                                          }
+
+                                          setState(() {
+                                            packageLoading = false;
                                           });
                                         }
                                       },
-                                      child: const CircleAvatar(
-                                        radius: 15,
-                                        child: Icon(
-                                          Icons.remove,
-                                          size: 18,
-                                        ),
-                                      ),
+                                      imagePath: 'assets/images/cart_icon.png',
+                                      labelColor: whiteColor,
+                                      buttonColor: blackColor,
+                                      titile: "Add to Cart",
                                     ),
-                                    const SpaceWidthWidget(width: 3),
-                                    SizedBox(
-                                        width: 60,
-                                        // height: 35,
-                                        child: RegisterTextField(
-                                          inputFormatter: [
-                                            FilteringTextInputFormatter
-                                                .digitsOnly
-                                          ],
-                                          controller: firstQtyController,
-                                          hintText: '',
-                                          textInputType: TextInputType.number,
-                                          onchangeFun: (val) {
-                                            setState(() {});
-                                          },
-                                          validation: (val) {
-                                            return null;
-                                          },
-                                          labelText: '',
-                                        )),
-                                    const SpaceWidthWidget(width: 3),
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          firstQtyController.text = (int.parse(
-                                                      firstQtyController.text) +
-                                                  1)
-                                              .toString();
-                                        });
-                                      },
-                                      child: const CircleAvatar(
-                                        radius: 15,
-                                        child: Icon(
-                                          Icons.add,
-                                          size: 18,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 150,
-                                  height: 35,
-                                  child: packageLoading
-                                      ? loader
-                                      : IconElevatedButton(
-                                          onTapFun: () async {
-                                            FocusManager.instance.primaryFocus
-                                                ?.unfocus();
-
-                                            setState(() {
-                                              packageLoading = true;
-                                            });
-
-                                            Map parameters = {
-                                              "action": "addRTCartitems",
-                                              "Pkid": widget.packageCode,
-                                              "Country": Constants.prefs
-                                                  .getString("country_id"),
-                                              "Uniqid": uniqId,
-                                              "sessid": sessionId,
-                                              "ipaddress": Constants.prefs
-                                                  .getString("ip"),
-                                              "sprno": "0",
-                                              "Quantity":
-                                                  firstQtyController.text
-                                            };
-
-                                            dynamic res = await MainController()
-                                                .getRegPackAddToCart(
-                                                    parameters);
-
-                                            if (res['Msg']
-                                                    .toString()
-                                                    .toLowerCase() ==
-                                                "success") {
-                                              Timer(const Duration(seconds: 1),
-                                                  () {
-                                                // Get.back(result: [true]);
-                                                Get.back();
-                                                Get.to(() => CartScreen(
-                                                    from: widget.from));
-                                              });
-                                            }
-
-                                            setState(() {
-                                              packageLoading = false;
-                                            });
-                                          },
-                                          imagePath:
-                                              'assets/images/cart_icon.png',
-                                          labelColor: whiteColor,
-                                          buttonColor: blackColor,
-                                          titile: "Add to Cart",
-                                        ),
-                                )
-                              ],
-                            ),
+                            )
                           ],
                         ),
-                      ),
-                    )
-                  : const SizedBox.shrink();
+                      ],
+                    ),
+                  ),
+                );
         }),
         body: Obx(() {
           return packDetailsController.loading.value
@@ -349,7 +344,8 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                         const SpaceHeightWidget(height: 30),
                         ProductAmountDetailsWidget(
                           units: "1",
-                          qty: "1",
+                          qty: packDetailsController
+                              .packageDetailsData.value.aqty,
                           price: packDetailsController
                                       .packageDetailsData.value.mrp !=
                                   ""

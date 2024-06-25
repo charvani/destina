@@ -30,6 +30,7 @@ class PackageDetailsModel {
   String img2;
   String img3;
   String rp;
+  String aqty;
 
   PackageDetailsModel({
     required this.packageDescriptionRpt1,
@@ -51,6 +52,7 @@ class PackageDetailsModel {
     required this.img2,
     required this.img3,
     required this.rp,
+    required this.aqty,
   });
 
   factory PackageDetailsModel.fromJson(Map<String, dynamic> json) =>
@@ -76,6 +78,7 @@ class PackageDetailsModel {
         img2: json["img2"],
         img3: json["img3"],
         rp: json["RP"] ?? "",
+        aqty: json["aqty"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -99,5 +102,6 @@ class PackageDetailsModel {
         "img1": img1,
         "img2": img2,
         "img3": img3,
+        "aqty": aqty,
       };
 }

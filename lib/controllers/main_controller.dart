@@ -147,26 +147,27 @@ class MainController extends GetxController {
       .obs;
 
   Rx<PackageDetailsModel> packageDetailsData = PackageDetailsModel(
-          packageDescriptionRpt1: [],
-          packageDescriptionRpt2: [],
-          msg: "",
-          message: "",
-          desc: "",
-          overview: "",
-          info: "",
-          pkid: "",
-          pkcode: "",
-          pkname: "",
-          mrp: "",
-          pImage: "",
-          codeNo: "",
-          cv: "",
-          img: "",
-          img1: "",
-          img2: "",
-          img3: "",
-          rp: "")
-      .obs;
+    packageDescriptionRpt1: [],
+    packageDescriptionRpt2: [],
+    msg: "",
+    message: "",
+    desc: "",
+    overview: "",
+    info: "",
+    pkid: "",
+    pkcode: "",
+    pkname: "",
+    mrp: "",
+    pImage: "",
+    codeNo: "",
+    cv: "",
+    img: "",
+    img1: "",
+    img2: "",
+    img3: "",
+    rp: "",
+    aqty: "",
+  ).obs;
   Rx<PackageItemsModel> packPackageDetails = PackageItemsModel(
     getPkgItemsRpt: [],
     msg: "",
@@ -770,7 +771,8 @@ class MainController extends GetxController {
           img2: "",
           img3: "",
           url: "",
-          pdfPath: "")
+          pdfPath: "",
+          qty: "")
       .obs;
   RxDouble dpMallDPAmount = 0.0.obs;
   RxDouble dpMallRMAmount = 0.0.obs;

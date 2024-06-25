@@ -1,4 +1,5 @@
 import 'package:destina_1_international/commons/common_widgets.dart';
+import 'package:destina_1_international/inside_screens/myBonus/level_variancebonus_screen.dart';
 import 'package:destina_1_international/inside_screens/myBonus/special_bonus_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -354,6 +355,16 @@ class _BonusDateSelectionScreenState extends State<BonusDateSelectionScreen> {
                                         : "01/01/2100",
                                     distributorId:
                                         distributorIDTController.text,
+                                  ));
+                            } else if (widget.from ==
+                                "Level Variance Consumption Bonus") {
+                              Get.to(() => LevelVarianceConBonusScreen(
+                                    fromDate: fromDateTController.text != ""
+                                        ? fromDateTController.text
+                                        : "01/01/1900",
+                                    toDate: toDateTController.text != ""
+                                        ? toDateTController.text
+                                        : formattedDate,
                                   ));
                             }
                             // }

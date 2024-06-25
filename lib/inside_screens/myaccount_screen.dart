@@ -705,7 +705,14 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           },
           title: "Group Consumption Bonus",
         ),
-
+        MyAccountItemWidget(
+          onTapFun: () {
+            Get.to(() => const BonusDateSelectionScreen(
+                  from: "Level Variance Consumption Bonus",
+                ));
+          },
+          title: "Level Variance Consumption Bonus",
+        ),
         // MyAccountItemWidget(
         //   onTapFun: () {
         //     Get.to(() => const BonusDateSelectionScreen(
@@ -722,7 +729,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         //   },
         //   title: "Special Bonus(Sponsor)",
         // ),
-
         // MyAccountItemWidget(
         //   onTapFun: () {
         //     Get.to(() => const BonusDateSelectionScreen(
@@ -739,7 +745,6 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
         //   },
         //   title: "Personal Sales Bonus",
         // ),
-
         const SpaceHeightWidget(height: 13)
       ],
     );

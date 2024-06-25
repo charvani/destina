@@ -145,143 +145,164 @@ class _SalesProductDetailsScreen2State
           backNavigation: true,
           title: widget.packageCode,
         ),
-        bottomSheet: Form(
-          key: _fomkey1,
-          child: Container(
-            padding: const EdgeInsets.fromLTRB(15, 5, 5, 0),
-            height: 90,
-            alignment: Alignment.center,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              border: Border.all(width: 1.5, color: darkBlue),
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-              color: whiteColor,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text("Quantity: "),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
+        bottomSheet: Obx(() {
+          return packDetailsController.loading.value
+              ? loader
+              : Form(
+                  key: _fomkey1,
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(15, 5, 5, 0),
+                    height: 90,
+                    alignment: Alignment.center,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1.5, color: darkBlue),
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30)),
+                      color: whiteColor,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            if (int.parse(firstQtyController.text) > 1) {
-                              setState(() {
-                                firstQtyController.text =
-                                    (int.parse(firstQtyController.text) - 1)
-                                        .toString();
-                              });
-                            }
-                          },
-                          child: const CircleAvatar(
-                            radius: 15,
-                            child: Icon(
-                              Icons.remove,
-                              size: 18,
-                            ),
-                          ),
-                        ),
-                        const SpaceWidthWidget(width: 3),
-                        SizedBox(
-                            width: 60,
-                            // height: 35,
-                            child: RegisterTextField(
-                              inputFormatter: [
-                                FilteringTextInputFormatter.digitsOnly
+                        const Text("Quantity: "),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    if (int.parse(firstQtyController.text) >
+                                        1) {
+                                      setState(() {
+                                        firstQtyController.text = (int.parse(
+                                                    firstQtyController.text) -
+                                                1)
+                                            .toString();
+                                      });
+                                    }
+                                  },
+                                  child: const CircleAvatar(
+                                    radius: 15,
+                                    child: Icon(
+                                      Icons.remove,
+                                      size: 18,
+                                    ),
+                                  ),
+                                ),
+                                const SpaceWidthWidget(width: 3),
+                                SizedBox(
+                                    width: 60,
+                                    // height: 35,
+                                    child: RegisterTextField(
+                                      inputFormatter: [
+                                        FilteringTextInputFormatter.digitsOnly
+                                      ],
+                                      controller: firstQtyController,
+                                      hintText: '',
+                                      textInputType: TextInputType.number,
+                                      onchangeFun: (val) {
+                                        setState(() {});
+                                      },
+                                      validation: (val) {
+                                        return null;
+                                      },
+                                      labelText: '',
+                                    )),
+                                const SpaceWidthWidget(width: 3),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      firstQtyController.text =
+                                          (int.parse(firstQtyController.text) +
+                                                  1)
+                                              .toString();
+                                    });
+                                  },
+                                  child: const CircleAvatar(
+                                    radius: 15,
+                                    child: Icon(
+                                      Icons.add,
+                                      size: 18,
+                                    ),
+                                  ),
+                                ),
                               ],
-                              controller: firstQtyController,
-                              hintText: '',
-                              textInputType: TextInputType.number,
-                              onchangeFun: (val) {
-                                setState(() {});
-                              },
-                              validation: (val) {
-                                return null;
-                              },
-                              labelText: '',
-                            )),
-                        const SpaceWidthWidget(width: 3),
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              firstQtyController.text =
-                                  (int.parse(firstQtyController.text) + 1)
-                                      .toString();
-                            });
-                          },
-                          child: const CircleAvatar(
-                            radius: 15,
-                            child: Icon(
-                              Icons.add,
-                              size: 18,
                             ),
-                          ),
+                            SizedBox(
+                              width: 150,
+                              height: 35,
+                              child: packageLoading
+                                  ? loader
+                                  : IconElevatedButton(
+                                      onTapFun: () async {
+                                        FocusManager.instance.primaryFocus
+                                            ?.unfocus();
+                                        if (int.parse(packDetailsController
+                                                .packageDetailsData
+                                                .value
+                                                .aqty) >
+                                            0) {
+                                          setState(() {
+                                            packageLoading = true;
+                                          });
+
+                                          Map parameters = {
+                                            "action": "addSACartitems",
+                                            // "addSGCartitems",
+                                            "Pkid": widget.packageCode,
+                                            "Country": Constants.prefs
+                                                .getString("country_id"),
+                                            "Uniqid": uniqId,
+                                            "sessid": sessionId,
+                                            "ipaddress":
+                                                Constants.prefs.getString("ip"),
+                                            "sprno": Constants.prefs
+                                                .getString("reg_id"),
+                                            // "0",
+                                            "Quantity": firstQtyController.text
+                                          };
+
+                                          dynamic res = await MainController()
+                                              .getRegPackAddToCart(parameters);
+
+                                          if (res['Msg']
+                                                  .toString()
+                                                  .toLowerCase() ==
+                                              "success") {
+                                            setState(() {
+                                              packageLoading = false;
+                                            });
+                                            Timer(const Duration(seconds: 1),
+                                                () {
+                                              Get.back();
+                                              Get.to(() =>
+                                                  const SalesmallCartScreen(
+                                                    from: "sales_product",
+                                                  ));
+                                            });
+                                          } else {
+                                            setState(() {
+                                              packageLoading = false;
+                                            });
+                                          }
+                                        }
+                                      },
+                                      imagePath: 'assets/images/cart_icon.png',
+                                      labelColor: whiteColor,
+                                      buttonColor: blackColor,
+                                      titile: "Add to Cart",
+                                    ),
+                            )
+                          ],
                         ),
                       ],
                     ),
-                    SizedBox(
-                      width: 150,
-                      height: 35,
-                      child: packageLoading
-                          ? loader
-                          : IconElevatedButton(
-                              onTapFun: () async {
-                                FocusManager.instance.primaryFocus?.unfocus();
-                                setState(() {
-                                  packageLoading = true;
-                                });
-
-                                Map parameters = {
-                                  "action": "addSACartitems",
-                                  // "addSGCartitems",
-                                  "Pkid": widget.packageCode,
-                                  "Country":
-                                      Constants.prefs.getString("country_id"),
-                                  "Uniqid": uniqId,
-                                  "sessid": sessionId,
-                                  "ipaddress": Constants.prefs.getString("ip"),
-                                  "sprno": Constants.prefs.getString("reg_id"),
-                                  // "0",
-                                  "Quantity": firstQtyController.text
-                                };
-
-                                dynamic res = await MainController()
-                                    .getRegPackAddToCart(parameters);
-
-                                if (res['Msg'].toString().toLowerCase() ==
-                                    "success") {
-                                  setState(() {
-                                    packageLoading = false;
-                                  });
-                                  Timer(const Duration(seconds: 1), () {
-                                    Get.back();
-                                    Get.to(() => const SalesmallCartScreen(
-                                          from: "sales_product",
-                                        ));
-                                  });
-                                } else {
-                                  setState(() {
-                                    packageLoading = false;
-                                  });
-                                }
-                              },
-                              imagePath: 'assets/images/cart_icon.png',
-                              labelColor: whiteColor,
-                              buttonColor: blackColor,
-                              titile: "Add to Cart",
-                            ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
+                  ),
+                );
+        }),
         body: Obx(() {
           return packDetailsController.loading.value
               ? loader
@@ -308,7 +329,8 @@ class _SalesProductDetailsScreen2State
                         const SpaceHeightWidget(height: 30),
                         ProductAmountDetailsWidget(
                           units: "1",
-                          qty: "1",
+                          qty: packDetailsController
+                              .packageDetailsData.value.aqty,
                           price: packDetailsController
                               .packageDetailsData.value.mrp,
                           cv: packDetailsController.packageDetailsData.value.cv,

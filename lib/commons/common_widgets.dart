@@ -2421,6 +2421,38 @@ class ProductAmountDetailsWidget extends StatelessWidget {
                   ],
                 ),
             ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    "Availability: ",
+                    style: TextStyle(
+                        fontFamily: "OnestSemiBold",
+                        fontSize: 14,
+                        color: darkBlue),
+                  ),
+                  const SpaceWidthWidget(width: 5),
+                  (qty != "" && qty != "0" && int.parse(qty) > 0)
+                      ? Text(
+                          "In Stock",
+                          style: TextStyle(
+                              fontFamily: "OnestSemiBold",
+                              fontSize: 16,
+                              color: greenColor),
+                        )
+                      : Text(
+                          "Temporarily Out-of-Stock",
+                          style: TextStyle(
+                              fontFamily: "OnestSemiBold",
+                              fontSize: 16,
+                              color: darkRedColor),
+                        ),
+                ],
+              ),
+            ],
           )
         ],
       ),
@@ -3728,11 +3760,10 @@ class OkDialog extends StatelessWidget {
                     width: 80,
                     height: 35,
                     child: CustomElevatedButton(
-                        onTapFun: 
-                        onTapFun??
-                        () {
-                          Get.back();
-                        },
+                        onTapFun: onTapFun ??
+                            () {
+                              Get.back();
+                            },
                         title: "OK"))
               ],
             )
