@@ -277,7 +277,7 @@ class _DPProductDetailsScreen2State extends State<DPProductDetailsScreen2> {
                               },
                               imagePath: 'assets/images/cart_icon.png',
                               labelColor: whiteColor,
-                              buttonColor: blackColor,
+                              buttonColor: darkBlue,
                               titile: "Add to Cart",
                             ),
                     )

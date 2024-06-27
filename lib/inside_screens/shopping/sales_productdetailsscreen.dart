@@ -226,7 +226,7 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                               },
                               imagePath: 'assets/images/cart_icon.png',
                               labelColor: whiteColor,
-                              buttonColor: blackColor,
+                              buttonColor: darkBlue,
                               titile: "Check Products",
                             ),
                           )
@@ -677,7 +677,7 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                                                   "country": Constants.prefs
                                                       .getString("country_id"),
                                                 };
-                                           
+
                                                 dynamic res =
                                                     await MainController()
                                                         .getSalesMallAddToCart(

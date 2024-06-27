@@ -4,6 +4,7 @@ import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/inside_screens/myEmoney/ecard_reqreport_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -29,6 +30,58 @@ Widget productBulletImg() {
       ),
     ],
   );
+}
+
+Widget productVideoWidget(String videoUrl, String imgUrl) {
+  return videoUrl == ""
+      ? const SizedBox.shrink()
+      : GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () async {
+            final Uri url = Uri.parse(videoUrl);
+            if (!await launchUrl(url)) {
+              throw Exception('Could not launch $url');
+            }
+          },
+          child: SizedBox(
+              // width: 300,
+              child: Stack(
+            alignment: Alignment.center,
+            children: [
+              CommonCachedNetworkImage(
+                imagePath: imgUrl,
+                height: 200,
+                // width: 225,
+                boxfit: BoxFit.fill,
+              ),
+              imgUrl != "Image"
+                  ? Icon(
+                      Icons.play_arrow_rounded,
+                      color: whiteColor,
+                      size: 40,
+                    )
+                  : const SizedBox.shrink()
+            ],
+          )),
+        );
+  //  Padding(
+  //   padding: const EdgeInsets.symmetric(horizontal: 8),
+  //   child: ClipRRect(
+  //       borderRadius: BorderRadius.circular(5),
+  //       child: ReviewVideoWidget(
+  //           onTapFun: () async {
+  //             final Uri url = Uri.parse(
+  //                 // "https://www.youtube.com/watch?v=b-QVKZD9jSQ&list=PLSn3vs1mApFHDMlwZgDmI4VGyHT4ximp8"
+  //                 videoUrl);
+  //             if (!await launchUrl(url)) {
+  //               throw Exception('Could not launch $url');
+  //             }
+  //           },
+  //           videoUrl:
+  //               // "https://www.youtube.com/watch?v=b-QVKZD9jSQ&list=PLSn3vs1mApFHDMlwZgDmI4VGyHT4ximp8",
+  //               videoUrl,
+  //           videoImgHeight: 200)),
+  // );
 }
 
 Widget pendentWidget() {
@@ -1851,7 +1904,8 @@ class ReviewFilter extends StatelessWidget {
 
 class PdfWidget extends StatefulWidget {
   final String category;
-  const PdfWidget({super.key, required this.category});
+  final String? pdfUrl;
+  const PdfWidget({super.key, required this.category, this.pdfUrl});
 
   @override
   State<PdfWidget> createState() => _PdfWidgetState();
@@ -1862,75 +1916,77 @@ class _PdfWidgetState extends State<PdfWidget> {
   bool progressbar = false;
   @override
   Widget build(BuildContext context) {
-    return const SizedBox.shrink();
-
-    // widget.category == "Kritalia & Co"
-    //     ? const SizedBox.shrink()
-    //     : Padding(
-    //         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-    //         child: Column(
-    //           children: [
-    //             Row(
-    //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //               children: [
-    //                 CommonTitle(
-    //                   titleName: "Download Broucher:",
-    //                   fontColor: darkBlue,
-    //                   size: 16,
-    //                 ),
-    //                 SizedBox(
-    //                   // width: 130,
-    //                   height: 30,
-    //                   child: IconElevatedButton(
-    //                     onTapFun: () {
-    //                       if (progressbar == false) {
-    //                         FileDownloader.downloadFile(
-    //                             url:
-    //                                 "https://admin.destina1.com/Resources/Mini%20Book%20web.pdf",
-    //                             name:
-    //                                 "https://admin.destina1.com/Resources/Mini%20Book%20web.pdf"
-    //                                     .split('MemberDownloads/')
-    //                                     .last, //(optional)
-    //                             onProgress: (String? name, double? onProgress) {
-    //                               setState(() {
-    //                                 progressbar = true;
-    //                                 progressVal = onProgress;
-    //                                 if (progressVal == 100.0) {
-    //                                   progressbar = false;
-    //                                 }
-    //                               });
-    //                             },
-    //                             onDownloadCompleted: (String path) {
-    //                               CommonToastTrue("Successfully donwloaded");
-    //                             },
-    //                             onDownloadError: (String error) {
-    //                               CommonToast(error);
-    //                             });
-    //                       }
-    //                     },
-    //                     idata: Icons.picture_as_pdf_outlined,
-    //                     imagePath: '',
-    //                     labelColor: whiteColor,
-    //                     buttonColor: blackColor,
-    //                     titile: "Download",
-    //                   ),
-    //                 ),
-    //               ],
-    //             ),
-    //             if (progressbar)
-    //               Column(
-    //                 children: [
-    //                   const SpaceHeightWidget(height: 10),
-    //                   LinearProgressIndicator(
-    //                     borderRadius: BorderRadius.circular(10),
-    //                     value: progressVal! / 100.00,
-    //                   ),
-    //                   const SpaceHeightWidget(height: 10)
-    //                 ],
-    //               ),
-    //           ],
-    //         ),
-    //       );
+    return widget.category == "Kritalia & Co" ||
+            widget.pdfUrl == "" ||
+            widget.category == ""
+        ? const SizedBox.shrink()
+        : Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CommonTitle(
+                      titleName: "Download Broucher:",
+                      fontColor: darkBlue,
+                      size: 16,
+                    ),
+                    SizedBox(
+                      // width: 130,
+                      height: 30,
+                      child: IconElevatedButton(
+                        onTapFun: () {
+                          if (progressbar == false) {
+                            FileDownloader.downloadFile(
+                                url: widget.pdfUrl!
+                                // "https://admin.destina1.com/Resources/Mini%20Book%20web.pdf"
+                                ,
+                                name:
+                                    // "https://admin.destina1.com/Resources/Mini%20Book%20web.pdf"
+                                    widget.pdfUrl!
+                                        .split('MemberDownloads/')
+                                        .last, //(optional)
+                                onProgress: (String? name, double? onProgress) {
+                                  setState(() {
+                                    progressbar = true;
+                                    progressVal = onProgress;
+                                    if (progressVal == 100.0) {
+                                      progressbar = false;
+                                    }
+                                  });
+                                },
+                                onDownloadCompleted: (String path) {
+                                  CommonToastTrue("Successfully donwloaded");
+                                },
+                                onDownloadError: (String error) {
+                                  CommonToast(error);
+                                });
+                          }
+                        },
+                        idata: Icons.picture_as_pdf_outlined,
+                        imagePath: '',
+                        labelColor: whiteColor,
+                        buttonColor: darkBlue,
+                        titile: "Download",
+                      ),
+                    ),
+                  ],
+                ),
+                if (progressbar)
+                  Column(
+                    children: [
+                      const SpaceHeightWidget(height: 10),
+                      LinearProgressIndicator(
+                        borderRadius: BorderRadius.circular(10),
+                        value: progressVal! / 100.00,
+                      ),
+                      const SpaceHeightWidget(height: 10)
+                    ],
+                  ),
+              ],
+            ),
+          );
   }
 }
 

@@ -167,6 +167,10 @@ class MainController extends GetxController {
     img3: "",
     rp: "",
     aqty: "",
+    fddesc: "",
+    broucherurl: "",
+    imgUrl: "",
+    youtubeUrl: ""
   ).obs;
   Rx<PackageItemsModel> packPackageDetails = PackageItemsModel(
     getPkgItemsRpt: [],
@@ -772,7 +776,12 @@ class MainController extends GetxController {
           img3: "",
           url: "",
           pdfPath: "",
-          qty: "")
+          qty: "",
+          imgUrl: "",
+          youtubeurl: "",
+          appdescr: "",
+          broucherurl: ""
+          )
       .obs;
   RxDouble dpMallDPAmount = 0.0.obs;
   RxDouble dpMallRMAmount = 0.0.obs;

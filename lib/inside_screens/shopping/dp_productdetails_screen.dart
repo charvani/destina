@@ -14,6 +14,7 @@ import '../../commons/cmnproduct_detailswdgts.dart';
 import '../customer_reviews/reviewlist_screen.dart';
 import '../customer_reviews/writereview_screen.dart';
 import '../heroanimation_screen.dart';
+import '../myEmoney/ecard_reqreport_screen.dart';
 import 'dp_cartscreen.dart';
 
 class DPProductDetailsScreen extends StatefulWidget {
@@ -255,7 +256,11 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                                     },
                                     imagePath: 'assets/images/cart_icon.png',
                                     labelColor: whiteColor,
-                                    buttonColor: blackColor,
+                                    buttonColor: (int.parse(_dataController
+                                                .dpProductdata.value.qty) >
+                                            0)
+                                        ? darkBlue
+                                        : lightDarKBlue.withOpacity(0.3),
                                     titile: "Add to cart",
                                   ),
                                 )
@@ -298,8 +303,19 @@ class _DPProductDetailsScreenState extends State<DPProductDetailsScreen> {
                         productCode: _dataController.dpProductdata.value.pkcode,
                         title: _dataController.dpProductdata.value.pkname,
                       ),
-                      const PdfWidget(
-                        category: "",
+                      PdfWidget(
+                          category: "",
+                          pdfUrl:
+                              _dataController.dpProductdata.value.broucherurl),
+                      const SpaceHeightWidget(height: 5),
+                      Column(
+                        children: [
+                          htmlDataWidget(
+                              _dataController.dpProductdata.value.appdescr),
+                          productVideoWidget(
+                              _dataController.dpProductdata.value.youtubeurl,
+                              _dataController.dpProductdata.value.imgUrl)
+                        ],
                       ),
                       const SpaceHeightWidget(height: 10),
                       const CommonDivider(),

@@ -202,9 +202,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                                   .getRedemptionMallItemRemove(
                                                                       params,
                                                                       cartParams);
-                                                          if (res != null) {
-                                                            
-                                                          }
+                                                          if (res != null) {}
                                                         },
                                                         title:
                                                             "Are you sure?"));
@@ -354,7 +352,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                             imagePath:
                                                 'assets/images/shopping_cart_img.jpg',
                                             labelColor: whiteColor,
-                                            buttonColor: blackColor,
+                                            buttonColor: darkBlue,
                                             titile: "Checkout",
                                           ),
                                         ),
@@ -381,7 +379,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                 'assets/images/arrow_right.png',
                                             labelColor: whiteColor,
                                             titile: "Continue Shopping",
-                                            buttonColor: blackColor,
+                                            buttonColor: darkBlue,
                                           ),
                                         ),
                                       ),
@@ -802,7 +800,7 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                   "jointype": "Promotion",
                                                   "action": "addSGPromoitems",
                                                 };
-                                                
+
                                                 dynamic res =
                                                     await cartController
                                                         .getPackAddToCart(

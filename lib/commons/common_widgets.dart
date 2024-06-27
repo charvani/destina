@@ -1794,14 +1794,14 @@ class IconElevatedButton extends StatelessWidget {
   final VoidCallback onTapFun;
   final String imagePath;
   final String titile;
-  final Color buttonColor;
+  final Color? buttonColor;
   final Color labelColor;
   final IconData? idata;
   const IconElevatedButton(
       {super.key,
       required this.imagePath,
       required this.onTapFun,
-      required this.buttonColor,
+      this.buttonColor,
       required this.labelColor,
       required this.titile,
       this.idata});
@@ -1809,7 +1809,8 @@ class IconElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
-        style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(darkBlue)),
+        style: ButtonStyle(
+            backgroundColor: MaterialStatePropertyAll(buttonColor ?? darkBlue)),
         onPressed: onTapFun,
         icon: imagePath.contains("assets")
             ? Image.asset(

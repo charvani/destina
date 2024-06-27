@@ -225,7 +225,7 @@ class _PackageDetailsScreenState extends State<PackageDetailsScreen> {
                                 },
                                 imagePath: 'assets/images/cart_icon.png',
                                 labelColor: whiteColor,
-                                buttonColor: blackColor,
+                                buttonColor: darkBlue,
                                 titile: "Add to Cart",
                               ),
                             )

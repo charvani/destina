@@ -31,6 +31,10 @@ class PackageDetailsModel {
   String img3;
   String rp;
   String aqty;
+  dynamic fddesc;
+  String broucherurl;
+  String youtubeUrl;
+  String imgUrl;
 
   PackageDetailsModel({
     required this.packageDescriptionRpt1,
@@ -53,6 +57,10 @@ class PackageDetailsModel {
     required this.img3,
     required this.rp,
     required this.aqty,
+    required this.fddesc,
+    required this.broucherurl,
+    required this.youtubeUrl,
+    required this.imgUrl,
   });
 
   factory PackageDetailsModel.fromJson(Map<String, dynamic> json) =>
@@ -79,6 +87,10 @@ class PackageDetailsModel {
         img3: json["img3"],
         rp: json["RP"] ?? "",
         aqty: json["aqty"],
+        fddesc: json["Fdescr"],
+        broucherurl: json["broucherurl"],
+        youtubeUrl: json["youtubeUrl"],
+        imgUrl: json["ImgUrl"],
       );
 
   Map<String, dynamic> toJson() => {

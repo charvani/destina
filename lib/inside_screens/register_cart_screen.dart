@@ -316,7 +316,7 @@ class _RegisterCartScreenState extends State<RegisterCartScreen> {
                                                 imagePath:
                                                     'assets/images/shopping_cart_img.jpg',
                                                 labelColor: whiteColor,
-                                                buttonColor: blackColor,
+                                                buttonColor: darkBlue,
                                                 titile: "Checkout",
                                               ),
                                             ),

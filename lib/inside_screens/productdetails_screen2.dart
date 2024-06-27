@@ -4,6 +4,7 @@ import 'package:destina_1_international/commons/colors.dart';
 import 'package:destina_1_international/commons/common_widgets.dart';
 import 'package:destina_1_international/commons/constants.dart';
 import 'package:destina_1_international/controllers/main_controller.dart';
+import 'package:destina_1_international/inside_screens/myEmoney/ecard_reqreport_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -306,7 +307,14 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                                       },
                                       imagePath: 'assets/images/cart_icon.png',
                                       labelColor: whiteColor,
-                                      buttonColor: blackColor,
+                                      buttonColor: (int.parse(
+                                                  packDetailsController
+                                                      .packageDetailsData
+                                                      .value
+                                                      .aqty) >
+                                              0)
+                                          ? darkBlue
+                                          : lightDarKBlue.withOpacity(0.3),
                                       titile: "Add to Cart",
                                     ),
                             )
@@ -359,43 +367,56 @@ class _ProductDetailsScreen2State extends State<ProductDetailsScreen2> {
                               .packageDetailsData.value.pkname,
                         ),
                         PdfWidget(
-                          category: widget.fromPack,
-                        ),
+                            category: widget.fromPack,
+                            pdfUrl: packDetailsController
+                                .packageDetailsData.value.broucherurl),
                         const SpaceHeightWidget(height: 5),
-                        if (widget.fromPack == "Kritalia & Co")
-                          kritaliaWidget(packDetailsController
-                              .packageDetailsData.value.desc),
-                        if (packDetailsController
-                                    .packageDetailsData.value.pkname ==
-                                "UNIWAVE PENDENT" ||
-                            packDetailsController
-                                    .packageDetailsData.value.pkname ==
-                                "UNIWAVE PENDANT")
-                          pendentWidget(),
-                        if (packDetailsController.packageDetailsData.value.pkname == "UNIWAVE FLASK" ||
-                            packDetailsController
-                                    .packageDetailsData.value.pkname ==
-                                "UNIWAVE STICK" ||
-                            packDetailsController
-                                    .packageDetailsData.value.pkname ==
-                                "UNIWAVE FILTER")
-                          flaskWidget(packDetailsController
-                              .packageDetailsData.value.pkname),
-                        if (packDetailsController
-                                .packageDetailsData.value.pkname ==
-                            "UNIWAVE SCALARVIA")
-                          scalarviaWidget(),
-                        if (packDetailsController
-                                .packageDetailsData.value.pkname ==
-                            "UNIWAVE INSTANT COFFEE")
-                          coffeeWidget(),
-                        if (packDetailsController
-                                    .packageDetailsData.value.pkname ==
-                                "UNIWAVE BIOMATRIX SHIELD" ||
-                            packDetailsController
-                                    .packageDetailsData.value.pkname ==
-                                "UNIWAVE BIO MATRIX SHIELD")
-                          biomatrixWidget(),
+                        (widget.fromPack == "Kritalia & Co")
+                            ? kritaliaWidget(packDetailsController
+                                .packageDetailsData.value.desc)
+                            : Column(
+                                children: [
+                                  htmlDataWidget(packDetailsController
+                                      .packageDetailsData.value.fddesc),
+                                  productVideoWidget(
+                                      packDetailsController
+                                          .packageDetailsData.value.youtubeUrl,
+                                      packDetailsController
+                                          .packageDetailsData.value.imgUrl)
+                                ],
+                              ),
+
+                        // if (packDetailsController
+                        //             .packageDetailsData.value.pkname ==
+                        //         "UNIWAVE PENDENT" ||
+                        //     packDetailsController
+                        //             .packageDetailsData.value.pkname ==
+                        //         "UNIWAVE PENDANT")
+                        // pendentWidget(),
+                        // if (packDetailsController.packageDetailsData.value.pkname == "UNIWAVE FLASK" ||
+                        //     packDetailsController
+                        //             .packageDetailsData.value.pkname ==
+                        //         "UNIWAVE STICK" ||
+                        //     packDetailsController
+                        //             .packageDetailsData.value.pkname ==
+                        //         "UNIWAVE FILTER")
+                        //   flaskWidget(packDetailsController
+                        //       .packageDetailsData.value.pkname),
+                        // if (packDetailsController
+                        //         .packageDetailsData.value.pkname ==
+                        //     "UNIWAVE SCALARVIA")
+                        //   scalarviaWidget(),
+                        // if (packDetailsController
+                        //         .packageDetailsData.value.pkname ==
+                        //     "UNIWAVE INSTANT COFFEE")
+                        //   coffeeWidget(),
+                        // if (packDetailsController
+                        //             .packageDetailsData.value.pkname ==
+                        //         "UNIWAVE BIOMATRIX SHIELD" ||
+                        //     packDetailsController
+                        //             .packageDetailsData.value.pkname ==
+                        //         "UNIWAVE BIO MATRIX SHIELD")
+                        //   biomatrixWidget(),
                         if (videoId != "" && videoId != null)
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

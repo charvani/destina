@@ -391,7 +391,7 @@ class _CartScreenState extends State<CartScreen> {
                                                               .getCheckSponsor(
                                                                   sponsorController
                                                                       .text);
-                                                      
+
                                                       if (res["Msg"]
                                                               .toString()
                                                               .toLowerCase() ==
@@ -458,7 +458,7 @@ class _CartScreenState extends State<CartScreen> {
                                           imagePath:
                                               'assets/images/shopping_cart_img.jpg',
                                           labelColor: whiteColor,
-                                          buttonColor: blackColor,
+                                          buttonColor: darkBlue,
                                           titile: "Checkout",
                                         ),
                                       ),
@@ -481,7 +481,7 @@ class _CartScreenState extends State<CartScreen> {
                                         imagePath:
                                             'assets/images/arrow_right.png',
                                         labelColor: whiteColor,
-                                        buttonColor: blackColor,
+                                        buttonColor: darkBlue,
                                         titile: "Continue Shopping",
                                       ),
                                     ),

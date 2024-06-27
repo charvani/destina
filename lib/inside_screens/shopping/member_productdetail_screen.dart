@@ -223,7 +223,7 @@ class _MemberProductDetailsScreenState
                               },
                               imagePath: 'assets/images/cart_icon.png',
                               labelColor: whiteColor,
-                              buttonColor: blackColor,
+                              buttonColor: darkBlue,
                               titile: "Check Products",
                             ),
                           )
@@ -670,7 +670,7 @@ class _MemberProductDetailsScreenState
                                                   "country": Constants.prefs
                                                       .getString("country_id"),
                                                 };
-                                               
+
                                                 dynamic res =
                                                     await MainController()
                                                         .getMemberMallAddToCart(

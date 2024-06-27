@@ -202,7 +202,6 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                                                   .getSalesMallItemRemove(
                                                                       params,
                                                                       cartParams);
-                                                         
                                                         },
                                                         title:
                                                             "Are you sure?"));
@@ -352,7 +351,7 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                             imagePath:
                                                 'assets/images/shopping_cart_img.jpg',
                                             labelColor: whiteColor,
-                                            buttonColor: blackColor,
+                                            buttonColor: darkBlue,
                                             titile: "Checkout",
                                           ),
                                         ),
@@ -378,7 +377,7 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                                 'assets/images/arrow_right.png',
                                             labelColor: whiteColor,
                                             titile: "Continue Shopping",
-                                            buttonColor: blackColor,
+                                            buttonColor: darkBlue,
                                           ),
                                         ),
                                       ),
@@ -799,7 +798,7 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                                   "jointype": "Promotion",
                                                   "action": "addSGPromoitems",
                                                 };
-                                               
+
                                                 dynamic res =
                                                     await cartController
                                                         .getPackAddToCart(

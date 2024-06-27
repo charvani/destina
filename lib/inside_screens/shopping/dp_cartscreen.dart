@@ -36,8 +36,6 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
   checkingFun() {
     String str = "10 DP + RM 1800.00";
     final endIndex = str.indexOf("DP", 0);
-
-   
   }
 
   @override
@@ -195,9 +193,7 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                                                   .getDPMallItemRemove(
                                                                       params,
                                                                       cartParams);
-                                                          if (res != null) {
-                                                          
-                                                          }
+                                                          if (res != null) {}
                                                         },
                                                         title:
                                                             "Are you sure?"));
@@ -478,7 +474,7 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                             imagePath:
                                                 'assets/images/shopping_cart_img.jpg',
                                             labelColor: whiteColor,
-                                            buttonColor: blackColor,
+                                            buttonColor: darkBlue,
                                             titile: "Checkout",
                                           ),
                                         ),
@@ -506,7 +502,7 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                                 'assets/images/arrow_right.png',
                                             labelColor: whiteColor,
                                             titile: "Continue Shopping",
-                                            buttonColor: blackColor,
+                                            buttonColor: darkBlue,
                                           ),
                                         ),
                                       ),
@@ -927,7 +923,7 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                                   "jointype": "Promotion",
                                                   "action": "addSGPromoitems",
                                                 };
-                                               
+
                                                 dynamic res =
                                                     await cartController
                                                         .getPackAddToCart(

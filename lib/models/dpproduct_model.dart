@@ -28,6 +28,10 @@ class DpProdccutModel {
   dynamic url;
   dynamic pdfPath;
   String qty;
+  String appdescr;
+  String broucherurl;
+  String youtubeurl;
+  String imgUrl;
 
   DpProdccutModel({
     required this.msg,
@@ -47,6 +51,10 @@ class DpProdccutModel {
     required this.url,
     required this.pdfPath,
     required this.qty,
+    required this.appdescr,
+    required this.broucherurl,
+    required this.youtubeurl,
+    required this.imgUrl,
   });
 
   factory DpProdccutModel.fromJson(Map<String, dynamic> json) =>
@@ -68,6 +76,10 @@ class DpProdccutModel {
         url: json["Url"],
         pdfPath: json["pdfPath"],
         qty: json["aqty"],
+        appdescr: json["appdescr"],
+        broucherurl: json["broucherurl"],
+        youtubeurl: json["youtubeurl"],
+        imgUrl: json["ImgUrl"],
       );
 
   Map<String, dynamic> toJson() => {

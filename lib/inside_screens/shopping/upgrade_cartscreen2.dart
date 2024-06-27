@@ -373,7 +373,7 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
                                                 imagePath:
                                                     'assets/images/shopping_cart_img.jpg',
                                                 labelColor: whiteColor,
-                                                buttonColor: blackColor,
+                                                buttonColor: darkBlue,
                                                 titile: "Checkout",
                                               ),
                                             ),
@@ -797,7 +797,7 @@ class _UpgradeOrderCartSceen2State extends State<UpgradeOrderCartSceen2> {
                                                   "jointype": "Promotion",
                                                   "action": "addSGPromoitems",
                                                 };
-                                         
+
                                                 dynamic res =
                                                     await cartController
                                                         .getPackAddToCart(

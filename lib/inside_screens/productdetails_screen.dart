@@ -58,7 +58,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       } else {
         sessionId = Constants.prefs.getString("ss_id");
       }
-
     });
   }
 
@@ -84,7 +83,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   getPackageItemsData() async {
-
     dynamic res = await productDetailsController.getProductPackageItems(
         productCode: widget.packageCode,
         uniqId: uniqId,
@@ -198,7 +196,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     height: 35,
                                     child: IconElevatedButton(
                                       onTapFun: () async {
-                                        
                                         setState(() {
                                           packageLoading = true;
                                         });
@@ -239,7 +236,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       },
                                       imagePath: 'assets/images/cart_icon.png',
                                       labelColor: whiteColor,
-                                      buttonColor: blackColor,
+                                      buttonColor: darkBlue,
                                       titile: "Add to Cart",
                                     ),
                                   )
@@ -788,7 +785,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                   "Quantity":
                                                       firstQtyController.text
                                                 };
-                                             
+
                                                 dynamic res =
                                                     await MainController()
                                                         .getAddToCart(

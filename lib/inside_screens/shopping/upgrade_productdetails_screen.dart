@@ -163,7 +163,7 @@ class _UpgradeProductDetailsScreenState
                           },
                           imagePath: 'assets/images/cart_icon.png',
                           labelColor: whiteColor,
-                          buttonColor: blackColor,
+                          buttonColor: darkBlue,
                           titile: "Check Products",
                         ),
                       )
@@ -607,7 +607,7 @@ class _UpgradeProductDetailsScreenState
                                                       .getString("user_id"),
                                                   "prdtype": "Package",
                                                 };
-                                                
+
                                                 dynamic res =
                                                     await MainController()
                                                         .getUpgradeMallAddToCart(
