@@ -21,10 +21,8 @@ class ApiCall {
   }
 
   postMethodFun({required String methodName, required Map params}) async {
-    print("method...$methodName");
-    print("params...$params");
+   
     dynamic encryptedText = Encrypt.encryptStringResponse(json.encode(params));
-    print("info text ==  ${encryptedText.toString()}");
     http.Response response = await http.post(
         Uri.parse(ApiData().baseUrl + methodName),
         body: {"Info": encryptedText.toString()});
@@ -88,9 +86,7 @@ class ApiCall {
 
   listPostMethodFun({required String methodName, required Map params}) async {
     dynamic encryptedText = Encrypt.encryptStringResponse(json.encode(params));
-    print("method...$methodName");
-    print("params...$params");
-    print("info text ==  ${encryptedText.toString()}");
+    
     http.Response response = await http.post(
         Uri.parse(ApiData().baseUrl + methodName),
         body: {"Info": encryptedText.toString()});

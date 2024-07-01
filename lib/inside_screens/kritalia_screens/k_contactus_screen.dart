@@ -48,7 +48,6 @@ class _KContactUsScreenState extends State<KContactUsScreen> {
       appBar: commonAppBar(backNavigation: true, title: "Contact Us"),
       body: SingleChildScrollView(
         child: Column(children: [
-          // Image.asset("assets/images/k_contactus_banner.jpeg"),
           const CommonCachedNetworkImage(
               imagePath: "https://www.destina1.com/images/jewellery-box.jpeg"),
           Padding(
@@ -87,9 +86,7 @@ class _KContactUsScreenState extends State<KContactUsScreen> {
               onTapFun: () async {
                 dynamic con = Constants.prefs.getString("open_country");
                 if (con != null) {
-                  print("con...$con");
                   Get.to(() => WebUrlScreen(
-                        // redirectUrl: "https://destina1.com/MAKritaliaBA.html",
                         redirectUrl:
                             "https://destina1.com/MABookAppointment.html?countrycode=$con",
                         from: "Book an Appointment",

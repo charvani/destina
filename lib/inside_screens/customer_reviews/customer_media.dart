@@ -63,7 +63,6 @@ class _CustomerMediaScreenState extends State<CustomerMediaScreen> {
                       childAspectRatio:
                           mediaType[selectedInd] == "Photos" ? 1 : 1.9,
                       crossAxisCount: 2,
-                      // mediaType[selectedInd] == "Photos" ? 2 : 1,
                       crossAxisSpacing: 5),
                   itemCount: mediaType[selectedInd] == "Photos"
                       ? widget.photos.length

@@ -64,24 +64,6 @@ Widget productVideoWidget(String videoUrl, String imgUrl) {
             ],
           )),
         );
-  //  Padding(
-  //   padding: const EdgeInsets.symmetric(horizontal: 8),
-  //   child: ClipRRect(
-  //       borderRadius: BorderRadius.circular(5),
-  //       child: ReviewVideoWidget(
-  //           onTapFun: () async {
-  //             final Uri url = Uri.parse(
-  //                 // "https://www.youtube.com/watch?v=b-QVKZD9jSQ&list=PLSn3vs1mApFHDMlwZgDmI4VGyHT4ximp8"
-  //                 videoUrl);
-  //             if (!await launchUrl(url)) {
-  //               throw Exception('Could not launch $url');
-  //             }
-  //           },
-  //           videoUrl:
-  //               // "https://www.youtube.com/watch?v=b-QVKZD9jSQ&list=PLSn3vs1mApFHDMlwZgDmI4VGyHT4ximp8",
-  //               videoUrl,
-  //           videoImgHeight: 200)),
-  // );
 }
 
 Widget pendentWidget() {
@@ -306,38 +288,10 @@ Widget flaskWidget(String itemName) {
         ],
       ),
       const SpaceHeightWidget(height: 10),
-      // for (int i = 0; i < 3; i++)
       const UniwaveProductDetails(
-        dataText:
-            // i == 0
-            //     ? "Rejuvenation of cells"
-            //     : i == 1
-            //         ? "Trigger the production of stem cells for new cell formation"
-            //         :
-            " Provide optimum energy for the healthy lifestyle",
+        dataText: " Provide optimum energy for the healthy lifestyle",
       ),
-      // const SpaceHeightWidget(height: 5),
-      // CommonTitle(
-      //   titleName: "Benefits of $itemName",
-      //   fontFamily: "OnestSemiBold",
-      //   size: 15.5,
-      // ),
-      // const SpaceHeightWidget(height: 8),
-      // for (int i = 0; i < flaskBenfitsData.length; i++)
-      //   UniwaveProductDetails(
-      //     dataText: flaskBenfitsData[i],
-      //   ),
       const SpaceHeightWidget(height: 15),
-
-      // Padding(
-      //   padding: const EdgeInsets.all(10.0),
-      //   child: Image.asset(itemName.toLowerCase() == "uniwave flask"
-      //       ? "assets/images/uniwave_flask.jpg"
-      //       // : itemName.toLowerCase() == "uniwave stick"
-      //       //     ? "assets/images/stick1.jpg"
-      //       //     :
-      //           "assets/images/filter1.jpg"),
-      // ),
       const SpaceHeightWidget(height: 15),
       Container(
         width: double.infinity,

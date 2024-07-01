@@ -124,7 +124,6 @@ class _ReviewListScreenState extends State<ReviewListScreen> {
                               height: 30,
                               child: CustomAutoWidthButton(
                                   onTapFun: () {
-                                    // Get.dialog(addReviewandRatingDialog());
                                     Get.to(() => WriteReviewScreen(
                                           pid: widget.pid,
                                         ));

@@ -145,9 +145,7 @@ class MyData extends DataTableSource {
         TableInfoWidget(info: "${index + 1}"),
       ),
       DataCell(_verticalDivider),
-      DataCell(
-          // TableInfoWidget(info: _dataController.upgradeList[index].orderNo),
-          orderNumTextWidget(_dataController.upgradeList[index].orderNo)),
+      DataCell(orderNumTextWidget(_dataController.upgradeList[index].orderNo)),
       DataCell(_verticalDivider),
       DataCell(
         TableInfoWidget(info: _dataController.upgradeList[index].totalPrice),

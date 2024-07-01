@@ -69,7 +69,6 @@ class _ProductsScreen2State extends State<ProductsScreen2> {
       } else {
         sessionId = Constants.prefs.getString("ss_id");
       }
-      print("bill ...${widget.billno}");
       if (widget.billno != "" && widget.billno != null) {
         oderAgainAddtoCartFun();
       }

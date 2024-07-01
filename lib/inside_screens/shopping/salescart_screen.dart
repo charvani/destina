@@ -155,7 +155,6 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                                               cv: cartController
                                                   .salesMallCartItems[i].cv,
 
-                                              // removeCartOption: true,
                                               decrementFun: () {
                                                 if (int.parse(cartController
                                                         .salesMallCartItems[i]
@@ -533,7 +532,6 @@ class _SalesmallCartScreenState extends State<SalesmallCartScreen> {
                       children: [
                         const SpaceHeightWidget(height: 5),
                         Text(
-                          // "Products In The Package MYSH01",
                           cartController.packPackageDetails.value.head,
                           style: TextStyle(
                               fontFamily: "OnestSemiBold",

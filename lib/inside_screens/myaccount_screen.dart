@@ -713,38 +713,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
           },
           title: "Level Variance Consumption Bonus",
         ),
-        // MyAccountItemWidget(
-        //   onTapFun: () {
-        //     Get.to(() => const BonusDateSelectionScreen(
-        //           from: "Special Bonus",
-        //         ));
-        //   },
-        //   title: "Special Bonus",
-        // ),
-        // MyAccountItemWidget(
-        //   onTapFun: () {
-        //     Get.to(() => const BonusDateSelectionScreen(
-        //           from: "Special Bonus(Sponsor)",
-        //         ));
-        //   },
-        //   title: "Special Bonus(Sponsor)",
-        // ),
-        // MyAccountItemWidget(
-        //   onTapFun: () {
-        //     Get.to(() => const BonusDateSelectionScreen(
-        //           from: "Direct Distributor",
-        //         ));
-        //   },
-        //   title: "Direct Distributor Sales Bonus",
-        // ),
-        // MyAccountItemWidget(
-        //   onTapFun: () {
-        //     Get.to(() => const BonusDateSelectionScreen(
-        //           from: "Personal Sales",
-        //         ));
-        //   },
-        //   title: "Personal Sales Bonus",
-        // ),
+        
         const SpaceHeightWidget(height: 13)
       ],
     );

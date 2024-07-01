@@ -24,7 +24,6 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
   @override
   void initState() {
     super.initState();
-    // countOfCart = "0";
     userId = Constants.prefs.getString("user_id");
     password = Constants.prefs.getString("password");
     countryId = Constants.prefs.getString("country_id");
@@ -51,7 +50,6 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
       "Action": "GetDMemberPackages",
       "CountryID": countryId,
       "MallName":
-          // uniqId
           Constants.prefs.getString("reg_id")
     };
 
@@ -103,7 +101,6 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 0),
             child: InkWell(
-                // behavior: HitTestBehavior.translucent,
                 onTap: () {
                   Get.back();
                 },
@@ -128,7 +125,6 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
                                         _dataController
                                                 .memberMallCartCount.value !=
                                             "") {
-                                      // Get.to(() => const MembermallCartScreen());
                                       actionFun();
                                     } else {}
                                   },
@@ -146,7 +142,6 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
                                       _dataController
                                               .memberMallCartCount.value !=
                                           "") {
-                                    // Get.to(() => const MembermallCartScreen());
                                     actionFun();
                                   } else {}
                                 },
@@ -173,16 +168,8 @@ class _MembershipMallScreenState extends State<MembershipMallScreen> {
                                                 "") {
                                           actionFun();
 
-                                          // dynamic res = await Get.to(
-                                          //     () => const MembermallCheckoutScreen());
-                                          // //  MembermallCartScreen());
-
-                                          // if (res != null) {
-                                          //   if (res[0] == true) {
-                                          //     dataFun();
-                                          //   }
+                                         
                                         }
-                                        // } else {}
                                       },
                                       title: "Checkout"));
                         })

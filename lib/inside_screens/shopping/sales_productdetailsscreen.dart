@@ -192,9 +192,7 @@ class _SalesProductDetailsScreenState extends State<SalesProductDetailsScreen> {
                             height: 35,
                             child: IconElevatedButton(
                               onTapFun: () async {
-                                // if (widget.from == "register") {
-
-                                // Get.defaultDialog();
+                                
                                 setState(() {
                                   packageLoading = true;
                                 });

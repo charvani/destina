@@ -139,7 +139,6 @@ orderNumTextWidget(String from, title, int index) {
             redirectUrl:
                 "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/invoiceparam.html?BillNo=${_dataController.orderAcknowledgeData[index].orderNo}"
 
-            // 'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderAknowledge"&OrderNo=${_dataController.orderAcknowledgeData[index].orderNo}',
             ));
       } else if (from == "details") {
         Get.to(() => OrderDetailsScreen(
@@ -296,8 +295,7 @@ class MyData extends DataTableSource {
       ),
       DataCell(_verticalDivider),
       DataCell(
-        // rowTextWidget(
-        //     _dataController.orderAcknowledgeData[index].licenseCollected),
+        
         orderNumTextWidget(
             "license",
             _dataController.orderAcknowledgeData[index].licenseCollected,

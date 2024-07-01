@@ -117,7 +117,6 @@ class _SearchItemsScreenState extends State<SearchItemsScreen> {
                                 });
                               },
                               imagePath:
-                                  // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
                                   productController.productItemList[i].image,
                               titile: productController
                                   .productItemList[i].packageName)

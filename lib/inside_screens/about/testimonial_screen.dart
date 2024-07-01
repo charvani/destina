@@ -28,7 +28,6 @@ class _TestimonialScreenState extends State<TestimonialScreen> {
 
   dataFun() {
     Map params = {
-      // API Name : GetTestimonials
       "action": "GetTestimonialsForMA",
       "regid": 0,
       "TestiImg": "Testimonials",
@@ -75,13 +74,7 @@ class _TestimonialScreenState extends State<TestimonialScreen> {
                                   ),
                                   htmlDataWidget(
                                       _dataController.testimonialData[i].descr)
-                                  // CommonTitle(
-                                  //   titleName: _dataController
-                                  //       .testimonialData[i].descr,
-                                  //   size: 14,
-                                  //   fontFamily: "OnestRegular",
-                                  //   textAlign: TextAlign.justify  ,
-                                  // )
+                                 
                                 ],
                               ),
                             ),

@@ -156,8 +156,7 @@ class _GroupSalesSelectionScreenState extends State<GroupSalesSelectionScreen> {
                               toDate: toDateTController.text,
                             ));
 
-                        // fromDateTController.text = "";
-                        // toDateTController.text = "";
+                      
                       }
                     },
                     title: "Get Report")

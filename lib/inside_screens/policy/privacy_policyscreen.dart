@@ -18,9 +18,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Image.asset(
-            //   "assets/images/privacy-banner.jpg",
-            // ),
+           
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(

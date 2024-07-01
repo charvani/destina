@@ -131,9 +131,7 @@ class _UpgradeProductDetailsScreenState
                         height: 35,
                         child: IconElevatedButton(
                           onTapFun: () async {
-                            // if (widget.from == "register") {
-
-                            // Get.defaultDialog();
+                           
                             setState(() {
                               packageLoading = true;
                             });

@@ -146,7 +146,6 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                         Column(
                                           children: [
                                             CartItemWidget(
-                                              // removeCartOption: true,
                                               cv: cartController
                                                   .salesMallCartItems[i].cv,
                                               decrementFun: () {
@@ -221,7 +220,6 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                             children: [
                                               const Text(
                                                 "You qualified to receive an ADD ON products!",
-                                                // textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontFamily: "OnestSemiBold",
                                                   fontSize: 16,
@@ -231,7 +229,6 @@ class _DPmallCartScreenState extends State<DPmallCartScreen> {
                                                   height: 10),
                                               const Text(
                                                 "You are eligible for the following promotion:",
-                                                // textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontFamily: "OnestRegular",
                                                   fontSize: 13,

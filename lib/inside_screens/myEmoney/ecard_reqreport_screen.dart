@@ -100,9 +100,7 @@ dipositSlipWidget(
   return GestureDetector(
     behavior: HitTestBehavior.translucent,
     onTap: () {
-      // Get.to(() => HeroAnimationScreen(
-      //       tagData: imagePath,
-      //     ));
+      
       Get.dialog(Dialog(
         backgroundColor: whiteColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -156,7 +154,6 @@ class MyData extends DataTableSource {
       ),
       DataCell(_verticalDivider),
       DataCell(
-        // TableInfoWidget(info: _dataController.ecardReqReportList[index].reqby),
         htmlDataWidget(_dataController.ecardReqReportList[index].reqby),
       ),
       DataCell(_verticalDivider),
@@ -183,8 +180,7 @@ class MyData extends DataTableSource {
       DataCell(_verticalDivider),
       DataCell(
           dipositSlipWidget(_dataController.ecardReqReportList[index].imagepath)
-          // TableInfoWidget(
-          //     info: ),
+          
           ),
       DataCell(_verticalDivider),
       DataCell(

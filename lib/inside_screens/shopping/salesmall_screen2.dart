@@ -120,7 +120,6 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
         leading: Padding(
           padding: const EdgeInsets.only(left: 8),
           child: InkWell(
-              // behavior: HitTestBehavior.translucent,
               onTap: () {
                 Get.back();
               },
@@ -221,7 +220,6 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: GridView.builder(
                             padding: const EdgeInsets.all(0),
-                            // physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
@@ -242,7 +240,6 @@ class _SalesMallScreen2State extends State<SalesMallScreen2> {
                                     });
                                   },
                                   imagePath:
-                                      // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
                                       _dataController
                                           .selPackageItemList[i].pImage,
                                   titile: _dataController

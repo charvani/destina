@@ -37,12 +37,7 @@ class _ViewProfileState extends State<ViewProfile> {
     _profileController.getViewProfile(bdata);
   }
 
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   super.dispose();
-  //   _profileController.dispose();
-  // }
+
 
   @override
   Widget build(BuildContext context) {

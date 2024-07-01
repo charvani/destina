@@ -225,10 +225,8 @@ class _DoctorConsultationScreenState extends State<DoctorConsultationScreen> {
       "AptDate": dateTController.text,
       "Address": addressTController.text
     };
-    print("getting b data...$bData");
     dynamic res = await _bookingController.getDoctorAppointment(bData);
     if (res != null) {
-      print("res...$res");
       if (res['Msg'] == "SUCCESS") {
         Get.dialog(OkDialog(
           title: "Your Appointment Request has been sent to Support Team.",

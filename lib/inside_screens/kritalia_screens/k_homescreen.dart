@@ -49,7 +49,6 @@ class _KritaliaHomeScreenState extends State<KritaliaHomeScreen> {
       videoFun();
       controller.addListener(() {
         if (controller.value.position == controller.value.duration) {
-          // Video completed, play another video
           _playNextVideo();
         }
       });

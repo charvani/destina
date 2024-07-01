@@ -72,7 +72,6 @@ class _UpgradeOrderScreenState extends State<UpgradeOrderScreen> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 8),
             child: InkWell(
-                // behavior: HitTestBehavior.translucent,
                 onTap: () {
                   Get.back();
                 },
@@ -82,56 +81,7 @@ class _UpgradeOrderScreenState extends State<UpgradeOrderScreen> {
                 )),
           ),
           actions: const [
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.end,
-            //   children: [
-            //     int.parse(countOfCart) > 0
-            //         ? Badge.count(
-            //             count: int.parse(countOfCart),
-            //             child: InkWell(
-            //               onTap: () {
-            //                 if (countOfCart != "0" && countOfCart != "") {
-            //                   Get.to(() => const SalesmallCartScreen());
-            //                 } else {}
-            //               },
-            //               child: Icon(
-            //                 Icons.shopping_cart,
-            //                 color: appthemeColor,
-            //               ),
-            //             ),
-            //           )
-            //         : InkWell(
-            //             onTap: () {
-            //               if (countOfCart != "0" && countOfCart != "") {
-            //                 Get.to(() => const SalesmallCartScreen());
-            //               } else {}
-            //             },
-            //             child: Icon(
-            //               Icons.shopping_cart,
-            //               color: appthemeColor,
-            //             ),
-            //           ),
-            //     const SpaceWidthWidget(width: 5),
-            //     Container(
-            //         height: 30,
-            //         width: 118,
-            //         padding: const EdgeInsets.only(right: 5),
-            //         child: CustomAutoWidthButton(
-            //             onTapFun: () async {
-            //               if (countOfCart != "0" && countOfCart != "") {
-            //                 dynamic res =
-            //                     await Get.to(() => const SalesmallCartScreen());
-
-            //                 if (res != null) {
-            //                   if (res[0] == true) {
-            //                     dataFun();
-            //                   }
-            //                 }
-            //               } else {}
-            //             },
-            //             title: "Checkout"))
-            //   ],
-            // )
+          
           ]),
       body: Obx(() {
         return _dataController.loading.value

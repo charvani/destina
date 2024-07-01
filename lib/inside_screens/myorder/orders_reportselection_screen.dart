@@ -94,7 +94,6 @@ class _OrdersSectionScreenState extends State<OrdersSectionScreen> {
                               );
                               if (picked != null) {
                                 final DateFormat formatter =
-                                    // DateFormat('dd-MM-yyyy');
                                     DateFormat('MM/dd/yyyy');
                                 setState(() {
                                   fromDateTController.text =

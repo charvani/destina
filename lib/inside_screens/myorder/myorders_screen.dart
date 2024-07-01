@@ -117,11 +117,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                                     billno: _dataController
                                         .orderReportData[i].orderNo,
                                   ));
-                              //  ProductsScreen2(
-                              //       from: "order_again",
-                              //       billno: _dataController
-                              //           .orderReportData[i].orderNo,
-                              //     ));
+                             
                             }
                           },
                           loading: selectedInt == i ? true : false,
@@ -139,7 +135,6 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                               "Pwd": pass,
                               "OrderNo":
                                   _dataController.orderReportData[i].orderNo,
-                              // "21122023/5048"
                             };
                             await _dataController.getOrderShipping(bdata);
                             Get.dialog(shippingHistoryDialog());
@@ -151,7 +146,6 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                             Get.to(() => InvoiceScreen(
                                 redirectUrl:
                                     "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/invoiceparam.html?BillNo=${_dataController.orderReportData[i].orderNo}"
-                                // 'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderRpt"&OrderNo=${_dataController.orderReportData[i].orderNo}',
                                 ));
                           },
                         )
@@ -187,9 +181,7 @@ class _MyOrdersScreenState extends State<MyOrdersScreen> {
                       ),
                       IconButton(
                           onPressed: () {
-                            // if (loading != true) {
                             Get.back();
-                            // }
                           },
                           icon: Icon(
                             Icons.close,

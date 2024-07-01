@@ -367,41 +367,7 @@ class _RegisterPackDetailsScreenState extends State<RegisterPackDetailsScreen> {
                                           .packageDetailsData.value.imgUrl)
                                 ],
                               ),
-                        // if (widget.fromPack == "Kritalia & Co")
-                        //   kritaliaWidget(packDetailsController
-                        //       .packageDetailsData.value.desc),
-                        // const SpaceHeightWidget(height: 15),
-                        // if (packDetailsController
-                        //             .packageDetailsData.value.pkname ==
-                        //         "UNIWAVE PENDENT" ||
-                        //     packDetailsController
-                        //             .packageDetailsData.value.pkname ==
-                        //         "UNIWAVE PENDANT")
-                        //   pendentWidget(),
-                        // if (packDetailsController.packageDetailsData.value.pkname == "UNIWAVE FLASK" ||
-                        //     packDetailsController
-                        //             .packageDetailsData.value.pkname ==
-                        //         "UNIWAVE STICK" ||
-                        //     packDetailsController
-                        //             .packageDetailsData.value.pkname ==
-                        //         "UNIWAVE FILTER")
-                        //   flaskWidget(packDetailsController
-                        //       .packageDetailsData.value.pkname),
-                        // if (packDetailsController
-                        //         .packageDetailsData.value.pkname ==
-                        //     "UNIWAVE SCALARVIA")
-                        //   scalarviaWidget(),
-                        // if (packDetailsController
-                        //         .packageDetailsData.value.pkname ==
-                        //     "UNIWAVE INSTANT COFFEE")
-                        //   coffeeWidget(),
-                        // if (packDetailsController
-                        //             .packageDetailsData.value.pkname ==
-                        //         "UNIWAVE BIOMATRIX SHIELD" ||
-                        //     packDetailsController
-                        //             .packageDetailsData.value.pkname ==
-                        //         "UNIWAVE BIO MATRIX SHIELD")
-                        //   biomatrixWidget(),
+                        
                         if (videoId != "" && videoId != null)
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

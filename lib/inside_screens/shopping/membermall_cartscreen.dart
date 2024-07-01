@@ -45,9 +45,7 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
 
     sponsorController.text = "";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // if (uniqId != null && sessionId != null) {
       getData("init");
-      // }
     });
   }
 
@@ -673,8 +671,7 @@ class _MembermallCartScreenState extends State<MembermallCartScreen> {
                                                   .digitsOnly,
                                               LengthLimitingTextInputFormatter(
                                                   2),
-                                              // FilteringTextInputFormatter.allow(
-                                              //     RegExp("[1-28]"))
+                                              
                                             ],
                                             padding: 8,
                                             textAlignVertical:

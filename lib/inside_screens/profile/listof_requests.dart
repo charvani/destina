@@ -433,8 +433,6 @@ oldDetailsWidget() {
             fontfamily: "OnestRegular",
             title: "Account Holder's Name\n(Same as the Bank Account):",
             info: _litsOfReqController.approvedProfileData.value.obenname),
-        // ViewProfileWidget(
-        //     fontfamily: "OnestRegular", title: "Type Of Account:", info: _litsOfReqController.approvedProfileData.value.ot),
         ViewProfileWidget(
             fontfamily: "OnestRegular",
             title: "Nominee's Name (next of kin)",
@@ -550,13 +548,7 @@ newDetailsWidget() {
           title: "Account Holder's Name\n(Same as the Bank Account):",
           infoColor: darkRedColor,
         ),
-        // ViewProfileWidget(
-// info: _litsOfReqController.approvedProfileData.value.onomrel,
-
-        //   fontfamily: "OnestRegular",
-        //   title: "Type Of Account:",
-        //   infoColor: darkRedColor,
-        // ),
+        
         ViewProfileWidget(
           info: _litsOfReqController.approvedProfileData.value.nominee,
           fontfamily: "OnestRegular",

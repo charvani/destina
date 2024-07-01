@@ -27,7 +27,6 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
   @override
   void initState() {
     super.initState();
-    // countOfCart = "0";
     userId = Constants.prefs.getString("user_id");
     password = Constants.prefs.getString("password");
     countryId = Constants.prefs.getString("country_id");
@@ -131,7 +130,6 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
         leading: Padding(
           padding: const EdgeInsets.only(left: 0),
           child: InkWell(
-              // behavior: HitTestBehavior.translucent,
               onTap: () {
                 Get.back();
               },
@@ -228,7 +226,6 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
                     ? SizedBox(height: 100, child: notAvailableW)
                     : GridView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
-                        // physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
@@ -348,7 +345,6 @@ class _MembershipMallScreen2State extends State<MembershipMallScreen2> {
   incrdcrFun(String from, String itemcount, String packCode) async {
     Map parameters = {
       "action": "addMECartitems",
-      // "addSGCartitems",
       "Pkid": packCode,
       "Country": Constants.prefs.getString("country_id"),
       "Uniqid": uniqId,

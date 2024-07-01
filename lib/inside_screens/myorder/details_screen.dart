@@ -65,10 +65,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: DataTable(
-                            // dataRowMaxHeight: 50,
                             horizontalMargin: 0,
                             columnSpacing: 0,
-                            // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
                             headingRowColor: MaterialStatePropertyAll(
                                 lightDarKBlue.withOpacity(0.2)),
                             border: TableBorder.all(

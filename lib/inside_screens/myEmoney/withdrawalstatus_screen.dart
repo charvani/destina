@@ -91,7 +91,6 @@ infoTextStyle(String id, sNo) {
       Get.to(() => InvoiceScreen(
           redirectUrl:
               "https://${ApiData().checkOutUrlDomain}/MobileAppCheckout/PayoutParam.html?DistId=$sNo"
-          // 'https://worldunityfoundation.org/members/MobileAppMTaxInvoice.aspx?Type="OrderRpt"&OrderNo=${_dataController.orderReportData[i].orderNo}',
           ));
     },
     child: Text(
@@ -115,9 +114,7 @@ class MyData extends DataTableSource {
             .withdrawStatusData.value.tpCheckWithdrawrpt[index].reqCode,
         _dataController.withdrawStatusData.value.tpCheckWithdrawrpt[index].sno,
       )
-          // TableInfoWidget(
-          //     info: _dataController
-          //         .withdrawStatusData.value.tpCheckWithdrawrpt[index].reqCode),
+        
           ),
       DataCell(_verticalDivider),
       DataCell(

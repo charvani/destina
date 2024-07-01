@@ -37,7 +37,6 @@ class _CVScreenState extends State<CVScreen> {
     bData = {
       "UserId": userid,
       "Pwd": password,
-      // "action": "Main",
       "action": "GetAdmin",
       "Month": widget.month,
       "year": widget.year,

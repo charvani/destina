@@ -121,7 +121,6 @@ class _PackageReviewScreenState extends State<PackageReviewScreen> {
                           return PackageReviewWidget(
                             imgPath:
                                 "https://admin.destina1.com/admin/RetailImages/20151.jpg",
-                            //  _dataController.packReviewList[i].pImage,
                             reviewTitle:
                                 _dataController.packReviewList[i].revsts,
                             itemName: _dataController.packReviewList[i].pkname,

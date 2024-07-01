@@ -35,7 +35,6 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
   void initState() {
     super.initState();
     userId = Constants.prefs.getString("user_id");
-    // passwordTController.text = widget.transPass;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       dataFun();
     });
@@ -173,7 +172,6 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
     Map bdata = {
       "UserId": userId,
       "Pwd": Constants.prefs.getString("password"),
-      // "From": userId,
       "Action": "Insert",
       "regid": Constants.prefs.getString("reg_id"),
       "amount": withdrawalAmountTController.text,

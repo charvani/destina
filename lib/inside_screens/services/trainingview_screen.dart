@@ -79,8 +79,6 @@ class _TrainingToolsViewScreenState extends State<TrainingToolsViewScreen> {
                   if (progressbar == false) {
                     FileDownloader.downloadFile(
                         url: widget.downloadlink,
-                        // url:
-                        //     "https://admin.destina1.com/MemberDownloads/GoProChapter_12.mp3",
                         name: widget.downloadlink
                             .split('MemberDownloads/')
                             .last, //(optional)

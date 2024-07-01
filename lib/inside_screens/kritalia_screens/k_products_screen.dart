@@ -74,7 +74,6 @@ class _KProductsScreen2State extends State<KProductsScreen2> {
         dynamic data = productController.getProducts("Kritalia & CO", null);
       }
 
-      // dataFun("All");
     });
   }
 

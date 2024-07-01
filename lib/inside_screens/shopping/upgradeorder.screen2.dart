@@ -113,7 +113,6 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
             leading: Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: InkWell(
-                    // behavior: HitTestBehavior.translucent,
                     onTap: () {
                       Get.back();
                     },
@@ -269,7 +268,6 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
                                           });
                                         },
                                         imagePath:
-                                            // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
                                             _dataController
                                                 .selPackageItemList[i].pImage,
                                         titile: _dataController
@@ -282,45 +280,7 @@ class _UpgradeOrderScreen2State extends State<UpgradeOrderScreen2> {
           ],
         ));
 
-    //   Obx(() {
-    //     return _dataController.loading.value
-    //         ? loader
-    //         : _dataController.salesOrdersList.isEmpty
-    //             ? const NotAvailableText(text: "No data found")
-    //             : Padding(
-    //                 padding: const EdgeInsets.all(8.0),
-    //                 child: GridView.builder(
-    //                   padding: const EdgeInsets.all(0),
-    //                   // physics: const NeverScrollableScrollPhysics(),
-    //                   shrinkWrap: true,
-    //                   gridDelegate:
-    //                       const SliverGridDelegateWithFixedCrossAxisCount(
-    //                           crossAxisCount: 2, childAspectRatio: 1 / 1.1),
-    //                   itemBuilder: (context, i) {
-    //                     return CategroyItemWidget(
-    //                       onTapFun: () async {
-    //                         dynamic res = await Get.to(
-    //                             () => RedemptionProductDetailsScreen(
-    //                                   packageCode: _dataController
-    //                                       .salesOrdersList[i].pkcode,
-    //                                 ));
-    //                         if (res != null) {
-    //                           if (res[0] == true) {
-    //                             dataFun();
-    //                           }
-    //                         }
-    //                       },
-    //                       imagePath: _dataController.salesOrdersList[i].pImage,
-    //                       titile: _dataController.salesOrdersList[i].pkname,
-    //                       amount:
-    //                           "RP ${_dataController.salesOrdersList[i].mrp}",
-    //                     );
-    //                   },
-    //                   itemCount: _dataController.salesOrdersList.length,
-    //                 ),
-    //               );
-    //   }),
-    // );
+  
   }
 
   checkOutFun() async {

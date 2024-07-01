@@ -81,10 +81,8 @@ class _InvoiceDesignScreenState extends State<InvoiceDesignScreen> {
                               controller: infoScrollController,
                               scrollDirection: Axis.horizontal,
                               child: DataTable(
-                                  // dataRowMaxHeight: 50,
                                   horizontalMargin: 0,
                                   columnSpacing: 0,
-                                  // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
                                   headingRowColor: MaterialStatePropertyAll(
                                       lightDarKBlue.withOpacity(0.2)),
                                   border: TableBorder.all(
@@ -160,10 +158,8 @@ class _InvoiceDesignScreenState extends State<InvoiceDesignScreen> {
                               controller: payScrollController,
                               scrollDirection: Axis.horizontal,
                               child: DataTable(
-                                  // dataRowMaxHeight: 50,
                                   horizontalMargin: 0,
                                   columnSpacing: 0,
-                                  // headingRowColor: MaterialStatePropertyAll(blackColor.withOpacity(0.85)),
                                   headingRowColor: MaterialStatePropertyAll(
                                       lightDarKBlue.withOpacity(0.2)),
                                   border: TableBorder.all(

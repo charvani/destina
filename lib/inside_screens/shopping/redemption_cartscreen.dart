@@ -371,7 +371,6 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                                                   "redemption_mall") {
                                                 Get.back(result: [true]);
                                               } else {
-                                                // Get.back();
                                                 Get.back(result: [true]);
                                               }
                                             },
@@ -444,7 +443,6 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
   Widget signInReqWidget() {
     return Container(
       height: 100,
-      // width: double.infinity,
       decoration: const BoxDecoration(
           image: DecorationImage(
               fit: BoxFit.cover,
@@ -535,7 +533,6 @@ class _RedemptionCartScreenState extends State<RedemptionCartScreen> {
                       children: [
                         const SpaceHeightWidget(height: 5),
                         Text(
-                          // "Products In The Package MYSH01",
                           cartController.packPackageDetails.value.head,
                           style: TextStyle(
                               fontFamily: "OnestSemiBold",

@@ -102,7 +102,6 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
             leading: Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: InkWell(
-                    // behavior: HitTestBehavior.translucent,
                     onTap: () {
                       Get.back();
                     },
@@ -203,7 +202,6 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: GridView.builder(
                               padding: const EdgeInsets.all(0),
-                              // physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
@@ -227,7 +225,6 @@ class _RedemptionMallScreen2State extends State<RedemptionMallScreen2> {
                                       });
                                     },
                                     imagePath:
-                                        // "https://admin.destina1.com/admin/RetailImages/20151.jpg",
                                         productCatgs[selectedInd] ==
                                                 "Redemption"
                                             ? _dataController

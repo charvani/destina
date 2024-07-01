@@ -71,7 +71,6 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                       size: 14,
                     ),
                     RegisterTextField(
-                      // inputFormatter: [FilteringTextInputFormatter.digitsOnly],
                       controller: nameController,
                       hintText: '',
                       textInputType: TextInputType.name,

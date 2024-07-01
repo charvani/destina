@@ -39,9 +39,7 @@ class _PromoCartScreenState extends State<PromoCartScreen> {
 
     sponsorController.text = "";
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      // if (uniqId != null && sessionId != null) {
       getData("init");
-      // }
     });
   }
 

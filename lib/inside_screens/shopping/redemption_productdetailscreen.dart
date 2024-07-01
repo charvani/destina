@@ -190,13 +190,10 @@ class _RedemptionProductDetailsScreenState
                     packageLoading
                         ? loader
                         : SizedBox(
-                            // width: 150,
                             height: 35,
                             child: IconElevatedButton(
                               onTapFun: () async {
-                                // if (widget.from == "register") {
-
-                                // Get.defaultDialog();
+                                
                                 setState(() {
                                   packageLoading = true;
                                 });

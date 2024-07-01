@@ -78,8 +78,6 @@ class _FormViewScreenState extends State<FormViewScreen> {
                   if (progressbar == false) {
                     FileDownloader.downloadFile(
                         url: widget.downloadlink,
-                        // url:
-                        //     "https://admin.destina1.com/MemberDownloads/GoProChapter_12.mp3",
                         name: widget.downloadlink
                             .split('MemberDownloads/')
                             .last, //(optional)
